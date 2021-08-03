@@ -1,0 +1,82 @@
+@import "https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/css/bootstrap.min.css";
+
+*{
+    font-family: Verdana;
+}
+
+.logo{
+    width: 6%;
+    height: 6%;
+    padding-right: 20px;
+}
+
+#showcase {
+    background-color: #7fd2c0;
+}
+.h1 img {
+    height:15rem;
+    width:95%;
+    object-fit: cover;
+}
+
+.container-custom {
+    width: 85%;
+}
+
+.card{
+    background: #7fd2c0;
+    border-color: #7fd2c0;
+    border-radius: 20px;
+}
+
+.card:hover{
+    transform: translateY(-15px);
+    transition: transform .3s;
+}
+
+.card-text{
+    line-height: 17px;
+}
+
+.star{
+    color: #fbc02d;
+}
+
+.custom-btn{
+    border-radius: 15px;
+    text-emphasis-color: white;
+    background-color: #7fd2c0;
+}
+
+.cover{
+    width: 100%;
+    object-fit: cover;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+
+.carousel-item{
+    height: 32rem;
+    background: rgb(24, 24, 24);
+    color: white;
+    position: relative;
+}
+
+.headline{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding-bottom: 50px;
+}
+
+.overlay-image{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: 0;
+    background-position: center;
+    background-size: cover;
+    opacity: 0.5;
+}

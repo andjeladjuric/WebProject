@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css" />
+
+    <link rel="stylesheet" href="styles.css">
+
+    <title>Pixie Delivery</title>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <img class="logo" src="img/Logo.png" alt="">
+            <a href="#" class="navbar-brand">PIXIE delivery</a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navmenu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navmenu">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a href="#login" class="nav-link">Log In</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#signup" class="nav-link">Sign up</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Showcase -->
+    <div id="carouselExample" class="carousel slide carousel-fade" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <div class="overlay-image" style="background-image: url(img/product-1.jpg);">
+                </div>
+                <div class="container headline">
+                    <h1>Order food from any restaurant!</h1>
+                    <p>
+                        We're a food delivery company of your dreams! Order delicious food to your doorstep from
+                        anywhere!
+                    </p>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div class="overlay-image" style="background-image: url(img/product-2.jpg);">
+                </div>
+                <div class="container headline">
+                    <h1>Order food from any restaurant!</h1>
+                    <p>
+                        We're a food delivery company of your dreams! Order delicious food to your doorstep from
+                        anywhere!
+                    </p>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div class="overlay-image" style="background-image: url(img/product-4.jpg);">
+                </div>
+                <div class="container headline">
+                    <h1>Order food from any restaurant!</h1>
+                    <p>
+                        We're a food delivery company of your dreams! Order delicious food to your doorstep from
+                        anywhere!
+                    </p>
+                </div>
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample"
+            data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample"
+            data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+
+    <!-- Restaurants -->
+    <section class="bg-light text-dark text-center p-5">
+        <div class="container">
+            <div class="d-md-flex justify-content-center align-items-center">
+                <h2 class="mb-3 mb-md-0">Restaurants</h2>
+            </div>
+
+            <!-- Search -->
+            <div class="container">
+                <br>
+                <div class="row g-4 justify-content-between align-items-center d-md-flex search-input">
+                    <div class="col-md">
+                        <input type="text" class="form-control" placeholder="Name" aria-label="Name">
+                    </div>
+                    <div class="col-md">
+                        <input type="text" class="form-control" placeholder="Type" aria-label="Type">
+                    </div>
+                    <div class="col-md">
+                        <input type="text" class="form-control" placeholder="Location" aria-label="Location">
+                    </div>
+                    <div class="col-md">
+                        <select class="form-control" placeholder="Type" aria-label="Type">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                    </div>
+                    <div class="col-md">
+                        <button type="button" class="btn btn-outline-secondary search-button"><i
+                                class="fa fa-search"></i>Search</button>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Boxes -->
+
+    <section class="p-5 bg-light">
+        <div class="container container-custom">
+            <div class="row text-center g-4">
+
+                <div class="col-md">
+                    <div class="card bg-light text-dark">
+                        <div class="cover">
+                            <img src="img/product-1.jpg" alt="" class="img-responsive cover">
+                        </div>
+                        <div class="card-body text-center">
+                            <h3 class="card-title mb-2">Restaurant</h3>
+
+                            <p class="card-text mb-2">
+                                Short restaurant description
+                            </p>
+
+                            <div class="star mb-2 align-items-center">
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                            </div>
+
+                            <a href="#" class="btn custom-btn">Select</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md">
+                    <div class="card bg-light text-dark">
+                        <div class="cover">
+                            <img src="img/product-2.jpg" alt="" class="img-responsive cover">
+                        </div>
+                        <div class="card-body text-center">
+                            <h3 class="card-title mb-2">Restaurant</h3>
+
+                            <p class="card-text mb-2">
+                                Short restaurant description
+                            </p>
+
+                            <div class="star mb-2 align-items-center">
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                            </div>
+
+                            <a href="#" class="btn custom-btn">Select</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md">
+                    <div class="card bg-light text-dark">
+                        <div class="cover">
+                            <img src="img/product-3.jpg" alt="" class="img-responsive cover">
+                        </div>
+                        <div class="card-body text-center">
+                            <h3 class="card-title mb-2">Restaurant</h3>
+
+                            <p class="card-text mb-2">
+                                Short restaurant description
+                            </p>
+
+                            <div class="star mb-2 align-items-center">
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                            </div>
+
+                            <a href="#" class="btn custom-btn">Select</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+
+</body>
+
+</html>
