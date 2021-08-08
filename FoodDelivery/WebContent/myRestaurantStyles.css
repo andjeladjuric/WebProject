@@ -1,0 +1,74 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
+
+.headline p{
+    font-size: 1rem;
+    color: white;
+}
+
+.wrapper{
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
+#itemAndCommentCards{
+    padding: 0;
+    border-radius: 0;
+    border: none;
+    border-bottom: 1px solid rgba(124, 124, 124, 0.404);
+}
+
+#itemAndCommentCards:hover{
+    border: 1px solid rgba(124, 124, 124, 0.404);
+}
+
+.itemBody{
+    display: inline-flex;
+}
+
+.cardContent{
+    display: block;
+}
+
+.cardContent h1, h4{
+    color: black; 
+    font-size: 1.2rem; 
+    text-transform: uppercase;
+}
+
+p{
+    font-size: 0.9rem; 
+    color: rgba(0, 0, 0, 0.363);
+    text-align: start;
+}
+
+.userNameAndType p{
+    text-transform: uppercase;
+    margin-top: 2px;
+}
+
+#rejectButton{
+    background: #ecbeb1;
+}
+
+#price{
+    font-size: 1.1rem;
+    color: black;
+}
+
+.more{
+    display: inline-flex;
+}
+
+.image-wrapper{
+    border-radius: 5px;
+    height: auto;
+    width: 100%;
+    position: relative;
+    background-position: center;
+    background-size: cover;
+}
+
+.information{
+    display: block;
+}
+
