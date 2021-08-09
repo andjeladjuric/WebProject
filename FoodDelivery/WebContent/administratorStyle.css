@@ -1,0 +1,113 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    font-family: 'Montserrat', sans-serif;
+}
+
+body{
+    background: #f8f9fa;
+}
+ /* Mark input boxes that gets an error on validation: */
+ input.invalid {
+    background-color: #ffdddd;
+  }
+  
+  /* Hide all steps by default: */
+  .tab {
+    display: none;
+  }
+  
+  /* Make circles that indicate the steps of the form: */
+  .step {
+    height: 15px;
+    width: 15px;
+    margin: 0 2px;
+    background-color: #bbbbbb;
+    border: none;
+    border-radius: 50%;
+    display: inline-block;
+    opacity: 0.5;
+  }
+  
+  /* Mark the active step: */
+  .step.active {
+    opacity: 1;
+  }
+  
+  /* Mark the steps that are finished and valid: */
+  .step.finish {
+    background-color: #04AA6D;
+  }
+
+  .btn-circle {
+    width: 30px;
+    height: 30px;
+    padding: 6px 0px;
+    border-radius: 15px;
+    text-align: center;
+    font-size: 12px;
+    line-height: 1.42857;
+}
+
+table{
+  table-layout: fixed;
+  align-content: center;
+  border-spacing: 0;
+  border-radius: 30px;
+}
+
+
+th{
+  text-indent: 10px;
+  text-transform: capitalize;
+  border-bottom:2px solid #f07681;
+}
+
+
+h6{
+  color: #acacaca2;
+}
+
+td{
+  text-indent: 15px;
+}
+
+td input{
+  text-align: end;
+}
+
+tr{
+  border-bottom:1px solid #acacaca2;
+}
+
+.card{
+  border-color: #7fd2c0;
+  border-radius: 20px;
+}
+
+@media (min-width: 577px) {
+  .buttons{
+      padding-left: 10px;
+  }
+}
+
+.buttonGroup{
+  background: #7fd2c079;
+  border-radius: 30px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.buttonGroup.active{
+  background: #ecbeb1;
+}
+
+.form-control,
+.form-select {
+    border-radius: 15px;
+}

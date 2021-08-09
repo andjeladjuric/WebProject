@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css" />
+    <link rel="stylesheet" href="administratorStyle.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css">
+
+    <title>Pixie Delivery</title>
+</head>
+
+<body class="bg-light">
+      <!-- Navbar -->
+    <nav class="navbar sticky-top navbar-expand-lg bg-light navbar-light">
+      <div class="container">
+          <div class="d-flex align-items-center">
+              <h2 class="fs-2 m-0">PIXIE Delivery</h2>
+          </div>
+
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navmenu"
+              aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navmenu">
+              <ul class="navbar-nav ms-auto">
+                  <li class="nav-item">
+                      <a href="" class="nav-link" data-bs-toggle="modal" data-bs-target="#createRestaurantModal">New Restaurant</a>
+                  </li>
+                  <li class="nav-item dropdown">
+                      <a href="" class="nav-link">Users</a>
+                  </li>
+                  <li class="nav-item">
+                      <a href="" class="nav-link">Profile</a>
+                  </li>
+                  <li class="nav-item">
+                      <a href="#logout" class="nav-link">Log Out</a>
+                  </li>
+              </ul>
+          </div>
+      </div>
+  </nav>
+    <!-- Main card-->
+
+    <div class="container-fluid mt-3">
+        <div class="row">
+            <div class="col-lg-8 col-md-12 col-11 mx-auto">
+                <div class="card text-center shadow-sm mb-3" style="height: 600px;">
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                          <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Users</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                          <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Menagers</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                          <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">Deliverers</button>
+                        </li>
+                      </ul>
+                      <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                            <div class="container-fluid">
+                                <rdiv class="row mt-3">
+                                    <div class="col-6 mx-auto">
+                                        <div class="input-group mb-3">
+                                            <input type="text" class="form-control" aria-label="Recipient's username" aria-describedby="button-addon2">
+                                            <button class="btn buttonGroup active" type="button" id="button-addon2">Search</button>
+                                          </div>
+                                    </div>
+                                    <div class="col-3 mx-auto">
+                                        <div class="input-group mb-3">
+                                            <label class="input-group-text" for="inputGroupSelect01">Sort By</label>
+                                            <select class="form-select" id="inputGroupSelect01">
+                                              <option selected></option>
+                                              <option value="1">First Name</option>
+                                              <option value="2">Last Name</option>
+                                              <option value="3">Username</option>
+                                              <option value="3">Points</option>
+                                            </select>
+                                          </div>
+                                    </div>
+                                    <div class="col-3 mx-auto">
+                                        <div class="input-group mb-3">
+                                            <label class="input-group-text" for="inputGroupSelect01">User Type</label>
+                                            <select class="form-select" id="inputGroupSelect01">
+                                              <option selected></option>
+                                              <option value="1">Golden</option>
+                                              <option value="2">Silver</option>
+                                              <option value="3">Bronze</option>
+                                            </select>
+                                          </div>
+                                    </div>
+                                </rdiv>
+                                <div class="row" style="height: 400px;">
+                                    <div class="col-11 mx-auto">
+                                      <div style="height:380px;overflow:auto;">
+                                        <table class="table caption-top table-hover">
+                                          <caption>List of users</caption>
+                                              <thead>
+                                                <tr>
+                                                  <th scope="col"></th>
+                                                  <th scope="col">First Name</th>
+                                                  <th scope="col">Last Name</th>
+                                                  <th scope="col">Username</th>
+                                                </tr>
+                                              </thead>                                              
+                                              <tbody>
+                                                <tr>
+                                                  <th scope="row">1</th>
+                                                  <td>Mark</td>
+                                                  <td>Otto</td>
+                                                  <td>@mdo</td>
+                                                </tr>
+                                                <tr>
+                                                  <th scope="row">2</th>
+                                                  <td>Jacob</td>
+                                                  <td>Thornton</td>
+                                                  <td>@fat</td>
+                                                </tr>
+                                                <tr>
+                                                  <th scope="row">3</th>
+                                                  <td>Larry</td>
+                                                  <td>the Bird</td>
+                                                  <td>@twitter</td>
+                                                </tr>
+                                                <tr>
+                                                  <th scope="row">3</th>
+                                                  <td>Larry</td>
+                                                  <td>the Bird</td>
+                                                  <td>@twitter</td>
+                                                </tr>
+                                                <tr>
+                                                  <th scope="row">3</th>
+                                                  <td>Larry</td>
+                                                  <td>the Bird</td>
+                                                  <td>@twitter</td>
+                                                </tr>
+                                                <tr>
+                                                  <th scope="row">3</th>
+                                                  <td>Larry</td>
+                                                  <td>the Bird</td>
+                                                  <td>@twitter</td>
+                                                </tr>
+                                                <tr>
+                                                  <th scope="row">3</th>
+                                                  <td>Larry</td>
+                                                  <td>the Bird</td>
+                                                  <td>@twitter</td>
+                                                </tr>
+                                                <tr>
+                                                  <th scope="row">3</th>
+                                                  <td>Larry</td>
+                                                  <td>the Bird</td>
+                                                  <td>@twitter</td>
+                                                </tr>
+                                                <tr>
+                                                  <th scope="row">3</th>
+                                                  <td>Larry</td>
+                                                  <td>the Bird</td>
+                                                  <td>@twitter</td>
+                                                </tr>
+                                                <tr>
+                                                  <th scope="row">3</th>
+                                                  <td>Larry</td>
+                                                  <td>the Bird</td>
+                                                  <td>@twitter</td>
+                                                </tr>
+                                                <tr>
+                                                  <th scope="row">3</th>
+                                                  <td>Larry</td>
+                                                  <td>the Bird</td>
+                                                  <td>@twitter</td>
+                                                </tr>
+                                              </tbody>
+                                      </table>
+                                      </div>
+                                       
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-6">
+                                        <button class="btn buttonGroup"><i class="fa fa-trash"></i> Remove</button>
+                                    </div>
+                                    <div class="col-6">
+                                        <button class="btn buttonGroup active"><i class="fa fa-ban"></i> Block</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                            <div class="container-fluid">
+                                <rdiv class="row mt-3">
+                                    <div class="col-6 mx-auto">
+                                        <div class="input-group mb-3">
+                                            <input type="text" class="form-control" aria-label="Recipient's username" aria-describedby="button-addon2">
+                                            <button class="btn buttonGroup active" type="button" id="button-addon2">Search</button>
+                                          </div>
+                                    </div>
+                                    <div class="col-6 mx-auto">
+                                        <div class="input-group mb-3">
+                                            <label class="input-group-text" for="inputGroupSelect01">Sort By</label>
+                                            <select class="form-select" id="inputGroupSelect01">
+                                              <option selected></option>
+                                              <option value="1">First Name</option>
+                                              <option value="2">Last Name</option>
+                                              <option value="3">Username</option>
+                                            </select>
+                                          </div>
+                                    </div>
+                                </rdiv>
+                                <div class="row" style="height: 400px;">
+                                    <div class="col-11 mx-auto">
+                                      <div style="height:380px;overflow:auto;">
+                                        <table class="table caption-top table-hover">
+                                          <caption>List of menagers</caption>
+                                              <thead>
+                                                <tr>
+                                                  <th scope="col"></th>
+                                                  <th scope="col">First Name</th>
+                                                  <th scope="col">Last Name</th>
+                                                  <th scope="col">Username</th>
+                                                </tr>
+                                              </thead>
+                                              <tbody>
+                                                <tr>
+                                                  <th scope="row">1</th>
+                                                  <td>Mark</td>
+                                                  <td>Otto</td>
+                                                  <td>@mdo</td>
+                                                </tr>
+                                                <tr>
+                                                  <th scope="row">2</th>
+                                                  <td>Jacob</td>
+                                                  <td>Thornton</td>
+                                                  <td>@fat</td>
+                                                </tr>
+                                                <tr>
+                                                  <th scope="row">3</th>
+                                                  <td>Larry</td>
+                                                  <td>the Bird</td>
+                                                  <td>@twitter</td>
+                                                </tr>
+                                              </tbody>
+                                      </table>
+                                      </div>
+                                        
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-6">
+                                        <button class="btn buttonGroup"><i class="fa fa-trash"></i> Remove</button>
+                                    </div>
+                                    <div class="col-6">
+                                        <button class="btn buttonGroup active" data-bs-toggle="modal" data-bs-target="#menagerModal"><i class="fa fa-plus"></i> Add</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                            <div class="container-fluid">
+                                <rdiv class="row mt-3">
+                                    <div class="col-6 mx-auto">
+                                        <div class="input-group mb-3">
+                                            <input type="text" class="form-control" aria-label="Recipient's username" aria-describedby="button-addon2">
+                                            <button class="btn buttonGroup active" type="button" id="button-addon2">Search</button>
+                                          </div>
+                                    </div>
+                                    <div class="col-6 mx-auto">
+                                        <div class="input-group mb-3">
+                                            <label class="input-group-text" for="inputGroupSelect01">Sort By</label>
+                                            <select class="form-select" id="inputGroupSelect01">
+                                              <option selected></option>
+                                              <option value="1">First Name</option>
+                                              <option value="2">Last Name</option>
+                                              <option value="3">Username</option>
+                                            </select>
+                                          </div>
+                                    </div>
+                                </rdiv>
+                                <div class="row" style="height: 400px;">
+                                    <div class="col-11 mx-auto">
+                                      <div style="height:380px;overflow:auto;">
+                                        <table class="table caption-top table-hover">
+                                          <caption>List of menagers</caption>
+                                              <thead>
+                                                <tr>
+                                                  <th scope="col"></th>
+                                                  <th scope="col">First Name</th>
+                                                  <th scope="col">Last Name</th>
+                                                  <th scope="col">Username</th>
+                                                </tr>
+                                              </thead>
+                                              <tbody>
+                                                <tr>
+                                                  <th scope="row">1</th>
+                                                  <td>Mark</td>
+                                                  <td>Otto</td>
+                                                  <td>@mdo</td>
+                                                </tr>
+                                                <tr>
+                                                  <th scope="row">2</th>
+                                                  <td>Jacob</td>
+                                                  <td>Thornton</td>
+                                                  <td>@fat</td>
+                                                </tr>
+                                                <tr>
+                                                  <th scope="row">3</th>
+                                                  <td>Larry</td>
+                                                  <td>the Bird</td>
+                                                  <td>@twitter</td>
+                                                </tr>
+                                              </tbody>
+                                        </table>
+                                      </div>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-6">
+                                        <button class="btn buttonGroup"><i class="fa fa-trash"></i> Remove</button>
+                                    </div>
+                                    <div class="col-6">
+                                        <button class="btn buttonGroup active" data-bs-toggle="modal" data-bs-target="#delivererModal"><i class="fa fa-plus"></i> Add</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                      </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-11 col-md-12 mx-auto">
+                <div class="card text-center shadow-sm" style="height: 600px;">
+                    <div class="row">
+                        <div class="col-11 mx-auto bg-light mt-2" style="border-radius: 30px;">
+                            <img src="img/profile_picture.png" class="card-img-top" style="height: 250px; width: 250px;" alt="...">
+                        </div>
+                    </div>
+                    <div class="card-body">
+                      <h5 class="card-title">Full Name (User Type)</h5>
+                      <div class="row">
+                          <div class="col-12">
+                            <p class="card-text">
+                                Date of Birth: 22.1.1999.
+                            </p>
+                            <hr>
+                          </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-12">
+                          <p class="card-text">
+                              Gender: Female
+                          </p>
+                          <hr>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                          <p class="card-text">
+                              Status: <i class="fa fa-medal" style="color: gold;"></i> ( 200 points)
+                          </p>
+                          <hr>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                          <p class="card-text">
+                              Username: user123
+                          </p>
+                          <hr>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 mx-auto">
+                            <a href="#" class="btn buttonGroup">Edit Profile</a>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Kreiranje novog menadzera/dostavljaca-->
+    <div class="modal fade" id="menagerModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div class="form-title text-center">
+                  <h4><i class="fas fa-user-alt"></i> Add New Menager</h4>
+                  <hr>
+              </div>
+              <div class="d-flex flex-column text-center">
+                  <form>
+                    <div class="d-grid gap-4">
+                      <div class="form-group">
+                        <div class="row">
+                            <label class="col-sm-4 col-form-label" style="text-align: left;">First Name</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control">
+                            </div>
+                          </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <label class="col-sm-4 col-form-label" style="text-align: left;">Last Name</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control">
+                            </div>
+                          </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <label class="col-sm-4 col-form-label" style="text-align: left;">Username</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control">
+                            </div>
+                          </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <label class="col-sm-4 col-form-label" style="text-align: left;">Password</label>
+                            <div class="col-sm-8">
+                                <input type="password" class="form-control">
+                            </div>
+                          </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <label class="col-sm-4 col-form-label" style="text-align: left;">Date Of Birth</label>
+                            <div class="col-sm-8">
+                                <input type="date" class="form-control">
+                            </div>
+                          </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-check form-check-inline" style="margin-left: 5rem;">
+                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+                            <label class="form-check-label" for="inlineRadio1">Male</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+                            <label class="form-check-label" for="inlineRadio2">Female</label>
+                          </div>
+                    </div>
+                   
+                    <div class="container">
+                        <div class="row">
+                          <div class="col-12">
+                            <div class="d-flex justify-content-evenly">
+                                <button type="button" class="btn btn-block buttonGroup">Cancel</button>
+                                <button type="button" class="btn btn-block buttonGroup active">Save</button>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                    </div>
+                  </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+       <!--Kreiranje novog dostavljaca-->
+    <div class="modal fade" id="delivererModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div class="form-title text-center">
+                  <h4><i class="fas fa-bicycle"></i> Add New Deliverer</h4>
+                  <hr>
+              </div>
+              <div class="d-flex flex-column text-center">
+                  <form>
+                    <div class="d-grid gap-4">
+                      <div class="form-group">
+                        <div class="row">
+                            <label class="col-sm-4 col-form-label" style="text-align: left;">First Name</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control">
+                            </div>
+                          </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <label class="col-sm-4 col-form-label" style="text-align: left;">Last Name</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control">
+                            </div>
+                          </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <label class="col-sm-4 col-form-label" style="text-align: left;">Username</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control">
+                            </div>
+                          </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <label class="col-sm-4 col-form-label" style="text-align: left;">Password</label>
+                            <div class="col-sm-8">
+                                <input type="password" class="form-control">
+                            </div>
+                          </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <label class="col-sm-4 col-form-label" style="text-align: left;">Date Of Birth</label>
+                            <div class="col-sm-8">
+                                <input type="date" class="form-control">
+                            </div>
+                          </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-check form-check-inline" style="margin-left: 5rem;">
+                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option1">
+                            <label class="form-check-label" for="inlineRadio3">Male</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio4" value="option2">
+                            <label class="form-check-label" for="inlineRadio4">Female</label>
+                          </div>
+                    </div>
+                   
+                    <div class="container">
+                        <div class="row">
+                            
+                            <div class="col-12">
+                                <div class="d-flex justify-content-evenly">
+                                    <button type="button" class="btn btn-block buttonGroup">Cancel</button>
+                                    <button type="button" class="btn btn-block buttonGroup active">Save</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                  </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!--Forma za kreiranje novog restorana-->
+      <div class="modal fade" tabindex="-1" id="createRestaurantModal" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Creating New Restaurant</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="regForm" action="">
+                    
+                    <!-- One "tab" for each step in the form: -->
+                    <div class="tab text-align-left">
+                      <div class="container-fluid">
+                        <div class="d-grid gap-4">
+                          <div class="row mt-3">
+                            <div class="col-3 mx-auto">
+                              <label for="exampleFormControlInput1" class="form-label">Name:</label>
+                            </div>
+                            <div class="col-8  mx-auto">
+                              <input type="text" class="form-control" id="exampleFormControlInput1">
+                            </div>
+                          </div>
+    
+                          <div class="row">
+                            <div class="col-3 mx-auto">
+                              <label for="exampleFormControlInput1" class="form-label">Type:</label>
+                            </div>
+                            <div class="col-8  mx-auto">
+                              <select class="form-select">
+                                <option selected>Select</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                              </select>                      
+                            </div>
+                          </div>
+    
+                          <div class="row">
+                            <div class="col-3 mx-auto">
+                              <label for="exampleFormControlInput1" class="form-label">Logo:</label>
+                            </div>
+                            <div class="col-8  mx-auto">
+                              <input class="form-control" type="file" id="formFile">
+                            </div>
+                          </div>
+    
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div class="tab">Working hours:
+                      <div class="container-fluid mt-3">
+                        <div class="d-grid gap-3">
+                          <div class="row">
+                            <div class="card shadow-sm bg-light">
+                              <div class="d-grid gap-2">
+                                <div class="row mt-3">
+                                  <div class="col-6 mx-auto">
+                                    <div class="form-floating">
+                                      <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
+                                        <option selected>12AM</option>
+                                        <option value="1">One</option>
+                                        <option value="2">Two</option>
+                                        <option value="3">Three</option>
+                                      </select>
+                                      <label for="floatingSelect">Open at</label>
+                                    </div>
+                                  </div>
+                                  <div class="col-6 mx-auto">
+                                    <div class="form-floating">
+                                      <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
+                                        <option selected>10PM</option>
+                                        <option value="1">One</option>
+                                        <option value="2">Two</option>
+                                        <option value="3">Three</option>
+                                      </select>
+                                      <label for="floatingSelect">Close at</label>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="row">
+                                  <div class="col-11 mx-auto">
+                                    <div class="d-flex gap-1">
+                                      <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                          Mon
+                                        </label>
+                                      </div>
+                                      <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                          Tue
+                                        </label>
+                                      </div>
+                                      <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                          Wed
+                                        </label>
+                                      </div>
+                                      <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                          Thur
+                                        </label>
+                                      </div>
+                                      <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                          Fri
+                                        </label>
+                                      </div>
+                                      <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                          Sat
+                                        </label>
+                                      </div>
+                                      <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                          Sun
+                                        </label>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+    
+                          <div class="row">
+                            <div class="card shadow-sm bg-light">
+                              <div class="d-grid gap-2">
+                                <div class="row mt-3">
+                                  <div class="col-6 mx-auto">
+                                    <div class="form-floating">
+                                      <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
+                                        <option selected>12AM</option>
+                                        <option value="1">One</option>
+                                        <option value="2">Two</option>
+                                        <option value="3">Three</option>
+                                      </select>
+                                      <label for="floatingSelect">Open at</label>
+                                    </div>
+                                  </div>
+                                  <div class="col-6 mx-auto">
+                                    <div class="form-floating">
+                                      <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
+                                        <option selected>10PM</option>
+                                        <option value="1">One</option>
+                                        <option value="2">Two</option>
+                                        <option value="3">Three</option>
+                                      </select>
+                                      <label for="floatingSelect">Close at</label>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="row">
+                                  <div class="col-11 mx-auto">
+                                    <div class="d-flex gap-1">
+                                      <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                          Mon
+                                        </label>
+                                      </div>
+                                      <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                          Tue
+                                        </label>
+                                      </div>
+                                      <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                          Wed
+                                        </label>
+                                      </div>
+                                      <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                          Thur
+                                        </label>
+                                      </div>
+                                      <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                          Fri
+                                        </label>
+                                      </div>
+                                      <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                          Sat
+                                        </label>
+                                      </div>
+                                      <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                          Sun
+                                        </label>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div class="tab">Choose Menager of the Restaurant
+                      <div class="container-fluid">
+                        <div class="row">
+                          <div class="col-11 mx-auto">
+                            <!--Izbor menadzera iz tabele-->
+                            <div class="row mt-3">
+                              <div class="col-12 mx-auto">
+                                <div class="row">
+                                    <div class="col-6 mx-auto">
+                                      <div class="input-group mb-3">
+                                          <input type="text" class="form-control" aria-label="Recipient's username" aria-describedby="button-addon2">
+                                          <button class="btn btn-outline-secondary" type="button" id="button-addon2"><i class="fas fa-search"></i></button>
+                                        </div>
+                                  </div>
+                                  <div class="col-6 mx-auto">
+                                      <div class="input-group mb-3">
+                                          <label class="input-group-text" for="inputGroupSelect01">Sort By</label>
+                                          <select class="form-select" id="inputGroupSelect01">
+                                            <option selected></option>
+                                            <option value="1">First Name</option>
+                                            <option value="2">Last Name</option>
+                                            <option value="3">Username</option>
+                                          </select>
+                                        </div>
+                                  </div>
+                                  </div>
+                                </div>
+    
+                                <div class="row">
+                                  <div class="col-12 mx-auto">
+                                    <div style="height:200px;overflow:auto;">
+                                        <table class="table table-sm caption-top table-hover">
+                                          <thead>
+                                            <tr>
+                                              <th scope="col"></th>
+                                              <th scope="col">First Name</th>
+                                              <th scope="col">Last Name</th>
+                                            </tr>
+                                          </thead>
+                                          <tbody>
+                                            <tr>
+                                              <th scope="row">1</th>
+                                              <td>Mark</td>
+                                              <td>Otto</td>
+                                            </tr>
+                                            <tr>
+                                              <th scope="row">2</th>
+                                              <td>Jacob</td>
+                                              <td>Thornton</td>
+                                            </tr>
+                                            <tr>
+                                              <th scope="row">3</th>
+                                              <td>Larry</td>
+                                              <td>the Bird</td>
+                                            </tr>
+                                          </tbody>
+                                        </table>
+                                    </div>
+                                    
+                                    
+                                  </div>
+                                </div>
+    
+                              </div>
+                            </div>
+                            <!--Expandable(Creating new Menager)-->
+                            <div class="row">
+                              <div class="col-11 mx-auto">
+                                <a  data-bs-toggle="collapse" href="#new_menager" id="scrollspy" aria-expanded="false" aria-controls="collapseExample">
+                                  Create New Menager
+                                </a>
+                              <div class="collapse" id="new_menager" data-bs-spy="scroll" data-bs-target="#scrollspy">
+                                <div class="card card-body" >
+                                  <form>
+                                    <div class="d-grid gap-1">
+                                      <div class="form-floating">
+                                        <input type="text" class="form-control" id="floatingInputValue" value="test@example.com">
+                                        <label for="floatingInputValue">Full Name</label>
+                                      </div>
+                                      <div class="form-floating">
+                                        <input type="text" class="form-control" id="floatingInputValue" value="test@example.com">
+                                        <label for="floatingInputValue">Username</label>
+                                      </div>
+                                      <div class="form-floating">
+                                        <input type="password" class="form-control" id="floatingInputValue" value="test@example.com">
+                                        <label for="floatingInputValue">Password</label>
+                                      </div>
+                                      <div class="form-floating">
+                                        <input type="date" class="form-control" id="floatingInputValue" value="test@example.com">
+                                        <label for="floatingInputValue">Date Of Birth</label>
+                                      </div>
+                                      <div class="d-flex gap-2">
+                                        <div class="form-check">
+                                          <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                                          <label class="form-check-label" for="flexRadioDefault1">
+                                            Male
+                                          </label>
+                                        </div>
+                                        <div class="form-check">
+                                          <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
+                                          <label class="form-check-label" for="flexRadioDefault2">
+                                            Female
+                                          </label>
+                                        </div>
+                                      </div>
+                                      <div class="d-flex justify-content-evenly">
+                                          <button class="btn-circle" style="color: red;"><i class="fas fa-times"></i></button>
+                                          <button class="btn-circle" style="color: green;"><i class="fas fa-check"></i></button>
+                                      </div>
+                                    </div>
+                                  </form>
+                                </div>
+                              </div>
+                                
+                              </div>
+                            </div>
+                            <!--End-->
+                          </div>
+                        </div>
+                      </div>
+                     
+                    </div>
+                    <div style="overflow:auto;">
+                      <div class="d-flex justify-content-evenly p-2">
+                          <button class="btn buttonGroup active" type="button" id="prevBtn" onclick="nextPrev(-1)">Previous</button>
+                          <button class="btn buttonGroup" type="button" id="nextBtn" onclick="nextPrev(1)">Next</button>
+                      </div>
+                    </div>
+                    
+                    <!-- Circles which indicates the steps of the form: -->
+                    <div style="text-align:center;margin-top:40px; margin-bottom: 40px;">
+                      <span class="step"></span>
+                      <span class="step"></span>
+                      <span class="step"></span>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+      <!---->
+      <script src="administratorScript.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>
