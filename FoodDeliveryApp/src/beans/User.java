@@ -3,9 +3,6 @@ package beans;
 import java.util.ArrayList;
 import java.util.Date;
 
-enum Gender { Male, Female }
-enum Role { Menager, Administrator, Customer, Deliverer}
-
 public class User {
 	
 	private String username;

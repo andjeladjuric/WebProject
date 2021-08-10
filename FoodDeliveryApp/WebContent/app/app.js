@@ -1,15 +1,3 @@
-let vue = new Vue({
-    el: "#vue-restaurants",
-    data: {
-        restaurants: null,
-    },
-    mounted() {
-        axios
-            .get("rest/restaurants/getAll")
-            .then((response) => (this.restaurants = response.data));
-    },
-});
-
 const RestaurantComponent = { template: '<view-restaurants></view-restaurants>'}
 const RegistrationComponent = { template: '<app-register></app-register>'}
 const LoginComponent = { template: '<app-login></app-login>'}
