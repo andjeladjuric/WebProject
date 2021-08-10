@@ -1,0 +1,104 @@
+[
+    {
+        "name": "La Forza",
+        "id": "1",
+        "deleted": false,
+        "type": 0,
+        "status": 0,
+        "location": {
+            "address": {
+                "street": "Katolicke porte",
+                "number": 6,
+                "city": "Novi Sad",
+                "postcode": 21000
+            },
+            "latitude": 124.555,
+            "longitude": 245.64
+        }
+    },
+    {
+        "name": "Menza",
+        "id": "2",
+        "deleted": false,
+        "type": 0,
+        "status": 0,
+        "location": {
+            "address": {
+                "street": "Dr Sime Milosevica",
+                "number": 6,
+                "city": "Novi Sad",
+                "postcode": 21000
+            },
+            "latitude": 124.555,
+            "longitude": 245.64
+        }
+    },
+    {
+        "name": "Mala menza",
+        "id": "3",
+        "deleted": false,
+        "type": 0,
+        "status": 0,
+        "location": {
+            "address": {
+                "street": "Dr Sime Milosevica",
+                "number": 6,
+                "city": "Novi Sad",
+                "postcode": 21000
+            },
+            "latitude": 124.555,
+            "longitude": 245.64
+        }
+    },
+    {
+        "name": "La Forza",
+        "id": "1",
+        "deleted": false,
+        "type": 0,
+        "status": 0,
+        "location": {
+            "address": {
+                "street": "Katolicke porte",
+                "number": 6,
+                "city": "Novi Sad",
+                "postcode": 21000
+            },
+            "latitude": 124.555,
+            "longitude": 245.64
+        }
+    },
+    {
+        "name": "Menza",
+        "id": "2",
+        "deleted": false,
+        "type": 0,
+        "status": 0,
+        "location": {
+            "address": {
+                "street": "Dr Sime Milosevica",
+                "number": 6,
+                "city": "Novi Sad",
+                "postcode": 21000
+            },
+            "latitude": 124.555,
+            "longitude": 245.64
+        }
+    },
+    {
+        "name": "Mala menza",
+        "id": "3",
+        "deleted": false,
+        "type": 0,
+        "status": 0,
+        "location": {
+            "address": {
+                "street": "Dr Sime Milosevica",
+                "number": 6,
+                "city": "Novi Sad",
+                "postcode": 21000
+            },
+            "latitude": 124.555,
+            "longitude": 245.64
+        }
+    }
+]
