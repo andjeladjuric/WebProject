@@ -3,7 +3,7 @@ package beans;
 import java.util.ArrayList;
 
 enum Status { Open, Closed }
-enum RestaurantType { italian }
+enum RestaurantType {  ITALIAN, CHINEESE, SERBIAN, FASTFOOD, BARBEQUE  }
 
 public class Restaurant {
 	
@@ -14,14 +14,13 @@ public class Restaurant {
 	private Status status;
 	private Location location;
 	private ArrayList<String> items = new ArrayList<String>();
-	private String logo; // image path
+	private String logo; 
+	private String menagerId;
 	
-	public Restaurant() {
-		super();
-	}
+	public Restaurant() {}
 
 	public Restaurant(String name, String id, boolean deleted, RestaurantType type, Status status, Location location,
-			ArrayList<String> items, String logo) {
+			ArrayList<String> items, String logo, String menagerId) {
 		super();
 		this.name = name;
 		this.id = id;
@@ -31,6 +30,7 @@ public class Restaurant {
 		this.location = location;
 		this.items = items;
 		this.logo = logo;
+		this.menagerId = menagerId;
 	}
 
 	public String getName() {
@@ -96,6 +96,16 @@ public class Restaurant {
 	public void setLogo(String logo) {
 		this.logo = logo;
 	}
+
+	public String getMenagerId() {
+		return menagerId;
+	}
+
+	public void setMenagerId(String menagerId) {
+		this.menagerId = menagerId;
+	}
+	
+	
 	
 	
 }

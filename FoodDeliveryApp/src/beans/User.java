@@ -1,5 +1,6 @@
 package beans;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 enum Gender { Male, Female }
@@ -14,12 +15,22 @@ public class User {
 	private Gender gender;
 	private Date dateOfBirth;
 	private Role role;
+	private String profilePicPath;
+
 	private boolean deleted;
+	private boolean blocked;
 	
+	private ArrayList<String> ordersForCourier = new ArrayList<String>(); 
+	
+	private CustomerType type;
+	private int points;
+	private ArrayList<String> orders = new ArrayList<String>(); // id porudzbina
+
 	public User() {}
-	
+
 	public User(String username, String password, String name, String surname, Gender gender, Date dateOfBirth,
-			Role role) {
+			Role role, String profilePicPath, boolean deleted, boolean blocked, ArrayList<String> ordersForCourier,
+			CustomerType type, int points, ArrayList<String> orders) {
 		super();
 		this.username = username;
 		this.password = password;
@@ -28,6 +39,13 @@ public class User {
 		this.gender = gender;
 		this.dateOfBirth = dateOfBirth;
 		this.role = role;
+		this.profilePicPath = profilePicPath;
+		this.deleted = deleted;
+		this.blocked = blocked;
+		this.ordersForCourier = ordersForCourier;
+		this.type = type;
+		this.points = points;
+		this.orders = orders;
 	}
 
 	public String getUsername() {
@@ -85,6 +103,65 @@ public class User {
 	public void setRole(Role role) {
 		this.role = role;
 	}
+
+	public String getProfilePicPath() {
+		return profilePicPath;
+	}
+
+	public void setProfilePicPath(String profilePicPath) {
+		this.profilePicPath = profilePicPath;
+	}
+
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
+	}
+
+	public boolean isBlocked() {
+		return blocked;
+	}
+
+	public void setBlocked(boolean blocked) {
+		this.blocked = blocked;
+	}
+
+	public ArrayList<String> getOrdersForCourier() {
+		return ordersForCourier;
+	}
+
+	public void setOrdersForCourier(ArrayList<String> ordersForCourier) {
+		this.ordersForCourier = ordersForCourier;
+	}
+
+	public CustomerType getType() {
+		return type;
+	}
+
+	public void setType(CustomerType type) {
+		this.type = type;
+	}
+
+	public int getPoints() {
+		return points;
+	}
+
+	public void setPoints(int points) {
+		this.points = points;
+	}
+
+	public ArrayList<String> getOrders() {
+		return orders;
+	}
+
+	public void setOrders(ArrayList<String> orders) {
+		this.orders = orders;
+	}
 	
 	
+
+	
+
 }
