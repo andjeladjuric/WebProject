@@ -1,0 +1,50 @@
+[
+    {
+        "id": "1asb3n5l6l7",
+        "deleted": false,
+        "items": {},
+        "restaurantId": "2",
+        "timeOfOrder": "2012-04-23T18:25:43",
+        "price": 300.0,
+        "customer": "Petra Jovic",
+        "status": 0,
+        "address": {
+            "street": "Katolicke porte",
+            "number": 6,
+            "city": "Novi Sad",
+            "postcode": 21000
+        }
+    },
+    {
+        "id": "5as215fr48",
+        "deleted": false,
+        "items": {},
+        "restaurantId": "2",
+        "timeOfOrder": "2012-04-23T18:25:43.511Z",
+        "price": 300.0,
+        "customer": "Jovana Jovic",
+        "status": 2,
+        "address": {
+            "street": "Katolicke porte",
+            "number": 6,
+            "city": "Novi Sad",
+            "postcode": 21000
+        }
+    },
+    {
+        "id": "1234567a89",
+        "deleted": false,
+        "items": {},
+        "restaurantId": "2",
+        "timeOfOrder": "2012-04-23T18:25:43.511Z",
+        "price": 300.0,
+        "customer": "Nikola Jovic",
+        "status": 3,
+        "address": {
+            "street": "Katolicke porte",
+            "number": 6,
+            "city": "Novi Sad",
+            "postcode": 21000
+        }
+    }
+]
