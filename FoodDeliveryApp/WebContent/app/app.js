@@ -1,5 +1,5 @@
 const RestaurantComponent = { template: '<view-restaurants></view-restaurants>'}
-const RegistrationComponent = { template: '<app-register></app-register>'}
+const RegistrationComponent = { template: '<app-signup></app-signup>'}
 const LoginComponent = { template: '<app-login></app-login>'}
 
 const router = new VueRouter({
@@ -7,7 +7,7 @@ const router = new VueRouter({
 	  routes: [
 		  { path: '/', component: RestaurantComponent},
 		  { path: '/restaurants', component: RestaurantComponent},
-		  { path: '/register', component: RegistrationComponent},
+		  { path: '/signup', component: RegistrationComponent},
 		  { path: '/login', component: LoginComponent}
 		  
 	  ]
