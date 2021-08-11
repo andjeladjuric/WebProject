@@ -2,10 +2,11 @@ Vue.component("all-orders", {
     data: function () {
         return {
             orders: [],
-            otherOrder: {},
+            allWaitingOrders: [],
             showSearch: false,
             showFilter: false,
             showSort: false,
+            isHidden: true,
         };
     },
     template: `
@@ -18,9 +19,10 @@ Vue.component("all-orders", {
                     <!-- Buttons -->
                     <div class="row mt-3">
                         <div class="container buttons mt-5 mb-1">
-                            <button type="button" class="btn d-sm-flex buttonGroup active me-2" id="btn1">My
-                                Orders</button>
-                            <button type="button" class="btn d-sm-flex buttonGroup" id="btn2">Awaiting</button>
+                            <button type="button" class="btn d-sm-flex buttonGroup me-2" id="btn1" @click="isHidden = true"
+                                v-bind:class="isHidden ? 'active' : 'notActive'">My Orders</button>
+                            <button type="button" class="btn d-sm-flex buttonGroup" @click="isHidden = !isHidden" id="btn2"
+                                v-bind:class="!isHidden ? 'active' : 'notActive'">Awaiting</button>
                         </div>
                     </div>
 
@@ -142,8 +144,47 @@ Vue.component("all-orders", {
                     </transition>
                     <!-- End of sort for orders -->
 
-                    <!-- Cards with orders -->
-                    <div class="row g-4 mb-4 cards" id="vue-orders" v-for="o in orders">
+                    <!-- Cards with my orders -->
+                    <div class="row g-4 mb-4 cards" id="vue-orders" v-for="o in orders" v-if="isHidden">
+                        <a href="order.html">
+                            <div class="card shadow bg-light text-dark">
+                                <div class="card-body text-center">
+                                    <div class="row g-2">
+                                        <h1 class="mb-4 orderID">Order #{{o.id}}</h1>
+                                    </div>
+                                    <div class="row">
+                                        <table class="table-responsive singleOrderView">
+                                            <thead>
+                                                <td>Ordered from:</td>
+                                                <td>Total sum:</td>
+                                                <td>Date and time:</td>
+                                                <td>Stauts:</td>
+                                                <td>Delivery Address:</td>
+                                            </thead>
+    
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <ol type="1">
+                                                            <li>{{o.restaurantId}}</li>
+                                                        </ol>
+                                                    </td>
+                                                    <td>{{o.price}}</td>
+                                                    <td>{{o.timeOfOrder | dateFormat('DD.MM.YYYY HH:mm')}}</td>
+                                                    <td>{{o.status}}</td>
+                                                    <td>{{o.address.street}} {{o.address.number}}, {{o.address.city}} {{o.address.postcode}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <!-- End of cards with orders -->
+
+                    <!-- Cards with waiting orders -->
+                    <div class="row g-4 mb-4 cards" id="waiting-orders" v-for="o in allWaitingOrders" v-if="!isHidden">
                         <a href="order.html">
                             <div class="card shadow bg-light text-dark">
                                 <div class="card-body text-center">
@@ -190,6 +231,10 @@ Vue.component("all-orders", {
         axios
             .get("rest/orders/getForCourier")
             .then((response) => (this.orders = response.data));
+
+        axios
+            .get("rest/orders/getWaitingOrders")
+            .then((response) => (this.allWaitingOrders = response.data));
     },
     filters: {
         dateFormat: function (value, format) {

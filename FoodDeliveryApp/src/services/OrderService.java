@@ -69,14 +69,36 @@ public class OrderService {
                 .entity("You do not have permission to access!").build();
 	}
 	
-	private boolean isUserCourier() {
+	@GET
+	@Path("/getWaitingOrders")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<Order> getWaitingOrders(){
+		OrderDAO dao = (OrderDAO) ctx.getAttribute("orders");
 		User user = (User) request.getSession().getAttribute("loginUser");
 		
-		if(user!= null) {
-			if(user.getRole().equals("COURIER")) {	
-				return true;
-			}
-		}	
-		return false;
+		return dao.getWaitingOrders(user);
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

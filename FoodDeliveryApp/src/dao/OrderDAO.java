@@ -8,6 +8,7 @@ import java.util.List;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import beans.Order;
+import beans.OrderStatus;
 import beans.User;
 
 public class OrderDAO {
@@ -57,4 +58,30 @@ public class OrderDAO {
 		
 		return null;
 	}
+	
+	public List<Order> getWaitingOrders(User user){
+		List<Order> waitingOrders = new ArrayList<Order>();
+		
+		for(Order o : orders) {
+			if(o.getStatus().equals(OrderStatus.WAITING) && !getOrdersForCourier(user).contains(o)) {
+				waitingOrders.add(o);
+			}
+		}
+		
+		return waitingOrders;
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+

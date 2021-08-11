@@ -23,7 +23,7 @@
         "timeOfOrder": "2012-04-23T18:25:43.511Z",
         "price": 300.0,
         "customer": "Jovana Jovic",
-        "status": 2,
+        "status": 3,
         "address": {
             "street": "Katolicke porte",
             "number": 6,
@@ -39,7 +39,7 @@
         "timeOfOrder": "2012-04-23T18:25:43.511Z",
         "price": 300.0,
         "customer": "Nikola Jovic",
-        "status": 3,
+        "status": 2,
         "address": {
             "street": "Katolicke porte",
             "number": 6,

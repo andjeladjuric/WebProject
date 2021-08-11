@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
-enum OrderStatus { PROCESSING, PREPARATION, WAITING, TRANSPORTING, DELIVERED, CANCELED }
-
 public class Order {
 	
 	private String id;
