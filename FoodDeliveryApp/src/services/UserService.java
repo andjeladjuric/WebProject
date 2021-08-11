@@ -15,6 +15,7 @@ import beans.Role;
 import beans.User;
 import dao.UsersDAO;
 import dto.LoginDTO;
+import dto.SignupDTO;
 
 
 @Path("/users")
@@ -60,7 +61,27 @@ public class UserService {
 		} else {
 			return "";
 		}		
-}
+	}
+	
+	@POST
+	@Path("/signup")
+	@Produces(MediaType.TEXT_HTML)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public String signup(SignupDTO user) {
+		UsersDAO allUsersDAO = getUsers();
+
+		if (allUsersDAO.alreadyExists(user.username)) {
+			return "Username taken";
+		}else {
+			allUsersDAO.addNewUser(user);
+		}
+		
+		User newUser = allUsersDAO.getByUsername(user.username);
+		request.getSession().setAttribute("loginUser", newUser); // we give him a session
+
+		return "/FoodDeliveryApp/html/administrator.html"; // stranica za kupca
+	}
+	
 	
 	private UsersDAO getUsers() {
 		

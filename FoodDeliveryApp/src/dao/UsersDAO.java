@@ -8,8 +8,9 @@ import java.util.List;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-
+import beans.Role;
 import beans.User;
+import dto.SignupDTO;
 
 public class UsersDAO {
 	
@@ -46,5 +47,16 @@ public class UsersDAO {
 		}
 
 		return null;
+	}
+	
+	public void addNewUser(SignupDTO newUser) {
+		User createdUser = new User(newUser.username, newUser.password, newUser.name, newUser.surname,
+				newUser.gender, newUser.dateOfBirth, Role.CUSTOMER);
+		users.put(createdUser.getUsername(), createdUser);
+	}
+
+	
+	public boolean alreadyExists(String username) {
+		return users.containsKey(username);
 	}
 }

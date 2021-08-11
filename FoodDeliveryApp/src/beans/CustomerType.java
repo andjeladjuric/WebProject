@@ -1,6 +1,6 @@
 package beans;
 
-enum Type { Gold, Silver, Bronze }
+enum Type { GOLD, SILVER, BRONZE, NONE }
 
 public class CustomerType {
 

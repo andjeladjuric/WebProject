@@ -45,6 +45,23 @@ public class User {
 		this.orders = orders;
 	}
 
+	
+	public User(String username, String password, String name, String surname, Gender gender, Date dateOfBirth, Role role) {
+		super();
+		this.username = username;
+		this.password = password;
+		this.name = name;
+		this.surname = surname;
+		this.gender = gender;
+		this.dateOfBirth = dateOfBirth;
+		this.role = role;
+		this.blocked = false;
+		this.deleted = false;
+		this.profilePicPath = "";
+		this.points = 0;
+		this.type = new CustomerType(Type.NONE, 0, 0);
+	}
+
 	public String getUsername() {
 		return username;
 	}
