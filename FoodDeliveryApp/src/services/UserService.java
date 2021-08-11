@@ -1,5 +1,7 @@
 package services;
 
+import java.util.List;
+
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
@@ -50,7 +52,7 @@ public class UserService {
 		request.getSession().setAttribute("loginUser", userForLogin); // we give him a session
 
 		if (userForLogin.getRole() == Role.ADMINISTRATOR) {
-			return "/FoodDeliveryApp/html/administrator.html";
+			return "/FoodDeliveryApp/administratorPage.html";
 
 		} else if (userForLogin.getRole() == Role.MANAGER) {
 			return "";
@@ -80,6 +82,36 @@ public class UserService {
 		request.getSession().setAttribute("loginUser", newUser); // we give him a session
 
 		return "/FoodDeliveryApp/html/administrator.html"; // stranica za kupca
+	}
+	
+	@GET
+	@Path("/getCustomers")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public List<User> getCustomers() {
+		UsersDAO allUsersDAO = getUsers();
+
+		return allUsersDAO.getCustomers(); 
+	}
+	
+	@GET
+	@Path("/getManagers")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public List<User> getManagers() {
+		UsersDAO allUsersDAO = getUsers();
+
+		return allUsersDAO.getManagers(); 
+	}
+	
+	@GET
+	@Path("/getCouriers")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public List<User> getCouriers() {
+		UsersDAO allUsersDAO = getUsers();
+
+		return allUsersDAO.getCouriers(); 
 	}
 	
 	

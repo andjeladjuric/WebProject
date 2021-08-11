@@ -76,4 +76,44 @@ public class UsersDAO {
 	public boolean alreadyExists(String username) {
 		return users.containsKey(username);
 	}
+	
+	public List<User> getCustomers() {
+		List<User> customers = new ArrayList<User>();
+		
+		for (User u : users.values()) {
+			if(u.getRole() == Role.CUSTOMER)
+				customers.add(u);
+		}
+		return customers;
+	}
+	
+	public List<User> getManagers() {
+		List<User> managers = new ArrayList<User>();
+		
+		for (User u : users.values()) {
+			if(u.getRole() == Role.MANAGER)
+				managers.add(u);
+		}
+		return managers;
+	}
+	
+	public List<User> getCouriers() {
+		List<User> couriers = new ArrayList<User>();
+		
+		for (User u : users.values()) {
+			if(u.getRole() == Role.COURIER)
+				couriers.add(u);
+		}
+		return couriers;
+	}
+
+	public List<User> getUsers() {
+		return (List<User>) users.values();
+	}
+
+	public void setUsers(LinkedHashMap<String, User> users) {
+		this.users = users;
+	}
+	
+	
 }
