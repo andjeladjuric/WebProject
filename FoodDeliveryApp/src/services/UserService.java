@@ -57,6 +57,9 @@ public class UserService {
 
 		} else if (userForLogin.getRole() == Role.CUSTOMER) {
 			return "";
+			
+		}else if (userForLogin.getRole() == Role.COURIER) {
+			return "/FoodDeliveryApp/courierHomePage.html";
 
 		} else {
 			return "";
