@@ -15,6 +15,7 @@ import beans.Role;
 import beans.User;
 import dao.UsersDAO;
 import dto.LoginDTO;
+import dto.PasswordDTO;
 import dto.SignupDTO;
 
 
@@ -100,6 +101,25 @@ public class UserService {
 	public void updateUser(User updated) {
 		UsersDAO dao = getUsers();
 		dao.editUser(updated);
+	}
+	
+	@POST
+	@Path("/changePassword")
+	@Produces(MediaType.TEXT_HTML)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public String changePassword(PasswordDTO updated) {
+		UsersDAO dao = getUsers();
+		
+		User user = getCurrentUser();
+		
+		if(!user.getPassword().equals(updated.oldPassword))
+			return "Old password is incorrect";
+		
+		if(!updated.newPassword.equals(updated.repeatPassword))
+			return "Passwords don't match";
+		
+		dao.changePassword(user, updated.newPassword);
+		return "Success";
 	}
 	
 	private UsersDAO getUsers() {

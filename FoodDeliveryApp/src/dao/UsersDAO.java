@@ -82,12 +82,30 @@ public class UsersDAO {
 			if(u.getUsername().equals(updated.getUsername())) {
 				u.setDateOfBirth(updated.getDateOfBirth());
 				u.setGender(updated.getGender());
-				u.setPassword(updated.getPassword());
+				u.setName(updated.getName());
+				u.setSurname(updated.getSurname());
 			}
 		}
 		
 		serialize();
 	}
 	
+	public void changePassword(User updated, String newPassword) {
+		for(User u : users.values()) {
+			if(u.getUsername().equals(updated.getUsername())) {
+				u.setPassword(newPassword);
+			}
+		}
+		
+		serialize();
+	}
 	
 }
+
+
+
+
+
+
+
+
