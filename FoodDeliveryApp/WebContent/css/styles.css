@@ -97,3 +97,14 @@ body {
 .sortInput .btn {
     background: #ecbeb1;
 }
+
+.show-enter-active,
+.show-leave-enter {
+    transform: translateX(0);
+    transition: all 2s linear;
+}
+
+.show-enter,
+.show-leave-to {
+    transform: translateX(100%);
+}
