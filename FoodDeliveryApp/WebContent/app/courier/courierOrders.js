@@ -10,12 +10,8 @@ Vue.component("all-orders", {
         };
     },
     template: `
-    <div class="bg-light" id="mainContent">
-        <div class="container bg-light">
-            <div class="row">
-                <div class="col-md-1"></div>
-                <div class="col-md-10">
-
+    <div class="bg-light align-items-center" id="mainContent">
+        <div class="container bg-light align-items-center" style="width: 83%;">
                     <!-- Buttons -->
                     <div class="row mt-3">
                         <div class="container buttons mt-5 mb-1">
@@ -222,8 +218,6 @@ Vue.component("all-orders", {
                     </div>
                     <!-- End of cards with orders -->
                 </div>
-                <div class="col-md-1"></div>
-            </div>
         </div>
     </div>
     `,

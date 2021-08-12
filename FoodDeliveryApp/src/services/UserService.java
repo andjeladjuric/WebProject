@@ -85,6 +85,22 @@ public class UserService {
 		return "/FoodDeliveryApp/html/administrator.html"; // stranica za kupca
 	}
 	
+	@GET
+	@Path("/getCurrentUser")
+	@Produces(MediaType.APPLICATION_JSON)
+	public User getCurrentUser() {
+		User user = (User) request.getSession().getAttribute("loginUser");
+		return user;
+	}
+	
+	@POST
+	@Path("/updateUser")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void updateUser(User updated) {
+		UsersDAO dao = getUsers();
+		dao.editUser(updated);
+	}
 	
 	private UsersDAO getUsers() {
 		

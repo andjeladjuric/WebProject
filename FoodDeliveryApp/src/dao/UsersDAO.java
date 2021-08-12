@@ -76,4 +76,18 @@ public class UsersDAO {
 	public boolean alreadyExists(String username) {
 		return users.containsKey(username);
 	}
+	
+	public void editUser(User updated) {
+		for(User u : users.values()) {
+			if(u.getUsername().equals(updated.getUsername())) {
+				u.setDateOfBirth(updated.getDateOfBirth());
+				u.setGender(updated.getGender());
+				u.setPassword(updated.getPassword());
+			}
+		}
+		
+		serialize();
+	}
+	
+	
 }
