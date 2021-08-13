@@ -1,5 +1,7 @@
 package dao;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -32,6 +34,23 @@ public class OrderDAO {
 	    } catch (Exception ex) {
 	        ex.printStackTrace();
 	    }
+	}
+	
+	public void serialize() {
+		List<Order> allOrders = new ArrayList<Order>();
+		String path = "E:\\Projects\\WebProject\\FoodDeliveryApp\\src\\files\\orders.json";
+		
+		for (Order o : orders) {
+			allOrders.add(o);
+		}
+
+		ObjectMapper objectMapper = new ObjectMapper();
+		try {
+			objectMapper.writeValue(new FileOutputStream(path), allOrders);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public List<Order> findAll(){
@@ -69,6 +88,15 @@ public class OrderDAO {
 		}
 		
 		return waitingOrders;
+	}
+	
+	public void changeStatus(OrderStatus updatedStatus, String id) {
+		for(Order o : orders) {
+			if(o.getId().equals(id))
+				o.setStatus(updatedStatus);
+		}
+		
+		serialize();
 	}
 }
 

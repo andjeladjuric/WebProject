@@ -143,11 +143,17 @@ Vue.component("all-orders", {
 
                     <!-- Cards with my orders -->
                     <div class="row g-4 mb-4 cards" id="vue-orders" v-for="o in orders" v-if="isHidden">
-                        <a :href="'#/details?id=' + o.id" class = "link">
                             <div class="card shadow bg-light text-dark">
                                 <div class="card-body text-center">
-                                    <div class="row g-2">
-                                        <h1 class="mb-4 orderID">Order #{{o.id}}</h1>
+                                    <div class="row g-2 align-items-center d-inline-flex">
+                                        <div class="container buttons">
+                                            <h1 class="mb-4 mt-1 orderID">Order #{{o.id}}</h1>
+                                            <h3 style="z-index: 2;">
+                                                <button type="button" class="btn ms-4 mb-4" style="background: #ecbeb1;"
+                                                    v-if="o.status == 'TRANSPORTING'"
+                                                    @click="changeStatus(o.id); reload()">Mark as delivered</button>
+                                            </h3>
+                                        </div>
                                     </div>
                                     <div class="row">
                                         <table class="table-responsive singleOrderView">
@@ -175,14 +181,13 @@ Vue.component("all-orders", {
                                         </table>
                                     </div>
                                 </div>
+                                <a :href="'#/details?id=' + o.id" class="stretched-link"></a>
                             </div>
-                        </a>
                     </div>
                     <!-- End of cards with orders -->
 
                     <!-- Cards with waiting orders -->
                     <div class="row g-4 mb-4 cards" id="waiting-orders" v-for="o in allWaitingOrders" v-if="!isHidden">
-                        <a href="order.html">
                             <div class="card shadow bg-light text-dark">
                                 <div class="card-body text-center">
                                     <div class="row g-2">
@@ -214,8 +219,8 @@ Vue.component("all-orders", {
                                         </table>
                                     </div>
                                 </div>
+                                <a :href="'#/details?id=' + o.id" class="stretched-link"></a>
                             </div>
-                        </a>
                     </div>
                     <!-- End of cards with orders -->
                 </div>
@@ -230,6 +235,18 @@ Vue.component("all-orders", {
         axios
             .get("rest/orders/getWaitingOrders")
             .then((response) => (this.allWaitingOrders = response.data));
+    },
+    methods: {
+        changeStatus: function (id) {
+            axios
+                .get("rest/orders/orderDelivered", {
+                    params: { id: id },
+                })
+                .then((response) => (this.order = response.data));
+        },
+        reload: function () {
+            window.location.reload();
+        },
     },
     filters: {
         dateFormat: function (value, format) {

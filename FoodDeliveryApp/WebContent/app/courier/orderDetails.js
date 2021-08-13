@@ -80,7 +80,7 @@ Vue.component("order-details", {
                                         {{order.status}}
                                     </td>
                                     <td>
-                                        <button type="button" class="btn d-flex tableBtn">
+                                        <button type="button" class="btn d-flex tableBtn" v-if="isOrderInTransport" @click="changeStatus(); reload()">
                                             Change status
                                         </button>
                                     </td>
@@ -107,6 +107,25 @@ Vue.component("order-details", {
                 params: { id: this.$route.query.id },
             })
             .then((response) => (this.order = response.data));
+    },
+    computed: {
+        isOrderInTransport() {
+            if (this.order.status == "TRANSPORTING") return true;
+
+            return false;
+        },
+    },
+    methods: {
+        changeStatus: function () {
+            axios
+                .get("rest/orders/orderDelivered", {
+                    params: { id: this.$route.query.id },
+                })
+                .then((response) => (this.order = response.data));
+        },
+        reload: function () {
+            window.location.reload();
+        },
     },
     filters: {
         dateFormat: function (value, format) {
