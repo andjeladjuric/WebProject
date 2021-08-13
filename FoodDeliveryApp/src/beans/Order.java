@@ -3,12 +3,15 @@ package beans;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
+
+import dto.OrderItemDTO;
 
 public class Order {
 	
 	private String id;
 	private boolean deleted;
-	private HashMap<String, Integer> items = new HashMap<String, Integer>(); // Cuvati cijeli item ili kljuc napraviti?
+	private List<OrderItemDTO> items = new ArrayList<OrderItemDTO>(); // Cuvati cijeli item ili kljuc napraviti?
 	private String restaurantId;
 	private Date timeOfOrder;
 	private double price;
@@ -18,7 +21,7 @@ public class Order {
 	
 	public Order() {}
 
-	public Order(String id, boolean deleted, HashMap<String, Integer> items, String restaurantId, Date timeOfOrder,
+	public Order(String id, boolean deleted, List<OrderItemDTO> items, String restaurantId, Date timeOfOrder,
 			double price, String customer, OrderStatus status, Address address) {
 		super();
 		this.id = id;
@@ -48,11 +51,11 @@ public class Order {
 		this.deleted = deleted;
 	}
 
-	public HashMap<String, Integer> getItems() {
+	public List<OrderItemDTO> getItems() {
 		return items;
 	}
 
-	public void setItems(HashMap<String, Integer> items) {
+	public void setItems(List<OrderItemDTO> items) {
 		this.items = items;
 	}
 

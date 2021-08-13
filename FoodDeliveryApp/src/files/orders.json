@@ -2,7 +2,7 @@
     {
         "id": "1asb3n5l6l7",
         "deleted": false,
-        "items": {},
+        "items": [],
         "restaurantId": "2",
         "timeOfOrder": "2012-04-23T18:25:43",
         "price": 300.0,
@@ -18,7 +18,36 @@
     {
         "id": "5as215fr48",
         "deleted": false,
-        "items": {},
+        "items": [
+            {
+                "item": {
+                    "id": "1",
+                    "deleted": false,
+                    "name": "Pizza",
+                    "price": 300.0,
+                    "type": 1,
+                    "amount": 500,
+                    "description": "Pizza",
+                    "imagePath": "",
+                    "restaurantId": "2"
+                },
+                "quantity": 2
+            },
+            {
+                "item": {
+                    "id": "1",
+                    "deleted": false,
+                    "name": "Pizza",
+                    "price": 300.0,
+                    "type": 1,
+                    "amount": 500,
+                    "description": "Pizza",
+                    "imagePath": "",
+                    "restaurantId": "2"
+                },
+                "quantity": 2
+            }
+        ],
         "restaurantId": "2",
         "timeOfOrder": "2012-04-23T18:25:43.511Z",
         "price": 300.0,
@@ -34,7 +63,7 @@
     {
         "id": "1234567a89",
         "deleted": false,
-        "items": {},
+        "items": [],
         "restaurantId": "2",
         "timeOfOrder": "2012-04-23T18:25:43.511Z",
         "price": 300.0,

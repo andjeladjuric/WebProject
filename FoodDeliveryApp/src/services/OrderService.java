@@ -79,7 +79,14 @@ public class OrderService {
 		return dao.getWaitingOrders(user);
 	}
 	
-	
+	@GET
+	@Path("/getOrderById")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Order getOrderById(@QueryParam("id") String id){
+		OrderDAO dao = (OrderDAO) ctx.getAttribute("orders");
+		
+		return dao.getOrderById(id);
+	}
 	
 	
 	

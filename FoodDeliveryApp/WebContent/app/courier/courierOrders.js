@@ -7,6 +7,7 @@ Vue.component("all-orders", {
             showFilter: false,
             showSort: false,
             isHidden: true,
+            singleOrder: {},
         };
     },
     template: `
@@ -142,7 +143,7 @@ Vue.component("all-orders", {
 
                     <!-- Cards with my orders -->
                     <div class="row g-4 mb-4 cards" id="vue-orders" v-for="o in orders" v-if="isHidden">
-                        <a href="order.html">
+                        <a :href="'#/details?id=' + o.id" class = "link">
                             <div class="card shadow bg-light text-dark">
                                 <div class="card-body text-center">
                                     <div class="row g-2">

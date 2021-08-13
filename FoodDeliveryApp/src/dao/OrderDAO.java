@@ -42,7 +42,7 @@ public class OrderDAO {
 		List<Order> courierOrders = new ArrayList<Order>();
 		
 		for(String id : user.getOrdersForCourier()) {
-			if(getOrderById(id) != null) {
+			if(getOrderById(id) != null && (!getOrderById(id).getStatus().equals(OrderStatus.DELIVERED)))  {
 				courierOrders.add(getOrderById(id));
 			}
 		}
@@ -50,7 +50,7 @@ public class OrderDAO {
 		return courierOrders;
 	}
 	
-	private Order getOrderById(String id) {
+	public Order getOrderById(String id) {
 		for (Order o : orders) {
 			if(o.getId().equals(id))
 				return o;
