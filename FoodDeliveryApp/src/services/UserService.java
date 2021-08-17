@@ -124,6 +124,28 @@ public class UserService {
 		return allUsersDAO.getCouriers(); 
 	}
 	
+	@POST
+	@Path("/search")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public List<User> search(String criteria) {
+		
+		UsersDAO allUsersDAO = getUsers();
+
+		return allUsersDAO.getUsers(); 
+	}
+	
+	@POST
+	@Path("/filter")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.TEXT_PLAIN)
+	public List<User> filter(String option) {
+		
+		UsersDAO allUsersDAO = getUsers();
+
+		return allUsersDAO.filter(option); 
+	}
+	
 	
 	private UsersDAO getUsers() {
 		

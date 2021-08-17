@@ -9,7 +9,9 @@ Vue.component("administrator-home",{
     data: function(){
         return{
 			users:[],
-			selectedUser : {}
+			selectedUser : {},
+			searchInput : '',
+			selectedFilter : 'All',
         }
     }
     ,
@@ -24,8 +26,8 @@ Vue.component("administrator-home",{
                     <div class="row mt-3 mx-2 ">
                         <div class="col-6 mx-auto">
                             <div class="input-group mb-3">
-                                <input type="text" class="form-control">
-                                <button class="btn buttonGroup active" type="button">Search</button>
+                                <input type="text" class="form-control" v-bind="searchInput">
+                                <button class="btn buttonGroup active" type="button"  v-on:click="search">Search</button>
                             </div>
                         </div>
                         <div class="col-3 mx-auto">
@@ -36,21 +38,21 @@ Vue.component("administrator-home",{
                                     <option value="1">First Name</option>
                                     <option value="2">Last Name</option>
                                     <option value="3">Username</option>
-                                    <option value="3">Points</option>
+                                    <option value="4">Points</option>
                                 </select>
                             </div>
                         </div>
                         <div class="col-3 mx-auto">
                             <div class="input-group mb-3">
                                 <label class="input-group-text">User Type</label>
-                                <select class="form-select">
-                                    <option selected></option>
-                                    <option value="1">Managers</option>
-                                    <option value="1">Couriers</option>
-                                    <option value="1">Customers</option>
-                                    <option value="1">Golden</option>
-                                    <option value="2">Silver</option>
-                                    <option value="3">Bronze</option>
+                                <select class="form-select" v-model="selectedFilter" v-on:change="filter()">
+                                    <option>All</option>
+                                    <option>Managers</option>
+                                    <option>Couriers</option>
+                                    <option>Customers</option>
+                                    <option>Golden</option>
+                                    <option>Silver</option>
+                                    <option>Bronze</option>
                                 </select>
                             </div>
                         </div>
@@ -151,6 +153,20 @@ Vue.component("administrator-home",{
 		selectUser : function(user) {
     			this.selectedUser = user;
     	},
+		search : function() {
+    		axios
+			.post('rest/users/search')
+			.then(response => (this.users = fixDate(response.data)));
+    	},
+		filter : function() {
+    		axios
+			.post('rest/users/filter', this.selectedFilter,
+        	{ headers: {
+        		'Content-type': 'text/plain',
+        		}
+        	})
+			.then(response => (this.users = fixDate(response.data)));
+    	}
     },
     filters: {
     	dateFormat: function (value, format) {

@@ -11,6 +11,7 @@ import java.util.List;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import beans.Role;
+import beans.Type;
 import beans.User;
 import dto.SignupDTO;
 
@@ -118,6 +119,66 @@ public class UsersDAO {
 
 	public void setUsers(LinkedHashMap<String, User> users) {
 		this.users = users;
+	}
+	
+	public List<User> getGolden() {
+		List<User> customers = new ArrayList<User>();
+		
+		for (User u : users.values()) {
+			if(u.getRole() == Role.CUSTOMER && u.getType().getName() == Type.GOLD)
+				customers.add(u);
+		}
+		return customers;
+	}
+	
+	public List<User> getSilver() {
+		List<User> customers = new ArrayList<User>();
+		
+		for (User u : users.values()) {
+			if(u.getRole() == Role.CUSTOMER && u.getType().getName() == Type.SILVER)
+				customers.add(u);
+		}
+		return customers;
+	}
+	
+	public List<User> getBronze() {
+		List<User> customers = new ArrayList<User>();
+		
+		for (User u : users.values()) {
+			if(u.getRole() == Role.CUSTOMER && u.getType().getName() == Type.BRONZE)
+				customers.add(u);
+		}
+		return customers;
+	}
+	
+
+	
+	public List<User> filter(String option){
+		List<User> retVal = new ArrayList<User>();
+		switch(option) {
+		  case "Managers":
+			  retVal = getManagers();
+		    break;
+		  case "Couriers":
+		    retVal = getCouriers();
+		    break;
+		  case "Customers":
+			retVal = getCustomers();
+			break;
+		  case "Golden":
+			retVal = getGolden();
+			 break;
+		  case "Silver":
+			retVal = getSilver();
+			  break;
+		  case "Bronze":
+			retVal = getBronze();
+			  break;
+		  default:
+			retVal = getUsers();
+		}
+		
+		return retVal;
 	}
 	
 	
