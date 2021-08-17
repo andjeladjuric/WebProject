@@ -202,5 +202,14 @@ public class UsersDAO {
 		return retVal;
 	}
 	
-	
+	public List<User> search(String input){
+		List<User> matches = new ArrayList<User>();
+
+	    for(User user: users.values()) {
+	        if (user.getName().toLowerCase().contains(input.toLowerCase()) || user.getSurname().toLowerCase().contains(input.toLowerCase()) || user.getUsername().toLowerCase().contains(input.toLowerCase()) ) {
+	            matches.add(user);
+	        }
+	    }
+	    return matches;
+	}
 }

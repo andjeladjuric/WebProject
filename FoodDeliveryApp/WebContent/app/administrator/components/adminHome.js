@@ -27,7 +27,7 @@ Vue.component("administrator-home",{
                     <div class="row mt-3 mx-2 ">
                         <div class="col-6 mx-auto">
                             <div class="input-group mb-3">
-                                <input type="text" class="form-control" v-bind="searchInput">
+                                <input type="text" class="form-control" v-model="searchInput" v-on:change="search">
                                 <button class="btn buttonGroup active" type="button"  v-on:click="search">Search</button>
                             </div>
                         </div>
@@ -156,7 +156,11 @@ Vue.component("administrator-home",{
     	},
 		search : function() {
     		axios
-			.post('rest/users/search')
+			.post('rest/users/search', this.searchInput,
+        	{ headers: {
+        		'Content-type': 'text/plain',
+        		}
+        	})
 			.then(response => (this.users = fixDate(response.data)));
     	},
 		filter : function() {

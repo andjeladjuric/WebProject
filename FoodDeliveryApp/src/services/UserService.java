@@ -94,45 +94,15 @@ public class UserService {
 		return allUsersDAO.getUsers(); 
 	}
 	
-	@GET
-	@Path("/getCustomers")
-	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_JSON)
-	public List<User> getCustomers() {
-		UsersDAO allUsersDAO = getUsers();
-
-		return allUsersDAO.getCustomers(); 
-	}
-	
-	@GET
-	@Path("/getManagers")
-	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_JSON)
-	public List<User> getManagers() {
-		UsersDAO allUsersDAO = getUsers();
-
-		return allUsersDAO.getManagers(); 
-	}
-	
-	@GET
-	@Path("/getCouriers")
-	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_JSON)
-	public List<User> getCouriers() {
-		UsersDAO allUsersDAO = getUsers();
-
-		return allUsersDAO.getCouriers(); 
-	}
-	
 	@POST
 	@Path("/search")
 	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_JSON)
-	public List<User> search(String criteria) {
+	@Consumes(MediaType.TEXT_PLAIN)
+	public List<User> search(String input) {
 		
 		UsersDAO allUsersDAO = getUsers();
 
-		return allUsersDAO.getUsers(); 
+		return allUsersDAO.search(input); 
 	}
 	
 	@POST
