@@ -3,8 +3,27 @@
         "id": "1asb3n5l6l7",
         "deleted": false,
         "items": [],
-        "restaurantId": "2",
-        "timeOfOrder": 1335205543000,
+        "restaurant": {
+            "name": "La Forza22",
+            "id": "1",
+            "deleted": false,
+            "type": 0,
+            "status": 0,
+            "location": {
+                "address": {
+                    "street": "Katolicke porte",
+                    "number": 6,
+                    "city": "Novi Sad",
+                    "postcode": 21000
+                },
+                "latitude": 124.555,
+                "longitude": 245.64
+            },
+            "items": [],
+            "logo": "",
+            "menagerId": ""
+        },
+        "timeOfOrder": 1335644700000,
         "price": 300.0,
         "customer": "Petra Jovic",
         "status": "PROCESSING",
@@ -48,9 +67,28 @@
                 "quantity": 2
             }
         ],
-        "restaurantId": "2",
+        "restaurant": {
+            "name": "La Forza",
+            "id": "1",
+            "deleted": false,
+            "type": 0,
+            "status": 0,
+            "location": {
+                "address": {
+                    "street": "Katolicke porte",
+                    "number": 6,
+                    "city": "Novi Sad",
+                    "postcode": 21000
+                },
+                "latitude": 124.555,
+                "longitude": 245.64
+            },
+            "items": [],
+            "logo": "",
+            "menagerId": ""
+        },
         "timeOfOrder": 1335205543511,
-        "price": 300.0,
+        "price": 600.0,
         "customer": "Jovana Jovic",
         "status": "TRANSPORTING",
         "address": {
@@ -64,9 +102,63 @@
         "id": "1234567a89",
         "deleted": false,
         "items": [],
-        "restaurantId": "2",
+        "restaurant": {
+            "name": "La Forza",
+            "id": "1",
+            "deleted": false,
+            "type": 0,
+            "status": 0,
+            "location": {
+                "address": {
+                    "street": "Katolicke porte",
+                    "number": 6,
+                    "city": "Novi Sad",
+                    "postcode": 21000
+                },
+                "latitude": 124.555,
+                "longitude": 245.64
+            },
+            "items": [],
+            "logo": "",
+            "menagerId": ""
+        },
         "timeOfOrder": 1335205543511,
         "price": 300.0,
+        "customer": "Nikola Jovic",
+        "status": "WAITING",
+        "address": {
+            "street": "Katolicke porte",
+            "number": 6,
+            "city": "Novi Sad",
+            "postcode": 21000
+        }
+    },
+    {
+        "id": "1234567a89",
+        "deleted": false,
+        "items": [],
+        "restaurant": {
+            "name": "La Forza",
+            "id": "1",
+            "deleted": false,
+            "type": 0,
+            "status": 0,
+            "location": {
+                "address": {
+                    "street": "Katolicke porte",
+                    "number": 6,
+                    "city": "Novi Sad",
+                    "postcode": 21000
+                },
+                "latitude": 124.555,
+                "longitude": 245.64
+            },
+            "items": [],
+            "logo": "",
+            "menagerId": ""
+        },
+        "timeOfOrder": 1335205543511,
+        "price": 700.0,
         "customer": "Nikola Jovic",
         "status": "WAITING",
         "address": {

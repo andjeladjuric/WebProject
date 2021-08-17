@@ -14,7 +14,10 @@
             },
             "latitude": 124.555,
             "longitude": 245.64
-        }
+        },
+        "items": [],
+        "logo": "",
+        "menagerId": ""
     },
     {
         "name": "Menza",
@@ -31,7 +34,10 @@
             },
             "latitude": 124.555,
             "longitude": 245.64
-        }
+        },
+        "items": [],
+        "logo": "",
+        "menagerId": ""
     },
     {
         "name": "Mala menza",
@@ -48,7 +54,10 @@
             },
             "latitude": 124.555,
             "longitude": 245.64
-        }
+        },
+        "items": [],
+        "logo": "",
+        "menagerId": ""
     },
     {
         "name": "La Forza",
@@ -65,7 +74,10 @@
             },
             "latitude": 124.555,
             "longitude": 245.64
-        }
+        },
+        "items": [],
+        "logo": "",
+        "menagerId": ""
     },
     {
         "name": "Menza",
@@ -82,7 +94,10 @@
             },
             "latitude": 124.555,
             "longitude": 245.64
-        }
+        },
+        "items": [],
+        "logo": "",
+        "menagerId": ""
     },
     {
         "name": "Mala menza",
@@ -99,6 +114,9 @@
             },
             "latitude": 124.555,
             "longitude": 245.64
-        }
+        },
+        "items": [],
+        "logo": "",
+        "menagerId": ""
     }
 ]

@@ -85,26 +85,15 @@ body {
     align-items: flex-end;
 }
 
-.form-control,
-.form-select {
-    height: 35px;
-    font-size: 14px;
-    border-radius: 15px;
-}
-
 .searchInput .btn,
 .filterInput .btn,
 .sortInput .btn {
     background: #ecbeb1;
 }
 
-.show-enter-active,
-.show-leave-enter {
-    transform: translateX(0);
-    transition: all 2s linear;
-}
-
-.show-enter,
-.show-leave-to {
-    transform: translateX(100%);
+.form-control,
+.form-select {
+    height: 35px;
+    font-size: 14px;
+    border-radius: 15px;
 }

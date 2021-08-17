@@ -94,10 +94,3 @@
         margin-left: -25rem;
     }
 }
-
-.form-control,
-.form-select {
-    height: 30px;
-    font-size: 14px;
-    border-radius: 15px;
-}

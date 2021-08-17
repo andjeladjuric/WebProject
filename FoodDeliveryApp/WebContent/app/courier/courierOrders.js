@@ -8,6 +8,19 @@ Vue.component("all-orders", {
             showSort: false,
             isHidden: true,
             singleOrder: {},
+            searchInput: {
+                restaurant: "",
+                minPrice: "",
+                maxPrice: "",
+                minDate: "",
+                maxDate: "",
+            },
+            selected: "",
+            sort: "",
+            filterInput: {
+                restaurantType: "",
+                status: "",
+            },
         };
     },
     template: `
@@ -39,36 +52,32 @@ Vue.component("all-orders", {
 
                     <!-- Search -->
                     <transition name="fade" appear>
-                        <div class="row g-2 mb-2 searchInput" v-if="showSearch">
+                        <div class="row g-4 mb-3 searchInput" v-if="showSearch">
                             <div class="container align-items-center">
-                                <div class="row g-3 mb-4 align-items-center justify-content-center d-md-flex search-input">
+                                <div class="row g-2 align-items-center justify-content-center d-md-flex search-input">
                                     <div class="col-md-3">
-                                        <input type="text" class="form-control" placeholder="Restaurant"
+                                        <input type="text" class="form-control" placeholder="Restaurant" v-model="searchInput.restaurant"
                                             aria-label="Restaurant">
                                     </div>
                                     <div class="col-md-3">
                                         <div class="input-group prices">
-                                            <input type="text" class="form-control" placeholder="Min price">
+                                            <input type="text" class="form-control" placeholder="Min price" v-model="searchInput.minPrice">
                                             <div class="input-group-addon"><i class="fas fa-minus p-2"></i></div>
-                                            <input type="text" class="form-control" placeholder="Max price">
+                                            <input type="text" class="form-control" placeholder="Max price" v-model="searchInput.maxPrice">
                                         </div>
                                     </div>
 
                                     <div class="col-md-4">
                                         <div class="col-md">
                                             <div class="input-group input-daterange">
-                                                <input type="date" class="form-control">
+                                                <input type="date" class="form-control" v-model="searchInput.minDate">
                                                 <div class="input-group-addon"><i class="fas fa-minus p-2"></i></div>
-                                                <input type="date" class="form-control">
+                                                <input type="date" class="form-control" v-model="searchInput.maxDate">
                                             </div>
                                         </div>
                                     </div>
 
                                     <div class="col-md-2">
-                                        <div class="col-md align-items-center">
-                                            <button type="button" class="btn btn-sm search-button"><i
-                                                    class="fa fa-search me-2"></i>Search</button>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -78,31 +87,32 @@ Vue.component("all-orders", {
 
                     <!-- Filter -->
                     <transition name="fade" appear>
-                        <div class="row mb-2 filterInput" v-if="showFilter">
+                        <div class="row mb-3 g-4 filterInput" v-if="showFilter">
                             <div class="container">
                                 <div class="row justify-content-between align-items-center d-md-flex search-input">
                                     <div class="row">
                                         <div class="col-md-3">
-                                            <select class="form-select" placeholder="Order status" aria-label="Order status">
+                                            <select class="form-select" placeholder="Order status" aria-label="Order status" v-model="filterInput.restaurantType">
                                                 <option value="" disabled selected hidden>Restaurant type</option>
-                                                <option value="italian">Italian</option>
-                                                <option value="fast-food">Fast food</option>
+                                                <option value="ITALIAN">Italian</option>
+                                                <option value="FASTFOOD">Fast food</option>
                                             </select>
                                         </div>
 
-                                        <div class="col-md-3">
-                                            <select class="form-select" placeholder="Order status" aria-label="Order status">
+                                        <div class="col-md-3" v-if="isHidden">
+                                            <select class="form-select" placeholder="Order status" aria-label="Order status" v-model="filterInput.status">
                                                 <option value="" disabled selected hidden>Status</option>
-                                                <option value="Obrada">Obrada</option>
-                                                <option value="Preparation">Preparation</option>
-                                                <option value="Waiting for delivery">Waiting for delivery</option>
-                                                <option value="In transport">In transport</option>
-                                                <option value="Delivered">Delivered</option>
+                                                <option value="PROCESSING">Processing</option>
+                                                <option value="PREPARATION">Preparation</option>
+                                                <option value="WAITING">Waiting for delivery</option>
+                                                <option value="TRANSPORTING">In transport</option>
+                                                <option value="DELIVERED">Delivered</option>
                                             </select>
                                         </div>
                             
                                         <div class="col-md mt-1">
-                                            <button type="button" class="btn btn-sm filter-button">Filter</button>
+                                            <button type="button" class="btn btn-sm filter-button" @click="noFilters()"><i
+                                            class="fas fa-trash me-2"></i>Clear Filters</button>
                                         </div>
                                     </div>
                                 </div>
@@ -113,9 +123,9 @@ Vue.component("all-orders", {
 
                     <!-- Sort for orders -->
                     <transition name="fade" appear>
-                        <div class="row g-2 sortInput" id="sortOrders" v-if="showSort">
+                        <div class="row g-4 sortInput" id="sortOrders" v-if="showSort">
                             <div class="col-md-3 me-5 select">
-                                <select class="form-select" aria-label="Sort by" placeholder="Sort by">
+                                <select class="form-select" aria-label="Sort by" placeholder="Sort by" v-model="selected">
                                     <option value="" disabled selected hidden>Sort by</option>
                                     <option value="1">Price</option>
                                     <option value="2">Date</option>
@@ -124,25 +134,26 @@ Vue.component("all-orders", {
 
                             <div class="col-md-3 p-2 d-inline-flex">
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="ascOrDsc" value="" id="flexCheck">
+                                    <input class="form-check-input" type="radio" name="ascOrDsc" id="flexCheck" v-model="sort" v-bind:value="'asc'">
                                     <label class="form-check-label" for="flexCheckDefault">Ascending</label>
                                 </div>
 
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="ascOrDsc" value="" id="flexCheck">
+                                    <input class="form-check-input" type="radio" name="ascOrDsc" id="flexCheck" v-model="sort" v-bind:value="'desc'">
                                     <label class="form-check-label" for="flexCheckDefault">Descending</label>
                                 </div>
                             </div>
 
                             <div class="col-md p-2">
-                                <button type="button" class="btn btn-sm filter-button">Sort</button>
+                                <button type="button" class="btn btn-sm filter-button" @click="sortOrders()"><i
+                                class="fa fa-sort me-2"></i>Sort</button>
                             </div>
                         </div>
                     </transition>
                     <!-- End of sort for orders -->
 
                     <!-- Cards with my orders -->
-                    <div class="row g-4 mb-4 cards" id="vue-orders" v-for="o in orders" v-if="isHidden">
+                    <div class="row g-4 mb-4 cards" id="vue-orders" v-for="o in filteredOrders" v-if="isHidden">
                             <div class="card shadow bg-light text-dark">
                                 <div class="card-body text-center">
                                     <div class="row g-2 align-items-center d-inline-flex">
@@ -169,7 +180,7 @@ Vue.component("all-orders", {
                                                 <tr>
                                                     <td>
                                                         <ol type="1">
-                                                            <li>{{o.restaurantId}}</li>
+                                                            <li>{{o.restaurant.name}}</li>
                                                         </ol>
                                                     </td>
                                                     <td>{{o.price}}</td>
@@ -187,7 +198,7 @@ Vue.component("all-orders", {
                     <!-- End of cards with orders -->
 
                     <!-- Cards with waiting orders -->
-                    <div class="row g-4 mb-4 cards" id="waiting-orders" v-for="o in allWaitingOrders" v-if="!isHidden">
+                    <div class="row g-4 mb-4 cards" id="waiting-orders" v-for="o in filteredWaitingOrders" v-if="!isHidden">
                             <div class="card shadow bg-light text-dark">
                                 <div class="card-body text-center">
                                     <div class="row g-2">
@@ -207,7 +218,7 @@ Vue.component("all-orders", {
                                                 <tr>
                                                     <td>
                                                         <ol type="1">
-                                                            <li>{{o.restaurantId}}</li>
+                                                            <li>{{o.restaurant.name}}</li>
                                                         </ol>
                                                     </td>
                                                     <td>{{o.price}}</td>
@@ -244,8 +255,71 @@ Vue.component("all-orders", {
                 })
                 .then((response) => (this.order = response.data));
         },
+
         reload: function () {
             window.location.reload();
+        },
+
+        searchOrders: function (order) {
+            if (
+                !order.restaurant.name
+                    .toLowerCase()
+                    .match(this.searchInput.restaurant.toLowerCase())
+            )
+                return false;
+
+            if (order.price < parseInt(this.searchInput.minPrice)) return false;
+
+            if (order.price > parseInt(this.searchInput.maxPrice)) return false;
+
+            if (order.timeOfOrder < Date.parse(this.searchInput.minDate))
+                return false;
+
+            if (order.timeOfOrder > Date.parse(this.searchInput.maxDate))
+                return false;
+
+            if (!order.restaurant.type.match(this.filterInput.restaurantType))
+                return false;
+
+            if (!order.status.match(this.filterInput.status)) return false;
+
+            return true;
+        },
+
+        sortOrders: function () {
+            let orders = new Array();
+            if (this.isHidden) orders = this.orders;
+            else orders = this.allWaitingOrders;
+
+            if (this.selected === "1" && this.sort === "asc")
+                orders.sort((a, b) => (a.price > b.price ? 1 : -1));
+
+            if (this.selected === "1" && this.sort === "desc")
+                orders.sort((a, b) => (a.price < b.price ? 1 : -1));
+
+            if (this.selected === "2" && this.sort === "asc")
+                orders.sort((a, b) => (a.timeOfOrder > b.timeOfOrder ? 1 : -1));
+
+            if (this.selected === "2" && this.sort === "desc")
+                orders.sort((a, b) => (a.timeOfOrder < b.timeOfOrder ? 1 : -1));
+        },
+
+        noFilters: function () {
+            this.filterInput.restaurantType = "";
+            this.filterInput.status = "";
+        },
+    },
+    computed: {
+        filteredOrders: function () {
+            return this.orders.filter((o) => {
+                return this.searchOrders(o);
+            });
+        },
+
+        filteredWaitingOrders: function () {
+            return this.allWaitingOrders.filter((o) => {
+                return this.searchOrders(o);
+            });
         },
     },
     filters: {
