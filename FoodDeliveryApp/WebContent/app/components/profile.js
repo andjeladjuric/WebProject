@@ -11,15 +11,16 @@ Vue.component("currentUser-profile", {
                 repeatPassword: "",
             },
             errorMessage: "",
+            isSidebarVisible: true,
         };
     },
 
     template: `
     <div>
-        <div class="d-flex" id="wrapper">
+        <div class="d-flex" id="wrapper" v-bind:class="!isSidebarVisible ? 'toggled' : 'notoggle'">
             <!-- Sidebar -->
             <div id="sidebar-wrapper">
-                <img class="img-fluid d-sm-block" src="/img/product-2.jpg" alt="" id="profile-picture">
+                <img class="img-fluid d-sm-block" src="img/profile_picture.png" alt="" id="profile-picture">
                 <div class="list-group list-group-flush my-3">
                     <a href="#" data-bs-target=".profileOverview" id="profileOverviewButton" @click="showEdit = false" 
 							class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i class="fas fa-user me-2"></i>Profile overview</a>
@@ -32,7 +33,12 @@ Vue.component("currentUser-profile", {
             <!-- End of sidebar -->
 
             <!-- Page Content -->
-            <div class="col-md-3"></div>
+            <div class="col-md-3">
+                <div class="d-flex p-2 justify-content-end d-md-none d-lg-none" style="z-index: 2; position: fixed;">
+                    <i class="fas fa-align-left fs-4"
+                        id="menu-toggle" @click="isSidebarVisible = !isSidebarVisible"></i>
+                </div>
+            </div>
             <div class="col-md-8">
                 <div class="container">
                     <!-- Heading -->
@@ -42,7 +48,7 @@ Vue.component("currentUser-profile", {
                             <p>{{currentUser.role}}</p>
                         </div>
                         <div class="col-md">
-                            <img src="/img/profile.svg" class="d-none d-sm-inline" style="width: 200px; height: 200px"
+                            <img src="img/profile.svg" class="d-none d-sm-inline" style="width: 200px; height: 200px"
                                 alt="">
                         </div>
                     </div>
@@ -112,7 +118,7 @@ Vue.component("currentUser-profile", {
                                 <tr>
                                     <td>Birthday</td>
                                     <td>
-                                        <input class="form-control text-start" type="date" name="birthday" v-model="currentUser.dateOfBirth"/>
+                                        <vuejs-datepicker :bootstrap-styling="true" style="background-color: white; text-align: start;" class="datepicker" format="dd.MM.yyyy" v-model="currentUser.dateOfBirth"></vuejs-datepicker>
                                     </td>
                                 </tr>
 
@@ -152,7 +158,7 @@ Vue.component("currentUser-profile", {
 
                         <div class="row my-5">
                             <div class="col d-inline-flex justify-content-center">
-                                <button type="button" class="btn profileBtn me-4" v-on:click="updateProfile(currentUser); showEdit = !showEdit">Save</button>
+                                <button type="button" class="btn profileBtn me-4" v-on:click="updateProfile(); showEdit = !showEdit">Save</button>
                                 <button type="button" class="btn profileBtn" style="background: #ecbeb1" v-on:click="cancelEditing(); showEdit = !showEdit">Cancel</button>
                             </div>
                         </div>
@@ -218,9 +224,9 @@ Vue.component("currentUser-profile", {
                 this.currentUser.surname,
             ];
         },
-        updateProfile: function (currentUser) {
+        updateProfile: function () {
             axios
-                .post("rest/users/updateUser", JSON.stringify(this.currentUser))
+                .post("rest/users/updateUser", this.currentUser)
                 .then((response) => "Success");
         },
 
@@ -266,6 +272,9 @@ Vue.component("currentUser-profile", {
         fullname: function () {
             return this.currentUser.name + " " + this.currentUser.surname;
         },
+    },
+    components: {
+        vuejsDatepicker,
     },
     filters: {
         dateFormat: function (value, format) {

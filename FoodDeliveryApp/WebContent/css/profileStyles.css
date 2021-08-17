@@ -93,4 +93,13 @@
     #wrapper.toggled #sidebar-wrapper {
         margin-left: -25rem;
     }
+
+    #wrapper.toggled #menu-toggle {
+        margin-left: 0;
+    }
+}
+
+.form-control {
+    background: white;
+    text-align: start;
 }
