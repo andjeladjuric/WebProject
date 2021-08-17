@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -176,6 +177,26 @@ public class UsersDAO {
 			  break;
 		  default:
 			retVal = getUsers();
+		}
+		
+		return retVal;
+	}
+	
+	public List<User> sort(String option){
+		List<User> retVal = getUsers();
+		
+		switch(option) {
+		  case "Surname":
+			  retVal.sort(Comparator.comparing(User::getSurname));
+		    break;
+		  case "Username":
+			  retVal.sort(Comparator.comparing(User::getUsername));
+		    break;
+		  case "Points":
+			  retVal.sort(Comparator.comparing(User::getPoints));
+			break;
+		  default:
+			  retVal.sort(Comparator.comparing(User::getName));
 		}
 		
 		return retVal;

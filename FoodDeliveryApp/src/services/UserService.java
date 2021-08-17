@@ -146,6 +146,17 @@ public class UserService {
 		return allUsersDAO.filter(option); 
 	}
 	
+	@POST
+	@Path("/sort")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.TEXT_PLAIN)
+	public List<User> sort(String option) {
+		
+		UsersDAO allUsersDAO = getUsers();
+
+		return allUsersDAO.sort(option); 
+	}
+	
 	
 	private UsersDAO getUsers() {
 		

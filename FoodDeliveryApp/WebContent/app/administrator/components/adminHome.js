@@ -12,6 +12,7 @@ Vue.component("administrator-home",{
 			selectedUser : {},
 			searchInput : '',
 			selectedFilter : 'All',
+			selectedOptionForSort : '',
         }
     }
     ,
@@ -33,12 +34,12 @@ Vue.component("administrator-home",{
                         <div class="col-3 mx-auto">
                             <div class="input-group mb-3">
                                 <label class="input-group-text">Sort By</label>
-                                <select class="form-select">
-                                    <option selected></option>
-                                    <option value="1">First Name</option>
-                                    <option value="2">Last Name</option>
-                                    <option value="3">Username</option>
-                                    <option value="4">Points</option>
+                                <select class="form-select" v-model="selectedOptionForSort" v-on:change="sort()">
+                                    <option></option>
+                                    <option>Name</option>
+                                    <option>Surname</option>
+                                    <option>Username</option>
+                                    <option>Points</option>
                                 </select>
                             </div>
                         </div>
@@ -161,6 +162,15 @@ Vue.component("administrator-home",{
 		filter : function() {
     		axios
 			.post('rest/users/filter', this.selectedFilter,
+        	{ headers: {
+        		'Content-type': 'text/plain',
+        		}
+        	})
+			.then(response => (this.users = fixDate(response.data)));
+    	},
+		sort : function() {
+    		axios
+			.post('rest/users/sort', this.selectedOptionForSort,
         	{ headers: {
         		'Content-type': 'text/plain',
         		}
