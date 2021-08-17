@@ -75,13 +75,14 @@ public class UserService {
 		if (allUsersDAO.alreadyExists(user.username)) {
 			return "Username taken";
 		}else {
+			user.role = Role.CUSTOMER;
 			allUsersDAO.addNewUser(user);
 		}
 		
 		User newUser = allUsersDAO.getByUsername(user.username);
 		request.getSession().setAttribute("loginUser", newUser); // we give him a session
 
-		return "/FoodDeliveryApp/html/administrator.html"; // stranica za kupca
+		return ""; // stranica za kupca
 	}
 	
 	@GET
@@ -125,6 +126,22 @@ public class UserService {
 		UsersDAO allUsersDAO = getUsers();
 
 		return allUsersDAO.sort(option); 
+	}
+	
+	@POST
+	@Path("/addNewUser")
+	@Produces(MediaType.TEXT_HTML)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public String addNewUser(SignupDTO user) {
+		UsersDAO allUsersDAO = getUsers();
+
+		if (allUsersDAO.alreadyExists(user.username)) {
+			return "Username taken";
+		}else {
+			allUsersDAO.addNewUser(user);
+		}
+		
+		return "/FoodDeliveryApp/administratorPage.html";
 	}
 	
 	

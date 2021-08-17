@@ -13,6 +13,9 @@ Vue.component("administrator-home",{
 			searchInput : '',
 			selectedFilter : 'All',
 			selectedOptionForSort : '',
+			newUser : {},
+			errorMessage : '',
+			gender : ''
         }
     }
     ,
@@ -89,7 +92,7 @@ Vue.component("administrator-home",{
                                 Block</button>
                         </div>
                         <div class="col-4">
-                            <button class="btn buttonGroup"><i class="fa fa-plus"></i>
+                            <button class="btn buttonGroup" data-bs-toggle="modal" data-bs-target="#menagerModal"><i class="fa fa-plus"></i>
                                 Add</button>
                         </div>
                     </div>
@@ -143,6 +146,114 @@ Vue.component("administrator-home",{
             </div>
         </div>
     </div>
+    
+    <div class="modal fade" id="menagerModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false"
+            aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-title text-center">
+                            <h4><i class="fas fa-user-alt"></i> Add New User</h4>
+                            <hr>
+                        </div>
+                        <div class="d-flex flex-column text-center">
+                            <form>
+                                <div class="d-grid gap-4">
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <label class="col-sm-4 col-form-label" style="text-align: left;">First
+                                                Name</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" v-model="newUser.name"
+                                                    v-on:change="signalChange">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <label class="col-sm-4 col-form-label" style="text-align: left;">Last
+                                                Name</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" v-model="newUser.surname"
+                                                    v-on:change="signalChange">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <label class="col-sm-4 col-form-label"
+                                                style="text-align: left;">Role</label>
+                                            <div class="col-sm-8">
+                                                <select class="form-select" v-model="newUser.role">
+                                                    <option>MANAGER</option>
+                                                    <option>COURIER</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <label class="col-sm-4 col-form-label"
+                                                style="text-align: left;">Username</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" v-model="newUser.username"
+                                                    v-on:change="signalChange">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <label class="col-sm-4 col-form-label"
+                                                style="text-align: left;">Password</label>
+                                            <div class="col-sm-8">
+                                                <input type="password" class="form-control" v-model="newUser.password"
+                                                    v-on:change="signalChange">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <label class="col-sm-4 col-form-label" style="text-align: left;">Date Of
+                                                Birth</label>
+                                            <div class="col-sm-8">
+                                                <input type="date" class="form-control" v-model="newUser.dateOfBirth">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="form-check form-check-inline" style="margin-left: 5rem;">
+                                            <input class="form-check-input" type="radio" value="male" v-model="gender">
+                                            <label class="form-check-label">Male</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" value="female"
+                                                v-model="gender">
+                                            <label class="form-check-label">Female</label>
+                                        </div>
+                                    </div>
+                                    <p style="color: red; font-size: small;">{{errorMessage}}</p>
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="d-flex justify-content-evenly">
+                                                    <button type="button" class="btn btn-block buttonGroup"
+                                                        data-bs-dismiss="modal">Cancel</button>
+                                                    <button type="button" class="btn btn-block buttonGroup active"
+                                                        v-on:click="addUser()">Save</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 </div>
 `
 	, mounted() {
@@ -180,7 +291,47 @@ Vue.component("administrator-home",{
         		}
         	})
 			.then(response => (this.users = fixDate(response.data)));
-    	}
+    	},addUser : function() {
+
+			if(this.newUser.username =='' || this.newUser.password=='' || this.newUser.name =='' || this.newUser.surname=='' || this.gender =='' || this.newUser.role == '')
+			{
+				this.errorMessage="All fields are required!";
+			}
+			else
+			{
+				let selectedGender;
+				if (this.gender == 'male') {
+					selectedGender = 0;
+				} else {
+					selectedGender = 1;
+				}
+				
+				this.newUser.gender = selectedGender;
+    		
+    		axios 
+    			.post('rest/users/addNewUser', JSON.stringify(this.newUser),
+        	{ headers: {
+        		'Content-type': 'application/json',
+        		}
+        	})
+    			.then(response => {
+    				if (response.data == "Username taken") {
+						this.errorMessage="Username is already taken.";
+					}
+					else {
+						location.href = response.data; 
+    				}
+				})
+				.catch(err => { 
+                    this.errorMessage="error";
+                })
+			}
+    		
+    	},
+		signalChange : function()
+		{
+			this.errorMessage="";
+		} 
     },
     filters: {
     	dateFormat: function (value, format) {

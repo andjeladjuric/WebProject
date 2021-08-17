@@ -69,7 +69,7 @@ public class UsersDAO {
 	
 	public void addNewUser(SignupDTO newUser) {
 		User createdUser = new User(newUser.username, newUser.password, newUser.name, newUser.surname,
-				newUser.gender, newUser.dateOfBirth, Role.CUSTOMER);
+				newUser.gender, newUser.dateOfBirth, newUser.role);
 		users.put(createdUser.getUsername(), createdUser);
 		serialize();
 	}

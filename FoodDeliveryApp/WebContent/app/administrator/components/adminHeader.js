@@ -40,17 +40,5 @@ Vue.component("administrator-header",{
     
     `,
     methods: {
-        logout: function(event){
-            event.preventDefault
-            axios
-            .get('rest/logout/someone')
-            .then(response => {
-                location.href = "/Apartments/#/login";
-            })
-            .catch(err => {
-                console.log(err);
-                alert('Error during log out');
-            })
-        }
     },
 });
