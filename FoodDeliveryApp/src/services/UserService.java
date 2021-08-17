@@ -85,6 +85,16 @@ public class UserService {
 	}
 	
 	@GET
+	@Path("/getUsers")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public List<User> getAllUsers() {
+		UsersDAO allUsersDAO = getUsers();
+
+		return allUsersDAO.getUsers(); 
+	}
+	
+	@GET
 	@Path("/getCustomers")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)

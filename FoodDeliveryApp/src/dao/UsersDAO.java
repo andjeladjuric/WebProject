@@ -108,7 +108,12 @@ public class UsersDAO {
 	}
 
 	public List<User> getUsers() {
-		return (List<User>) users.values();
+		List<User> allUsers = new ArrayList<User>();
+		
+		for (User u : users.values()) {
+				allUsers.add(u);
+		}
+		return allUsers;
 	}
 
 	public void setUsers(LinkedHashMap<String, User> users) {
