@@ -96,17 +96,6 @@ public class UserService {
 	}
 	
 	@POST
-	@Path("/search")
-	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.TEXT_PLAIN)
-	public List<User> search(String input) {
-		
-		UsersDAO allUsersDAO = getUsers();
-
-		return allUsersDAO.search(input); 
-	}
-	
-	@POST
 	@Path("/filter")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.TEXT_PLAIN)
@@ -117,16 +106,6 @@ public class UserService {
 		return allUsersDAO.filter(option); 
 	}
 	
-	@POST
-	@Path("/sort")
-	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.TEXT_PLAIN)
-	public List<User> sort(String option) {
-		
-		UsersDAO allUsersDAO = getUsers();
-
-		return allUsersDAO.sort(option); 
-	}
 	
 	@POST
 	@Path("/addNewUser")

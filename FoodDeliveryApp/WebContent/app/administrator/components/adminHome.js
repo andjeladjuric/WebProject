@@ -15,7 +15,8 @@ Vue.component("administrator-home",{
 			selectedOptionForSort : '',
 			newUser : {},
 			errorMessage : '',
-			gender : ''
+			gender : '',
+			sortType : 'Asc'
         }
     }
     ,
@@ -28,42 +29,45 @@ Vue.component("administrator-home",{
                 <div class="card text-center shadow-sm mb-3" style="height: 600px;">
                     <h6 class="card-subtitle mb-3 mt-3 text-muted">List of Users</h6>
                     <div class="row mt-3 mx-2 ">
-                        <div class="col-6 mx-auto">
-                            <div class="input-group mb-3">
-                                <input type="text" class="form-control" v-model="searchInput" v-on:change="search">
-                                <button class="btn buttonGroup active" type="button"  v-on:click="search">Search</button>
+                            <div class="col-3 mx-auto">
+                                <div class="form-floating">
+                                    <select class="form-select" v-model="selectedFilter" v-on:change="filter()">
+                                        <option>All</option>
+                                        <option>Managers</option>
+                                        <option>Couriers</option>
+                                        <option>Customers</option>
+                                        <option>Golden</option>
+                                        <option>Silver</option>
+                                        <option>Bronze</option>
+                                    </select>
+                                    <label>Filter By</label>
+                                </div>
+                            </div>
+                            <div class="col-3 mx-auto">
+                                <div class="form-floating">
+                                    <select class="form-select" v-model="selectedOptionForSort" v-on:change="sort()">
+                                        <option>Name Asc</option>
+                                        <option>Name Desc</option>
+                                        <option>Surname Asc</option>
+                                        <option>Surname Desc</option>
+                                        <option>Username Asc</option>
+                                        <option>Username Desc</option>
+                                        <option>Points Asc</option>
+                                        <option>Points Desc</option>
+                                    </select>
+                                    <label>Sort By</label>
+                                </div>
+                            </div>
+                            <div class="col-4 mx-auto">
+                                <div class="input-group mt-2">
+                                    <input type="text" class="form-control" v-model="searchInput" v-on:change="doSearch()">
+                                    <button class="btn buttonGroup active" type="button" v-on:click="doSearch()"><i class="fas fa-search"></i></button>     
+                                </div>
                             </div>
                         </div>
-                        <div class="col-3 mx-auto">
-                            <div class="input-group mb-3">
-                                <label class="input-group-text">Sort By</label>
-                                <select class="form-select" v-model="selectedOptionForSort" v-on:change="sort()">
-                                    <option></option>
-                                    <option>Name</option>
-                                    <option>Surname</option>
-                                    <option>Username</option>
-                                    <option>Points</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-3 mx-auto">
-                            <div class="input-group mb-3">
-                                <label class="input-group-text">User Type</label>
-                                <select class="form-select" v-model="selectedFilter" v-on:change="filter()">
-                                    <option>All</option>
-                                    <option>Managers</option>
-                                    <option>Couriers</option>
-                                    <option>Customers</option>
-                                    <option>Golden</option>
-                                    <option>Silver</option>
-                                    <option>Bronze</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
                     <div class="row mt-3" style="height: 400px;">
                         <div class="col-11 mx-auto">
-                            <div style="height:380px; overflow:auto;">
+                            <div style="height:350px; overflow:auto;">
                                 <table class="table table-hover">
                                     <thead>
                                         <tr>
@@ -104,7 +108,7 @@ Vue.component("administrator-home",{
                 <div class="card text-center shadow-sm mb-3" style="height: 600px;">
                     <div class="row" style="height: 250px;">
                         <div class="col-10 mx-auto bg-light mt-2" style="border-radius: 30px;">
-                            <img src="/img/profile_picture.png" class="card-img-top"
+                            <img src="img/profile_picture.png" class="card-img-top"
                                 style="height: 250px; width: 250px;" alt="...">
                         </div>
                     </div>
@@ -265,14 +269,14 @@ Vue.component("administrator-home",{
 		selectUser : function(user) {
     			this.selectedUser = user;
     	},
-		search : function() {
-    		axios
-			.post('rest/users/search', this.searchInput,
-        	{ headers: {
-        		'Content-type': 'text/plain',
-        		}
-        	})
-			.then(response => (this.users = fixDate(response.data)));
+		doSearch : function() {
+		let matches = [];
+	    for(var u of this.users) {
+	        if (u.name.toLowerCase().search(searchInput.toLowerCase()) || u.surname.toLowerCase().contains(searchInput.toLowerCase()) || u.username.toLowerCase().contains(searchInput.toLowerCase()) ) {
+	            matches.add(u);
+	        }	        
+	       }
+	      	this.users = matches;
     	},
 		filter : function() {
     		axios
@@ -284,13 +288,33 @@ Vue.component("administrator-home",{
 			.then(response => (this.users = fixDate(response.data)));
     	},
 		sort : function() {
-    		axios
-			.post('rest/users/sort', this.selectedOptionForSort,
-        	{ headers: {
-        		'Content-type': 'text/plain',
-        		}
-        	})
-			.then(response => (this.users = fixDate(response.data)));
+		
+		switch(this.selectedOptionForSort) {
+		   case "Name Desc":
+			  this.users.sort((a, b) => (a.name < b.name ? 1 : -1));
+		    break;
+		  case "Surname Asc":
+			  this.users.sort((a, b) => (a.surname > b.surname ? 1 : -1));
+		    break;
+		  case "Surname Desc":
+			  this.users.sort((a, b) => (a.surname < b.surname ? 1 : -1));
+		    break;
+		  case "Username Asc":
+			  this.users.sort((a, b) => (a.username > b.username ? 1 : -1));
+		    break;
+		  case "Username Desc":
+			  this.users.sort((a, b) => (a.username < b.username ? 1 : -1));
+		    break;
+		  case "Points Asc":
+			  this.users.sort((a, b) => (a.points > b.points ? 1 : -1));
+			break;
+		   case "Points Desc":
+			  this.users.sort((a, b) => (a.points < b.points ? 1 : -1));
+			break;
+		  default:
+			  this.users.sort((a, b) => (a.name > b.name ? 1 : -1));
+		}
+    		
     	},addUser : function() {
 
 			if(this.newUser.username =='' || this.newUser.password=='' || this.newUser.name =='' || this.newUser.surname=='' || this.gender =='' || this.newUser.role == '')

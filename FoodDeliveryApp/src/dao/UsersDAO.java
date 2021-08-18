@@ -2,6 +2,7 @@ package dao;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -180,36 +181,5 @@ public class UsersDAO {
 		}
 		
 		return retVal;
-	}
-	
-	public List<User> sort(String option){
-		List<User> retVal = getUsers();
-		
-		switch(option) {
-		  case "Surname":
-			  retVal.sort(Comparator.comparing(User::getSurname));
-		    break;
-		  case "Username":
-			  retVal.sort(Comparator.comparing(User::getUsername));
-		    break;
-		  case "Points":
-			  retVal.sort(Comparator.comparing(User::getPoints));
-			break;
-		  default:
-			  retVal.sort(Comparator.comparing(User::getName));
-		}
-		
-		return retVal;
-	}
-	
-	public List<User> search(String input){
-		List<User> matches = new ArrayList<User>();
-
-	    for(User user: users.values()) {
-	        if (user.getName().toLowerCase().contains(input.toLowerCase()) || user.getSurname().toLowerCase().contains(input.toLowerCase()) || user.getUsername().toLowerCase().contains(input.toLowerCase()) ) {
-	            matches.add(user);
-	        }
-	    }
-	    return matches;
 	}
 }
