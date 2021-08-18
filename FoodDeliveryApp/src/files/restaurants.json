@@ -17,17 +17,17 @@
         },
         "items": [],
         "logo": "",
-        "menagerId": ""
+        "menagerId": "andjela"
     },
     {
-        "name": "Menza",
+        "name": "Caribic",
         "id": "2",
         "deleted": false,
-        "type": 0,
+        "type": "FASTFOOD",
         "status": 0,
         "location": {
             "address": {
-                "street": "Dr Sime Milosevica",
+                "street": "Maksima Gorkog",
                 "number": 6,
                 "city": "Novi Sad",
                 "postcode": 21000
@@ -37,18 +37,18 @@
         },
         "items": [],
         "logo": "",
-        "menagerId": ""
+        "menagerId": "andjela"
     },
     {
-        "name": "Mala menza",
+        "name": "Corso",
         "id": "3",
         "deleted": false,
         "type": 0,
         "status": 0,
         "location": {
             "address": {
-                "street": "Dr Sime Milosevica",
-                "number": 6,
+                "street": "Zmaj Jovina",
+                "number": 16,
                 "city": "Novi Sad",
                 "postcode": 21000
             },
@@ -57,66 +57,6 @@
         },
         "items": [],
         "logo": "",
-        "menagerId": ""
-    },
-    {
-        "name": "La Forza",
-        "id": "1",
-        "deleted": false,
-        "type": 0,
-        "status": 0,
-        "location": {
-            "address": {
-                "street": "Katolicke porte",
-                "number": 6,
-                "city": "Novi Sad",
-                "postcode": 21000
-            },
-            "latitude": 124.555,
-            "longitude": 245.64
-        },
-        "items": [],
-        "logo": "",
-        "menagerId": ""
-    },
-    {
-        "name": "Menza",
-        "id": "2",
-        "deleted": false,
-        "type": 0,
-        "status": 0,
-        "location": {
-            "address": {
-                "street": "Dr Sime Milosevica",
-                "number": 6,
-                "city": "Novi Sad",
-                "postcode": 21000
-            },
-            "latitude": 124.555,
-            "longitude": 245.64
-        },
-        "items": [],
-        "logo": "",
-        "menagerId": ""
-    },
-    {
-        "name": "Mala menza",
-        "id": "3",
-        "deleted": false,
-        "type": 0,
-        "status": 0,
-        "location": {
-            "address": {
-                "street": "Dr Sime Milosevica",
-                "number": 6,
-                "city": "Novi Sad",
-                "postcode": 21000
-            },
-            "latitude": 124.555,
-            "longitude": 245.64
-        },
-        "items": [],
-        "logo": "",
-        "menagerId": ""
+        "menagerId": "andjela"
     }
 ]

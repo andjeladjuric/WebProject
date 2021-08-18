@@ -27,7 +27,7 @@ public class RestaurantDAO {
 	    restaurants = new ArrayList<Restaurant>();
 	    
 	    try {
-	        restaurants = Arrays.asList(mapper.readValue(Paths.get(path).toFile(), Restaurant[].class));
+	        restaurants = new ArrayList<>(Arrays.asList(mapper.readValue(Paths.get(path).toFile(), Restaurant[].class)));
 
 	    } catch (Exception ex) {
 	        ex.printStackTrace();

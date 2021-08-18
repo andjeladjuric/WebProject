@@ -4,11 +4,11 @@
         "deleted": false,
         "items": [],
         "restaurant": {
-            "name": "La Forza22",
+            "name": "La Forza",
             "id": "1",
             "deleted": false,
-            "type": 0,
-            "status": 0,
+            "type": "ITALIAN",
+            "status": "Open",
             "location": {
                 "address": {
                     "street": "Katolicke porte",
@@ -54,7 +54,7 @@
             },
             {
                 "item": {
-                    "id": "1",
+                    "id": "2",
                     "deleted": false,
                     "name": "Pizza",
                     "price": 300.0,
@@ -71,8 +71,8 @@
             "name": "La Forza",
             "id": "1",
             "deleted": false,
-            "type": 0,
-            "status": 0,
+            "type": "ITALIAN",
+            "status": "Open",
             "location": {
                 "address": {
                     "street": "Katolicke porte",
@@ -85,7 +85,7 @@
             },
             "items": [],
             "logo": "",
-            "menagerId": ""
+            "menagerId": "andjela"
         },
         "timeOfOrder": 1335205543511,
         "price": 600.0,
@@ -106,8 +106,8 @@
             "name": "La Forza",
             "id": "1",
             "deleted": false,
-            "type": 0,
-            "status": 0,
+            "type": "ITALIAN",
+            "status": "Open",
             "location": {
                 "address": {
                     "street": "Katolicke porte",
@@ -120,7 +120,7 @@
             },
             "items": [],
             "logo": "",
-            "menagerId": ""
+            "menagerId": "andjela"
         },
         "timeOfOrder": 1335205543511,
         "price": 300.0,
@@ -134,19 +134,19 @@
         }
     },
     {
-        "id": "1234567a89",
+        "id": "1bgh256aj1",
         "deleted": false,
         "items": [],
         "restaurant": {
-            "name": "La Forza",
-            "id": "1",
+            "name": "Corso",
+            "id": "3",
             "deleted": false,
-            "type": 0,
-            "status": 0,
+            "type": "ITALIAN",
+            "status": "Open",
             "location": {
                 "address": {
-                    "street": "Katolicke porte",
-                    "number": 6,
+                    "street": "Zmaj Jovina",
+                    "number": 16,
                     "city": "Novi Sad",
                     "postcode": 21000
                 },
@@ -155,7 +155,7 @@
             },
             "items": [],
             "logo": "",
-            "menagerId": ""
+            "menagerId": "andjela"
         },
         "timeOfOrder": 1335205543511,
         "price": 700.0,
