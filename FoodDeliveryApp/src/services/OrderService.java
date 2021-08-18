@@ -18,10 +18,12 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import beans.Order;
+import beans.OrderRequests;
 import beans.User;
 import beans.Role;
 import beans.OrderStatus;
 import dao.OrderDAO;
+import dao.OrderRequestDAO;
 
 @Path("/orders")
 public class OrderService {
@@ -108,22 +110,39 @@ public class OrderService {
 	}
 	
 	
+	@POST
+	@Path("/sendRequest")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response sendOrderRequest(OrderRequests r) {
+		User user = (User) request.getSession().getAttribute("loginUser");
+		
+		if(user!= null && (user.getRole() == (Role.COURIER))) {
+			OrderDAO dao = (OrderDAO) ctx.getAttribute("orders");
+			Order currentOrder = dao.getOrderById(r.getOrderId());
+			
+			if(dao.alreadyExists(r))
+				return Response.status(400).type("text/plain")
+		                .entity("Already exists!").build();
+			
+			if(currentOrder.getStatus() == OrderStatus.WAITING) {
+				dao.sendRequestToManager(r);
+				return Response
+						.status(Response.Status.ACCEPTED).entity("SUCCESS")
+						.build();
+			}
+			
+		}
+		
+		return Response.status(403).type("text/plain")
+                .entity("Access denied!").build();
+	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	@GET
+	@Path("/getAllRequests")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<OrderRequests> getAllRequests(){
+		OrderRequestDAO requestsDAO = new OrderRequestDAO();
+		return requestsDAO.findAll();
+	}
 }

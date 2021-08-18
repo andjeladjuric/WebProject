@@ -2,10 +2,18 @@ Vue.component("order-details", {
     data: function () {
         return {
             order: {},
+            orderRequest: {
+                orderId: "",
+                restaurantId: "",
+                courier: "",
+                manager: "",
+            },
+            requests: [],
+            currentUser: {},
         };
     },
     template: `
-    <div class="bg-light" id="main-content">
+        <div class="bg-light" id="main-content">
             <div class="container bg-light">
                 <div class="row">
                     <div class="col-md-2"></div>
@@ -75,6 +83,14 @@ Vue.component("order-details", {
                                 </tr>
 
                                 <tr>
+                                    <td id="restaurant">Restaurant</td>
+                                    <td>
+                                        {{order.restaurant.name}}
+                                    </td>
+                                    <td></td>
+                                </tr>
+
+                                <tr>
                                     <td id="status">Order status</td>
                                     <td>
                                         {{order.status}}
@@ -82,6 +98,10 @@ Vue.component("order-details", {
                                     <td>
                                         <button type="button" class="btn d-flex tableBtn" v-if="isOrderInTransport" @click="changeStatus(); reload()">
                                             Change status
+                                        </button>
+                                        <button type="button" class="btn d-flex tableBtn" v-if="isOrderWaiting" @click="sendRequest(); reload()"
+                                            v-bind:class="isSent ? 'disabled' : 'nothing'">
+                                            Send delivery request
                                         </button>
                                     </td>
                                 </tr>
@@ -107,10 +127,34 @@ Vue.component("order-details", {
                 params: { id: this.$route.query.id },
             })
             .then((response) => (this.order = response.data));
+
+        axios
+            .get("rest/users/getCurrentUser")
+            .then((response) => (this.currentUser = response.data));
+
+        axios
+            .get("rest/orders/getAllRequests")
+            .then((response) => (this.requests = response.data));
     },
     computed: {
         isOrderInTransport() {
             if (this.order.status == "TRANSPORTING") return true;
+
+            return false;
+        },
+        isOrderWaiting() {
+            if (this.order.status == "WAITING") return true;
+
+            return false;
+        },
+        isSent() {
+            for (let r of this.requests) {
+                if (
+                    r.orderId === this.order.id &&
+                    r.courier === this.currentUser.username
+                )
+                    return true;
+            }
 
             return false;
         },
@@ -125,6 +169,23 @@ Vue.component("order-details", {
         },
         reload: function () {
             window.location.reload();
+        },
+
+        sendRequest: function () {
+            this.orderRequest.orderId = this.order.id;
+            this.orderRequest.restaurantId = this.order.restaurant.id;
+            this.orderRequest.courier = this.currentUser.username;
+            this.orderRequest.manager = this.order.restaurant.menagerId;
+
+            axios
+                .post(
+                    "rest/orders/sendRequest",
+                    JSON.stringify(this.orderRequest),
+                    {
+                        headers: { "Content-type": "application/json" },
+                    }
+                )
+                .then((response) => (this.orderRequest = response.data));
         },
     },
     filters: {

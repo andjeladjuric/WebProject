@@ -55,6 +55,7 @@ tr {
 
 #customerName,
 #dateAndTime,
+#restaurant,
 #status,
 #orderID {
     text-align: justify;

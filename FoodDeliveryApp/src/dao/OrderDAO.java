@@ -10,6 +10,7 @@ import java.util.List;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import beans.Order;
+import beans.OrderRequests;
 import beans.OrderStatus;
 import beans.User;
 
@@ -29,7 +30,7 @@ public class OrderDAO {
 	    orders = new ArrayList<Order>();
 	    
 	    try {
-	        orders = Arrays.asList(mapper.readValue(Paths.get(path).toFile(), Order[].class));
+	        orders = new ArrayList<>(Arrays.asList(mapper.readValue(Paths.get(path).toFile(), Order[].class)));
 
 	    } catch (Exception ex) {
 	        ex.printStackTrace();
@@ -97,6 +98,25 @@ public class OrderDAO {
 		}
 		
 		serialize();
+	}
+	
+	public void sendRequestToManager(OrderRequests r) {
+		OrderRequestDAO requestsDAO = new OrderRequestDAO();
+		
+		for(Order o : orders) {
+			if(o.getId().equals(r.getOrderId())) {
+				requestsDAO.insert(r);
+			}
+		}
+	}
+	
+	public boolean alreadyExists(OrderRequests r) {
+		OrderRequestDAO requestsDAO = new OrderRequestDAO();
+		
+		if(requestsDAO.findAll().contains(r))
+			return true;
+		
+		return false;
 	}
 }
 
