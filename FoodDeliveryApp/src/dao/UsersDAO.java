@@ -84,7 +84,7 @@ public class UsersDAO {
 		List<User> customers = new ArrayList<User>();
 		
 		for (User u : users.values()) {
-			if(u.getRole() == Role.CUSTOMER)
+			if(u.getRole() == Role.CUSTOMER && u.isDeleted() == false && u.isBlocked() == false )
 				customers.add(u);
 		}
 		return customers;
@@ -106,7 +106,7 @@ public class UsersDAO {
 		List<User> managers = new ArrayList<User>();
 		
 		for (User u : users.values()) {
-			if(u.getRole() == Role.MANAGER)
+			if(u.getRole() == Role.MANAGER  && u.isDeleted() == false && u.isBlocked() == false )
 				managers.add(u);
 		}
 		return managers;
@@ -116,7 +116,7 @@ public class UsersDAO {
 		List<User> couriers = new ArrayList<User>();
 		
 		for (User u : users.values()) {
-			if(u.getRole() == Role.COURIER)
+			if(u.getRole() == Role.COURIER  && u.isDeleted() == false && u.isBlocked() == false )
 				couriers.add(u);
 		}
 		return couriers;
@@ -126,6 +126,7 @@ public class UsersDAO {
 		List<User> allUsers = new ArrayList<User>();
 		
 		for (User u : users.values()) {
+			if(u.getRole() != Role.ADMINISTRATOR  && u.isDeleted() == false && u.isBlocked() == false )
 				allUsers.add(u);
 		}
 		return allUsers;
@@ -139,7 +140,7 @@ public class UsersDAO {
 		List<User> customers = new ArrayList<User>();
 		
 		for (User u : users.values()) {
-			if(u.getRole() == Role.CUSTOMER && u.getType().getName() == Type.GOLD)
+			if(u.getRole() == Role.CUSTOMER && u.getType().getName() == Type.GOLD  && u.isDeleted() == false && u.isBlocked() == false )
 				customers.add(u);
 		}
 		return customers;
@@ -149,7 +150,7 @@ public class UsersDAO {
 		List<User> customers = new ArrayList<User>();
 		
 		for (User u : users.values()) {
-			if(u.getRole() == Role.CUSTOMER && u.getType().getName() == Type.SILVER)
+			if(u.getRole() == Role.CUSTOMER && u.getType().getName() == Type.SILVER  && u.isDeleted() == false && u.isBlocked() == false )
 				customers.add(u);
 		}
 		return customers;
@@ -159,7 +160,7 @@ public class UsersDAO {
 		List<User> customers = new ArrayList<User>();
 		
 		for (User u : users.values()) {
-			if(u.getRole() == Role.CUSTOMER && u.getType().getName() == Type.BRONZE)
+			if(u.getRole() == Role.CUSTOMER && u.getType().getName() == Type.BRONZE  && u.isDeleted() == false && u.isBlocked() == false )
 				customers.add(u);
 		}
 		return customers;

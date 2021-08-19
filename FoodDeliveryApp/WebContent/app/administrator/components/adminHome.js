@@ -76,7 +76,7 @@ Vue.component("administrator-home",{
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr v-for="u in users" v-on:click="selectUser(u)">
+                                        <tr v-for="u in users" v-on:click="selectUser(u)" v-bind:class="{selected : selectedUser.username===u.username}">
                                             <td>{{u.name}}</td>
                                             <td>{{u.surname}}</td>
                                             <td>{{u.username}}</td>

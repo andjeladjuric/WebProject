@@ -44,6 +44,10 @@ tr{
   border-bottom:1px solid #acacaca2;
 }
 
+tr.selected {
+	 background-color: #ecbeb1;
+}
+
 .card{
   border-color: #7fd2c0;
   border-radius: 20px;

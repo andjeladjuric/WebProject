@@ -245,7 +245,7 @@ Vue.component("restaurant-form",{
                                         <div class="row">
                                             <div class="col-10 mx-auto">
                                                 <div style="height:250px;overflow:auto;">
-                                                    <table class="table table-sm caption-top table-hover">
+                                                    <table class="table table-sm table-hover">
                                                         <thead>
                                                             <tr>
                                                                 <th scope="col">Name</th>
@@ -254,7 +254,7 @@ Vue.component("restaurant-form",{
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-															<tr v-for="m in managers" v-on:click="selectManager(m)">
+															<tr v-for="m in managers" v-on:click="selectManager(m)" v-bind:class="{selected : selectedManager.username===m.username}">
                                             					<td>{{m.name}}</td>
                                             					<td>{{m.surname}}</td>
                                             					<td>{{m.username}}</td>
