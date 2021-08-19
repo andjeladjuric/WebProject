@@ -14,7 +14,8 @@
             },
             "latitude": 124.555,
             "longitude": 245.64
-        }
+        },
+        "menagerId" : "ostoja"
     },
     {
         "name": "Menza",
@@ -31,7 +32,8 @@
             },
             "latitude": 124.555,
             "longitude": 245.64
-        }
+        },
+        "menagerId" : "ostoja"
     },
     {
         "name": "Mala menza",
@@ -48,7 +50,8 @@
             },
             "latitude": 124.555,
             "longitude": 245.64
-        }
+        },
+        "menagerId" : "ostoja"
     },
     {
         "name": "La Forza",
@@ -65,7 +68,8 @@
             },
             "latitude": 124.555,
             "longitude": 245.64
-        }
+        },
+        "menagerId" : "ostoja"
     },
     {
         "name": "Menza",
@@ -82,7 +86,8 @@
             },
             "latitude": 124.555,
             "longitude": 245.64
-        }
+        },
+        "menagerId" : "ostoja"
     },
     {
         "name": "Mala menza",
@@ -99,6 +104,7 @@
             },
             "latitude": 124.555,
             "longitude": 245.64
-        }
+        },
+        "menagerId" : "ostoja"
     }
 ]

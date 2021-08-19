@@ -95,6 +95,16 @@ public class UserService {
 		return allUsersDAO.getUsers(); 
 	}
 	
+	@GET
+	@Path("/getManagers")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public List<User> getManagers() {
+		UsersDAO allUsersDAO = getUsers();
+
+		return allUsersDAO.getFreeManagers(); 
+	}
+	
 	@POST
 	@Path("/filter")
 	@Produces(MediaType.APPLICATION_JSON)

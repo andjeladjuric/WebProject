@@ -90,6 +90,18 @@ public class UsersDAO {
 		return customers;
 	}
 	
+	public List<User> getFreeManagers() {
+		List<User> freeManagers = new ArrayList<User>();
+		List<User> managers = getManagers();
+		RestaurantDAO dao = new RestaurantDAO("");
+		
+		for (User m : managers) {
+			if(!dao.hasRestaurant(m.getUsername()))
+				freeManagers.add(m);
+		}
+		return freeManagers;
+	}
+	
 	public List<User> getManagers() {
 		List<User> managers = new ArrayList<User>();
 		

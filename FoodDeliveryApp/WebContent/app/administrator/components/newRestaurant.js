@@ -1,9 +1,22 @@
+function fixDate(users) {
+	for (var u of users) {
+		u.dateOfBirth = new Date(parseInt(u.dateOfBirth));
+	}
+	return users;
+}
+
 Vue.component("restaurant-form",{
     data: function(){
         return{
 				step : 1,
 				totalSteps : 3,
-				table : 1
+				table : 1,
+				managers : [],
+				restaurant : {},
+				selectedManager : {},
+				newManager : {},
+				errorMessage : '',
+				gender : ''
             
         }
     }
@@ -237,6 +250,11 @@ Vue.component("restaurant-form",{
                                                             </tr>
                                                         </thead>
                                                         <tbody>
+															<tr v-for="m in managers" v-on:click="selectManager(m)">
+                                            					<td>{{m.name}}</td>
+                                            					<td>{{m.surname}}</td>
+                                            					<td>{{m.username}}</td>
+                                        					</tr>
                                                         </tbody>
                                                     </table>
                                                 </div>
@@ -245,7 +263,7 @@ Vue.component("restaurant-form",{
 
                                         <div class="row">
                                             <div class="col-6 justify-content-center">
-                                                <a href="" @click.prevent="newManager">
+                                                <a href="" @click.prevent="addNewManager">
                                                     Create New Menager
                                                 </a>
 
@@ -265,7 +283,7 @@ Vue.component("restaurant-form",{
                                                     <label class="form-label">Name:</label>
                                                 </div>
                                                 <div class="col-8  mx-auto">
-                                                    <input type="text" class="form-control">
+                                                    <input type="text" class="form-control"  v-model="newManager.name" v-on:change="signalChange()">
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -273,7 +291,7 @@ Vue.component("restaurant-form",{
                                                     <label class="form-label">Surname:</label>
                                                 </div>
                                                 <div class="col-8  mx-auto">
-                                                    <input type="text" class="form-control">
+                                                    <input type="text" class="form-control"  v-model="newManager.surname" v-on:change="signalChange()">
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -281,7 +299,7 @@ Vue.component("restaurant-form",{
                                                     <label class="form-label">Username:</label>
                                                 </div>
                                                 <div class="col-8  mx-auto">
-                                                    <input type="text" class="form-control">
+                                                    <input type="text" class="form-control"  v-model="newManager.username" v-on:change="signalChange()">
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -289,7 +307,7 @@ Vue.component("restaurant-form",{
                                                     <label class="form-label">Password:</label>
                                                 </div>
                                                 <div class="col-8  mx-auto">
-                                                    <input type="password" class="form-control">
+                                                    <input type="password" class="form-control" v-model="newManager.password" v-on:change="signalChange()">
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -297,26 +315,27 @@ Vue.component("restaurant-form",{
                                                     <label class="form-label">Date Of Birth:</label>
                                                 </div>
                                                 <div class="col-8  mx-auto">
-                                                    <input type="date" class="form-control">
+                                                    <input type="date" class="form-control" v-model="newManager.dateOfBirth">
                                                 </div>
                                             </div>
                                             <div class="d-flex gap-2 justify-content-evenly ">
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio">
+                                                    <input class="form-check-input" type="radio" value="male" v-model="gender">
                                                     <label class="form-check-label">
                                                         Male
                                                     </label>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" checked>
+                                                    <input class="form-check-input" type="radio" value="female" v-model="gender">
                                                     <label class="form-check-label">
                                                         Female
                                                     </label>
                                                 </div>
                                             </div>
+                                    <p style="color: red; font-size: small;">{{errorMessage}}</p>
                                             <div class="d-flex justify-content-evenly">
                                                 <button class="btn buttonGroup"  @click.prevent="cancel">Cancel</button>
-                                                <button class="btn buttonGroup" @click.prevent="save">Save</button>
+                                                <button class="btn buttonGroup" @click.prevent="addManager">Save</button>
                                             </div>
                                         </div>
                                     </form>
@@ -338,7 +357,11 @@ Vue.component("restaurant-form",{
 
 	</div>
     
-    `,
+    `, mounted() {
+		axios
+			.get("rest/users/getManagers")
+            .then((response) =>( this.managers = fixDate(response.data)));
+    },
     methods: {
 		nextStep : function()
 		{
@@ -348,14 +371,63 @@ Vue.component("restaurant-form",{
 		{
 			this.step--;
 		},
-		newManager : function()
+		addNewManager : function()
 		{
 			this.table = 0;
 		},
 		cancel : function()
 		{
 			this.table = 1;
-		}
+		},
+		selectManager : function(manager)
+		{
+			this.selectedManager = manager;
+		},
+		addManager : function() {
+
+			if(this.newManager.username =='' || this.newManager.password=='' || this.newManager.name =='' || this.newManager.surname=='' || this.gender =='')
+			{
+				this.errorMessage="All fields are required!";
+			}
+			else
+			{
+				let selectedGender;
+				if (this.gender == 'male') {
+					selectedGender = 0;
+				} else {
+					selectedGender = 1;
+				}
+				
+				this.newManager.gender = selectedGender;
+				this.newManager.role = 'MANAGER';
+    		
+    		axios 
+    			.post('rest/users/addNewUser', JSON.stringify(this.newManager),
+        	{ headers: {
+        		'Content-type': 'application/json',
+        		}
+        	})
+    			.then(response => {
+    				if (response.data == "Username taken") {
+						this.errorMessage="Username is already taken.";
+					}
+					else {
+						axios
+							.get("rest/users/getManagers")
+            				.then((response) =>( this.managers = fixDate(response.data)));
+						this.table = 1; 
+    				}
+				})
+				.catch(err => { 
+                    this.errorMessage="error";
+                })
+			}
+    		
+    	},
+		signalChange : function()
+		{
+			this.errorMessage="";
+		} 
 		
     },
 });

@@ -22,7 +22,7 @@ public class RestaurantDAO {
 	
 	private void loadFromFile(String contextPath) {
 		ObjectMapper mapper = new ObjectMapper();
-	    String path = "E:\\Projects\\WebProject\\FoodDeliveryApp\\src\\files\\restaurants.json";
+	    String path = "C:\\Users\\jovic\\Desktop\\WebProject\\FoodDeliveryApp\\src\\files\\restaurants.json";
 	    
 	    restaurants = new ArrayList<Restaurant>();
 	    
@@ -36,6 +36,16 @@ public class RestaurantDAO {
 	
 	public List<Restaurant> findAll(){
 		return restaurants;
+	}
+	
+	public boolean hasRestaurant(String username) {
+		
+		for(Restaurant r : restaurants) {
+			if(r.getMenagerId().equals(username)) {
+				return true;
+			}
+		}
+		return false;
 	}
 }
 
