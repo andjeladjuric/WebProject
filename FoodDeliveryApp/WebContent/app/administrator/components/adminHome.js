@@ -15,8 +15,7 @@ Vue.component("administrator-home",{
 			selectedOptionForSort : '',
 			newUser : {},
 			errorMessage : '',
-			gender : '',
-			sortType : 'Asc'
+			gender : ''
         }
     }
     ,

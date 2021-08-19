@@ -16,7 +16,9 @@ Vue.component("restaurant-form",{
 				selectedManager : {},
 				newManager : {},
 				errorMessage : '',
-				gender : ''
+				gender : '',
+				searchInput : '',
+				selectedOptionForSort : ''
             
         }
     }
@@ -220,19 +222,21 @@ Vue.component("restaurant-form",{
                                         <div class="row justify-content-center">
                                             <div class="col-5 mx-auto">
                                                 <div class="input-group mb-3">
-                                                    <input type="text" class="form-control">
-                                                    <button class="btn btn-outline-secondary" type="button"><i
+                                                    <input type="text" class="form-control" v-model="searchInput">
+                                                    <button class="btn btn-outline-secondary" type="button" @click ="search"><i
                                                             class="fas fa-search"></i></button>
                                                 </div>
                                             </div>
                                             <div class="col-5 mx-auto">
                                                 <div class="input-group mb-3">
                                                     <label class="input-group-text">Sort By</label>
-                                                    <select class="form-select">
-                                                        <option selected></option>
-                                                        <option value="1">First Name</option>
-                                                        <option value="2">Last Name</option>
-                                                        <option value="3">Username</option>
+                                                    <select class="form-select" v-model="selectedOptionForSort" v-on:change="sort()">
+                                                        <option>Name Asc</option>
+                                        				<option>Name Desc</option>
+				                                        <option>Surname Asc</option>
+				                                        <option>Surname Desc</option>
+				                                        <option>Username Asc</option>
+				                                        <option>Username Desc</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -427,7 +431,39 @@ Vue.component("restaurant-form",{
 		signalChange : function()
 		{
 			this.errorMessage="";
-		} 
+		},
+		search : function() {
+		let matches = [];
+	    for(var u of this.managers) {
+	        if (u.name.toLowerCase().search(searchInput.toLowerCase()) || u.surname.toLowerCase().contains(searchInput.toLowerCase()) || u.username.toLowerCase().contains(searchInput.toLowerCase()) ) {
+	            matches.add(u);
+	        }	        
+	       }
+	      	this.managers = matches;
+    	},
+		sort : function() {
+		
+		switch(this.selectedOptionForSort) {
+		   case "Name Desc":
+			  this.managers.sort((a, b) => (a.name < b.name ? 1 : -1));
+		    break;
+		  case "Surname Asc":
+			  this.managers.sort((a, b) => (a.surname > b.surname ? 1 : -1));
+		    break;
+		  case "Surname Desc":
+			  this.managers.sort((a, b) => (a.surname < b.surname ? 1 : -1));
+		    break;
+		  case "Username Asc":
+			  this.managers.sort((a, b) => (a.username > b.username ? 1 : -1));
+		    break;
+		  case "Username Desc":
+			  this.managers.sort((a, b) => (a.username < b.username ? 1 : -1));
+		    break;
+		  default:
+			  this.managers.sort((a, b) => (a.name > b.name ? 1 : -1));
+		}
+    		
+    	}
 		
     },
 });
