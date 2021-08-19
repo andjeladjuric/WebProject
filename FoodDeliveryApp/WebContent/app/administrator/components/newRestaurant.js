@@ -40,7 +40,7 @@ Vue.component("restaurant-form",{
                                             <label class="form-label">Name:</label>
                                         </div>
                                         <div class="col-8  mx-auto">
-                                            <input type="text" class="form-control">
+                                            <input type="text" class="form-control" v-model="restaurant.name">
                                         </div>
                                     </div>
 
@@ -49,11 +49,11 @@ Vue.component("restaurant-form",{
                                             <label class="form-label">Type:</label>
                                         </div>
                                         <div class="col-8  mx-auto">
-                                            <select class="form-select">
-                                                <option selected>Select</option>
-                                                <option value="1">One</option>
-                                                <option value="2">Two</option>
-                                                <option value="3">Three</option>
+                                            <select class="form-select" v-model="restaurant.type">
+                                                <option>ITALIAN</option>
+                                                <option>FASTFOOD</option>
+                                                <option>SERBIAN</option>
+                                                <option>Three</option>
                                             </select>
                                         </div>
                                     </div>
@@ -463,7 +463,18 @@ Vue.component("restaurant-form",{
 			  this.managers.sort((a, b) => (a.name > b.name ? 1 : -1));
 		}
     		
-    	}
+    	},
+		submit : function()
+		{
+			this.restaurant.menagerId = this.selectedManager.username;
+			this.restaurant.logo = '';
+			axios 
+    			.post('rest/restaurants/addNewRestaurant', JSON.stringify(this.restaurant),
+        	{ headers: {
+        		'Content-type': 'application/json',
+        		}
+        	})
+		}	
 		
     },
 });
