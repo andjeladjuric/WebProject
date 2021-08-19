@@ -54,7 +54,7 @@ public class UserService {
 			return "/FoodDeliveryApp/html/administrator.html";
 
 		} else if (userForLogin.getRole() == Role.MANAGER) {
-			return "";
+			return "/FoodDeliveryApp/managerHomePage.html";
 
 		} else if (userForLogin.getRole() == Role.CUSTOMER) {
 			return "";

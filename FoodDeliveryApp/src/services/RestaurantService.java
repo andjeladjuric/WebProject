@@ -6,6 +6,7 @@ import java.util.Collection;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -17,6 +18,8 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
 import beans.Restaurant;
+import beans.Role;
+import beans.User;
 import dao.RestaurantDAO;
 
 @Path("/restaurants")
@@ -24,6 +27,8 @@ public class RestaurantService {
 
 	@Context
 	ServletContext ctx;
+	@Context
+	HttpServletRequest request;
 	
 	public RestaurantService() {}
 	
@@ -46,6 +51,19 @@ public class RestaurantService {
 		}
 
 		return dao.findAll();
+	}
+	
+	@GET
+	@Path("/getRestaurantForManager")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Restaurant getForManager(@QueryParam("id") String username){
+		RestaurantDAO dao = (RestaurantDAO) ctx.getAttribute("restaurants");
+		User user = (User) request.getSession().getAttribute("loginUser");
+		
+		if(user.getRole() == Role.MANAGER)
+			return dao.getRestaurantByManager(user.getUsername());
+		
+		return null;
 	}
 
 }

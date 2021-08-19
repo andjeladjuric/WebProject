@@ -17,7 +17,7 @@
         },
         "items": [],
         "logo": "",
-        "menagerId": "andjela"
+        "menagerId": ""
     },
     {
         "name": "Caribic",
@@ -37,7 +37,7 @@
         },
         "items": [],
         "logo": "",
-        "menagerId": "andjela"
+        "menagerId": ""
     },
     {
         "name": "Corso",
@@ -55,7 +55,30 @@
             "latitude": 124.555,
             "longitude": 245.64
         },
-        "items": [],
+        "items": [
+            {
+                "id": "1",
+                "deleted": false,
+                "name": "Pizza",
+                "price": 300.0,
+                "type": "Food",
+                "amount": 500.0,
+                "description": "This is a pizza",
+                "imagePath": "",
+                "restaurantId": "2"
+            },
+            {
+                "id": "2",
+                "deleted": false,
+                "name": "Pasta",
+                "price": 300.0,
+                "type": "Food",
+                "amount": 500.0,
+                "description": "This is a great pasta",
+                "imagePath": "",
+                "restaurantId": "2"
+            }
+        ],
         "logo": "",
         "menagerId": "andjela"
     }

@@ -104,7 +104,7 @@ Vue.component("all-orders", {
                                                 <option value="" disabled selected hidden>Status</option>
                                                 <option value="PROCESSING">Processing</option>
                                                 <option value="PREPARATION">Preparation</option>
-                                                <option value="WAITING">Waiting for delivery</option>
+                                                <option value="WAITING">Waiting for courier</option>
                                                 <option value="TRANSPORTING">In transport</option>
                                                 <option value="DELIVERED">Delivered</option>
                                             </select>

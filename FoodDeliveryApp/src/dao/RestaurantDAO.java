@@ -37,5 +37,25 @@ public class RestaurantDAO {
 	public List<Restaurant> findAll(){
 		return restaurants;
 	}
+	
+	public Restaurant getRestaurantByManager(String username) {
+		for(Restaurant r : restaurants) {
+			if(r.getMenagerId().equals(username))
+				return r;
+		}
+		
+		return null;
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
 

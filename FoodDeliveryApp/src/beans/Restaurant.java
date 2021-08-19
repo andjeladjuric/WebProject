@@ -13,14 +13,14 @@ public class Restaurant {
 	private RestaurantType type; // enumeracija?
 	private Status status;
 	private Location location;
-	private ArrayList<String> items = new ArrayList<String>();
+	private ArrayList<Item> items = new ArrayList<Item>();
 	private String logo; 
 	private String menagerId;
 	
 	public Restaurant() {}
 
 	public Restaurant(String name, String id, boolean deleted, RestaurantType type, Status status, Location location,
-			ArrayList<String> items, String logo, String menagerId) {
+			ArrayList<Item> items, String logo, String menagerId) {
 		super();
 		this.name = name;
 		this.id = id;
@@ -81,11 +81,11 @@ public class Restaurant {
 		this.location = location;
 	}
 
-	public ArrayList<String> getItems() {
+	public ArrayList<Item> getItems() {
 		return items;
 	}
 
-	public void setItems(ArrayList<String> items) {
+	public void setItems(ArrayList<Item> items) {
 		this.items = items;
 	}
 
