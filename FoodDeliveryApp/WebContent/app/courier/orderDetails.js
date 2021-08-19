@@ -1,7 +1,17 @@
 Vue.component("order-details", {
     data: function () {
         return {
-            order: {},
+            order: {
+                id: "",
+                deleted: false,
+                items: [],
+                restaurant: {},
+                timeofOrder: "",
+                price: "",
+                customer: "",
+                stauts: "",
+                address: {},
+            },
             orderRequest: {
                 orderId: "",
                 restaurantId: "",
@@ -187,6 +197,9 @@ Vue.component("order-details", {
                 )
                 .then((response) => (this.orderRequest = response.data));
         },
+    },
+    components: {
+        toast,
     },
     filters: {
         dateFormat: function (value, format) {
