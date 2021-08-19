@@ -172,7 +172,7 @@ Vue.component("all-orders", {
                                                 <td>Ordered from:</td>
                                                 <td>Total sum:</td>
                                                 <td>Date and time:</td>
-                                                <td>Stauts:</td>
+                                                <td>Status:</td>
                                                 <td>Delivery Address:</td>
                                             </thead>
     

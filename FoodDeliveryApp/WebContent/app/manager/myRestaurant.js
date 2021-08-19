@@ -22,6 +22,7 @@ Vue.component("myrestaurant", {
                 menagerId: "",
             },
             currentUser: {},
+            orders: [],
             showItems: true,
             showComments: false,
             showOrders: false,
@@ -75,7 +76,7 @@ Vue.component("myrestaurant", {
                         Comments
                     </button>
                     <button type="button" class="btn d-sm-flex buttonGroup" id="ordersButton"
-                        @click="showComments = false; showOrders = !showOrders; showItems = false" v-bind:class="showOrders ? 'active' : 'notActive'">
+                        @click="showComments = false; showOrders = !showOrders; showItems = false; getOrders(restaurant.id)" v-bind:class="showOrders ? 'active' : 'notActive'">
                         Orders
                     </button>
                 </div>
@@ -189,21 +190,22 @@ Vue.component("myrestaurant", {
                     <nav id="myScrollspy">
                         <h4 style="margin-left: 1rem;" class="mb-4">Categories</h4>
                         <nav class="nav nav-pills flex-column">
-                            <a class="nav-link" href="#item-1">Breakfast</a>
-                            <a class="nav-link" href="#item-2">Salads</a>
-                            <a class="nav-link" href="#item-3">Pizza</a>
-                            <a class="nav-link" href="#item-4">Pasta</a>
-                            <a class="nav-link" href="#item-5">Main Dishes</a>
-                            <a class="nav-link" href="#item-6">Drinks</a>
-                            <a class="nav-link" href="#item-7">Desserts</a>
+                            <a class="nav-link" href="#item-1" v-if="!isCategoryEmpty('BREAKFAST')">Breakfast</a>
+                            <a class="nav-link" href="#item-2" v-if="!isCategoryEmpty('SALADS')">Salads</a>
+                            <a class="nav-link" href="#item-3" v-if="!isCategoryEmpty('PIZZA')">Pizza</a>
+                            <a class="nav-link" href="#item-4" v-if="!isCategoryEmpty('PASTA')">Pasta</a>
+                            <a class="nav-link" href="#item-5" v-if="!isCategoryEmpty('MAINDISHES')">Main Dishes</a>
+                            <a class="nav-link" href="#item-6" v-if="!isCategoryEmpty('DRINKS')">Drinks</a>
+                            <a class="nav-link" href="#item-7" v-if="!isCategoryEmpty('DESSERTS')">Desserts</a>
                         </nav>
                     </nav>
                 </div>
 
                 <!-- Items -->
                 <div class="col-md-7 ms-2">
-                    <h4 class="mb-3" id="item-1" style="border-bottom: 1px solid rgba(124, 124, 124, 0.404);">Breakfast</h4>
-                    <div class="card bg-light text-dark mb-2" id="itemAndCommentCards" v-for="item in restaurant.items">
+                    <!-- Breakfast -->
+                    <h4 class="mb-4" id="item-1" v-if="!isCategoryEmpty('BREAKFAST')">Breakfast</h4>
+                    <div class="card bg-light text-dark mb-2" id="itemAndCommentCards" v-for="item in restaurant.items" v-if="item.category == 'BREAKFAST'">
                         <div class="card-body text-start itemBody">
                             <div class="container cardContent text-start">
                                 <h1 class="mb-4">{{item.name}}</h1>
@@ -213,12 +215,133 @@ Vue.component("myrestaurant", {
                                     <p>·</p>
                                     <p class="ms-2">{{item.amount}}</p>
                                 </div>
-                                <p id="price">{{item.price}}</p>
+                                <p id="price">RSD {{item.price}}</p>
                             </div>
 
                             <div class="image-wrapper py-5" style="background-image: url(img/pizza.jpeg);"></div>
                         </div>
                     </div>
+                    <!-- End of breakfast -->
+
+                    <!-- Salads -->
+                    <h4 class="mb-3" id="item-2" v-if="!isCategoryEmpty('SALADS')">Salads</h4>
+                    <div class="card bg-light text-dark mb-2" id="itemAndCommentCards" v-for="item in restaurant.items" v-if="item.category == 'SALADS'">
+                        <div class="card-body text-start itemBody">
+                            <div class="container cardContent text-start">
+                                <h1 class="mb-4">{{item.name}}</h1>
+                                <p class="mb-1">{{item.description}}</p>
+                                <div class="more mb-2">
+                                    <p class="me-2">{{item.type}}</p>
+                                    <p>·</p>
+                                    <p class="ms-2">{{item.amount}}</p>
+                                </div>
+                                <p id="price">RSD {{item.price}}</p>
+                            </div>
+
+                            <div class="image-wrapper py-5" style="background-image: url(img/pizza.jpeg);"></div>
+                        </div>
+                    </div>
+                    <!-- End of salads -->
+
+                    <!-- Pizza -->
+                    <h4 class="mb-3" id="item-3" v-if="!isCategoryEmpty('PIZZA')">Pizza</h4>
+                    <div class="card bg-light text-dark mb-2" id="itemAndCommentCards" v-for="item in restaurant.items" v-if="item.category == 'PIZZA'">
+                        <div class="card-body text-start itemBody">
+                            <div class="container cardContent text-start">
+                                <h1 class="mb-4">{{item.name}}</h1>
+                                <p class="mb-1">{{item.description}}</p>
+                                <div class="more mb-2">
+                                    <p class="me-2">{{item.type}}</p>
+                                    <p>·</p>
+                                    <p class="ms-2">{{item.amount}}</p>
+                                </div>
+                                <p id="price">RSD {{item.price}}</p>
+                            </div>
+
+                            <div class="image-wrapper py-5" style="background-image: url(img/pizza.jpeg);"></div>
+                        </div>
+                    </div>
+                    <!-- End of pizza -->
+
+                    <!-- Pasta -->
+                    <h4 class="mb-3" id="item-4" v-if="!isCategoryEmpty('PASTA')">Pasta</h4>
+                    <div class="card bg-light text-dark mb-2" id="itemAndCommentCards" v-for="item in restaurant.items" v-if="item.category == 'PASTA'">
+                        <div class="card-body text-start itemBody">
+                            <div class="container cardContent text-start">
+                                <h1 class="mb-4">{{item.name}}</h1>
+                                <p class="mb-1">{{item.description}}</p>
+                                <div class="more mb-2">
+                                    <p class="me-2">{{item.type}}</p>
+                                    <p>·</p>
+                                    <p class="ms-2">{{item.amount}}</p>
+                                </div>
+                                <p id="price">RSD {{item.price}}</p>
+                            </div>
+
+                            <div class="image-wrapper py-5" style="background-image: url(img/pizza.jpeg);"></div>
+                        </div>
+                    </div>
+                    <!-- End of pasta -->
+                    
+                    <!-- Main dishes -->
+                    <h4 class="mb-3" id="item-5" v-if="!isCategoryEmpty('MAINDISHES')">Main Dishes</h4>
+                    <div class="card bg-light text-dark mb-2" id="itemAndCommentCards" v-for="item in restaurant.items" v-if="item.category == 'MAINDISHES'">
+                        <div class="card-body text-start itemBody">
+                            <div class="container cardContent text-start">
+                                <h1 class="mb-4">{{item.name}}</h1>
+                                <p class="mb-1">{{item.description}}</p>
+                                <div class="more mb-2">
+                                    <p class="me-2">{{item.type}}</p>
+                                    <p>·</p>
+                                    <p class="ms-2">{{item.amount}}</p>
+                                </div>
+                                <p id="price">RSD {{item.price}}</p>
+                            </div>
+
+                            <div class="image-wrapper py-5" style="background-image: url(img/pizza.jpeg);"></div>
+                        </div>
+                    </div>
+                    <!-- End of main dishes -->
+
+                    <!-- Drinks -->    
+                    <h4 class="mb-3" id="item-6" v-if="!isCategoryEmpty('DRINKS')">Drinks</h4>
+                    <div class="card bg-light text-dark mb-2" id="itemAndCommentCards" v-for="item in restaurant.items" v-if="item.category == 'DRINKS'">
+                        <div class="card-body text-start itemBody">
+                            <div class="container cardContent text-start">
+                                <h1 class="mb-4">{{item.name}}</h1>
+                                <p class="mb-1">{{item.description}}</p>
+                                <div class="more mb-2">
+                                    <p class="me-2">{{item.type}}</p>
+                                    <p>·</p>
+                                    <p class="ms-2">{{item.amount}}</p>
+                                </div>
+                                <p id="price">RSD {{item.price}}</p>
+                            </div>
+
+                            <div class="image-wrapper py-5" style="background-image: url(img/pizza.jpeg);"></div>
+                        </div>
+                    </div>
+                    <!-- End of drinks -->
+
+                    <!-- Desserts -->
+                    <h4 class="mb-3" id="item-7" v-if="!isCategoryEmpty('DESSERTS')">Desserts</h4>
+                    <div class="card bg-light text-dark mb-2" id="itemAndCommentCards" v-for="item in restaurant.items" v-if="item.category == 'DESSERTS'">
+                        <div class="card-body text-start itemBody">
+                            <div class="container cardContent text-start">
+                                <h1 class="mb-4">{{item.name}}</h1>
+                                <p class="mb-1">{{item.description}}</p>
+                                <div class="more mb-2">
+                                    <p class="me-2">{{item.type}}</p>
+                                    <p>·</p>
+                                    <p class="ms-2">{{item.amount}}</p>
+                                </div>
+                                <p id="price">RSD {{item.price}}</p>
+                            </div>
+
+                            <div class="image-wrapper py-5" style="background-image: url(img/pizza.jpeg);"></div>
+                        </div>
+                    </div>
+                    <!-- End of desserts -->
                 </div>
 
                 <div class="col-md">
@@ -256,45 +379,45 @@ Vue.component("myrestaurant", {
             </div>
             <!-- End of items -->
 
-            <!-- Orders -->
-            <div class="row g-2 allOrders" v-if="showOrders">
-                <div class="row g-4 mb-4 cards">
-                    <a href="order.html">
-                        <div class="card shadow bg-light text-dark p-2">
-                            <div class="card-body text-center orderCards">
-                                <div class="row g-2">
-                                    <h1 class="mb-4 orderID">Order #1asb3n5l6l7</h1>
-                                </div>
-                                <div class="row">
-                                    <table class="table-responsive singleOrderView">
-                                        <thead>
-                                            <td>Ordered from:</td>
-                                            <td>Total sum:</td>
-                                            <td>Date and time</td>
-                                            <td>Delivery Address</td>
-                                        </thead>
-
-                                        <tbody>
-                                            <tr>
-                                                <td>
-                                                    <ol type="1">
-                                                        <li>La forza</li>
-                                                        <li>Dva stapica</li>
-                                                    </ol>
-                                                </td>
-                                                <td>RSD 500.00</td>
-                                                <td>05/08/2021 13:00</td>
-                                                <td>Sutjeska 5, Novi Sad 21000</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+            <!-- Cards with my orders -->
+            <div class="row g-4 mb-4 cards" id="vue-orders" v-for="o in orders" v-if="showOrders">
+                    <div class="card shadow bg-light text-dark">
+                        <div class="card-body text-center">
+                            <div class="row g-2 align-items-center d-inline-flex">
+                                <div class="container buttons">
+                                    <h1 class="mb-4 mt-1 orderID">Order #{{o.id}}</h1>
                                 </div>
                             </div>
+                            <div class="row">
+                                <table class="table-responsive singleOrderView">
+                                    <thead>
+                                        <td>Ordered from:</td>
+                                        <td>Total sum:</td>
+                                        <td>Date and time:</td>
+                                        <td>Status:</td>
+                                        <td>Delivery Address:</td>
+                                    </thead>
+
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <ol type="1">
+                                                    <li>{{o.restaurant.name}}</li>
+                                                </ol>
+                                            </td>
+                                            <td>{{o.price}}</td>
+                                            <td>{{o.timeOfOrder | dateFormat('DD.MM.YYYY HH:mm')}}</td>
+                                            <td>{{o.status}}</td>
+                                            <td>{{o.address.street}} {{o.address.number}}, {{o.address.city}} {{o.address.postcode}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
-                    </a>
-                </div>
+                        <a :href="'#/details?id=' + o.id" class="stretched-link"></a>
+                    </div>
             </div>
-            <!-- End of orders -->
+            <!-- End of cards with orders -->
 
             <!-- Comments -->
             <div class="row g-2 comments mt-5" v-if="showComments">
@@ -364,5 +487,31 @@ Vue.component("myrestaurant", {
         axios
             .get("rest/restaurants/getRestaurantForManager")
             .then((response) => (this.restaurant = response.data));
+    },
+    methods: {
+        isCategoryEmpty: function (category) {
+            let itemsInCategory = new Array();
+            for (let i of this.restaurant.items) {
+                if (i.category === category) itemsInCategory.push(i);
+            }
+
+            if (itemsInCategory.length === 0) return true;
+
+            return false;
+        },
+
+        getOrders: function (id) {
+            axios
+                .get("rest/orders/getOrdersForRestaurant", {
+                    params: { id: id },
+                })
+                .then((response) => (this.orders = response.data));
+        },
+    },
+    filters: {
+        dateFormat: function (value, format) {
+            var parsed = moment(value);
+            return parsed.format(format);
+        },
     },
 });

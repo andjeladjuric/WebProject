@@ -1,65 +1,66 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap");
 
-.headline p{
+.headline p {
     font-size: 1rem;
     color: white;
 }
 
-.wrapper{
+.wrapper {
     padding-left: 5%;
     padding-right: 5%;
 }
 
-#itemAndCommentCards{
+#itemAndCommentCards {
     padding: 0;
     border-radius: 0;
     border: none;
-    border-bottom: 1px solid rgba(124, 124, 124, 0.404);
+    border-top: 1px solid rgba(124, 124, 124, 0.404);
 }
 
-#itemAndCommentCards:hover{
+#itemAndCommentCards:hover {
     border: 1px solid rgba(124, 124, 124, 0.404);
 }
 
-.itemBody{
+.itemBody {
     display: inline-flex;
 }
 
-.cardContent{
+.cardContent {
     display: block;
 }
 
-.cardContent h1, h4{
-    color: black; 
-    font-size: 1.2rem; 
+.cardContent h1,
+h4 {
+    color: black;
+    font-size: 1.2rem;
     text-transform: uppercase;
 }
 
-p{
-    font-size: 0.9rem; 
+p {
+    font-size: 0.9rem;
     color: rgba(0, 0, 0, 0.363);
     text-align: start;
 }
 
-.userNameAndType p{
+.userNameAndType p {
     text-transform: uppercase;
     margin-top: 2px;
 }
 
-#rejectButton{
+#rejectButton {
     background: #ecbeb1;
 }
 
-#price{
+#price {
     font-size: 1.1rem;
     color: black;
 }
 
-.more{
+.more {
     display: inline-flex;
 }
 
-.image-wrapper{
+.image-wrapper {
     border-radius: 5px;
     height: auto;
     width: 100%;
@@ -68,7 +69,6 @@ p{
     background-size: cover;
 }
 
-.information{
+.information {
     display: block;
 }
-
