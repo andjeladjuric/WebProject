@@ -100,7 +100,7 @@ public class UserService {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public void updateUser(User updated) {
 		UsersDAO dao = getUsers();
-		dao.editUser(updated);
+		dao.editUser(updated, getCurrentUser());
 	}
 	
 	@POST

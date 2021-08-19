@@ -68,15 +68,15 @@
             }
         ],
         "restaurant": {
-            "name": "La Forza",
-            "id": "1",
+            "name": "Corso",
+            "id": "3",
             "deleted": false,
             "type": "ITALIAN",
             "status": "Open",
             "location": {
                 "address": {
-                    "street": "Katolicke porte",
-                    "number": 6,
+                    "street": "Zmaj Jovina",
+                    "number": 16,
                     "city": "Novi Sad",
                     "postcode": 21000
                 },

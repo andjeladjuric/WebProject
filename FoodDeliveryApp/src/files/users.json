@@ -48,12 +48,12 @@
         "orders": []
     },
     {
-        "username": "miki",
-        "password": "123",
+        "username": "mili",
+        "password": "1234",
         "name": "Milos",
         "surname": "Bikovic",
         "gender": "Male",
-        "dateOfBirth": 1628208000000,
+        "dateOfBirth": 642124800000,
         "role": "COURIER",
         "profilePicPath": "",
         "deleted": false,

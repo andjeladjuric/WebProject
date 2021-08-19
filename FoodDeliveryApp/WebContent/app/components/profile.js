@@ -31,7 +31,6 @@ Vue.component("currentUser-profile", {
                 </div>
             </div>
             <!-- End of sidebar -->
-
             <!-- Page Content -->
             <div class="col-md-3">
                 <div class="d-flex p-2 justify-content-end d-md-none d-lg-none" style="z-index: 2; position: fixed;">
@@ -53,7 +52,6 @@ Vue.component("currentUser-profile", {
                         </div>
                     </div>
                     <!-- End of heading -->
-
                     <!-- Profile overview -->
                     <div class="row my-5 text-center profileOverview" v-if="!showEdit">
                         <h2 class="mb-2">
@@ -68,21 +66,18 @@ Vue.component("currentUser-profile", {
                                         {{currentUser.dateOfBirth | dateFormat('DD.MM.YYYY')}}
                                     </td>
                                 </tr>
-
                                 <tr>
                                     <td>Gender</td>
                                     <td>
                                         {{currentUser.gender}}
                                     </td>
                                 </tr>
-
                                 <tr>
                                     <td>Username</td>
                                     <td>
                                         {{currentUser.username}}
                                     </td>
                                 </tr>
-
                                 <tr>
                                     <td>Password</td>
                                     <td>
@@ -94,7 +89,6 @@ Vue.component("currentUser-profile", {
                         </div>
                     </div>
                     <!-- End of profile overview -->
-
                     <!-- Edit Profile -->
                     <div class="row my-5 text-center editProfile" v-if="showEdit">
                         <h2 class="mb-2">
@@ -114,14 +108,20 @@ Vue.component("currentUser-profile", {
                                         <input class="form-control text-start" type="text" name="lastname" v-model="currentUser.surname"/>
                                     </td>
                                 </tr>
-
+                                <tr>
+                                    <td>Profile picture</td>
+                                    <td>
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input form-control" id="validatedCustomFile" required>
+                                    </div>
+                                    </td>
+                                </tr>
                                 <tr>
                                     <td>Birthday</td>
                                     <td>
-                                        <vuejs-datepicker :bootstrap-styling="true" style="background-color: white; text-align: start;" class="datepicker" format="dd.MM.yyyy" v-model="currentUser.dateOfBirth"></vuejs-datepicker>
+                                        <vuejs-datepicker :bootstrap-styling="true" style="background-color: white; text-align: start;" class="datepicker" format="dd.MM.yyyy" v-model="currentUser.dateOfBirth"></vuejs-datepicker>                                    </td>
                                     </td>
                                 </tr>
-
                                 <tr>
                                     <td>Gender</td>
                                     <td>
@@ -137,7 +137,6 @@ Vue.component("currentUser-profile", {
                                         </label>
                                     </td>
                                 </tr>
-
                                 <tr>
                                     <td>Username</td>
                                     <td>
@@ -145,7 +144,6 @@ Vue.component("currentUser-profile", {
                                             v-model="currentUser.username" />
                                     </td>
                                 </tr>
-
                                 <tr>
                                     <td>Password</td>
                                     <td>
@@ -155,10 +153,9 @@ Vue.component("currentUser-profile", {
                                 </tr>
                             </table>
                         </div>
-
                         <div class="row my-5">
                             <div class="col d-inline-flex justify-content-center">
-                                <button type="button" class="btn profileBtn me-4" v-on:click="updateProfile(); showEdit = !showEdit">Save</button>
+                                <button type="button" class="btn profileBtn me-4" v-on:click="updateProfile(currentUser); showEdit = !showEdit">Save</button>
                                 <button type="button" class="btn profileBtn" style="background: #ecbeb1" v-on:click="cancelEditing(); showEdit = !showEdit">Cancel</button>
                             </div>
                         </div>
@@ -167,10 +164,8 @@ Vue.component("currentUser-profile", {
                 </div>
             </div>
             <!-- End of page content -->
-
             <div class="col-md-2"></div>
         </div>
-
         <!-- Change password -->
         <div class="modal" id="modalForm">
             <div class="modal-dialog modal-dialog-centered">
@@ -197,7 +192,7 @@ Vue.component("currentUser-profile", {
                     </div>
                     <p style="color: red; font-size: small;" class="text-center mx-2">{{errorMessage}}</p>
                     <div class="modal-footer">
-                        <button type="submit" class="btn profileBtn" data-bs-dismiss="modal" @click = "changePass(password); reload()">Save</button>
+                        <button type="submit" class="btn profileBtn" @click = "changePass(password);">Save</button>
                         <button type="submit" class="btn profileBtn" style="background: #ecbeb1" data-bs-dismiss="modal" @click = "cancelChange(); reload()">Cancel</button>
                     </div>
                 </div>
@@ -224,9 +219,17 @@ Vue.component("currentUser-profile", {
                 this.currentUser.surname,
             ];
         },
-        updateProfile: function () {
+        updateProfile: function (currentUser) {
             axios
-                .post("rest/users/updateUser", this.currentUser)
+                .post(
+                    "rest/users/updateUser",
+                    JSON.stringify(this.currentUser),
+                    {
+                        headers: {
+                            "Content-type": "application/json",
+                        },
+                    }
+                )
                 .then((response) => "Success");
         },
 
@@ -259,6 +262,7 @@ Vue.component("currentUser-profile", {
                         } else if (response.data == "Passwords don't match") {
                             this.errorMessage = "Passwords do not match";
                         } else {
+                            window.location.reload();
                         }
                     });
             }

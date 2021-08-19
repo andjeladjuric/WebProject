@@ -29,9 +29,9 @@ Vue.component("all-orders", {
                     <!-- Buttons -->
                     <div class="row mt-3">
                         <div class="container buttons mt-5 mb-1">
-                            <button type="button" class="btn d-sm-flex buttonGroup me-2" id="btn1" @click="isHidden = true"
+                            <button type="button" class="btn d-sm-flex buttonGroup me-2" id="btn1" @click="isHidden = true; hideOnClick();"
                                 v-bind:class="isHidden ? 'active' : 'notActive'">My Orders</button>
-                            <button type="button" class="btn d-sm-flex buttonGroup" @click="isHidden = !isHidden" id="btn2"
+                            <button type="button" class="btn d-sm-flex buttonGroup" @click="isHidden = !isHidden; hideOnClick();" id="btn2"
                                 v-bind:class="!isHidden ? 'active' : 'notActive'">Awaiting</button>
                         </div>
                     </div>
@@ -248,6 +248,24 @@ Vue.component("all-orders", {
             .then((response) => (this.allWaitingOrders = response.data));
     },
     methods: {
+        hideOnClick: function () {
+            this.showSearch = false;
+            this.showFilter = false;
+            this.showSort = false;
+            this.searchInput = {
+                restaurant: "",
+                minPrice: "",
+                maxPrice: "",
+                minDate: "",
+                maxDate: "",
+            };
+            this.filterInput = {
+                restaurantType: "",
+                status: "",
+            };
+            this.sort = "";
+            this.selected = "";
+        },
         changeStatus: function (id) {
             axios
                 .get("rest/orders/orderDelivered", {

@@ -77,27 +77,28 @@ public class UsersDAO {
 		return users.containsKey(username);
 	}
 	
-	public void editUser(User updated) {
+	public void editUser(User updated, User currentUser) {
 		for(User u : users.values()) {
-			if(u.getUsername().equals(updated.getUsername())) {
+			if(u.getUsername().equals(currentUser.getUsername())) {
 				u.setDateOfBirth(updated.getDateOfBirth());
 				u.setGender(updated.getGender());
 				u.setName(updated.getName());
 				u.setSurname(updated.getSurname());
+				u.setUsername(updated.getUsername());
+				serialize();
+				break;
 			}
 		}
-		
-		serialize();
 	}
 	
 	public void changePassword(User updated, String newPassword) {
 		for(User u : users.values()) {
 			if(u.getUsername().equals(updated.getUsername())) {
 				u.setPassword(newPassword);
+				serialize();
+				break;
 			}
 		}
-		
-		serialize();
 	}
 	
 }
