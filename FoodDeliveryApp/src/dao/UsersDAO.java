@@ -195,4 +195,20 @@ public class UsersDAO {
 		
 		return retVal;
 	}
+	
+	public List<User> remove(String username){
+		List<User> allUsers = new ArrayList<User>();
+		
+		for (User u : users.values()) {
+			if(u.getUsername().equals(username))
+				u.setDeleted(true);
+			allUsers.add(u);
+		}
+		users = new LinkedHashMap<String, User>();
+		for (User u : allUsers) {
+			users.put(u.getUsername(), u);
+		}
+		serialize();
+		return getUsers();
+	}
 }

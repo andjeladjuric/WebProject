@@ -133,6 +133,17 @@ public class UserService {
 		return "/FoodDeliveryApp/administratorPage.html";
 	}
 	
+	@POST
+	@Path("/removeUser")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.TEXT_PLAIN)
+	public List<User> removeUser(String username) {
+		
+		UsersDAO allUsersDAO = getUsers();
+
+		return allUsersDAO.remove(username); 
+	}
+	
 	
 	private UsersDAO getUsers() {
 		

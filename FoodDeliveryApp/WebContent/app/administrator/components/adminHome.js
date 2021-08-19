@@ -9,7 +9,9 @@ Vue.component("administrator-home",{
     data: function(){
         return{
 			users:[],
-			selectedUser : {},
+			selectedUser : {
+				username : ''
+			},
 			searchInput : '',
 			selectedFilter : 'All',
 			selectedOptionForSort : '',
@@ -88,7 +90,7 @@ Vue.component("administrator-home",{
                     </div>
                     <div class="row mb-3">
                         <div class="col-4">
-                            <button class="btn buttonGroup"><i class="fa fa-trash"></i> Remove</button>
+                            <button class="btn buttonGroup" v-on:click="remove()"><i class="fa fa-trash"></i> Remove</button>
                         </div>
                         <div class="col-4">
                             <button class="btn buttonGroup active"><i class="fa fa-ban"></i>
@@ -354,7 +356,22 @@ Vue.component("administrator-home",{
 		signalChange : function()
 		{
 			this.errorMessage="";
-		} 
+		},
+		remove : function()
+		{
+				if(this.selectedUser.username == '' ){
+					alert("You must select a user.");
+				}else{
+					let user = this.selectedUser;
+					axios 
+	    			.post('rest/users/removeUser', this.selectedUser.username,
+	        	{ headers: {
+	        		'Content-type': 'text/plain',
+	        		}
+	        	})
+	    			.then((response) =>( this.users = fixDate(response.data)));
+				}			
+		}  
     },
     filters: {
     	dateFormat: function (value, format) {
