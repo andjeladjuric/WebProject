@@ -67,9 +67,10 @@
         <!-- Buttons -->
         <div class="row">
             <div class="container buttons mt-5 mb-1">
-                <button type="button" class="btn d-sm-flex buttonGroup active me-2" id="itemsButton">Items</button>
+                <button type="button" class="btn d-sm-flex buttonGroup me-2" id="itemsButton">Items</button>
                 <button type="button" class="btn d-sm-flex buttonGroup me-2" id="commentsButton">Comments</button>
-                <button type="button" class="btn d-sm-flex buttonGroup" id="ordersButton">Orders</button>
+                <button type="button" class="btn d-sm-flex buttonGroup me-2" id="ordersButton">Orders</button>
+                <button type="button" class="btn d-sm-flex buttonGroup active" id="addItem">Add Item</button>
             </div>
         </div>
         <div class="row mb-4">
@@ -164,8 +165,82 @@
         </div>
         <!-- End of sort for orders -->
 
+        <!-- Add item -->
+        <div class="row my-5 text-center addItemForm">
+            <h2 class="mb-2">
+                <i class="fas fa-plus mb-4 me-4"></i>Add Item
+            </h2>
+            <div class="row d-flex justify-content-center">
+                <table class="table-responsive addItemTable">
+                   <tr>
+                        <td>Name</td>
+                        <td>
+                            <input class="form-control text-start" type="text" name="name" v-model="currentUser.name"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Price</td>
+                        <td>
+                            <input class="form-control text-start" type="text" name="lastname" v-model="currentUser.surname"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Image</td>
+                        <td>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input form-control" id="validatedCustomFile" required>
+                        </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Category</td>
+                        <td>
+                            <select class="form-select" placeholder="Order status" aria-label="Order status">
+                                <option value="Obrada">Obrada</option>
+                                <option value="Preparation">Preparation</option>
+                                <option value="Waiting for delivery">Waiting for delivery</option>
+                                <option value="In transport">In transport</option>
+                                <option value="Delivered">Delivered</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Type</td>
+                        <td>
+                            <label for="radio_1">
+                                <input type="radio" name="gender" :checked="currentUser.gender == 'Male'"
+                                    v-bind:value="'Male'" v-model="currentUser.gender">
+                                Male
+                            </label>
+                            <label for="radio_1">
+                                <input type="radio" name="gender" :checked="currentUser.gender == 'Female'"
+                                    v-bind:value="'Female'" v-model="currentUser.gender">
+                                Female
+                            </label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Description</td>
+                        <td>
+                            <textarea style="height: 80px; white-space: normal;" class="form-control text-start" aria-describedby="username"
+                                v-model="currentUser.username">
+                            </textarea>
+
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="row my-5">
+                <div class="col d-inline-flex justify-content-center">
+                    <button type="button" class="btn profileBtn me-4" v-on:click="updateProfile(currentUser); showEdit = !showEdit">Save</button>
+                    <button type="button" class="btn profileBtn" style="background: #ecbeb1" v-on:click="cancelEditing(); showEdit = !showEdit">Cancel</button>
+                </div>
+            </div>
+        </div>
+        <!-- End of add item -->
+
         <!-- All Items -->
-        <div class="row g-2 allItems mt-5">
+        <div class="row g-2 allItems mt-5" style="display: none;">
             <div class="col-md-2 d-flex">
                 <nav id="myScrollspy">
                     <h4 style="margin-left: 1rem;" class="mb-4">Categories</h4>
@@ -363,6 +438,17 @@
     <script>
         $('#itemsButton').click(function () {
             $('.allItems').show();
+            $('.allOrders').hide();
+            $('.comments').hide();
+            $('.searchButtons').hide();
+            $('#searchOrders').hide();
+            $('#filterOrders').hide();
+            $('#sortOrders').hide();
+        });
+
+        $('#addItem').click(function () {
+            $('.addItem').show();
+            $('.allItems').hide();
             $('.allOrders').hide();
             $('.comments').hide();
             $('.searchButtons').hide();

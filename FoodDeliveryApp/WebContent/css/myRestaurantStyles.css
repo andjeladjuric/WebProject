@@ -6,8 +6,7 @@
 }
 
 .wrapper {
-    padding-left: 5%;
-    padding-right: 5%;
+    width: 85%;
 }
 
 #itemAndCommentCards {
@@ -71,4 +70,37 @@ p {
 
 .information {
     display: block;
+}
+
+.addItem {
+    background: none;
+    font-size: 14px;
+    text-transform: uppercase;
+    display: inline-flex;
+    align-items: flex-end;
+}
+
+.addItem:hover {
+    margin-left: 1rem;
+    border: 1px solid rgba(124, 124, 124, 0.404);
+}
+
+.addItemTable {
+    align-content: center;
+    border-spacing: 0px;
+    border-collapse: separate;
+    width: 80%;
+}
+
+.addItemTable tr,
+.addItemTable td {
+    text-align: start;
+    text-indent: 10%;
+    border: none;
+}
+
+.addItemTable input,
+.addItemTable select,
+.addItemTable textarea {
+    width: 90%;
 }
