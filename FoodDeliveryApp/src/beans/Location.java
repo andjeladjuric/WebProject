@@ -3,18 +3,18 @@ package beans;
 public class Location {
 	
 	private Address address; 
-	private float latitude;
-	private float longitude;
+	private double latitude;
+	private double longitude;
 	
 	public Location() {
 		super();
 	}
 
-	public Location(Address address, float latitude, float longitude) {
+	public Location(Address address, double d, double e) {
 		super();
 		this.address = address;
-		this.latitude = latitude;
-		this.longitude = longitude;
+		this.latitude = d;
+		this.longitude = e;
 	}
 
 	public Address getAddress() {
@@ -25,7 +25,7 @@ public class Location {
 		this.address = address;
 	}
 
-	public float getLatitude() {
+	public double getLatitude() {
 		return latitude;
 	}
 
@@ -33,7 +33,7 @@ public class Location {
 		this.latitude = latitude;
 	}
 
-	public float getLongitude() {
+	public double getLongitude() {
 		return longitude;
 	}
 

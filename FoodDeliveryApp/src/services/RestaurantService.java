@@ -17,7 +17,12 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
 import beans.Restaurant;
+import beans.Role;
+import beans.User;
 import dao.RestaurantDAO;
+import dao.UsersDAO;
+import dto.RestaurantDTO;
+import dto.SignupDTO;
 
 @Path("/restaurants")
 public class RestaurantService {
@@ -45,6 +50,16 @@ public class RestaurantService {
 			System.out.println("Ime: "+ p.getName() +"\n");
 		}
 
+		return dao.findAll();
+	}
+	
+	@POST
+	@Path("/addNewRestaurant")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Collection<Restaurant> addNewRestaurant(RestaurantDTO rest) {
+		RestaurantDAO dao = (RestaurantDAO) ctx.getAttribute("restaurants");
+		dao.addNew(rest);
 		return dao.findAll();
 	}
 

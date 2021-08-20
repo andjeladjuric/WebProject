@@ -3,6 +3,7 @@ package dto;
 import java.util.Date;
 
 import beans.Gender;
+import beans.Role;
 
 public class SignupDTO {
 	
@@ -12,4 +13,5 @@ public class SignupDTO {
 	public String surname;
 	public Gender gender;
 	public Date dateOfBirth;
+	public Role role;
 }

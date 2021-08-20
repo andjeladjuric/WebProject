@@ -2,15 +2,16 @@ package beans;
 
 import java.util.ArrayList;
 
+import dto.RestaurantDTO;
+
 enum Status { Open, Closed }
-enum RestaurantType {  ITALIAN, CHINEESE, SERBIAN, FASTFOOD, BARBEQUE  }
 
 public class Restaurant {
 	
 	private String name;
 	private String id;
 	private boolean deleted;
-	private RestaurantType type; // enumeracija?
+	private RestaurantType type; 
 	private Status status;
 	private Location location;
 	private ArrayList<String> items = new ArrayList<String>();
@@ -18,6 +19,18 @@ public class Restaurant {
 	private String menagerId;
 	
 	public Restaurant() {}
+	
+	public Restaurant(RestaurantDTO rest) {
+		this.name = rest.name;
+		this.id = "";
+		this.deleted = false;
+		this.type = rest.type;
+		this.status = Status.Open;
+		this.logo = rest.logo;
+		this.menagerId = rest.menagerId;
+		Address adr = new Address("Dr Sime Milosevica", 6, "Novi Sad", 2100);
+		this.location = new Location(adr, 124.55, 245.64);
+	}
 
 	public Restaurant(String name, String id, boolean deleted, RestaurantType type, Status status, Location location,
 			ArrayList<String> items, String logo, String menagerId) {

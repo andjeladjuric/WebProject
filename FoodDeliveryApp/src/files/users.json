@@ -11,7 +11,11 @@
         "deleted": false,
         "blocked": false,
         "ordersForCourier": [],
-        "type": null,
+        "type": {
+            "name": "NONE",
+            "discount": 0.0,
+            "requiredPoints": 0
+        },
         "points": 0,
         "orders": []
     },
@@ -23,11 +27,15 @@
         "gender": "Female",
         "dateOfBirth": 944259506625,
         "role": "MANAGER",
-        "profilePicPath": "",
+        "profilePicPath": "img/profile_picture.png",
         "deleted": false,
         "blocked": false,
         "ordersForCourier": [],
-        "type": null,
+        "type": {
+            "name": "NONE",
+            "discount": 0.0,
+            "requiredPoints": 0
+        },
         "points": 0,
         "orders": []
     },
@@ -43,23 +51,31 @@
         "deleted": false,
         "blocked": false,
         "ordersForCourier": [],
-        "type": null,
+        "type": {
+            "name": "BRONZE",
+            "discount": 0.0,
+            "requiredPoints": 0
+        },
         "points": 0,
         "orders": []
     },
     {
-        "username": "mili",
-        "password": "1234",
+        "username": "miki",
+        "password": "123",
         "name": "Milos",
         "surname": "Bikovic",
         "gender": "Male",
-        "dateOfBirth": 642124800000,
+        "dateOfBirth": 814400306625,
         "role": "COURIER",
         "profilePicPath": "",
         "deleted": false,
         "blocked": false,
-        "ordersForCourier": ["1asb3n5l6l7", "5as215fr48"],
-        "type": null,
+        "ordersForCourier": [],
+        "type": {
+            "name": "NONE",
+            "discount": 0.0,
+            "requiredPoints": 0
+        },
         "points": 0,
         "orders": []
     },
@@ -75,7 +91,11 @@
         "deleted": false,
         "blocked": false,
         "ordersForCourier": [],
-        "type": { "name": "NONE", "discount": 0.0, "requiredPoints": 0 },
+        "type": {
+            "name": "GOLD",
+            "discount": 0.0,
+            "requiredPoints": 0
+        },
         "points": 0,
         "orders": []
     },
@@ -91,7 +111,71 @@
         "deleted": false,
         "blocked": false,
         "ordersForCourier": [],
-        "type": { "name": "NONE", "discount": 0.0, "requiredPoints": 0 },
+        "type": {
+            "name": "NONE",
+            "discount": 0.0,
+            "requiredPoints": 0
+        },
+        "points": 0,
+        "orders": []
+    },
+    {
+        "username": "mikimilan",
+        "password": "123",
+        "name": "Milan",
+        "surname": "Mimi",
+        "gender": "Male",
+        "dateOfBirth": 1629244800000,
+        "role": "COURIER",
+        "profilePicPath": "",
+        "deleted": false,
+        "blocked": false,
+        "ordersForCourier": [],
+        "type": {
+            "name": "NONE",
+            "discount": 0.0,
+            "requiredPoints": 0
+        },
+        "points": 0,
+        "orders": []
+    },
+    {
+        "username": "ostoja",
+        "password": "123",
+        "name": "Ostoja",
+        "surname": "Smith",
+        "gender": "Male",
+        "dateOfBirth": 1628035200000,
+        "role": "MANAGER",
+        "profilePicPath": "",
+        "deleted": false,
+        "blocked": false,
+        "ordersForCourier": [],
+        "type": {
+            "name": "NONE",
+            "discount": 0.0,
+            "requiredPoints": 0
+        },
+        "points": 0,
+        "orders": []
+    },
+    {
+        "username": "any",
+        "password": "123",
+        "name": "Ana",
+        "surname": "Jo",
+        "gender": "Female",
+        "dateOfBirth": 1629417600000,
+        "role": "MANAGER",
+        "profilePicPath": "",
+        "deleted": false,
+        "blocked": false,
+        "ordersForCourier": [],
+        "type": {
+            "name": "NONE",
+            "discount": 0.0,
+            "requiredPoints": 0
+        },
         "points": 0,
         "orders": []
     }
