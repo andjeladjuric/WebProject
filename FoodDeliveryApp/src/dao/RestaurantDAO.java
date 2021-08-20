@@ -1,5 +1,7 @@
 package dao;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -7,6 +9,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import beans.Item;
 import beans.Restaurant;
 
 public class RestaurantDAO {
@@ -14,13 +17,13 @@ public class RestaurantDAO {
 	private List<Restaurant> restaurants = new ArrayList<Restaurant>();
 	private String path;
 	
-	public RestaurantDAO() {}
+	public RestaurantDAO() {loadFromFile();}
 	
 	public RestaurantDAO(String contextPath) {
-		loadFromFile(contextPath);
+		loadFromFile();
 	}
 	
-	private void loadFromFile(String contextPath) {
+	private void loadFromFile() {
 		ObjectMapper mapper = new ObjectMapper();
 	    String path = "E:\\Projects\\WebProject\\FoodDeliveryApp\\src\\files\\restaurants.json";
 	    
@@ -32,6 +35,23 @@ public class RestaurantDAO {
 	    } catch (Exception ex) {
 	        ex.printStackTrace();
 	    }
+	}
+	
+	public void serialize() {
+		List<Restaurant> allRestaurants = new ArrayList<Restaurant>();
+		String path = "E:\\Projects\\WebProject\\FoodDeliveryApp\\src\\files\\restaurants.json";
+		
+		for (Restaurant o : restaurants) {
+			allRestaurants.add(o);
+		}
+
+		ObjectMapper objectMapper = new ObjectMapper();
+		try {
+			objectMapper.writeValue(new FileOutputStream(path), allRestaurants);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public List<Restaurant> findAll(){

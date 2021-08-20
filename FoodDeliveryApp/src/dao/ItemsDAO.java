@@ -1,0 +1,117 @@
+package dao;
+
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.UUID;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import beans.Item;
+import beans.Item;
+import beans.Restaurant;
+
+public class ItemsDAO {
+	
+	private List<Item> items = new ArrayList<Item>();
+	private String path;
+	
+	public ItemsDAO() {loadFromFile();}
+	
+	public ItemsDAO(String contextPath) {
+		loadFromFile();
+	}
+	
+	private void loadFromFile() {
+		ObjectMapper mapper = new ObjectMapper();
+	    String path = "E:\\Projects\\WebProject\\FoodDeliveryApp\\src\\files\\items.json";
+	    
+	    items = new ArrayList<Item>();
+	    
+	    try {
+	        items = new ArrayList<>(Arrays.asList(mapper.readValue(Paths.get(path).toFile(), Item[].class)));
+
+	    } catch (Exception ex) {
+	        ex.printStackTrace();
+	    }
+	}
+	
+	public void serialize() {
+		List<Item> allItems = new ArrayList<Item>();
+		String path = "E:\\Projects\\WebProject\\FoodDeliveryApp\\src\\files\\items.json";
+		
+		for (Item o : items) {
+			allItems.add(o);
+		}
+
+		ObjectMapper objectMapper = new ObjectMapper();
+		try {
+			objectMapper.writeValue(new FileOutputStream(path), allItems);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public List<Item> findAll(){
+		return items;
+	}
+	
+	public Item getItemsById(String id) {
+		for(Item i : items) {
+			if(i.getId().equals(id))
+				return i;
+		}
+		
+		return null;
+	}
+	
+	public List<Item> getItemsInRestaurant(String id){
+		RestaurantDAO restaurantDAO = new RestaurantDAO();
+		List<Item> foundItems = new ArrayList<Item>();
+		
+		for(Restaurant r : restaurantDAO.findAll()) {
+			if(r.getId().equals(id)) {
+				for(String i : r.getItems())
+					foundItems.add(getItemsById(i));
+			}
+		}
+		
+		return foundItems;
+	}
+	
+	public void insert(Item i) {
+		String id = UUID.randomUUID().toString();
+		Item createdItem = new Item(id, false, i.getName(), i.getPrice(), i.getType(), i.getAmount(), i.getDescription(), i.getImagePath(), i.getRestaurantId(),
+				i.getCategory());
+		items.add(createdItem);
+		serialize();
+		addItemToRestaurant(i.getRestaurantId(), createdItem.getId());
+	}
+	
+	public void addItemToRestaurant(String id, String itemId) {
+		RestaurantDAO restaurantDAO = new RestaurantDAO();
+		
+		for(Restaurant r : restaurantDAO.findAll()) {
+			if(r.getId().equals(id)) {
+				r.getItems().add(itemId);
+				break;
+			}
+		}
+		
+		restaurantDAO.serialize();
+	}
+	
+}
+
+
+
+
+
+
+
+
+

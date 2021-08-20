@@ -56,7 +56,7 @@ public class RestaurantService {
 	@GET
 	@Path("/getRestaurantForManager")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Restaurant getForManager(@QueryParam("id") String username){
+	public Restaurant getForManager(){
 		RestaurantDAO dao = (RestaurantDAO) ctx.getAttribute("restaurants");
 		User user = (User) request.getSession().getAttribute("loginUser");
 		
