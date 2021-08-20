@@ -36,14 +36,15 @@ Vue.component("restaurant-items", {
             },
             currentUser: {},
             showAddItem: false,
+            errorMessage: "",
         };
     },
     template: `
     <div>
         <!-- All Items -->
         <div class="row g-2 allItems mt-5 justify-content-between" v-if="!showAddItem"> 
-            <div class="col-md-3">
-                <div style="margin-left: 3rem">
+            <div class="col-md-2">
+                <div>
                     <nav id="myScrollspy">
                         <h4 style="margin-left: 1rem;" class="mb-4">Categories</h4>
                         <nav class="nav nav-pills flex-column">
@@ -65,7 +66,7 @@ Vue.component("restaurant-items", {
             </div>
 
             <!-- Items -->
-            <div class="col-md-6">
+            <div class="col-md-7" style="padding-left: 4rem">
                 <!-- Breakfast -->
                 <h4 class="mb-3" id="item-1" v-if="!isCategoryEmpty('BREAKFAST')">Breakfast</h4>
                 <div class="card bg-light text-dark mb-2" id="itemAndCommentCards" v-for="item in items" v-if="item.category == 'BREAKFAST'">
@@ -302,28 +303,28 @@ Vue.component("restaurant-items", {
                 <form>
                     <div class="row d-flex justify-content-center">
                         <table class="table-responsive addItemTable">
-                        <tr>
-                                <td class="label">Name</td>
+                            <tr>
+                                <td class="label">Name <span style="color: red;">*</span></td>
                                 <td>
                                     <input class="form-control text-start" type="text" name="name" v-model="item.name"/>
                                 </td>
                             </tr>
                             <tr>
-                                <td class="label">Price</td>
+                                <td class="label">Price <span style="color: red;">*</span></td>
                                 <td>
                                     <input class="form-control text-start" type="text" name="lastname" v-model="item.price"/>
                                 </td>
                             </tr>
                             <tr>
-                                <td class="label">Image</td>
+                                <td class="label">Image <span style="color: red;">*</span></td>
                                 <td>
                                 <div class="custom-file">
-                                    <input type="file" class="custom-file-input form-control" id="validatedCustomFile">
+                                    <input type="file" class="custom-file-input form-control">
                                 </div>
                                 </td>
                             </tr>
                             <tr>
-                                <td class="label">Category</td>
+                                <td class="label">Category <span style="color: red;">*</span></td>
                                 <td>
                                     <select class="form-select" placeholder="Category" aria-label="Category" v-model="item.category">
                                         <option value="BREAKFAST">Breakfast</option>
@@ -337,18 +338,24 @@ Vue.component("restaurant-items", {
                                 </td>
                             </tr>
                             <tr>
-                                <td class="label">Type</td>
-                                <td style="display: inline;">
-                                    <label for="radio_1">
+                                <td class="label">Type <span style="color: red;">*</span></td>
+                                <td>
+                                    <label>
                                         <input type="radio" name="type" :checked="item.type == 'Food'"
                                             v-bind:value="'Food'" v-model="item.type">
                                         Food
                                     </label>
-                                    <label for="radio_1">
+                                    <label>
                                         <input type="radio" name="type" :checked="item.type == 'Drink'"
                                             v-bind:value="'Drink'" v-model="item.type">
                                         Drink
                                     </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="label">Amount</td>
+                                <td>
+                                    <input class="form-control text-start" type="text" name="amount" v-model="item.amount"/>
                                 </td>
                             </tr>
                             <tr>
@@ -362,7 +369,8 @@ Vue.component("restaurant-items", {
                             </tr>
                         </table>
                     </div>
-                    <div class="row my-5">
+                    <p style="color: red; font-size: small;" class="text-center mt-5">{{errorMessage}}</p>
+                    <div class="row mt-5">
                         <div class="col d-inline-flex justify-content-center">
                             <button type="button" class="btn me-4" @click="addNewItem()">Save</button>
                             <button type="button" class="btn" style="background: #ecbeb1">Cancel</button>
@@ -400,22 +408,39 @@ Vue.component("restaurant-items", {
         },
 
         addNewItem: function () {
-            var newItem = {
-                id: this.item.id,
-                deleted: this.item.deleted,
-                name: this.item.name,
-                price: this.item.price,
-                type: this.item.type,
-                amount: this.item.amount,
-                description: this.item.description,
-                imagePath: this.item.imagePath,
-                restaurantId: this.restaurant.id,
-                category: this.item.category,
-            };
-            axios.post("rest/items/addNewItem", newItem).then((response) => {
-                this.item = response.data;
-                window.location.reload();
-            });
+            if (
+                this.item.name === "" ||
+                this.item.price === "" ||
+                this.item.type === "" ||
+                this.item.category === "" ||
+                this.item.imagePath === ""
+            ) {
+                this.errorMessage = "Please fill in the required fields!";
+            } else if (this.items.indexOf(this.item.name) === -1) {
+                this.errorMessage =
+                    "Item with the name '" +
+                    this.item.name +
+                    "' already exists!";
+            } else {
+                var newItem = {
+                    id: this.item.id,
+                    deleted: this.item.deleted,
+                    name: this.item.name,
+                    price: this.item.price,
+                    type: this.item.type,
+                    amount: this.item.amount,
+                    description: this.item.description,
+                    imagePath: this.item.imagePath,
+                    restaurantId: this.restaurant.id,
+                    category: this.item.category,
+                };
+                axios
+                    .post("rest/items/addNewItem", newItem)
+                    .then((response) => {
+                        this.item = response.data;
+                        window.location.reload();
+                    });
+            }
         },
     },
     filters: {

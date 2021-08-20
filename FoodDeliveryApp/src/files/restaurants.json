@@ -1,1 +1,68 @@
-[{"name":"La Forza","id":"1","deleted":false,"type":"ITALIAN","status":"Open","location":{"address":{"street":"Katolicke porte","number":6,"city":"Novi Sad","postcode":21000},"latitude":124.555,"longitude":245.64},"items":[],"logo":"","menagerId":""},{"name":"Caribic","id":"2","deleted":false,"type":"FASTFOOD","status":"Open","location":{"address":{"street":"Maksima Gorkog","number":6,"city":"Novi Sad","postcode":21000},"latitude":124.555,"longitude":245.64},"items":["caec61c7-21d3-4a2d-a9ff-2858efcf1ea3"],"logo":"","menagerId":""},{"name":"Corso","id":"3","deleted":false,"type":"ITALIAN","status":"Open","location":{"address":{"street":"Zmaj Jovina","number":16,"city":"Novi Sad","postcode":21000},"latitude":124.555,"longitude":245.64},"items":["1","2","686c02c4-816b-48ec-bc48-26c86a0a9f4a","c5a0f1e3-d1c7-469a-a8fb-8939220840b1","f06f0d03-1b62-413f-8527-c7285af889c1"],"logo":"","menagerId":"andjela"}]
+[
+    {
+        "name": "La Forza",
+        "id": "1",
+        "deleted": false,
+        "type": "ITALIAN",
+        "status": "Open",
+        "location": {
+            "address": {
+                "street": "Katolicke porte",
+                "number": 6,
+                "city": "Novi Sad",
+                "postcode": 21000
+            },
+            "latitude": 124.555,
+            "longitude": 245.64
+        },
+        "items": [],
+        "logo": "",
+        "menagerId": ""
+    },
+    {
+        "name": "Caribic",
+        "id": "2",
+        "deleted": false,
+        "type": "FASTFOOD",
+        "status": "Open",
+        "location": {
+            "address": {
+                "street": "Maksima Gorkog",
+                "number": 6,
+                "city": "Novi Sad",
+                "postcode": 21000
+            },
+            "latitude": 124.555,
+            "longitude": 245.64
+        },
+        "items": ["caec61c7-21d3-4a2d-a9ff-2858efcf1ea3"],
+        "logo": "",
+        "menagerId": ""
+    },
+    {
+        "name": "Corso",
+        "id": "3",
+        "deleted": false,
+        "type": "ITALIAN",
+        "status": "Open",
+        "location": {
+            "address": {
+                "street": "Zmaj Jovina",
+                "number": 16,
+                "city": "Novi Sad",
+                "postcode": 21000
+            },
+            "latitude": 124.555,
+            "longitude": 245.64
+        },
+        "items": [
+            "1",
+            "2",
+            "c5a0f1e3-d1c7-469a-a8fb-8939220840b1",
+            "0d21adf1-6ec9-4992-baf9-a896277beaa4",
+            "8bc9a5aa-3df0-4eeb-8b18-78df23b8f8a2"
+        ],
+        "logo": "",
+        "menagerId": "andjela"
+    }
+]
