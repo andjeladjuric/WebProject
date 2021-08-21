@@ -105,6 +105,22 @@ public class ItemsDAO {
 		restaurantDAO.serialize();
 	}
 	
+	public void editItem(Item updatedItem) {
+		for(Item i : items) {
+			if(i.getId().equals(updatedItem.getId())) {
+				i.setName(updatedItem.getName());
+				i.setPrice(updatedItem.getPrice());
+				i.setType(updatedItem.getType());
+				i.setCategory(updatedItem.getCategory());
+				i.setAmount(updatedItem.getAmount());
+				i.setImagePath(updatedItem.getImagePath());
+				i.setDescription(updatedItem.getDescription());
+				serialize();
+				break;
+			}
+		}
+	}
+	
 }
 
 

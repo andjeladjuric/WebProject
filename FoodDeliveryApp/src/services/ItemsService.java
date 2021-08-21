@@ -52,6 +52,15 @@ public class ItemsService {
 		dao.insert(i);
 	}
 	
+	@POST
+	@Path("/updateItem")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public void updateItem(Item i) {
+		ItemsDAO dao = (ItemsDAO) ctx.getAttribute("items");
+		dao.editItem(i);
+	}
+	
 }
 
 
