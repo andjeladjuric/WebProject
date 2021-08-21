@@ -1,8 +1,12 @@
 package services;
 
+import java.util.List;
+
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
@@ -11,6 +15,7 @@ import javax.ws.rs.core.MediaType;
 import beans.ShoppingCart;
 import beans.User;
 import dao.CartDAO;
+import dao.UsersDAO;
 
 
 @Path("/carts")
@@ -26,9 +31,21 @@ public class CartService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public ShoppingCart getCart() {
 		User user = (User) request.getSession().getAttribute("loginUser");
-		System.out.println(user.getUsername());
 		CartDAO dao = getCarts();
 		return dao.getCart(user.getUsername());
+	}
+	
+	@POST
+	@Path("/removeItem")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.TEXT_PLAIN)
+	public ShoppingCart removeUser(String id) {
+		
+		User user = (User) request.getSession().getAttribute("loginUser");
+		CartDAO dao = getCarts();
+		dao.removeItem(user.getUsername(), id);
+
+		return dao.getCart(user.getUsername()); 
 	}
 	
 	private CartDAO getCarts() {

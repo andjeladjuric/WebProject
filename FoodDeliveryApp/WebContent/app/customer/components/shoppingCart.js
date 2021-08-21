@@ -102,9 +102,9 @@ Vue.component("shopping-cart",{
                                                     justify-content-between
                                                     remove_wish
                                                 ">
-                                            <p>
-                                                <i class="fas fa-trash-alt"></i>REMOVE ITEM
-                                            </p>
+                                            <a href="" v-on:click="removeItem(i.id)">
+                                                <i class="fas fa-trash-alt"></i> REMOVE ITEM
+                                            </a>
                                         </div>
                                         <div class="
                                                     col-4
@@ -272,6 +272,15 @@ Vue.component("shopping-cart",{
 					i.quantity--;
 				}
 			}
+		},
+		removeItem : function(id){
+			axios 
+	    			.post('rest/carts/removeItem', id,
+	        	{ headers: {
+	        		'Content-type': 'text/plain',
+	        		}
+	        	})
+	    			.then((response) =>{( this.cart = response.data); this.numOfItems = this.cart.items.length; this.totalPrice = this.cart.totalPrice + 50; });			
 		}
     },
 });

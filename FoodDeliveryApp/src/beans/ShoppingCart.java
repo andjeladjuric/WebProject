@@ -49,8 +49,11 @@ public class ShoppingCart {
 		return totalPrice;
 	}
 
-	public void setTotalPrice(double totalPrice) {
-		this.totalPrice = totalPrice;
+	public void setTotalPrice() {
+		this.totalPrice = 0;
+		for(Item i : items) {
+			totalPrice += i.getPrice();
+		}
 	}
 	
 	

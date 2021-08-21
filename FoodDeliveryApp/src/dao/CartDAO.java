@@ -9,6 +9,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import beans.Item;
 import beans.ShoppingCart;
 
 public class CartDAO {
@@ -49,6 +50,26 @@ public class CartDAO {
 				return cart;
 		}
 		return null;
+	}
+	
+	public void removeItem(String user, String item) {
+		
+		List<ShoppingCart> newCarts = new ArrayList<ShoppingCart>();
+		List<Item> items = new ArrayList<Item>();
+		
+		for(ShoppingCart cart : carts) {
+			if(cart.getCustomer().equals(user)) {
+				for(Item i : cart.getItems()) {
+					if(!i.getId().equals(item)) {
+						items.add(i);
+					}
+				}
+				cart.setItems(items);
+				cart.setTotalPrice();
+			}
+			newCarts.add(cart);
+		}
+		serialize();
 	}
 
 }
