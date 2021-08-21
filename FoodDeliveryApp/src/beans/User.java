@@ -154,8 +154,16 @@ public class User {
 		return type;
 	}
 
-	public void setType(CustomerType type) {
-		this.type = type;
+	public void setType() {
+		if(points >= 25 && points <= 50) {
+			this.type = new CustomerType(Type.BRONZE);
+		}else if(points >= 25 && points <= 50) {
+			this.type = new CustomerType(Type.SILVER);	
+		}else if(points >= 25 && points <= 50){
+			this.type = new CustomerType(Type.GOLD);	
+		}else {
+			this.type = new CustomerType(Type.NONE);	
+		}
 	}
 
 	public int getPoints() {

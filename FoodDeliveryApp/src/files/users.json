@@ -93,8 +93,8 @@
         "ordersForCourier": [],
         "type": {
             "name": "GOLD",
-            "discount": 0.0,
-            "requiredPoints": 0
+            "discount": 20,
+            "requiredPoints": 100
         },
         "points": 0,
         "orders": []

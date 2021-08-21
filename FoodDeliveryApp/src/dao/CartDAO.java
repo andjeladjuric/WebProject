@@ -69,6 +69,7 @@ public class CartDAO {
 			}
 			newCarts.add(cart);
 		}
+		carts = newCarts;
 		serialize();
 	}
 

@@ -14,6 +14,27 @@ public class CustomerType {
 		this.discount = discount;
 		this.requiredPoints = requiredPoints;
 	}
+	
+	public CustomerType(Type name) {
+		super();
+		this.name = name;
+
+		if(name == Type.BRONZE) {
+			this.requiredPoints = 25;
+			this.discount = 10;
+		}
+		else if(name == Type.SILVER) {
+			this.requiredPoints = 50;
+			this.discount = 15;
+		}
+		else if(name == Type.GOLD) {
+			this.requiredPoints = 100;
+			this.discount = 20;
+		}else {
+			this.requiredPoints = 100;
+			this.discount = 20;
+		}
+	}
 
 	public Type getName() {
 		return name;

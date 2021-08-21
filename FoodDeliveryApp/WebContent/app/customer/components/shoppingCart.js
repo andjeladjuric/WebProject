@@ -3,7 +3,10 @@ Vue.component("shopping-cart",{
         return{
             cart : {},
 			numOfItems : 0,
-			totalPrice : 0
+			totalPrice : 0,
+			user : {},
+			paragraph : "",
+			haveDiscount : true
         }
     }
     ,
@@ -181,10 +184,10 @@ Vue.component("shopping-cart",{
                             <div class="pt-4">
                                 <h5 class="mb-4">Discount codes</h5>
                                 <p>
-                                    <i class="fas fa-medal" style="color: gold"></i>
-                                    30% as Golden user
+                                    <i class="fas fa-medal" v-if="haveDiscount"></i>
+                                    {{paragraph}}
                                 </p>
-                                <button class="btn buttonGroup active">
+                                <button class="btn buttonGroup active" v-bind:disabled="haveDiscount == false" v-on:click="useDiscount()">
                                     Use discount
                                 </button>
                             </div>
@@ -256,7 +259,22 @@ Vue.component("shopping-cart",{
     `, mounted() {
 		axios
 			.get("rest/carts/getCart")
-            .then((response) =>{( this.cart = response.data); this.numOfItems = this.cart.items.length; this.totalPrice = this.cart.totalPrice + 50; });
+            .then((response) =>{( this.cart = response.data); this.numOfItems = this.cart.items.length; this.totalPrice = this.cart.totalPrice + 100; });
+		axios
+			.get("rest/users/getCurrentUser")
+            .then((response) =>{
+				( this.user = response.data);
+				if(this.user.type.name === "GOLD"){
+					this.paragraph = "You have 20% discount as a GOLD user.";
+				}else if(this.user.type.name === "SILVER"){
+					this.paragraph = "You have 15% discount as a SILVER user.";
+				}else if(this.user.type.name === "BRONZE"){
+					this.paragraph = "You have 10% discount as a BRONZE user." 
+				}else if(this.user.type.name === "NONE"){
+					this.paragraph = "You do not have any discount currently." 
+					this.haveDiscount = false;
+				}
+			})
     },
     methods: {
 		incr : function(id){
@@ -280,7 +298,12 @@ Vue.component("shopping-cart",{
 	        		'Content-type': 'text/plain',
 	        		}
 	        	})
-	    			.then((response) =>{( this.cart = response.data); this.numOfItems = this.cart.items.length; this.totalPrice = this.cart.totalPrice + 50; });			
+	    			.then((response) =>{( this.cart = response.data); this.numOfItems = this.cart.items.length; this.totalPrice = this.cart.totalPrice + 100; });			
+		},
+		useDiscount : function(){
+			this.totalPrice = this.totalPrice * (1 - this.user.type.discount * 0.01);
+			this.haveDiscount = false;
+			
 		}
     },
 });
