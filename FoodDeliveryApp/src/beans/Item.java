@@ -10,10 +10,13 @@ public class Item {
 	private double price;
 	private ItemType type;
 	private double amount;
+	private double points;
 	private String description;
 	private String imagePath;
 	private String restaurantId;
+	private double quantity;
 	
+
 	public Item() {}
 
 	public Item(String id, boolean deleted, String name, double price, ItemType type, double amount, String description,
@@ -28,6 +31,15 @@ public class Item {
 		this.description = description;
 		this.imagePath = imagePath;
 		this.restaurantId = restaurantId;
+		this.quantity = 1;
+	}
+
+	public double getPoints() {
+		return points;
+	}
+
+	public void setPoints(double points) {
+		this.points = points;
 	}
 
 	public String getId() {
@@ -102,6 +114,11 @@ public class Item {
 		this.restaurantId = restaurantId;
 	}
 	
-	
+	public double getQuantity() {
+		return quantity;
+	}
 
+	public void setQuantity(double quantity) {
+		this.quantity = quantity;
+	}
 }

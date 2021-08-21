@@ -1,7 +1,9 @@
 Vue.component("shopping-cart",{
     data: function(){
         return{
-            fleg:0
+            cart : {},
+			numOfItems : 0,
+			totalPrice : 0
         }
     }
     ,
@@ -19,9 +21,9 @@ Vue.component("shopping-cart",{
                                 mb-lg-0 mb-5
                                 shadow
                             ">
-                        <h2 class="py-4">Cart (2 items)</h2>
+                        <h2 class="py-4">Cart ({{numOfItems}} items)</h2>
 
-                        <div class="card p-4">
+                        <div class="card p-4"  v-for="i in cart.items">
                             <div class="row">
                                 <!-- cart images div -->
                                 <div class="
@@ -45,19 +47,18 @@ Vue.component("shopping-cart",{
                                         <!-- product name  -->
                                         <div class="col-6 card-title">
                                             <h1 class="mb-4 product_name">
-                                                Fried Chicken
+                                                {{i.name}}
                                             </h1>
                                             <p class="mb-2">
-                                                Description - chicken,
-                                                potato, salad
+                                                Description: {{i.description}}
                                             </p>
-                                            <p class="mb-2">Size: 250g</p>
+                                            <p class="mb-2">Size: {{i.amount}} mg</p>
                                             <p class="mb-2">
-                                                Restaurant: "McDonalds"
+                                                Restaurant: 
                                             </p>
                                             <p class="mb-3">
                                                 <i class="fas fa-coins"></i>
-                                                5
+                                                {{i.points}}
                                             </p>
                                         </div>
                                         <!-- quantity inc dec -->
@@ -70,7 +71,7 @@ Vue.component("shopping-cart",{
                                                 <li class="page-item">
                                                     <button class="page-link" style="
                                                                 border-radius: 15px;
-                                                            ">
+                                                            " v-on:click="decr(i.id)">
                                                         <i class="
                                                                     fas
                                                                     fa-minus
@@ -78,13 +79,12 @@ Vue.component("shopping-cart",{
                                                     </button>
                                                 </li>
                                                 <li class="page-item">
-                                                    <input type="text" name="" class="page-link" value="0"
-                                                        id="textbox" />
+                                                    <input type="text" name="" class="page-link" v-model="i.quantity" />
                                                 </li>
                                                 <li class="page-item">
                                                     <button class="page-link" style="
                                                                 border-radius: 15px;
-                                                            ">
+                                                            " v-on:click="incr(i.id)">
                                                         <i class="
                                                                     fas
                                                                     fa-plus
@@ -113,16 +113,16 @@ Vue.component("shopping-cart",{
                                                     price_money
                                                 ">
                                             <h3>
-                                                $<span id="itemval">0.00
+                                                <span id="itemval">{{i.price}} din
                                                 </span>
                                             </h3>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
                         <hr />
 
+                        </div>
                         
                     </div>
                     <!-- right side div -->
@@ -142,7 +142,7 @@ Vue.component("shopping-cart",{
                                     ">
                                 <p>Product amount</p>
                                 <p>
-                                    $<span id="product_total_amt">0.00</span>
+                                    <span id="product_total_amt">{{cart.totalPrice}}</span> din
                                 </p>
                             </div>
                             <div class="
@@ -151,7 +151,7 @@ Vue.component("shopping-cart",{
                                         justify-content-between
                                     ">
                                 <p>Shipping Charge</p>
-                                <p>$<span>50.0</span></p>
+                                <p><span>100</span> din</p>
                             </div>
                             <div class="
                                         price_indiv
@@ -170,7 +170,7 @@ Vue.component("shopping-cart",{
                                     ">
                                 <p>The total amount</p>
                                 <p>
-                                    $<span id="total_cart_amt">0.00</span>
+                                    <span id="total_cart_amt">{{totalPrice}}</span> din
                                 </p>
                             </div>
                             <button class="btn buttonGroup" data-bs-toggle="modal" data-bs-target="#checkoutModal">
@@ -184,8 +184,7 @@ Vue.component("shopping-cart",{
                                     <i class="fas fa-medal" style="color: gold"></i>
                                     30% as Golden user
                                 </p>
-                                <button class="btn buttonGroup active" data-bs-toggle="modal"
-                                    data-bs-target="#commentModal">
+                                <button class="btn buttonGroup active">
                                     Use discount
                                 </button>
                             </div>
@@ -195,6 +194,7 @@ Vue.component("shopping-cart",{
             </div>
         </div>
     </div>
+
     <!--Modal-->
     <div class="modal fade" id="checkoutModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -251,10 +251,27 @@ Vue.component("shopping-cart",{
             </div>
         </div>
     </div>
-
 	</div>
     
-    `,
+    `, mounted() {
+		axios
+			.get("rest/carts/getCart")
+            .then((response) =>{( this.cart = response.data); this.numOfItems = this.cart.items.length; this.totalPrice = this.cart.totalPrice + 50; });
+    },
     methods: {
+		incr : function(id){
+			for(var i of this.cart.items){
+				if(i.id === id){
+					i.quantity++;
+				}
+			}
+		},
+		decr : function(id){
+			for(var i of this.cart.items){
+				if(i.id === id && i.quantity != 1){
+					i.quantity--;
+				}
+			}
+		}
     },
 });

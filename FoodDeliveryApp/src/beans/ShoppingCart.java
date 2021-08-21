@@ -1,17 +1,19 @@
 package beans;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
-public class ShoppingBasket {
+public class ShoppingCart {
 	
 	private String id;
 	private String customer; // username
-	private HashMap<String, Integer> items = new HashMap<String, Integer>(); // Cuvati cijeli item ili kljuc napraviti?
+	private List<Item> items = new ArrayList<Item>(); // Cuvati cijeli item ili kljuc napraviti?
 	private double totalPrice;
 	
-	public ShoppingBasket() {}
+	public ShoppingCart() {}
 
-	public ShoppingBasket(String id, String customer, HashMap<String, Integer> items, double totalPrice) {
+	public ShoppingCart(String id, String customer, List<Item> items, double totalPrice) {
 		super();
 		this.id = id;
 		this.customer = customer;
@@ -35,11 +37,11 @@ public class ShoppingBasket {
 		this.customer = customer;
 	}
 
-	public HashMap<String, Integer> getItems() {
+	public List<Item> getItems() {
 		return items;
 	}
 
-	public void setItems(HashMap<String, Integer> items) {
+	public void setItems(List<Item> items) {
 		this.items = items;
 	}
 
