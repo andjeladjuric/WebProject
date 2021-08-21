@@ -59,7 +59,7 @@ public class UserService {
 			return "";
 
 		} else if (userForLogin.getRole() == Role.CUSTOMER) {
-			return "";
+			return "/FoodDeliveryApp/customerPage.html";
 			
 		}else if (userForLogin.getRole() == Role.COURIER) {
 			return "/FoodDeliveryApp/courierHomePage.html";
