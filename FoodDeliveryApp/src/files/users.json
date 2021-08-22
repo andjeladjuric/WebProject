@@ -92,7 +92,7 @@
         "blocked": false,
         "ordersForCourier": [],
         "type": {
-            "name": "GOLD",
+            "name": "SILVER",
             "discount": 20,
             "requiredPoints": 100
         },

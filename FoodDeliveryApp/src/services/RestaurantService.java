@@ -62,6 +62,14 @@ public class RestaurantService {
 		dao.addNew(rest);
 		return dao.findAll();
 	}
+	
+	@POST
+	@Path("/getById")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Restaurant getById(String id) {
+		RestaurantDAO dao = (RestaurantDAO) ctx.getAttribute("restaurants");
+		return dao.getById(id);
+	}
 
 }
 

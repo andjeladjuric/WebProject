@@ -5,8 +5,10 @@ Vue.component("shopping-cart",{
 			numOfItems : 0,
 			totalPrice : 0,
 			user : {},
+			medal : "",
 			paragraph : "",
-			haveDiscount : true
+			haveDiscount : true,
+			points : 0
         }
     }
     ,
@@ -57,7 +59,7 @@ Vue.component("shopping-cart",{
                                             </p>
                                             <p class="mb-2">Size: {{i.amount}} mg</p>
                                             <p class="mb-2">
-                                                Restaurant: 
+                                                Restaurant: ""
                                             </p>
                                             <p class="mb-3">
                                                 <i class="fas fa-coins"></i>
@@ -82,7 +84,7 @@ Vue.component("shopping-cart",{
                                                     </button>
                                                 </li>
                                                 <li class="page-item">
-                                                    <input type="text" name="" class="page-link" v-model="i.quantity" />
+                                                    <input type="text" readonly class="page-link" v-model="i.quantity" />
                                                 </li>
                                                 <li class="page-item">
                                                     <button class="page-link" style="
@@ -105,7 +107,7 @@ Vue.component("shopping-cart",{
                                                     justify-content-between
                                                     remove_wish
                                                 ">
-                                            <a href="" v-on:click="removeItem(i.id)">
+                                            <a href="" v-on:click="removeItem(i)">
                                                 <i class="fas fa-trash-alt"></i> REMOVE ITEM
                                             </a>
                                         </div>
@@ -162,7 +164,7 @@ Vue.component("shopping-cart",{
                                         justify-content-between
                                     ">
                                 <p>Points</p>
-                                <p><span id="shipping_charge">20</span></p>
+                                <p><span id="shipping_charge">{{points}}</span></p>
                             </div>
                             <hr />
                             <div class="
@@ -184,7 +186,10 @@ Vue.component("shopping-cart",{
                             <div class="pt-4">
                                 <h5 class="mb-4">Discount codes</h5>
                                 <p>
-                                    <i class="fas fa-medal" v-if="haveDiscount"></i>
+                                    <i class="fas fa-medal" style="color:brown;" v-if="haveDiscount && medal == 'BRONZE'"></i>
+                                    <i class="fas fa-medal" style="color:gold;" v-if="haveDiscount && medal == 'GOLD'"></i>
+                                    <i class="fas fa-medal" v-if="haveDiscount && medal == 'SILVER'"></i>
+                    
                                     {{paragraph}}
                                 </p>
                                 <button class="btn buttonGroup active" v-bind:disabled="haveDiscount == false" v-on:click="useDiscount()">
@@ -259,11 +264,20 @@ Vue.component("shopping-cart",{
     `, mounted() {
 		axios
 			.get("rest/carts/getCart")
-            .then((response) =>{( this.cart = response.data); this.numOfItems = this.cart.items.length; this.totalPrice = this.cart.totalPrice + 100; });
+            .then((response) =>{
+            ( this.cart = response.data);
+             this.numOfItems = this.cart.items.length;
+             this.totalPrice = this.cart.totalPrice + 100;
+              for(var i of this.cart.items){
+            	this.points = this.points + i.points;
+            };
+              });
+            
 		axios
 			.get("rest/users/getCurrentUser")
             .then((response) =>{
 				( this.user = response.data);
+				this.medal = this.user.type.name;
 				if(this.user.type.name === "GOLD"){
 					this.paragraph = "You have 20% discount as a GOLD user.";
 				}else if(this.user.type.name === "SILVER"){
@@ -291,19 +305,28 @@ Vue.component("shopping-cart",{
 				}
 			}
 		},
-		removeItem : function(id){
+		removeItem : function(i){
 			axios 
-	    			.post('rest/carts/removeItem', id,
+	    			.post('rest/carts/removeItem', i.id,
 	        	{ headers: {
 	        		'Content-type': 'text/plain',
 	        		}
 	        	})
-	    			.then((response) =>{( this.cart = response.data); this.numOfItems = this.cart.items.length; this.totalPrice = this.cart.totalPrice + 100; });			
+	    			.then((response) =>{( this.cart = response.data); this.numOfItems = this.cart.items.length; this.totalPrice = this.cart.totalPrice + 100; this.points = this.points - i.points});			
 		},
 		useDiscount : function(){
 			this.totalPrice = this.totalPrice * (1 - this.user.type.discount * 0.01);
 			this.haveDiscount = false;
 			
+		},
+		getRestaurant : function(id){
+			axios 
+	    		.post('rest/restaurants/getById', id,
+	        	{ headers: {
+	        		'Content-type': 'text/plain',
+	        		}
+	        	})
+	    		.then((response) =>{( response.data);});
 		}
     },
 });

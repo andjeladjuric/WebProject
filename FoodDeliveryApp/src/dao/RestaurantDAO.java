@@ -72,5 +72,13 @@ public class RestaurantDAO {
 		serialize();
 		
 	}
+	
+	public Restaurant getById(String id) {
+		for(Restaurant r : restaurants) {
+			if(r.getId().equals(id))
+				return r;
+		}
+		return null;
+	}
 }
 
