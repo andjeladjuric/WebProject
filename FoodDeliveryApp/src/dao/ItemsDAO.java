@@ -146,9 +146,23 @@ public class ItemsDAO {
 			if(i.getId().equals(id)){
 				i.setDeleted(true);
 				serialize();
+				removeItemFromRestaurant(i.getRestaurantId(), i.getId());
 				break;
 			}
 		}
+	}
+	
+	public void removeItemFromRestaurant(String id, String itemId) {
+		RestaurantDAO restaurantDAO = new RestaurantDAO();
+		
+		for(Restaurant r : restaurantDAO.findAll()) {
+			if(r.getId().equals(id)) {
+				r.getItems().remove(itemId);
+				break;
+			}
+		}
+		
+		restaurantDAO.serialize();
 	}
 	
 }

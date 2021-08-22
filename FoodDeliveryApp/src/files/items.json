@@ -1,7 +1,7 @@
 [
     {
         "id": "1",
-        "deleted": true,
+        "deleted": false,
         "name": "Pizza",
         "price": 300.0,
         "type": "Food",
@@ -49,7 +49,7 @@
     },
     {
         "id": "c5a0f1e3-d1c7-469a-a8fb-8939220840b1",
-        "deleted": false,
+        "deleted": true,
         "name": "Grcka salata",
         "price": 300.0,
         "type": "Food",

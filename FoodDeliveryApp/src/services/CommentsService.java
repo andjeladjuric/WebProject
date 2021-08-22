@@ -1,0 +1,66 @@
+package services;
+
+import java.util.Collection;
+
+import javax.annotation.PostConstruct;
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+
+import beans.Comment;
+import beans.Role;
+import beans.User;
+import dao.CommentsDAO;
+import dao.ItemsDAO;
+
+@Path("/comments")
+public class CommentsService {
+	@Context
+	ServletContext ctx;
+	@Context
+	HttpServletRequest request;
+	
+	public CommentsService() {}
+	
+	@PostConstruct
+	public void init() {
+		if(ctx.getAttribute("comments") == null) {
+			String contextPath = ctx.getRealPath("");
+			ctx.setAttribute("comments", new CommentsDAO(contextPath));
+		}
+	}
+	
+	@GET
+	@Path("/getCommentsForManager")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getCommentsForManager(@QueryParam("id") String restaurantId){
+		CommentsDAO dao = (CommentsDAO) ctx.getAttribute("comments");
+		User user = (User) request.getSession().getAttribute("loginUser");
+		
+		if(user != null && user.getRole() == Role.MANAGER)
+			return Response
+					.status(Response.Status.ACCEPTED).entity("SUCCESS")
+					.entity(dao.getCommentsForRestaurant(restaurantId))
+					.build();
+		
+		return Response.status(403).type("text/plain")
+                .entity("You do not have permission to access!").build();
+	}
+}
+
+
+
+
+
+
+
+
+
+
+

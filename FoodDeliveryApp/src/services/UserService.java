@@ -7,6 +7,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -120,6 +121,15 @@ public class UserService {
 		
 		dao.changePassword(user, updated.newPassword);
 		return "Success";
+	}
+	
+	@GET
+	@Path("/getUserByUsername")
+	@Produces(MediaType.APPLICATION_JSON)
+	public User getUserByUsername(@QueryParam("id") String username) {
+		UsersDAO dao = getUsers();
+		dao.load();
+		return dao.getByUsername(username);
 	}
 	
 	private UsersDAO getUsers() {

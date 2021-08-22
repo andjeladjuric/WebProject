@@ -1,6 +1,6 @@
 package beans;
 
-enum State {REJECTED, ACCEPTED}
+enum State {UNDEFINED, REJECTED, ACCEPTED}
 public class Comment {
 	
 	private String id;
