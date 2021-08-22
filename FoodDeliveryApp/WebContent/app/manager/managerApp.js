@@ -8,6 +8,7 @@ const orderDetails = {
 const restaurantItems = { template: "<restaurant-items></restaurant-items>" };
 const comments = { template: "<comments></comments>" };
 const orders = { template: "<rest-orders></rest-orders>" };
+const editItem = { template: "<edit-item></edit-item>" };
 
 const router = new VueRouter({
     mode: "hash",
@@ -24,6 +25,7 @@ const router = new VueRouter({
                     path: "/myRestaurant/orders/details",
                     component: orderDetails,
                 },
+                { path: "/myRestaurant/editItem", component: editItem },
             ],
         },
         { path: "/profile", component: profile },

@@ -34,6 +34,7 @@ Vue.component("restaurant-items", {
                 restaurantId: "",
                 category: "",
             },
+            itemToDelete: {},
             currentUser: {},
             showAddItem: false,
             errorMessage: "",
@@ -72,14 +73,7 @@ Vue.component("restaurant-items", {
                 <div class="card bg-light text-dark mb-2" id="itemAndCommentCards" v-for="item in items" v-if="item.category == 'BREAKFAST'">
                     <div class="card-body text-start itemBody">
                         <div class="container cardContent text-start">
-                            <div class="more mb-4">
-                                <h1 class="mt-1">{{item.name}}</h1>
-                                <h1>
-                                    <button type="button" class="btn ms-3 btn-sm btn-outline-secondary" style="background: none">
-                                        <i class="fas fa-edit me-2"></i>Edit item
-                                    </button>
-                                </h1>
-                            </div>
+                            <h1 class="mt-1 mb-3">{{item.name}}</h1>
                             <p class="mb-1">{{item.description}}</p>
                             <div class="more mb-2">
                                 <p class="me-2">{{item.type}}</p>
@@ -87,6 +81,17 @@ Vue.component("restaurant-items", {
                                 <p class="ms-2">{{item.amount}}</p>
                             </div>
                             <p id="price">RSD {{item.price}}</p>
+
+                            <a :href="'#/myRestaurant/editItem?id=' + item.id" class="link">
+                                <button type="button" class="btn btn-sm btn-outline-secondary editItem" data-toggle="tooltip" data-placement="bottom" title="Edit item"
+                                    style="background: none; width: 3rem">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                            </a>
+                            <button type="button" class="btn ms-1 btn-sm btn-outline-secondary deleteItem" style="background: none; width: 3rem"
+                                data-toggle="tooltip" data-placement="bottom" title="Delete item" @click="itemToDelete.id = item.id" data-bs-toggle="modal" data-bs-target="#myModal">
+                                <i class="fas fa-trash"></i>
+                            </button>
                         </div>
 
                         <div class="image-wrapper py-5" style="background-image: url(img/pizza.jpeg);"></div>
@@ -99,14 +104,7 @@ Vue.component("restaurant-items", {
                 <div class="card bg-light text-dark mb-2" id="itemAndCommentCards" v-for="item in items" v-if="item.category == 'SALADS'">
                     <div class="card-body text-start itemBody">
                         <div class="container cardContent text-start">
-                            <div class="more mb-4">
-                                <h1 class="mt-1">{{item.name}}</h1>
-                                <h1>
-                                    <button type="button" class="btn ms-3 btn-sm btn-outline-secondary" style="background: none">
-                                        <i class="fas fa-edit me-2"></i>Edit item
-                                    </button>
-                                </h1>
-                            </div>
+                            <h1 class="mt-1 mb-3">{{item.name}}</h1>
                             <p class="mb-1">{{item.description}}</p>
                             <div class="more mb-2">
                                 <p class="me-2">{{item.type}}</p>
@@ -114,6 +112,17 @@ Vue.component("restaurant-items", {
                                 <p class="ms-2">{{item.amount}}</p>
                             </div>
                             <p id="price">RSD {{item.price}}</p>
+
+                            <a :href="'#/myRestaurant/editItem?id=' + item.id" class="link">
+                                <button type="button" class="btn btn-sm btn-outline-secondary editItem" data-toggle="tooltip" data-placement="bottom" title="Edit item"
+                                    style="background: none; width: 3rem">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                            </a>
+                            <button type="button" class="btn ms-1 btn-sm btn-outline-secondary deleteItem" style="background: none; width: 3rem"
+                                data-toggle="tooltip" data-placement="bottom" title="Delete item" @click="itemToDelete.id = item.id" data-bs-toggle="modal" data-bs-target="#myModal">
+                                <i class="fas fa-trash"></i>
+                            </button>
                         </div>
 
                         <div class="image-wrapper py-5" style="background-image: url(img/pizza.jpeg);"></div>
@@ -126,14 +135,7 @@ Vue.component("restaurant-items", {
                 <div class="card bg-light text-dark mb-2" id="itemAndCommentCards" v-for="item in items" v-if="item.category == 'PIZZA'">
                     <div class="card-body text-start itemBody">
                         <div class="container cardContent text-start">
-                            <div class="more mb-4">
-                                <h1 class="mt-1">{{item.name}}</h1>
-                                <h1>
-                                    <button type="button" class="btn ms-3 btn-sm btn-outline-secondary" style="background: none">
-                                        <i class="fas fa-edit me-2"></i>Edit item
-                                    </button>
-                                </h1>
-                            </div>
+                            <h1 class="mt-1 mb-3">{{item.name}}</h1>
                             <p class="mb-1">{{item.description}}</p>
                             <div class="more mb-2">
                                 <p class="me-2">{{item.type}}</p>
@@ -141,6 +143,17 @@ Vue.component("restaurant-items", {
                                 <p class="ms-2">{{item.amount}}</p>
                             </div>
                             <p id="price">RSD {{item.price}}</p>
+
+                            <a :href="'#/myRestaurant/editItem?id=' + item.id" class="link">
+                                <button type="button" class="btn btn-sm btn-outline-secondary editItem" data-toggle="tooltip" data-placement="bottom" title="Edit item"
+                                    style="background: none; width: 3rem">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                            </a>
+                            <button type="button" class="btn ms-1 btn-sm btn-outline-secondary deleteItem" style="background: none; width: 3rem"
+                                data-toggle="tooltip" data-placement="bottom" title="Delete item" @click="itemToDelete.id = item.id" data-bs-toggle="modal" data-bs-target="#myModal">
+                                <i class="fas fa-trash"></i>
+                            </button>
                         </div>
 
                         <div class="image-wrapper py-5" style="background-image: url(img/pizza.jpeg);"></div>
@@ -153,14 +166,7 @@ Vue.component("restaurant-items", {
                 <div class="card bg-light text-dark mb-2" id="itemAndCommentCards" v-for="item in items" v-if="item.category == 'PASTA'">
                     <div class="card-body text-start itemBody">
                         <div class="container cardContent text-start">
-                            <div class="more mb-4">
-                                <h1 class="mt-1">{{item.name}}</h1>
-                                <h1>
-                                    <button type="button" class="btn ms-3 btn-sm btn-outline-secondary" style="background: none">
-                                        <i class="fas fa-edit me-2"></i>Edit item
-                                    </button>
-                                </h1>
-                            </div>
+                            <h1 class="mt-1 mb-3">{{item.name}}</h1>
                             <p class="mb-1">{{item.description}}</p>
                             <div class="more mb-2">
                                 <p class="me-2">{{item.type}}</p>
@@ -168,6 +174,17 @@ Vue.component("restaurant-items", {
                                 <p class="ms-2">{{item.amount}}</p>
                             </div>
                             <p id="price">RSD {{item.price}}</p>
+
+                            <a :href="'#/myRestaurant/editItem?id=' + item.id" class="link">
+                                <button type="button" class="btn btn-sm btn-outline-secondary editItem" data-toggle="tooltip" data-placement="bottom" title="Edit item"
+                                    style="background: none; width: 3rem">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                            </a>
+                            <button type="button" class="btn ms-1 btn-sm btn-outline-secondary deleteItem" style="background: none; width: 3rem"
+                                data-toggle="tooltip" data-placement="bottom" title="Delete item" @click="itemToDelete.id = item.id" data-bs-toggle="modal" data-bs-target="#myModal">
+                                <i class="fas fa-trash"></i>
+                            </button>
                         </div>
 
                         <div class="image-wrapper py-5" style="background-image: url(img/pizza.jpeg);"></div>
@@ -180,14 +197,7 @@ Vue.component("restaurant-items", {
                 <div class="card bg-light text-dark mb-2" id="itemAndCommentCards" v-for="item in items" v-if="item.category == 'MAINDISHES'">
                     <div class="card-body text-start itemBody">
                         <div class="container cardContent text-start">
-                            <div class="more mb-4">
-                                <h1 class="mt-1">{{item.name}}</h1>
-                                <h1>
-                                    <button type="button" class="btn ms-3 btn-sm btn-outline-secondary" style="background: none">
-                                        <i class="fas fa-edit me-2"></i>Edit item
-                                    </button>
-                                </h1>
-                            </div>
+                            <h1 class="mt-1 mb-3">{{item.name}}</h1>
                             <p class="mb-1">{{item.description}}</p>
                             <div class="more mb-2">
                                 <p class="me-2">{{item.type}}</p>
@@ -195,6 +205,17 @@ Vue.component("restaurant-items", {
                                 <p class="ms-2">{{item.amount}}</p>
                             </div>
                             <p id="price">RSD {{item.price}}</p>
+
+                            <a :href="'#/myRestaurant/editItem?id=' + item.id" class="link">
+                                <button type="button" class="btn btn-sm btn-outline-secondary editItem" data-toggle="tooltip" data-placement="bottom" title="Edit item"
+                                    style="background: none; width: 3rem">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                            </a>
+                            <button type="button" class="btn ms-1 btn-sm btn-outline-secondary deleteItem" style="background: none; width: 3rem"
+                                data-toggle="tooltip" data-placement="bottom" title="Delete item" @click="itemToDelete.id = item.id" data-bs-toggle="modal" data-bs-target="#myModal">
+                                <i class="fas fa-trash"></i>
+                            </button>
                         </div>
 
                         <div class="image-wrapper py-5" style="background-image: url(img/pizza.jpeg);"></div>
@@ -207,14 +228,7 @@ Vue.component("restaurant-items", {
                 <div class="card bg-light text-dark mb-2" id="itemAndCommentCards" v-for="item in items" v-if="item.category == 'DRINKS'">
                     <div class="card-body text-start itemBody">
                         <div class="container cardContent text-start">
-                            <div class="more mb-4">
-                                <h1 class="mt-1">{{item.name}}</h1>
-                                <h1>
-                                    <button type="button" class="btn ms-3 btn-sm btn-outline-secondary" style="background: none">
-                                        <i class="fas fa-edit me-2"></i>Edit item
-                                    </button>
-                                </h1>
-                            </div>
+                            <h1 class="mt-1 mb-3">{{item.name}}</h1>
                             <p class="mb-1">{{item.description}}</p>
                             <div class="more mb-2">
                                 <p class="me-2">{{item.type}}</p>
@@ -222,6 +236,17 @@ Vue.component("restaurant-items", {
                                 <p class="ms-2">{{item.amount}}</p>
                             </div>
                             <p id="price">RSD {{item.price}}</p>
+
+                            <a :href="'#/myRestaurant/editItem?id=' + item.id" class="link">
+                                <button type="button" class="btn btn-sm btn-outline-secondary editItem" data-toggle="tooltip" data-placement="bottom" title="Edit item"
+                                    style="background: none; width: 3rem">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                            </a>
+                            <button type="button" class="btn ms-1 btn-sm btn-outline-secondary deleteItem" style="background: none; width: 3rem"
+                                data-toggle="tooltip" data-placement="bottom" title="Delete item" @click="itemToDelete.id = item.id" data-bs-toggle="modal" data-bs-target="#myModal">
+                                <i class="fas fa-trash"></i>
+                            </button>
                         </div>
 
                         <div class="image-wrapper py-5" style="background-image: url(img/pizza.jpeg);"></div>
@@ -234,14 +259,7 @@ Vue.component("restaurant-items", {
                 <div class="card bg-light text-dark mb-2" id="itemAndCommentCards" v-for="item in items" v-if="item.category == 'DESSERTS'">
                     <div class="card-body text-start itemBody">
                         <div class="container cardContent text-start">
-                            <div class="more mb-4">
-                                <h1 class="mt-1">{{item.name}}</h1>
-                                <h1>
-                                    <button type="button" class="btn ms-3 btn-sm btn-outline-secondary" style="background: none">
-                                        <i class="fas fa-edit me-2"></i>Edit item
-                                    </button>
-                                </h1>
-                            </div>
+                            <h1 class="mt-1 mb-3">{{item.name}}</h1>
                             <p class="mb-1">{{item.description}}</p>
                             <div class="more mb-2">
                                 <p class="me-2">{{item.type}}</p>
@@ -249,6 +267,17 @@ Vue.component("restaurant-items", {
                                 <p class="ms-2">{{item.amount}}</p>
                             </div>
                             <p id="price">RSD {{item.price}}</p>
+
+                            <a :href="'#/myRestaurant/editItem?id=' + item.id" class="link">
+                                <button type="button" class="btn btn-sm btn-outline-secondary editItem" data-toggle="tooltip" data-placement="bottom" title="Edit item"
+                                    style="background: none; width: 3rem">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                            </a>
+                            <button type="button" class="btn ms-1 btn-sm btn-outline-secondary deleteItem" style="background: none; width: 3rem"
+                                data-toggle="tooltip" data-placement="bottom" title="Delete item" @click="itemToDelete.id = item.id" data-bs-toggle="modal" data-bs-target="#myModal">
+                                <i class="fas fa-trash"></i>
+                            </button>
                         </div>
 
                         <div class="image-wrapper py-5" style="background-image: url(img/pizza.jpeg);"></div>
@@ -339,15 +368,15 @@ Vue.component("restaurant-items", {
                             </tr>
                             <tr>
                                 <td class="label">Type <span style="color: red;">*</span></td>
-                                <td>
-                                    <label>
-                                        <input type="radio" name="type" :checked="item.type == 'Food'"
-                                            v-bind:value="'Food'" v-model="item.type">
+                                <td style="text-indent: 0">
+                                    <label style="white-space: nowrap;" class="me-5">
+                                        <input type="radio" class="radio" name="type" :checked="updatedItem.type == 'Food'"
+                                            v-bind:value="'Food'" v-model="updatedItem.type">
                                         Food
                                     </label>
-                                    <label>
-                                        <input type="radio" name="type" :checked="item.type == 'Drink'"
-                                            v-bind:value="'Drink'" v-model="item.type">
+                                    <label style="white-space: nowrap">
+                                        <input type="radio" class="radio" name="type" :checked="updatedItem.type == 'Drink'"
+                                            v-bind:value="'Drink'" v-model="updatedItem.type">
                                         Drink
                                     </label>
                                 </td>
@@ -373,7 +402,7 @@ Vue.component("restaurant-items", {
                     <div class="row mt-5">
                         <div class="col d-inline-flex justify-content-center">
                             <button type="button" class="btn me-4" @click="addNewItem()">Save</button>
-                            <button type="button" class="btn" style="background: #ecbeb1">Cancel</button>
+                            <button type="button" class="btn" style="background: #ecbeb1" @click="cancelAdding()">Cancel</button>
                         </div>
                     </div>
                 </form>
@@ -381,6 +410,29 @@ Vue.component("restaurant-items", {
             <div class="col-md-2"></div>
         </div>
         <!-- End of add item -->
+
+        <!-- Delete item modal -->
+        <div id="myModal" class="modal fade">
+            <div class="modal-dialog modal-confirm">
+                <div class="modal-content">
+                    <div class="modal-header flex-column">
+                        <div class="icon-box">
+                        <i class="fas fa-trash mt-3 mb-3"></i>
+                        </div>						
+                        <h4 class="modal-title w-100 mt-5">Are you sure?</h4>	
+                        <button type="button" class="close" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Do you really want to delete this item? This process cannot be undone.</p>
+                    </div>
+                    <div class="modal-footer justify-content-center">
+                        <button type="button" class="btn" data-bs-dismiss="modal" @click="deleteItem(itemToDelete.id)">Confirm</button>
+                        <button type="button" class="btn" style="background: #ecbeb1">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End of delete item modal -->
     </div>
     `,
     mounted() {
@@ -441,6 +493,18 @@ Vue.component("restaurant-items", {
                         window.location.reload();
                     });
             }
+        },
+
+        cancelAdding: function () {
+            window.location.reload();
+        },
+
+        deleteItem: function (id) {
+            axios
+                .get("rest/items/deleteItem", {
+                    params: { id: id },
+                })
+                .then((response) => window.location.reload());
         },
     },
     filters: {

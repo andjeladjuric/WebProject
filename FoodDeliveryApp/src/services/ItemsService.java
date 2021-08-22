@@ -43,6 +43,14 @@ public class ItemsService {
 		return dao.getItemsInRestaurant(id);
 	}
 	
+	@GET
+	@Path("/getItemById")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Item getItemById(@QueryParam("id") String id) {
+		ItemsDAO dao = (ItemsDAO) ctx.getAttribute("items");
+		return dao.getItemById(id);
+	}
+	
 	@POST
 	@Path("/addNewItem")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -59,6 +67,15 @@ public class ItemsService {
 	public void updateItem(Item i) {
 		ItemsDAO dao = (ItemsDAO) ctx.getAttribute("items");
 		dao.editItem(i);
+	}
+	
+	@GET
+	@Path("/deleteItem")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public void deleteItem(@QueryParam("id") String id) {
+		ItemsDAO dao = (ItemsDAO) ctx.getAttribute("items");
+		dao.deleteItem(id);
 	}
 	
 }

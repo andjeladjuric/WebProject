@@ -75,12 +75,32 @@ public class ItemsDAO {
 		
 		for(Restaurant r : restaurantDAO.findAll()) {
 			if(r.getId().equals(id)) {
-				for(String i : r.getItems())
-					foundItems.add(getItemsById(i));
+				for(String i : r.getItems()) {
+					if(!isItemDeleted(i))
+						foundItems.add(getItemsById(i));
+				}
 			}
 		}
 		
 		return foundItems;
+	}
+	
+	private boolean isItemDeleted(String id) {
+		for(Item i : items) {
+			if(i.getId().equals(id) && i.isDeleted())
+				return true;
+		}
+		
+		return false;
+	}
+	
+	public Item getItemById(String id) {
+		for(Item i : items) {
+			if(i.getId().equals(id))
+				return i;
+		}
+		
+		return null;
 	}
 	
 	public void insert(Item i) {
@@ -115,6 +135,16 @@ public class ItemsDAO {
 				i.setAmount(updatedItem.getAmount());
 				i.setImagePath(updatedItem.getImagePath());
 				i.setDescription(updatedItem.getDescription());
+				serialize();
+				break;
+			}
+		}
+	}
+	
+	public void deleteItem(String id) {
+		for(Item i : items) {
+			if(i.getId().equals(id)){
+				i.setDeleted(true);
 				serialize();
 				break;
 			}

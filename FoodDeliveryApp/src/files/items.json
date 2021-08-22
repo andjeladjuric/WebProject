@@ -1,7 +1,7 @@
 [
     {
         "id": "1",
-        "deleted": false,
+        "deleted": true,
         "name": "Pizza",
         "price": 300.0,
         "type": "Food",
@@ -54,7 +54,7 @@
         "price": 300.0,
         "type": "Food",
         "amount": 500.0,
-        "description": "This is a cool salad",
+        "description": "This is a cool salad reallz",
         "imagePath": "",
         "restaurantId": "3",
         "category": "SALADS"
