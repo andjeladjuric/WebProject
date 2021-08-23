@@ -61,19 +61,14 @@ Vue.component("manager-order-details", {
                         </table>
                     </div>
 
-                    <div class="row g-4 mb-5">
+                    <div class="row g-4 mb-5 table-responsive" style="overflow-x: auto">
                         <table class="bg-light">
                             <tr>
-                                <th colspan="3" id="additional">
-                                    Additional information
-                                </th>
+                                <th colspan="3">Info</th>
                             </tr>
                             <tr>
                                 <td id="customerName">Customer</td>
-                                <td>
-                                    {{order.customer}}
-                                </td>
-                                <td></td>
+                                <td>{{order.customer}}</td>
                             </tr>
 
                             <tr>
@@ -81,7 +76,6 @@ Vue.component("manager-order-details", {
                                 <td>
                                     {{order.timeOfOrder | dateFormat('DD.MM.YYYY HH:mm')}}
                                 </td>
-                                <td></td>
                             </tr>
 
                             <tr>
@@ -89,7 +83,6 @@ Vue.component("manager-order-details", {
                                 <td>
                                     {{order.restaurant.name}}
                                 </td>
-                                <td></td>
                             </tr>
 
                             <tr>
@@ -109,7 +102,6 @@ Vue.component("manager-order-details", {
                                 <td>
                                     {{order.id}}
                                 </td>
-                                <td></td>
                             </tr>
                         </table>
                     </div>

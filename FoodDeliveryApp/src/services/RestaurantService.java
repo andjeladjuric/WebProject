@@ -72,6 +72,7 @@ public class RestaurantService {
 	public Restaurant getById(String id) {
 		RestaurantDAO dao = (RestaurantDAO) ctx.getAttribute("restaurants");
 		return dao.getById(id);
+	}
 
 	@GET
 	@Path("/getRestaurantForManager")

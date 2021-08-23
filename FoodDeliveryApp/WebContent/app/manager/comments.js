@@ -2,6 +2,7 @@ Vue.component("comments", {
     data: function () {
         return {
             allComments: [],
+            users: [],
             user: {},
         };
     },
@@ -12,12 +13,14 @@ Vue.component("comments", {
 
         <div class="col-md-8 ms-2">
             <h4 class="mb-3" id="item-1">All comments</h4>
-            <div class="card bg-light text-dark mb-2" id="itemAndCommentCards" v-for="comment in allComments"
+            <div class="card bg-light text-dark mb-2" id="itemAndCommentCards" v-for="(comment, index) in allComments"
                 style="border-top: 1px solid rgba(124, 124, 124, 0.404);">
                 <div class="card-body text-start">
                     <div class="container cardContent text-start">
                         <div class="container mb-2 d-inline-flex userNameAndType">
-                            <h1 class="me-2">{{comment.customer}}</h1>
+                            <h1 class="me-2"> {{comment.customer}}
+                            <!-- {{users[index] === undefined ? getCustomers(comment) : users[index].name}} -->
+                            </h1>
                             <p class="me-2">·</p>
                             <p>golden</p>
                         </div>
@@ -61,7 +64,10 @@ Vue.component("comments", {
                 })
                 .then((response) => {
                     this.user = response.data;
+                    this.users.push(response.data);
                 });
+
+            return this.user.name;
         },
 
         rejectComment: function (id) {

@@ -50,7 +50,7 @@
         "profilePicPath": "",
         "deleted": false,
         "blocked": false,
-        "ordersForCourier": [],
+        "ordersForCourier": ["5as215fr48"],
         "type": {
             "name": "BRONZE",
             "discount": 0.0,
@@ -70,7 +70,7 @@
         "profilePicPath": "",
         "deleted": false,
         "blocked": false,
-        "ordersForCourier": [],
+        "ordersForCourier": ["5as215fr48"],
         "type": {
             "name": "NONE",
             "discount": 0.0,
