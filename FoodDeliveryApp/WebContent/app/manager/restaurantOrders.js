@@ -23,7 +23,7 @@ Vue.component("rest-orders", {
     },
     template: `
     <div>
-            <div class="row mb-4">
+            <div class="row mb-2">
                 <div class="col-md container buttons searchButtons">
                     <button type="button" class="btn d-sm-flex filters" id="searchButton" @click="showSearch = !showSearch">search<i
                             class="fas fa-caret-down p-1"></i></button>
@@ -127,50 +127,47 @@ Vue.component("rest-orders", {
             <!-- End of sort for orders -->
 
             <!-- Cards with my orders -->
-            <div class="row g-4 mb-4 cards" id="vue-orders">
-                <div class="col-md-2">
-                    <h4 style="margin-left: 1rem;" class="mb-2">Options</h4>
-                    <button type="button" class="btn buttonGroup requests d-flex" style="white-space: normal">
+            <div class="row g-4 mb-4 cards align-contet-center justify-content-center" id="vue-orders" style="padding-left: 7%; padding-right: 7%">
+                <div class="container">
+                    <button type="button" class="btn buttonGroup requests d-flex mb-2" style="white-space: normal">
                         <i class="fas fa-boxes me-2 p-1" style="color: #ecbeb1;"></i>Check requests
                     </button>
                 </div>
 
-                <div class="col-md-10">
-                    <div class="card shadow bg-light text-dark mb-5" v-for="o in orders">
-                        <div class="card-body text-center">
-                            <div class="row g-2 align-items-center d-inline-flex">
-                                <div class="col-md container buttons">
-                                    <h1 class="mb-4 mt-1 orderID">Order #{{o.id}}</h1>
-                                </div>
-                            </div>
-                            <div class="container">
-                                <table class="singleOrderView">
-                                    <thead>
-                                        <td scope="col">Ordered from:</td>
-                                        <td scope="col">Total sum:</td>
-                                        <td scope="col">Date and time:</td>
-                                        <td scope="col">Status:</td>
-                                        <td scope="col">Delivery Address:</td>
-                                    </thead>
-    
-                                    <tbody>
-                                        <tr>
-                                            <td data-label="Ordered from:">
-                                                <ul>
-                                                    <li>{{o.restaurant.name}}</li>
-                                                </ul>
-                                            </td>
-                                            <td data-label="Total sum:" class="orderDetails">{{o.price}}</td>
-                                            <td data-label="Date and time:" class="orderDetails">{{o.timeOfOrder | dateFormat('DD.MM.YYYY HH:mm')}}</td>
-                                            <td data-label="Status:" class="orderDetails">{{o.status}}</td>
-                                            <td data-label="Delivery address:" class="orderDetails">{{o.address.street}} {{o.address.number}}, {{o.address.city}} {{o.address.postcode}}</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                <div class="card shadow bg-light text-dark mb-5" v-for="o in orders">
+                    <div class="card-body text-center">
+                        <div class="row g-2 align-items-center d-inline-flex">
+                            <div class="col-md container buttons">
+                                <h1 class="mb-4 mt-1 orderID">Order #{{o.id}}</h1>
                             </div>
                         </div>
-                        <a :href="'#/myRestaurant/orders/details?id=' + o.id" class="stretched-link"></a>
+                        <div class="container">
+                            <table class="singleOrderView">
+                                <thead>
+                                    <td scope="col">Ordered from:</td>
+                                    <td scope="col">Total sum:</td>
+                                    <td scope="col">Date and time:</td>
+                                    <td scope="col">Status:</td>
+                                    <td scope="col">Delivery Address:</td>
+                                </thead>
+
+                                <tbody>
+                                    <tr>
+                                        <td data-label="Ordered from:">
+                                            <ul>
+                                                <li>{{o.restaurant.name}}</li>
+                                            </ul>
+                                        </td>
+                                        <td data-label="Total sum:" class="orderDetails">{{o.price}}</td>
+                                        <td data-label="Date and time:" class="orderDetails">{{o.timeOfOrder | dateFormat('DD.MM.YYYY HH:mm')}}</td>
+                                        <td data-label="Status:" class="orderDetails">{{o.status}}</td>
+                                        <td data-label="Delivery address:" class="orderDetails">{{o.address.street}} {{o.address.number}}, {{o.address.city}} {{o.address.postcode}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
+                    <a :href="'#/myRestaurant/orders/details?id=' + o.id" class="stretched-link"></a>
                 </div>
             </div>
             <!-- End of cards with orders -->
