@@ -25,7 +25,7 @@ public class OrderDAO {
 	
 	private void loadFromFile(String contextPath) {
 		ObjectMapper mapper = new ObjectMapper();
-	    String path = "E:\\Projects\\WebProject\\FoodDeliveryApp\\src\\files\\orders.json";
+	    String path = "C:\\Users\\jovic\\Desktop\\WebProject\\FoodDeliveryApp\\src\\files\\orders.json";
 	    
 	    orders = new ArrayList<Order>();
 	    
@@ -39,7 +39,7 @@ public class OrderDAO {
 	
 	public void serialize() {
 		List<Order> allOrders = new ArrayList<Order>();
-		String path = "E:\\Projects\\WebProject\\FoodDeliveryApp\\src\\files\\orders.json";
+		String path = "C:\\Users\\jovic\\Desktop\\WebProject\\FoodDeliveryApp\\src\\files\\orders.json";
 		
 		for (Order o : orders) {
 			allOrders.add(o);
@@ -118,6 +118,31 @@ public class OrderDAO {
 		
 		return false;
 	}
+	
+	public List<Order> getDeliveredForCustomer(User user){
+		List<Order> customerOrders = new ArrayList<Order>();
+		
+		for(String id : user.getOrders()) {
+			if(getOrderById(id) != null && (getOrderById(id).getStatus().equals(OrderStatus.DELIVERED)))  {
+				customerOrders.add(getOrderById(id));
+			}
+		}
+		
+		return customerOrders;
+	}
+	
+	public List<Order> getNotDeliveredForCustomer(User user){
+		List<Order> customerOrders = new ArrayList<Order>();
+		
+		for(String id : user.getOrders()) {
+			if(getOrderById(id) != null && (!getOrderById(id).getStatus().equals(OrderStatus.DELIVERED)))  {
+				customerOrders.add(getOrderById(id));
+			}
+		}
+		
+		return customerOrders;
+	}
+	
 }
 
 

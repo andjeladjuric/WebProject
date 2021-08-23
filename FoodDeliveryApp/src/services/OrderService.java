@@ -145,4 +145,28 @@ public class OrderService {
 		OrderRequestDAO requestsDAO = new OrderRequestDAO();
 		return requestsDAO.findAll();
 	}
+	
+	@GET
+	@Path("/getDeliveredForCustomer")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<Order> getDeliveredForCustomer(){
+		OrderDAO dao = (OrderDAO) ctx.getAttribute("orders");
+		User user = (User) request.getSession().getAttribute("loginUser");
+	
+		
+		return dao.getDeliveredForCustomer(user);
+	}
+	
+	@GET
+	@Path("/getNotDeliveredForCustomer")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<Order> getNotDeliveredForCustomer(){
+		OrderDAO dao = (OrderDAO) ctx.getAttribute("orders");
+		User user = (User) request.getSession().getAttribute("loginUser");
+	
+		
+		return dao.getNotDeliveredForCustomer(user);
+	}
+	
+	
 }
