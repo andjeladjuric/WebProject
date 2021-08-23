@@ -27,7 +27,7 @@ public class ItemsDAO {
 	
 	private void loadFromFile() {
 		ObjectMapper mapper = new ObjectMapper();
-	    String path = "E:\\Projects\\WebProject\\FoodDeliveryApp\\src\\files\\items.json";
+	    String path = "C:\\Users\\jovic\\Desktop\\WebProject\\FoodDeliveryApp\\src\\files\\items.json";
 	    
 	    items = new ArrayList<Item>();
 	    

@@ -56,6 +56,15 @@ public class RestaurantService {
 		return dao.findAll();
 	}
 	
+	@GET
+	@Path("/getRestaurant")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Restaurant getRestaurant(){
+		RestaurantDAO dao = (RestaurantDAO) ctx.getAttribute("restaurants");
+
+		return dao.getById("3");
+	}
+	
 	@POST
 	@Path("/addNewRestaurant")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -72,6 +81,7 @@ public class RestaurantService {
 	public Restaurant getById(String id) {
 		RestaurantDAO dao = (RestaurantDAO) ctx.getAttribute("restaurants");
 		return dao.getById(id);
+	}
 
 	@GET
 	@Path("/getRestaurantForManager")

@@ -81,6 +81,8 @@ public class RestaurantDAO {
 			if(r.getId().equals(id))
 				return r;
 		}
+		return null;
+	}
 
 	public Restaurant getRestaurantByManager(String username) {
 		for(Restaurant r : restaurants) {
