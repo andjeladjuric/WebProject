@@ -10,6 +10,7 @@ import java.util.List;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import beans.Comment;
+import beans.User;
 
 public class CommentsDAO {
 	private List<Comment> comments = new ArrayList<Comment>();
@@ -67,7 +68,17 @@ public class CommentsDAO {
 		return commentsForRestaurant;
 	}
 	
-	
+	public User getCustomer(String commentId){
+		UsersDAO usersDAO = new UsersDAO();
+		usersDAO.load();
+		
+		for(Comment c : comments) {
+			if(c.getId().equals(commentId)) {
+				return usersDAO.getByUsername(c.getCustomer());
+			}
+		}
+		return null;
+	}
 	
 	
 	

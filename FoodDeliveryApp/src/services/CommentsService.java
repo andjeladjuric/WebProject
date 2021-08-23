@@ -52,6 +52,14 @@ public class CommentsService {
 		return Response.status(403).type("text/plain")
                 .entity("You do not have permission to access!").build();
 	}
+	
+	@GET
+	@Path("/getCustomer")
+	@Produces(MediaType.APPLICATION_JSON)
+	public User getCustomer(@QueryParam("id") String commentId) {
+		CommentsDAO dao = (CommentsDAO) ctx.getAttribute("comments");
+		return dao.getCustomer(commentId);
+	}
 }
 
 

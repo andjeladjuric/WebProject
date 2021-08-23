@@ -123,15 +123,6 @@ public class UserService {
 		return "Success";
 	}
 	
-	@GET
-	@Path("/getUserByUsername")
-	@Produces(MediaType.APPLICATION_JSON)
-	public User getUserByUsername(@QueryParam("id") String username) {
-		UsersDAO dao = getUsers();
-		dao.load();
-		return dao.getByUsername(username);
-	}
-	
 	private UsersDAO getUsers() {
 		
 		UsersDAO users = (UsersDAO) ctx.getAttribute("users");

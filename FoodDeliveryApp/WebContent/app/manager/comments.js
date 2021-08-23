@@ -1,9 +1,16 @@
 Vue.component("comments", {
     data: function () {
         return {
+            comment: {
+                id: "",
+                customer: "",
+                restaurantId: "",
+                text: "",
+                stars: "",
+                status: "",
+            },
             allComments: [],
             user: {},
-            statusChanged: false,
         };
     },
     template: `
@@ -18,9 +25,9 @@ Vue.component("comments", {
                 <div class="card-body text-start">
                     <div class="container cardContent text-start">
                         <div class="container mb-2 d-inline-flex userNameAndType">
-                            <h1 class="me-2">{{getUserByUsername(comment.customer)}}</h1>
+                            <h1 class="me-2">{{comment.customer}}</h1>
                             <p class="me-2">·</p>
-                            <p>{{user.type.name}}</p>
+                            <p>golden</p>
                         </div>
                         <p class="mb-2">{{comment.text}}</p>
                         <div class="more mb-2">
@@ -30,7 +37,7 @@ Vue.component("comments", {
                         </div>
 
                         <div class="container d-inline-flex buttons p-0">
-                            <button type="button" class="btn d-sm-flex me-2 disabled" v-if="statusChanged">{{comment.status}}</button>
+                            <button type="button" class="btn d-sm-flex me-2 disabled" v-if="comment.status != 'UNDEFINED'">{{comment.status}}</button>
                             <button type="button" class="btn d-sm-flex me-2" id="allowButton">Allow</button>
                             <button type="button" class="btn d-sm-flex" id="rejectButton">Reject</button>
                         </div>
@@ -55,14 +62,14 @@ Vue.component("comments", {
             });
     },
     methods: {
-        getUserByUsername: function (username) {
+        getCustomers: function (comment) {
             axios
-                .get("rest/users/getUserByUsername", {
-                    params: { id: username },
+                .get("rest/comments/getCustomer", {
+                    params: { id: comment.id },
                 })
-                .then((response) => (this.user = response.data));
-
-            return this.user.name + " " + this.user.surname;
+                .then((response) => {
+                    this.user = response.data;
+                });
         },
     },
 });
