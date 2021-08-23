@@ -161,7 +161,6 @@ Vue.component("all-orders", {
                                         <h1 class="mb-4 mt-1 orderID">Order #{{o.id}}</h1>
                                         <h3 style="z-index: 2;">
                                             <button type="button" class="btn ms-4 mb-4" style="background: #ecbeb1;"
-                                                v-if="o.status == 'TRANSPORTING'"
                                                 @click="cancelOrder(o.id); reload()">Cancel Order</button>
                                         </h3>
                                     </div>
@@ -265,12 +264,18 @@ Vue.component("all-orders", {
             this.sort = "";
             this.selected = "";
         },
-        changeStatus: function (id) {
+        cancelOrder: function (id) {
             axios
-                .get("rest/orders/orderDelivered", {
+                .get("rest/users/cancelOrder", {
                     params: { id: id },
                 })
-                .then((response) => (this.order = response.data));
+            axios
+                .get("rest/orders/cancelOrder", {
+                    params: { id: id },
+                })
+            axios
+            .get("rest/orders/getNotDeliveredForCustomer")
+            .then((response) => (this.orders = response.data));
         },
 
         reload: function () {

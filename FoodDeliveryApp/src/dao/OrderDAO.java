@@ -143,6 +143,20 @@ public class OrderDAO {
 		return customerOrders;
 	}
 	
+	public void cancelOrder(String id) {
+		 List<Order> allOrders = new ArrayList<Order>();
+		 
+		 for(Order o : orders) {
+			 if(o.getId().equals(id))
+				 o.setDeleted(true);
+			 allOrders.add(o);
+		 }
+		 
+		 orders = allOrders;
+		 
+		 serialize();	
+	}
+	
 }
 
 

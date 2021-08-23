@@ -168,5 +168,14 @@ public class OrderService {
 		return dao.getNotDeliveredForCustomer(user);
 	}
 	
+	@GET
+	@Path("/cancelOrder")
+	@Produces(MediaType.APPLICATION_JSON)
+	public void cancelOrder(@QueryParam("id") String id){
+		OrderDAO dao = (OrderDAO) ctx.getAttribute("orders");
+		
+		 dao.cancelOrder(id);
+	}
+	
 	
 }

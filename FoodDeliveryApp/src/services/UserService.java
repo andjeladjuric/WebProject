@@ -9,12 +9,15 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import beans.Order;
 import beans.Role;
 import beans.User;
+import dao.OrderDAO;
 import dao.UsersDAO;
 import dto.LoginDTO;
 import dto.PasswordDTO;
@@ -148,6 +151,7 @@ public class UserService {
 		return allUsersDAO.remove(username); 
 	}
 	
+	
 	@GET
 	@Path("/getCurrentUser")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -195,5 +199,14 @@ public class UserService {
 		}
 
 		return users;
+	}
+	
+	@GET
+	@Path("/cancelOrder")
+	public void getOrderById(@QueryParam("id") String id){
+		UsersDAO dao = getUsers();
+		User user = (User) request.getSession().getAttribute("loginUser");
+		
+		 dao.cancelOrder(user.getUsername(), id);
 	}
 }
