@@ -20,14 +20,17 @@ Vue.component("customer-header",{
 		
 		          <div class="collapse navbar-collapse" id="navmenu">
 		              <ul class="navbar-nav ms-auto">
-		                  <li class="nav-item">
-		                      <a href="#" class="nav-link">Orders</a>
+		              	 <li class="nav-item">
+		                      <a href="#/" class="nav-link">Home</a>
 		                  </li>
 		                  <li class="nav-item">
-		                      <a href="#" class="nav-link">Cart</a>
+		                      <a href="#/orders" class="nav-link">Orders</a>
 		                  </li>
 		                  <li class="nav-item">
-		                      <a href="" class="nav-link">Profile</a>
+		                      <a href="#/cart" class="nav-link">Cart</a>
+		                  </li>
+		                  <li class="nav-item">
+		                      <a href="#/profile" class="nav-link">Profile</a>
 		                  </li>
 		                  <li class="nav-item">
 		                      <a href="#logout" class="nav-link">Log Out</a>

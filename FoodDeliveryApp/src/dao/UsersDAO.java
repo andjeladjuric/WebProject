@@ -235,4 +235,27 @@ public class UsersDAO {
 		serialize();
 		return getUsers();
 	}
+	
+	public void cancelOrder(String user, String order) {
+		List<User> allUsers = new ArrayList<User>();
+		ArrayList<String> orders = new ArrayList<String>();
+
+		
+		for (User u : users.values()) {
+			if(u.getUsername().equals(user))
+				{
+					for(String o : u.getOrders()) {
+						if(!o.equals(order))
+							orders.add(o);
+					}
+					u.setOrders(orders);
+				}
+			allUsers.add(u);
+		}
+		users = new LinkedHashMap<String, User>();
+		for (User u : allUsers) {
+			users.put(u.getUsername(), u);
+		}
+		serialize();
+	}
 }

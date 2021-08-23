@@ -154,4 +154,35 @@ public class OrderService {
 		return dao.getOrderByRestaurant(id);
 	}
 	
+	@Path("/getDeliveredForCustomer")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<Order> getDeliveredForCustomer(){
+		OrderDAO dao = (OrderDAO) ctx.getAttribute("orders");
+		User user = (User) request.getSession().getAttribute("loginUser");
+	
+		
+		return dao.getDeliveredForCustomer(user);
+	}
+	
+	@GET
+	@Path("/getNotDeliveredForCustomer")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<Order> getNotDeliveredForCustomer(){
+		OrderDAO dao = (OrderDAO) ctx.getAttribute("orders");
+		User user = (User) request.getSession().getAttribute("loginUser");
+	
+		
+		return dao.getNotDeliveredForCustomer(user);
+	}
+	
+	@GET
+	@Path("/cancelOrder")
+	@Produces(MediaType.APPLICATION_JSON)
+	public void cancelOrder(@QueryParam("id") String id){
+		OrderDAO dao = (OrderDAO) ctx.getAttribute("orders");
+		
+		 dao.cancelOrder(id);
+	}
+	
+	
 }
