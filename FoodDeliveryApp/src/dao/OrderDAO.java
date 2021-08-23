@@ -118,6 +118,16 @@ public class OrderDAO {
 		
 		return false;
 	}
+	
+	public List<Order> getOrderByRestaurant(String restaurantId) {
+		List<Order> ordersForRestaurant = new ArrayList<Order>();
+		for(Order o : orders) {
+			if(o.getRestaurant().getId().equals(restaurantId))
+				ordersForRestaurant.add(o);
+		}
+		
+		return ordersForRestaurant;
+	}
 }
 
 

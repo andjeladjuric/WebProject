@@ -1,6 +1,7 @@
 package beans;
 
 enum ItemType { Drink, Food }
+enum Category {BREAKFAST, SALADS, PIZZA, PASTA, MAINDISHES, DRINKS, DESSERT}
 
 public class Item {
 	
@@ -15,12 +16,13 @@ public class Item {
 	private String imagePath;
 	private String restaurantId;
 	private double quantity;
+	private Category category;
 	
 
 	public Item() {}
 
 	public Item(String id, boolean deleted, String name, double price, ItemType type, double amount, String description,
-			String imagePath, String restaurantId) {
+			String imagePath, String restaurantId, Category category) {
 		super();
 		this.id = id;
 		this.deleted = deleted;
@@ -40,6 +42,14 @@ public class Item {
 
 	public void setPoints(double points) {
 		this.points = points;
+	}
+
+	public Category getCategory() {
+		return category;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
 	}
 
 	public String getId() {

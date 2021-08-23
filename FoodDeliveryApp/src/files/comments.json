@@ -1,0 +1,34 @@
+[
+    {
+        "id": "1",
+        "customer": "raske",
+        "restaurantId": "3",
+        "text": "Odlicno sve, nemam zamerke",
+        "stars": 5,
+        "status": "ACCEPTED"
+    },
+    {
+        "id": "2",
+        "customer": "jele",
+        "restaurantId": "3",
+        "text": "Odlicno sve, nemam zamerke",
+        "stars": 5,
+        "status": "ACCEPTED"
+    },
+    {
+        "id": "3",
+        "customer": "zlatko",
+        "restaurantId": "3",
+        "text": "Odlicno sve, nemam zamerke",
+        "stars": 5,
+        "status": "UNDEFINED"
+    },
+    {
+        "id": "4",
+        "customer": "raske",
+        "restaurantId": "3",
+        "text": "Odlicno sve, nemam zamerke",
+        "stars": 5,
+        "status": "UNDEFINED"
+    }
+]

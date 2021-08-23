@@ -6,6 +6,7 @@ import java.util.Collection;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -29,6 +30,8 @@ public class RestaurantService {
 
 	@Context
 	ServletContext ctx;
+	@Context
+	HttpServletRequest request;
 	
 	public RestaurantService() {}
 	
@@ -69,6 +72,18 @@ public class RestaurantService {
 	public Restaurant getById(String id) {
 		RestaurantDAO dao = (RestaurantDAO) ctx.getAttribute("restaurants");
 		return dao.getById(id);
+
+	@GET
+	@Path("/getRestaurantForManager")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Restaurant getForManager(){
+		RestaurantDAO dao = (RestaurantDAO) ctx.getAttribute("restaurants");
+		User user = (User) request.getSession().getAttribute("loginUser");
+		
+		if(user.getRole() == Role.MANAGER)
+			return dao.getRestaurantByManager(user.getUsername());
+		
+		return null;
 	}
 
 }

@@ -9,6 +9,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import beans.Item;
 import beans.Restaurant;
 import beans.User;
 import dto.RestaurantDTO;
@@ -18,13 +19,13 @@ public class RestaurantDAO {
 	private List<Restaurant> restaurants = new ArrayList<Restaurant>();
 	private String path;
 	
-	public RestaurantDAO() {}
+	public RestaurantDAO() {loadFromFile();}
 	
 	public RestaurantDAO(String contextPath) {
-		loadFromFile(contextPath);
+		loadFromFile();
 	}
 	
-	private void loadFromFile(String contextPath) {
+	private void loadFromFile() {
 		ObjectMapper mapper = new ObjectMapper();
 	    String path = "C:\\Users\\jovic\\Desktop\\WebProject\\FoodDeliveryApp\\src\\files\\restaurants.json";
 	    
@@ -39,14 +40,16 @@ public class RestaurantDAO {
 	}
 	
 	public void serialize() {
-	    path = "C:\\Users\\jovic\\Desktop\\WebProject\\FoodDeliveryApp\\src\\files\\restaurants.json";
-
+		List<Restaurant> allRestaurants = new ArrayList<Restaurant>();
+		String path = "E:\\Projects\\WebProject\\FoodDeliveryApp\\src\\files\\restaurants.json";
+		
+		for (Restaurant o : restaurants) {
+			allRestaurants.add(o);
+		}
 
 		ObjectMapper objectMapper = new ObjectMapper();
 		try {
-			// Write them to the file
-			objectMapper.writeValue(new FileOutputStream(this.path), restaurants);
-
+			objectMapper.writeValue(new FileOutputStream(path), allRestaurants);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -78,7 +81,25 @@ public class RestaurantDAO {
 			if(r.getId().equals(id))
 				return r;
 		}
+
+	public Restaurant getRestaurantByManager(String username) {
+		for(Restaurant r : restaurants) {
+			if(r.getMenagerId().equals(username))
+				return r;
+		}
+	
 		return null;
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
 

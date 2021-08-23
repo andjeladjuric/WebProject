@@ -145,4 +145,13 @@ public class OrderService {
 		OrderRequestDAO requestsDAO = new OrderRequestDAO();
 		return requestsDAO.findAll();
 	}
+	
+	@GET
+	@Path("/getOrdersForRestaurant")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<Order> getOrdersForRestaurant(@QueryParam("id") String id){
+		OrderDAO dao = (OrderDAO) ctx.getAttribute("orders");
+		return dao.getOrderByRestaurant(id);
+	}
+	
 }

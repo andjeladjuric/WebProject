@@ -44,7 +44,7 @@ Vue.component("currentUser-profile", {
                     <div class="row mb-2 mainContent border-bottom justify-content-center d-flex text-center">
                         <div class="col-md">
                             <h1>{{currentUser.name}} {{currentUser.surname}}</h1>
-                            <p>{{currentUser.role}}</p>
+                            <p style="text-align: center;">{{currentUser.role}}</p>
                         </div>
                         <div class="col-md">
                             <img src="img/profile.svg" class="d-none d-sm-inline" style="width: 200px; height: 200px"

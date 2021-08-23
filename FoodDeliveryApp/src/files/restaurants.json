@@ -3,8 +3,8 @@
         "name": "La Forza",
         "id": "1",
         "deleted": false,
-        "type": 0,
-        "status": 0,
+        "type": "ITALIAN",
+        "status": "Open",
         "location": {
             "address": {
                 "street": "Katolicke porte",
@@ -17,14 +17,14 @@
         },
         "items": [],
         "logo": "",
-        "menagerId": "andjela"
+        "menagerId": ""
     },
     {
         "name": "Caribic",
         "id": "2",
         "deleted": false,
         "type": "FASTFOOD",
-        "status": 0,
+        "status": "Open",
         "location": {
             "address": {
                 "street": "Maksima Gorkog",
@@ -35,16 +35,16 @@
             "latitude": 124.555,
             "longitude": 245.64
         },
-        "items": [],
+        "items": ["caec61c7-21d3-4a2d-a9ff-2858efcf1ea3"],
         "logo": "",
-        "menagerId": "andjela"
+        "menagerId": ""
     },
     {
         "name": "Corso",
         "id": "3",
         "deleted": false,
-        "type": 0,
-        "status": 0,
+        "type": "ITALIAN",
+        "status": "Open",
         "location": {
             "address": {
                 "street": "Zmaj Jovina",
@@ -55,7 +55,12 @@
             "latitude": 124.555,
             "longitude": 245.64
         },
-        "items": [],
+        "items": [
+            "1",
+            "2",
+            "0d21adf1-6ec9-4992-baf9-a896277beaa4",
+            "8bc9a5aa-3df0-4eeb-8b18-78df23b8f8a2"
+        ],
         "logo": "",
         "menagerId": "andjela"
     }
