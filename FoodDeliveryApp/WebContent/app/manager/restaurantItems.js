@@ -501,9 +501,7 @@ Vue.component("restaurant-items", {
 
         deleteItem: function (id) {
             axios
-                .get("rest/items/deleteItem", {
-                    params: { id: id },
-                })
+                .post("rest/items/deleteItem", id)
                 .then((response) => window.location.reload());
         },
     },

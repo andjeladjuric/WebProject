@@ -1,14 +1,6 @@
 Vue.component("comments", {
     data: function () {
         return {
-            comment: {
-                id: "",
-                customer: "",
-                restaurantId: "",
-                text: "",
-                stars: "",
-                status: "",
-            },
             allComments: [],
             user: {},
         };
@@ -37,9 +29,9 @@ Vue.component("comments", {
                         </div>
 
                         <div class="container d-inline-flex buttons p-0">
-                            <button type="button" class="btn d-sm-flex me-2 disabled" v-if="comment.status != 'UNDEFINED'">{{comment.status}}</button>
-                            <button type="button" class="btn d-sm-flex me-2" id="allowButton">Allow</button>
-                            <button type="button" class="btn d-sm-flex" id="rejectButton">Reject</button>
+                            <button type="button" class="btn d-sm-flex me-2 disabled">{{comment.status}}</button>
+                            <button type="button" class="btn d-sm-flex me-2" id="allowButton" v-if="comment.status === 'UNDEFINED'" @click="allowComment(comment.id)">Allow</button>
+                            <button type="button" class="btn d-sm-flex" id="rejectButton" v-if="comment.status === 'UNDEFINED'" @click="rejectComment(comment.id)">Reject</button>
                         </div>
                     </div>
                 </div>
@@ -70,6 +62,18 @@ Vue.component("comments", {
                 .then((response) => {
                     this.user = response.data;
                 });
+        },
+
+        rejectComment: function (id) {
+            axios
+                .post("rest/comments/rejectComment", id)
+                .then((response) => window.location.reload());
+        },
+
+        allowComment: function (id) {
+            axios
+                .post("rest/comments/allowComment", id)
+                .then((response) => window.location.reload());
         },
     },
 });

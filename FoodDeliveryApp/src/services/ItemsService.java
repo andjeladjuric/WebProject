@@ -69,11 +69,11 @@ public class ItemsService {
 		dao.editItem(i);
 	}
 	
-	@GET
+	@POST
 	@Path("/deleteItem")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public void deleteItem(@QueryParam("id") String id) {
+	public void deleteItem(String id) {
 		ItemsDAO dao = (ItemsDAO) ctx.getAttribute("items");
 		dao.deleteItem(id);
 	}

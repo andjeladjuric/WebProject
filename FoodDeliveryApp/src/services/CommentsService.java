@@ -6,6 +6,7 @@ import javax.annotation.PostConstruct;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
@@ -15,6 +16,7 @@ import javax.ws.rs.core.Response;
 
 import beans.Comment;
 import beans.Role;
+import beans.State;
 import beans.User;
 import dao.CommentsDAO;
 import dao.ItemsDAO;
@@ -59,6 +61,22 @@ public class CommentsService {
 	public User getCustomer(@QueryParam("id") String commentId) {
 		CommentsDAO dao = (CommentsDAO) ctx.getAttribute("comments");
 		return dao.getCustomer(commentId);
+	}
+	
+	@POST
+	@Path("/allowComment")
+	@Produces(MediaType.APPLICATION_JSON)
+	public void allowComment(String commentId) {
+		CommentsDAO dao = (CommentsDAO) ctx.getAttribute("comments");
+		dao.changeStatus(commentId, State.ACCEPTED);
+	}
+	
+	@POST
+	@Path("/rejectComment")
+	@Produces(MediaType.APPLICATION_JSON)
+	public void rejectComment(String commentId) {
+		CommentsDAO dao = (CommentsDAO) ctx.getAttribute("comments");
+		dao.changeStatus(commentId, State.REJECTED);
 	}
 }
 

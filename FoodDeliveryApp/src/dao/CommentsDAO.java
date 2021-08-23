@@ -10,6 +10,7 @@ import java.util.List;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import beans.Comment;
+import beans.State;
 import beans.User;
 
 public class CommentsDAO {
@@ -78,6 +79,17 @@ public class CommentsDAO {
 			}
 		}
 		return null;
+	}
+	
+	public void changeStatus(String commentId, State status) {
+		for(Comment c : comments) {
+			if(c.getId().equals(commentId)) {
+				c.setStatus(status);
+				break;
+			}
+		}
+		
+		serialize();
 	}
 	
 	
