@@ -1,23 +1,13 @@
+
 Vue.component("one-order", {
     data: function () {
         return {
-            order: {
-                id: "",
-                deleted: false,
-                items: [],
-                restaurant: {},
-                timeofOrder: "",
-                price: "",
-                customer: "",
-                stauts: "",
-                address: {},
-            },
-            requests: [],
-            currentUser: {},
+				order : {}
         };
     },
     template: `
-        <div class="bg-light" id="main-content">
+       <div>
+		 <div class="bg-light" id="main-content">
             <div class="container bg-light">
                 <div class="row">
                     <div class="col-md-2"></div>
@@ -70,13 +60,6 @@ Vue.component("one-order", {
                                         Additional information
                                     </th>
                                 </tr>
-                                <tr>
-                                    <td id="customerName">Customer</td>
-                                    <td>
-                                        {{order.customer}}
-                                    </td>
-                                    <td></td>
-                                </tr>
 
                                 <tr>
                                     <td id="dateAndTime">Date and time</td>
@@ -115,55 +98,25 @@ Vue.component("one-order", {
                 </div>
             </div>
         </div>
+	   </div>
     `,
     mounted() {
-        axios
+		 axios
             .get("rest/orders/getOrderById", {
                 params: { id: this.$route.query.id },
             })
-            .then((response) => (this.order = response.data));
-
-        axios
-            .get("rest/users/getCurrentUser")
-            .then((response) => (this.currentUser = response.data));
-    },
-    computed: {
-        isOrderInTransport() {
-            if (this.order.status == "TRANSPORTING") return true;
-
-            return false;
-        },
-        isOrderWaiting() {
-            if (this.order.status == "WAITING") return true;
-
-            return false;
-        },
-        isSent() {
-            for (let r of this.requests) {
-                if (
-                    r.orderId === this.order.id &&
-                    r.courier === this.currentUser.username
-                )
-                    return true;
-            }
-
-            return false;
-        },
+            .then((response) => (this.order = response.data));  
     },
     methods: {
         
-        reload: function () {
-            window.location.reload();
-        }
+    
         
     },
-    components: {
-        toast,
-    },
     filters: {
-        dateFormat: function (value, format) {
+	 dateFormat: function (value, format) {
             var parsed = moment(value);
             return parsed.format(format);
         },
+       
     },
 });
