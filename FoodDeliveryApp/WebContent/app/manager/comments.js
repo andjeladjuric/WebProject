@@ -3,7 +3,16 @@ Vue.component("comments", {
         return {
             allComments: [],
             users: [],
-            user: {},
+            user: {
+                username: "",
+                name: "",
+                surname: "",
+                type: {
+                    name: "",
+                    discount: "",
+                    requiredPoints: "",
+                },
+            },
         };
     },
     template: `
@@ -18,11 +27,7 @@ Vue.component("comments", {
                 <div class="card-body text-start">
                     <div class="container cardContent text-start">
                         <div class="container mb-2 d-inline-flex userNameAndType">
-                            <h1 class="me-2"> {{comment.customer}}
-                            <!-- {{users[index] === undefined ? getCustomers(comment) : users[index].name}} -->
-                            </h1>
-                            <p class="me-2">·</p>
-                            <p>golden</p>
+                            <h1 class="me-2"> {{users[index]}} </h1>
                         </div>
                         <p class="mb-2">{{comment.text}}</p>
                         <div class="more mb-2">
@@ -53,23 +58,17 @@ Vue.component("comments", {
                     .get("rest/comments/getCommentsForManager", {
                         params: { id: this.restaurant.id },
                     })
-                    .then((response) => (this.allComments = response.data));
+                    .then((response) => (this.allComments = response.data))
+                    .then((response) => {
+                        axios
+                            .get("rest/comments/getCustomers", {
+                                params: { id: this.restaurant.id },
+                            })
+                            .then((response) => (this.users = response.data));
+                    });
             });
     },
     methods: {
-        getCustomers: function (comment) {
-            axios
-                .get("rest/comments/getCustomer", {
-                    params: { id: comment.id },
-                })
-                .then((response) => {
-                    this.user = response.data;
-                    this.users.push(response.data);
-                });
-
-            return this.user.name;
-        },
-
         rejectComment: function (id) {
             axios
                 .post("rest/comments/rejectComment", id)

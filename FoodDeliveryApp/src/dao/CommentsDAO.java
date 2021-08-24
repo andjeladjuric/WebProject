@@ -12,6 +12,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import beans.Comment;
 import beans.State;
 import beans.User;
+import dto.CommentCustomerDTO;
 
 public class CommentsDAO {
 	private List<Comment> comments = new ArrayList<Comment>();
@@ -69,16 +70,18 @@ public class CommentsDAO {
 		return commentsForRestaurant;
 	}
 	
-	public User getCustomer(String commentId){
+	public List<String> getCustomers(String restaurantId){
+		List<String> usersWhoCommented = new ArrayList<String>();
 		UsersDAO usersDAO = new UsersDAO();
 		usersDAO.load();
 		
 		for(Comment c : comments) {
-			if(c.getId().equals(commentId)) {
-				return usersDAO.getByUsername(c.getCustomer());
+			if(c.getRestaurantId().equals(restaurantId)) {
+				User user = usersDAO.getByUsername(c.getCustomer());
+				usersWhoCommented.add(user.getName() + " " + user.getSurname() + " · " + user.getType().getName());
 			}
 		}
-		return null;
+		return usersWhoCommented;
 	}
 	
 	public void changeStatus(String commentId, State status) {

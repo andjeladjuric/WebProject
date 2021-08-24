@@ -19,7 +19,6 @@ import beans.Role;
 import beans.State;
 import beans.User;
 import dao.CommentsDAO;
-import dao.ItemsDAO;
 
 @Path("/comments")
 public class CommentsService {
@@ -56,11 +55,11 @@ public class CommentsService {
 	}
 	
 	@GET
-	@Path("/getCustomer")
+	@Path("/getCustomers")
 	@Produces(MediaType.APPLICATION_JSON)
-	public User getCustomer(@QueryParam("id") String commentId) {
+	public Collection<String> getCustomer(@QueryParam("id") String restaurantId) {
 		CommentsDAO dao = (CommentsDAO) ctx.getAttribute("comments");
-		return dao.getCustomer(commentId);
+		return dao.getCustomers(restaurantId);
 	}
 	
 	@POST
