@@ -1,10 +1,11 @@
 package services;
 
-import java.util.Collection;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -19,7 +20,7 @@ import beans.Role;
 import beans.State;
 import beans.User;
 import dao.CommentsDAO;
-import dao.ItemsDAO;
+import dto.CommentDTO;
 
 @Path("/comments")
 public class CommentsService {
@@ -77,6 +78,26 @@ public class CommentsService {
 	public void rejectComment(String commentId) {
 		CommentsDAO dao = (CommentsDAO) ctx.getAttribute("comments");
 		dao.changeStatus(commentId, State.REJECTED);
+	}
+	
+	@GET
+	@Path("/getCommentsForUser")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Comment> getCommentsForUser(@QueryParam("id") String restaurantId){
+		CommentsDAO dao = (CommentsDAO) ctx.getAttribute("comments");
+		
+		return dao.getCommentsForRestaurant(restaurantId);
+		
+	}
+	
+	@POST
+	@Path("/addComment")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void addComment(CommentDTO comment) {
+		CommentsDAO dao = (CommentsDAO) ctx.getAttribute("comments");
+		User user = (User) request.getSession().getAttribute("loginUser");
+
+		dao.addComment(comment, user);
 	}
 }
 

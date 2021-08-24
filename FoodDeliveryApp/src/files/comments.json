@@ -30,5 +30,13 @@
         "text": "Odlicno sve, nemam zamerke",
         "stars": 5,
         "status": "UNDEFINED"
+    },
+    {
+        "id": "95546f6e-04d1-4772-b3f4-23afc8ed2fd2",
+        "customer": "jele",
+        "restaurantId": "3",
+        "text": "Okej",
+        "stars": 3,
+        "status": "UNDEFINED"
     }
 ]

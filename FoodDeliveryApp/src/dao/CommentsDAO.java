@@ -6,12 +6,14 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import beans.Comment;
 import beans.State;
 import beans.User;
+import dto.CommentDTO;
 
 public class CommentsDAO {
 	private List<Comment> comments = new ArrayList<Comment>();
@@ -25,7 +27,7 @@ public class CommentsDAO {
 	
 	private void loadFromFile() {
 		ObjectMapper mapper = new ObjectMapper();
-	    String path = "E:\\Projects\\WebProject\\FoodDeliveryApp\\src\\files\\comments.json";
+	    String path = "C:\\Users\\jovic\\Desktop\\WebProject\\FoodDeliveryApp\\src\\files\\comments.json";
 	    
 	    comments = new ArrayList<Comment>();
 	    
@@ -39,7 +41,7 @@ public class CommentsDAO {
 	
 	public void serialize() {
 		List<Comment> allComments = new ArrayList<Comment>();
-		String path = "E:\\Projects\\WebProject\\FoodDeliveryApp\\src\\files\\comments.json";
+	    String path = "C:\\Users\\jovic\\Desktop\\WebProject\\FoodDeliveryApp\\src\\files\\comments.json";
 		
 		for (Comment o : comments) {
 			allComments.add(o);
@@ -89,6 +91,13 @@ public class CommentsDAO {
 			}
 		}
 		
+		serialize();
+	}
+
+	public void addComment(CommentDTO comment, User user) {
+		String id = UUID.randomUUID().toString();
+		Comment newComment = new Comment(id, user.getUsername(), comment.restaurant, comment.text, comment.rating, State.UNDEFINED);
+		comments.add(newComment);
 		serialize();
 	}
 	
