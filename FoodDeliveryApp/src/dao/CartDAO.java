@@ -15,7 +15,7 @@ import beans.ShoppingCart;
 public class CartDAO {
 	
 	private List<ShoppingCart> carts;
-	private String path = "C:\\Users\\jovic\\Desktop\\WebProject\\FoodDeliveryApp\\src\\files\\carts.json";
+	private String path = "src/files/carts.json";
 	
 	public CartDAO() {
 		carts = new ArrayList<ShoppingCart>();

@@ -26,7 +26,7 @@ public class OrderDAO {
 	
 	private void loadFromFile(String contextPath) {
 		ObjectMapper mapper = new ObjectMapper();
-	    String path = "E:\\Projects\\WebProject\\FoodDeliveryApp\\src\\files\\orders.json";
+	    String path = "src/files/orders.json";
 	    
 	    orders = new ArrayList<Order>();
 	    
@@ -40,7 +40,7 @@ public class OrderDAO {
 	
 	public void serialize() {
 		List<Order> allOrders = new ArrayList<Order>();
-		String path = "E:\\Projects\\WebProject\\FoodDeliveryApp\\src\\files\\orders.json";
+		String path = "src/files/orders.json";
 		
 		for (Order o : orders) {
 			allOrders.add(o);
@@ -128,6 +128,30 @@ public class OrderDAO {
 		}
 		
 		return ordersForRestaurant;
+	}
+	
+	public List<String> getRestaurantNames(User user, String choose){
+		List<String> names = new ArrayList<String>();
+		RestaurantDAO dao = new RestaurantDAO();
+		
+		if(choose.equals("WAITING")) {
+			for(Order o : getWaitingOrders(user)) {
+				for(Restaurant r : dao.findAll()) {
+					if(r.getId().equals(o.getRestaurantId()))
+						names.add(r.getName());
+				}
+			}
+		}
+		else {
+			for(Order o : getOrdersForCourier(user)) {
+				for(Restaurant r : dao.findAll()) {
+					if(r.getId().equals(o.getRestaurantId()))
+						names.add(r.getName());
+				}
+			}
+		}
+		
+		return names;
 	}
 }
 

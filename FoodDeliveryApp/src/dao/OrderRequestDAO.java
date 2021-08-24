@@ -22,7 +22,7 @@ private List<OrderRequests> requests = new ArrayList<OrderRequests>();
 	
 	private void loadFromFile() {
 		ObjectMapper mapper = new ObjectMapper();
-	    String path = "E:\\Projects\\WebProject\\FoodDeliveryApp\\src\\files\\requests.json";
+	    String path = "src/files/requests.json";
 	    
 	    requests = new ArrayList<OrderRequests>();
 	    
@@ -36,7 +36,7 @@ private List<OrderRequests> requests = new ArrayList<OrderRequests>();
 	
 	public void serialize() {
 		List<OrderRequests> allrequests = new ArrayList<OrderRequests>();
-		String path = "E:\\Projects\\WebProject\\FoodDeliveryApp\\src\\files\\requests.json";
+		String path = "src/files/requests.json";
 		
 		for (OrderRequests o : requests) {
 			allrequests.add(o);

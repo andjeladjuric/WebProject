@@ -27,7 +27,7 @@ public class ItemsDAO {
 	
 	private void loadFromFile() {
 		ObjectMapper mapper = new ObjectMapper();
-	    String path = "E:\\Projects\\WebProject\\FoodDeliveryApp\\src\\files\\items.json";
+	    String path = "src/files/items.json";
 	    
 	    items = new ArrayList<Item>();
 	    
@@ -41,7 +41,7 @@ public class ItemsDAO {
 	
 	public void serialize() {
 		List<Item> allItems = new ArrayList<Item>();
-		String path = "E:\\Projects\\WebProject\\FoodDeliveryApp\\src\\files\\items.json";
+		String path = "src/files/items.json";
 		
 		for (Item o : items) {
 			allItems.add(o);

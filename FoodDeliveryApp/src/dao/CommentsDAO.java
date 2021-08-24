@@ -25,7 +25,7 @@ public class CommentsDAO {
 	
 	private void loadFromFile() {
 		ObjectMapper mapper = new ObjectMapper();
-	    String path = "E:\\Projects\\WebProject\\FoodDeliveryApp\\src\\files\\comments.json";
+	    String path = "src/files/comments.json";
 	    
 	    comments = new ArrayList<Comment>();
 	    
@@ -39,7 +39,7 @@ public class CommentsDAO {
 	
 	public void serialize() {
 		List<Comment> allComments = new ArrayList<Comment>();
-		String path = "E:\\Projects\\WebProject\\FoodDeliveryApp\\src\\files\\comments.json";
+		String path = "src/files/comments.json";
 		
 		for (Comment o : comments) {
 			allComments.add(o);
