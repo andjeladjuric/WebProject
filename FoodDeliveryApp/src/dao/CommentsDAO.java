@@ -8,6 +8,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
+import javax.ws.rs.core.Response.Status;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import beans.Comment;
@@ -99,6 +101,18 @@ public class CommentsDAO {
 		Comment newComment = new Comment(id, user.getUsername(), comment.restaurant, comment.text, comment.rating, State.UNDEFINED);
 		comments.add(newComment);
 		serialize();
+	}
+
+	public List<Comment> getCommentsForUser(String restaurantId) {
+		List<Comment> commentsForRestaurant = new ArrayList<Comment>();
+		
+		for(Comment c : comments) {
+			if(c.getRestaurantId().equals(restaurantId) && (c.getStatus() == State.ACCEPTED))
+				commentsForRestaurant.add(c);
+		}
+	
+		return commentsForRestaurant;
+		
 	}
 	
 	

@@ -86,7 +86,7 @@ public class CommentsService {
 	public List<Comment> getCommentsForUser(@QueryParam("id") String restaurantId){
 		CommentsDAO dao = (CommentsDAO) ctx.getAttribute("comments");
 		
-		return dao.getCommentsForRestaurant(restaurantId);
+		return dao.getCommentsForUser(restaurantId);
 		
 	}
 	
