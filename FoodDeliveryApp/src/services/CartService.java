@@ -12,6 +12,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
+import beans.Item;
 import beans.ShoppingCart;
 import beans.User;
 import dao.CartDAO;
@@ -46,6 +47,17 @@ public class CartService {
 		dao.removeItem(user.getUsername(), id);
 
 		return dao.getCart(user.getUsername()); 
+	}
+	
+	@POST
+	@Path("/addToCart")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void addToCart(Item item) {
+		
+		User user = (User) request.getSession().getAttribute("loginUser");
+		CartDAO dao = getCarts();
+		dao.addItem(user.getUsername(), item);
+
 	}
 	
 	private CartDAO getCarts() {

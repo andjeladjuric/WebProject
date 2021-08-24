@@ -47,7 +47,7 @@ Vue.component("restaurant-items", {
                             <p id="price">RSD {{item.price}}</p>
 
                                 <button type="button" class="btn btn-sm btn-outline-secondary editItem" data-toggle="tooltip" data-placement="bottom"
-                                    style="background: none; ">
+                                    style="background: none; " v-on:click="addToCart(item)">
                                     <i class="fas fa-shopping-cart"></i> Add to cart
                                 </button>
                             
@@ -73,7 +73,7 @@ Vue.component("restaurant-items", {
                             <p id="price">RSD {{item.price}}</p>
 
                                 <button type="button" class="btn btn-sm btn-outline-secondary editItem" data-toggle="tooltip" data-placement="bottom" title="Add to cart"
-                                    style="background: none; ">
+                                    style="background: none; "  v-on:click="addToCart(item)">
                                     <i class="fas fa-shopping-cart"></i> Add to cart
                                 </button>
                            
@@ -99,7 +99,7 @@ Vue.component("restaurant-items", {
                             <p id="price">RSD {{item.price}}</p>
 
                                 <button type="button" class="btn btn-sm btn-outline-secondary editItem" data-toggle="tooltip" data-placement="bottom" title="Add to cart"
-                                    style="background: none; ">
+                                    style="background: none; "  v-on:click="addToCart(item)">
                                     <i class="fas fa-shopping-cart"></i> Add to cart
                                 </button>
                            
@@ -125,7 +125,7 @@ Vue.component("restaurant-items", {
                             <p id="price">RSD {{item.price}}</p>
 
                                 <button type="button" class="btn btn-sm btn-outline-secondary editItem" data-toggle="tooltip" data-placement="bottom" title="Add to cart"
-                                    style="background: none; ">
+                                    style="background: none; "  v-on:click="addToCart(item)">
                                     <i class="fas fa-shopping-cart"></i> Add to cart
                                 </button>
                             
@@ -151,7 +151,7 @@ Vue.component("restaurant-items", {
                             <p id="price">RSD {{item.price}}</p>
 
                                 <button type="button" class="btn btn-sm btn-outline-secondary editItem" data-toggle="tooltip" data-placement="bottom" title="Add to cart"
-                                    style="background: none; ">
+                                    style="background: none; "  v-on:click="addToCart(item)">
                                     <i class="fas fa-shopping-cart"></i> Add to cart
                                 </button>
                             
@@ -177,7 +177,7 @@ Vue.component("restaurant-items", {
                             <p id="price">RSD {{item.price}}</p>
 
                                 <button type="button" class="btn btn-sm btn-outline-secondary editItem" data-toggle="tooltip" data-placement="bottom" title="Add to cart"
-                                    style="background: none; ">
+                                    style="background: none; "  v-on:click="addToCart(item)">
                                     <i class="fas fa-shopping-cart"></i> Add to cart
                                 </button>
                            
@@ -203,7 +203,7 @@ Vue.component("restaurant-items", {
                             <p id="price">RSD {{item.price}}</p>
 
                                 <button type="button" class="btn btn-sm btn-outline-secondary editItem" data-toggle="tooltip" data-placement="bottom" title="Add to cart"
-                                    style="background: none; ">
+                                    style="background: none; "  v-on:click="addToCart(item)">
                                     <i class="fas fa-shopping-cart"></i> Add to cart
                                 </button>
                            
@@ -273,6 +273,14 @@ Vue.component("restaurant-items", {
             if (itemsInCategory.length === 0) return true;
 
             return false;
+        },
+        addToCart : function(item) {
+        	axios 
+    			.post('rest/carts/addToCart', JSON.stringify(item),
+        	{ headers: {
+        		'Content-type': 'application/json',
+        		}
+        	})
         }
     },
     filters: {
