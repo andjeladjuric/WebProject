@@ -12,7 +12,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import beans.Comment;
 import beans.State;
 import beans.User;
-import dto.CommentCustomerDTO;
 
 public class CommentsDAO {
 	private List<Comment> comments = new ArrayList<Comment>();

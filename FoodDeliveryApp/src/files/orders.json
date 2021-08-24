@@ -3,26 +3,7 @@
         "id": "1asb3n5l6l7",
         "deleted": false,
         "items": [],
-        "restaurant": {
-            "name": "La Forza",
-            "id": "1",
-            "deleted": false,
-            "type": "ITALIAN",
-            "status": "Open",
-            "location": {
-                "address": {
-                    "street": "Katolicke porte",
-                    "number": 6,
-                    "city": "Novi Sad",
-                    "postcode": 21000
-                },
-                "latitude": 124.555,
-                "longitude": 245.64
-            },
-            "items": [],
-            "logo": "",
-            "menagerId": ""
-        },
+        "restaurantId": "3",
         "timeOfOrder": 1335644700000,
         "price": 300.0,
         "customer": "Petra Jovic",
@@ -48,7 +29,7 @@
                     "amount": 500.0,
                     "description": "Pizza",
                     "imagePath": "",
-                    "restaurantId": "2"
+                    "restaurantId": "3"
                 },
                 "quantity": 2
             },
@@ -62,31 +43,12 @@
                     "amount": 500.0,
                     "description": "Pizza",
                     "imagePath": "",
-                    "restaurantId": "2"
+                    "restaurantId": "3"
                 },
                 "quantity": 2
             }
         ],
-        "restaurant": {
-            "name": "Corso",
-            "id": "3",
-            "deleted": false,
-            "type": "ITALIAN",
-            "status": "Open",
-            "location": {
-                "address": {
-                    "street": "Zmaj Jovina",
-                    "number": 16,
-                    "city": "Novi Sad",
-                    "postcode": 21000
-                },
-                "latitude": 124.555,
-                "longitude": 245.64
-            },
-            "items": [],
-            "logo": "",
-            "menagerId": "andjela"
-        },
+        "restaurantId": "3",
         "timeOfOrder": 1335205543511,
         "price": 600.0,
         "customer": "Jovana Jovic",
@@ -102,26 +64,7 @@
         "id": "1234567a89",
         "deleted": false,
         "items": [],
-        "restaurant": {
-            "name": "La Forza",
-            "id": "1",
-            "deleted": false,
-            "type": "ITALIAN",
-            "status": "Open",
-            "location": {
-                "address": {
-                    "street": "Katolicke porte",
-                    "number": 6,
-                    "city": "Novi Sad",
-                    "postcode": 21000
-                },
-                "latitude": 124.555,
-                "longitude": 245.64
-            },
-            "items": [],
-            "logo": "",
-            "menagerId": "andjela"
-        },
+        "restaurantId": "2",
         "timeOfOrder": 1335205543511,
         "price": 300.0,
         "customer": "Nikola Jovic",
@@ -137,26 +80,7 @@
         "id": "1bgh256aj1",
         "deleted": false,
         "items": [],
-        "restaurant": {
-            "name": "Corso",
-            "id": "3",
-            "deleted": false,
-            "type": "ITALIAN",
-            "status": "Open",
-            "location": {
-                "address": {
-                    "street": "Zmaj Jovina",
-                    "number": 16,
-                    "city": "Novi Sad",
-                    "postcode": 21000
-                },
-                "latitude": 124.555,
-                "longitude": 245.64
-            },
-            "items": [],
-            "logo": "",
-            "menagerId": "andjela"
-        },
+        "restaurantId": "3",
         "timeOfOrder": 1335205543511,
         "price": 700.0,
         "customer": "Nikola Jovic",

@@ -12,7 +12,7 @@ public class Order {
 	private String id;
 	private boolean deleted;
 	private List<OrderItemDTO> items = new ArrayList<OrderItemDTO>(); // Cuvati cijeli item ili kljuc napraviti?
-	private Restaurant restaurant;
+	private String restaurantId;
 	private Date timeOfOrder;
 	private double price;
 	private String customer; // full name
@@ -21,13 +21,13 @@ public class Order {
 	
 	public Order() {}
 
-	public Order(String id, boolean deleted, List<OrderItemDTO> items, Restaurant restaurant, Date timeOfOrder,
+	public Order(String id, boolean deleted, List<OrderItemDTO> items, String restaurantId, Date timeOfOrder,
 			double price, String customer, OrderStatus status, Address address) {
 		super();
 		this.id = id;
 		this.deleted = deleted;
 		this.items = items;
-		this.restaurant = restaurant;
+		this.restaurantId = restaurantId;
 		this.timeOfOrder = timeOfOrder;
 		this.price = price;
 		this.customer = customer;
@@ -59,12 +59,12 @@ public class Order {
 		this.items = items;
 	}
 
-	public Restaurant getRestaurant() {
-		return restaurant;
+	public String getRestaurantId() {
+		return restaurantId;
 	}
 
-	public void setRestaurant(Restaurant restaurant) {
-		this.restaurant = restaurant;
+	public void setRestaurant(String restaurantId) {
+		this.restaurantId = restaurantId;
 	}
 
 	public Date getTimeOfOrder() {

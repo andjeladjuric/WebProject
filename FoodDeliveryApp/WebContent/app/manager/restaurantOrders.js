@@ -19,6 +19,7 @@ Vue.component("rest-orders", {
                 restaurantType: "",
                 status: "",
             },
+            restaurant: "",
         };
     },
     template: `
@@ -134,7 +135,7 @@ Vue.component("rest-orders", {
                     </button>
                 </div>
 
-                <div class="card shadow bg-light text-dark mb-5" v-for="o in orders">
+                <div class="card shadow bg-light text-dark mb-5" v-for="(o, index) in orders">
                     <div class="card-body text-center">
                         <div class="row g-2 align-items-center d-inline-flex">
                             <div class="col-md container buttons">
@@ -154,9 +155,7 @@ Vue.component("rest-orders", {
                                 <tbody>
                                     <tr>
                                         <td data-label="Ordered from:">
-                                            <ul>
-                                                <li>{{o.restaurant.name}}</li>
-                                            </ul>
+                                            {{restaurant.name}}
                                         </td>
                                         <td data-label="Total sum:" class="orderDetails">{{o.price}}</td>
                                         <td data-label="Date and time:" class="orderDetails">{{o.timeOfOrder | dateFormat('DD.MM.YYYY HH:mm')}}</td>
@@ -179,6 +178,10 @@ Vue.component("rest-orders", {
                 params: { id: this.$route.query.id },
             })
             .then((response) => (this.orders = response.data));
+
+        axios
+            .post("rest/restaurants/getById", this.$route.query.id)
+            .then((response) => (this.restaurant = response.data));
     },
     filters: {
         dateFormat: function (value, format) {

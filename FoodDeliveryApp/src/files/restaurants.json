@@ -12,8 +12,8 @@
                 "city": "Novi Sad",
                 "postcode": 21000
             },
-            "latitude": 124.555,
-            "longitude": 245.64
+            "latitude": 124.55500030517578,
+            "longitude": 245.63999938964844
         },
         "items": [],
         "logo": "",
@@ -32,8 +32,8 @@
                 "city": "Novi Sad",
                 "postcode": 21000
             },
-            "latitude": 124.555,
-            "longitude": 245.64
+            "latitude": 124.55500030517578,
+            "longitude": 245.63999938964844
         },
         "items": ["caec61c7-21d3-4a2d-a9ff-2858efcf1ea3"],
         "logo": "",
@@ -52,14 +52,15 @@
                 "city": "Novi Sad",
                 "postcode": 21000
             },
-            "latitude": 124.555,
-            "longitude": 245.64
+            "latitude": 124.55500030517578,
+            "longitude": 245.63999938964844
         },
         "items": [
             "1",
             "2",
+            "8bc9a5aa-3df0-4eeb-8b18-78df23b8f8a2",
             "0d21adf1-6ec9-4992-baf9-a896277beaa4",
-            "8bc9a5aa-3df0-4eeb-8b18-78df23b8f8a2"
+            "0d12adf1-6bc9-4992-bsf9-a896288beaa4"
         ],
         "logo": "",
         "menagerId": "andjela"

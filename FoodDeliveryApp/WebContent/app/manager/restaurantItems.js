@@ -67,10 +67,11 @@ Vue.component("restaurant-items", {
             </div>
 
             <!-- Items -->
-            <div class="col-md-7" style="padding-left: 4rem">
+            <div class="col-md-7 pl-sm-3 pl-lg-5">
                 <!-- Breakfast -->
-                <h4 class="mb-3" id="item-1" v-if="!isCategoryEmpty('BREAKFAST')">Breakfast</h4>
-                <div class="card bg-light text-dark mb-2" id="itemAndCommentCards" v-for="item in items" v-if="item.category == 'BREAKFAST'">
+                <div class="categoryBox" v-if="!isCategoryEmpty('BREAKFAST')">
+                <h4 class="mb-3 title" id="item-1">Breakfast</h4>
+                <div class="card bg-light text-dark mb-4" id="itemAndCommentCards" v-for="item in items" v-if="item.category == 'BREAKFAST'">
                     <div class="card-body text-start itemBody">
                         <div class="container cardContent text-start">
                             <h1 class="mt-1 mb-3">{{item.name}}</h1>
@@ -94,14 +95,18 @@ Vue.component("restaurant-items", {
                             </button>
                         </div>
 
-                        <div class="image-wrapper py-5" style="background-image: url(img/pizza.jpeg);"></div>
+                        <div class="image-wrapper mt-2">
+                            <img class="img-responsive img-rounded image-wrapper" src="img/pizza.jpeg" alt="Chania">
+                        </div>
                     </div>
+                </div>
                 </div>
                 <!-- End of breakfast -->
 
                 <!-- Salads -->
-                <h4 class="mb-3 mt-5" id="item-2" v-if="!isCategoryEmpty('SALADS')">Salads</h4>
-                <div class="card bg-light text-dark mb-2" id="itemAndCommentCards" v-for="item in items" v-if="item.category == 'SALADS'">
+                <div class="categoryBox" v-if="!isCategoryEmpty('SALADS')">
+                <h4 class="mb-3 title" id="item-2">Salads</h4>
+                <div class="card bg-light text-dark mb-4" id="itemAndCommentCards" v-for="item in items" v-if="item.category == 'SALADS'">
                     <div class="card-body text-start itemBody">
                         <div class="container cardContent text-start">
                             <h1 class="mt-1 mb-3">{{item.name}}</h1>
@@ -125,14 +130,18 @@ Vue.component("restaurant-items", {
                             </button>
                         </div>
 
-                        <div class="image-wrapper py-5" style="background-image: url(img/pizza.jpeg);"></div>
+                        <div class="image-wrapper mt-2">
+                            <img class="img-responsive img-rounded image-wrapper" src="img/pizza.jpeg" alt="Chania">
+                        </div>
                     </div>
+                </div>
                 </div>
                 <!-- End of salads -->
 
                 <!-- Pizza -->
-                <h4 class="mb-3 mt-5" id="item-3" v-if="!isCategoryEmpty('PIZZA')">Pizza</h4>
-                <div class="card bg-light text-dark mb-2" id="itemAndCommentCards" v-for="item in items" v-if="item.category == 'PIZZA'">
+                <div class="categoryBox" v-if="!isCategoryEmpty('PIZZA')">
+                <h4 class="mb-3 title" id="item-3">Pizza</h4>
+                <div class="card bg-light text-dark mb-4" id="itemAndCommentCards" v-for="item in items" v-if="item.category == 'PIZZA'">
                     <div class="card-body text-start itemBody">
                         <div class="container cardContent text-start">
                             <h1 class="mt-1 mb-3">{{item.name}}</h1>
@@ -156,14 +165,18 @@ Vue.component("restaurant-items", {
                             </button>
                         </div>
 
-                        <div class="image-wrapper py-5" style="background-image: url(img/pizza.jpeg);"></div>
+                        <div class="image-wrapper mt-2">
+                            <img class="img-responsive img-rounded image-wrapper" src="img/pizza.jpeg" alt="Chania">
+                        </div>
                     </div>
+                </div>
                 </div>
                 <!-- End of pizza -->
 
                 <!-- Pasta -->
-                <h4 class="mb-3 mt-5" id="item-4" v-if="!isCategoryEmpty('PASTA')">Pasta</h4>
-                <div class="card bg-light text-dark mb-2" id="itemAndCommentCards" v-for="item in items" v-if="item.category == 'PASTA'">
+                <div class="categoryBox" v-if="!isCategoryEmpty('PASTA')">
+                <h4 class="mb-3 title" id="item-4">Pasta</h4>
+                <div class="card bg-light text-dark mb-4" id="itemAndCommentCards" v-for="item in items" v-if="item.category == 'PASTA'">
                     <div class="card-body text-start itemBody">
                         <div class="container cardContent text-start">
                             <h1 class="mt-1 mb-3">{{item.name}}</h1>
@@ -187,14 +200,18 @@ Vue.component("restaurant-items", {
                             </button>
                         </div>
 
-                        <div class="image-wrapper py-5" style="background-image: url(img/pizza.jpeg);"></div>
+                        <div class="image-wrapper mt-2">
+                            <img class="img-responsive img-rounded image-wrapper" src="img/pizza.jpeg" alt="Chania">
+                        </div>
                     </div>
+                </div>
                 </div>
                 <!-- End of pasta -->
                 
                 <!-- Main dishes -->
-                <h4 class="mb-3 mt-5" id="item-5" v-if="!isCategoryEmpty('MAINDISHES')">Main Dishes</h4>
-                <div class="card bg-light text-dark mb-2" id="itemAndCommentCards" v-for="item in items" v-if="item.category == 'MAINDISHES'">
+                <div class="categoryBox" v-if="!isCategoryEmpty('MAINDISHES')">
+                <h4 class="mb-3 title" id="item-5">Main Dishes</h4>
+                <div class="card bg-light text-dark mb-4" id="itemAndCommentCards" v-for="item in items" v-if="item.category == 'MAINDISHES'">
                     <div class="card-body text-start itemBody">
                         <div class="container cardContent text-start">
                             <h1 class="mt-1 mb-3">{{item.name}}</h1>
@@ -218,14 +235,18 @@ Vue.component("restaurant-items", {
                             </button>
                         </div>
 
-                        <div class="image-wrapper py-5" style="background-image: url(img/pizza.jpeg);"></div>
+                        <div class="image-wrapper mt-2">
+                            <img class="img-responsive img-rounded image-wrapper" src="img/pizza.jpeg" alt="Chania">
+                        </div>
                     </div>
+                </div>
                 </div>
                 <!-- End of main dishes -->
 
-                <!-- Drinks -->    
-                <h4 class="mb-3 mt-5" id="item-6" v-if="!isCategoryEmpty('DRINKS')">Drinks</h4>
-                <div class="card bg-light text-dark mb-2" id="itemAndCommentCards" v-for="item in items" v-if="item.category == 'DRINKS'">
+                <!-- Drinks --> 
+                <div class="categoryBox" v-if="!isCategoryEmpty('DRINKS')">   
+                <h4 class="mb-3 title" id="item-6">Drinks</h4>
+                <div class="card bg-light text-dark mb-4" id="itemAndCommentCards" v-for="item in items" v-if="item.category == 'DRINKS'">
                     <div class="card-body text-start itemBody">
                         <div class="container cardContent text-start">
                             <h1 class="mt-1 mb-3">{{item.name}}</h1>
@@ -249,14 +270,18 @@ Vue.component("restaurant-items", {
                             </button>
                         </div>
 
-                        <div class="image-wrapper py-5" style="background-image: url(img/pizza.jpeg);"></div>
+                        <div class="image-wrapper mt-2">
+                            <img class="img-responsive img-rounded image-wrapper" src="img/pizza.jpeg" alt="Chania">
+                        </div>
                     </div>
+                </div>
                 </div>
                 <!-- End of drinks -->
 
                 <!-- Desserts -->
-                <h4 class="mb-3 mt-5" id="item-7" v-if="!isCategoryEmpty('DESSERTS')">Desserts</h4>
-                <div class="card bg-light text-dark mb-2" id="itemAndCommentCards" v-for="item in items" v-if="item.category == 'DESSERTS'">
+                <div class="categoryBox" v-if="!isCategoryEmpty('DESSERTS')">
+                <h4 class="mb-3 title" id="item-7">Desserts</h4>
+                <div class="card bg-light text-dark mb-4" id="itemAndCommentCards" v-for="item in items" v-if="item.category == 'DESSERTS'">
                     <div class="card-body text-start itemBody">
                         <div class="container cardContent text-start">
                             <h1 class="mt-1 mb-3">{{item.name}}</h1>
@@ -280,8 +305,11 @@ Vue.component("restaurant-items", {
                             </button>
                         </div>
 
-                        <div class="image-wrapper py-5" style="background-image: url(img/pizza.jpeg);"></div>
+                        <div class="image-wrapper mt-2">
+                            <img class="img-responsive img-rounded image-wrapper" src="img/pizza.jpeg" alt="Chania">
+                        </div>
                     </div>
+                </div>
                 </div>
                 <!-- End of desserts -->
             </div>

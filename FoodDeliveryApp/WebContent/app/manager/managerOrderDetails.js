@@ -5,7 +5,7 @@ Vue.component("manager-order-details", {
                 id: "",
                 deleted: false,
                 items: [],
-                restaurant: {},
+                restaurantId: "",
                 timeofOrder: "",
                 price: "",
                 customer: "",
@@ -13,6 +13,7 @@ Vue.component("manager-order-details", {
                 address: {},
             },
             currentUser: {},
+            restaurant: {},
         };
     },
     template: `
@@ -20,9 +21,9 @@ Vue.component("manager-order-details", {
             <div class="row">
                 <div class="col-md-2"></div>
                 <div class="col-md-8">
-                    <div class="row g-4">
+                    <div class="row g-4 mt-3">
                         <div class="col-md d-sm-flex justify-content-start mt-5 mb-4">
-                            <a :href="'#/myRestaurant/orders?id=' + order.restaurant.id"><i class="fas fa-arrow-left me-3"></i>Back
+                            <a @click="$router.go(-1)" class="link" style="cursor: pointer; font-style: italic"><i class="fas fa-arrow-left me-3"></i>Back
                                 to all orders</a>
                         </div>
                     </div>
@@ -81,7 +82,7 @@ Vue.component("manager-order-details", {
                             <tr>
                                 <td id="restaurant">Restaurant</td>
                                 <td>
-                                    {{order.restaurant.name}}
+                                    {{restaurant.name}}
                                 </td>
                             </tr>
 
@@ -115,7 +116,12 @@ Vue.component("manager-order-details", {
             .get("rest/orders/getOrderById", {
                 params: { id: this.$route.query.id },
             })
-            .then((response) => (this.order = response.data));
+            .then((response) => {
+                this.order = response.data;
+                axios
+                    .post("rest/restaurants/getById", this.order.restaurantId)
+                    .then((response) => (this.restaurant = response.data));
+            });
 
         axios
             .get("rest/users/getCurrentUser")

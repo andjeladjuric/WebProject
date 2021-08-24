@@ -66,8 +66,6 @@ h4,
     height: auto;
     width: 100%;
     position: relative;
-    background-position: center;
-    background-size: cover;
 }
 
 .information {
@@ -158,4 +156,8 @@ h4,
     color: #eca895;
     font-size: 64px;
     display: inline-block;
+}
+
+.categoryBox {
+    margin-bottom: 7rem;
 }

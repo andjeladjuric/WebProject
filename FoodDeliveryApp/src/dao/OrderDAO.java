@@ -12,6 +12,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import beans.Order;
 import beans.OrderRequests;
 import beans.OrderStatus;
+import beans.Restaurant;
 import beans.User;
 
 public class OrderDAO {
@@ -122,7 +123,7 @@ public class OrderDAO {
 	public List<Order> getOrderByRestaurant(String restaurantId) {
 		List<Order> ordersForRestaurant = new ArrayList<Order>();
 		for(Order o : orders) {
-			if(o.getRestaurant().getId().equals(restaurantId))
+			if(o.getRestaurantId().equals(restaurantId))
 				ordersForRestaurant.add(o);
 		}
 		
