@@ -1,6 +1,7 @@
 Vue.component("shopping-cart",{
     data: function(){
         return{
+        	dto : {},
             cart : {},
 			numOfItems : 0,
 			totalPrice : 0,
@@ -8,7 +9,8 @@ Vue.component("shopping-cart",{
 			medal : "",
 			paragraph : "",
 			haveDiscount : true,
-			points : 0
+			points : 0,
+			address : {}
         }
     }
     ,
@@ -231,13 +233,13 @@ Vue.component("shopping-cart",{
                     <div class="row justify-content-center mt-3">
                         <div class="col-6">
                             <form class="form-floating">
-                                <input type="text" class="form-control" value="Sutjeska" />
+                                <input type="text" class="form-control" v-model="address.street" />
                                 <label for="floatingInputValue">Street</label>
                             </form>
                         </div>
                         <div class="col-3">
                             <form class="form-floating">
-                                <input type="number" class="form-control" value="3" />
+                                <input type="number" class="form-control" v-model="address.number" />
                                 <label for="floatingInputValue">Number</label>
                             </form>
                         </div>
@@ -245,13 +247,13 @@ Vue.component("shopping-cart",{
                     <div class="row justify-content-center mt-3 mb-3">
                         <div class="col-6">
                             <form class="form-floating">
-                                <input type="text" class="form-control" value="Novi Sad" />
+                                <input type="text" class="form-control" v-model="address.city" />
                                 <label for="floatingInputValue">City</label>
                             </form>
                         </div>
                         <div class="col-3">
                             <form class="form-floating">
-                                <input type="number" class="form-control" value="21000" />
+                                <input type="number" class="form-control" v-model="address.postcode" />
                                 <label for="floatingInputValue">Postcode</label>
                             </form>
                         </div>
@@ -261,7 +263,7 @@ Vue.component("shopping-cart",{
                     <button type="button" class="btn buttonGroup" data-bs-dismiss="modal">
                         Cancel
                     </button>
-                    <button type="button" class="btn buttonGroup active">
+                    <button type="button" class="btn buttonGroup active" v-on:click="makeOrder()" data-bs-dismiss="modal">
                         Order
                     </button>
                 </div>
@@ -343,6 +345,29 @@ Vue.component("shopping-cart",{
 	        		}
 	        	})
 	    		.then((response) =>{( response.data);});
+		},
+		makeOrder : function(){
+			this.cart.totalPrice = this.totalPrice;
+			this.dto.cart = this.cart;
+			this.dto.points = this.points;
+			this.dto.address = this.address;
+						
+			axios 
+	    		.post('rest/orders/makeOrder', JSON.stringify(this.dto),
+        	{ headers: {
+        		'Content-type': 'application/json',
+        		}
+	        	})
+	        	
+	        axios
+			.get("rest/carts/emptyCart")
+            .then((response) =>{
+            ( this.cart = response.data);
+             this.numOfItems = this.cart.items.length;
+             this.totalPrice = this.cart.totalPrice + 100;
+             this.points = 0;
+             });
+	        
 		}
     },
 });

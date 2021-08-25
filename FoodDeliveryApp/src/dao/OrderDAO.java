@@ -3,17 +3,23 @@ package dao;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import beans.Item;
 import beans.Order;
 import beans.OrderRequests;
 import beans.OrderStatus;
 import beans.Restaurant;
 import beans.User;
+import dto.OrderDTO;
+import dto.OrderItemDTO;
 
 public class OrderDAO {
 	private List<Order> orders = new ArrayList<Order>();
@@ -182,6 +188,62 @@ public class OrderDAO {
 		}
 		
 		return names;
+	}
+
+	public void makeOrders(OrderDTO dto, User u) {
+		String customer = u.getName() + " " + u.getSurname();
+
+		List<Restaurant> allRestaurants = getRestaurants(dto.cart.getItems());
+		for(Restaurant r : allRestaurants) {
+			String id = UUID.randomUUID().toString();
+			List<OrderItemDTO> items = getItemsForRestaurant(dto.cart.getItems(), r.getId());
+			double price = getPrice(items);
+			Order newOrder = new Order(id, false, items, r, LocalDateTime.now(), price, customer, OrderStatus.PROCESSING, dto.address);
+			orders.add(newOrder);
+		}
+		serialize();
+	}
+	
+	private List<Restaurant> getRestaurants(List<Item> items){
+		List<Restaurant> retVal = new ArrayList<Restaurant>();
+		RestaurantDAO dao = new RestaurantDAO();
+		
+		for(Item i : items) {
+			if(!alreadyExists(retVal, i.getRestaurantId()))
+				retVal.add(dao.getById(i.getRestaurantId()));
+		}
+		return retVal;
+	}
+	
+	private boolean alreadyExists(List<Restaurant> restaurants, String rest) {
+		for(Restaurant r : restaurants )
+			if(r.getId().equals(rest))
+				return true;
+		return false;
+	}
+	
+	private List<OrderItemDTO> getItemsForRestaurant(List<Item> items, String restaurant){
+		List<OrderItemDTO> itemsDTO = new ArrayList<OrderItemDTO>();
+		
+		for(Item i : items) {
+			if(i.getRestaurantId().equals(restaurant))
+			{
+				OrderItemDTO dto = new OrderItemDTO();
+				dto.item = i;
+				dto.quantity = (int) i.getQuantity();
+				itemsDTO.add(dto);
+			}
+		}
+		return itemsDTO;
+	}
+	
+	private double getPrice(List<OrderItemDTO> items) {
+		double price = 0;
+		for(OrderItemDTO i: items) {
+			price += i.item.getPrice() * i.quantity;
+		}
+		
+		return price;
 	}
 }
 

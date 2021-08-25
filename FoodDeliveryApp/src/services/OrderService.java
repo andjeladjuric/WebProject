@@ -24,6 +24,8 @@ import beans.Role;
 import beans.OrderStatus;
 import dao.OrderDAO;
 import dao.OrderRequestDAO;
+import dao.UsersDAO;
+import dto.OrderDTO;
 
 @Path("/orders")
 public class OrderService {
@@ -199,4 +201,17 @@ public class OrderService {
 		OrderDAO dao = (OrderDAO) ctx.getAttribute("orders");
 		return dao.getCouriersFromRequests(id);
 	}
+	
+	@POST
+	@Path("/makeOrder")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void makeOrder(OrderDTO dto) {
+		OrderDAO dao = (OrderDAO) ctx.getAttribute("orders");
+		User user = (User) request.getSession().getAttribute("loginUser");
+		UsersDAO userDAO = new UsersDAO();
+		userDAO.addPoints(user.getUsername(), dto.points);
+
+		dao.makeOrders(dto, user);
+	}
+	
 }
