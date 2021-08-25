@@ -26,9 +26,11 @@ Vue.component("shopping-cart",{
                                 mb-lg-0 mb-5
                                 shadow
                             ">
-                        <h2 class="py-4">Cart ({{numOfItems}} items)</h2>
+                            <div class="d-flex justify-content-center">
+                        		<h2 class="py-4">Cart ({{numOfItems}} items)</h2>
+                        	</div>
 
-                        <div class="card p-4"  v-for="i in cart.items">
+                        <div class="card p-4 cartItemCard"  v-for="i in cart.items">
                             <div class="row">
                                 <!-- cart images div -->
                                 <div class="
@@ -38,7 +40,7 @@ Vue.component("shopping-cart",{
                                             d-flex
                                             product_img
                                         " style="border-radius: 15px">
-                                    <img src="img/product-1.jpg" class="img-fluid" alt="cart img" />
+                                    <img src="img/product-1.jpg" class="img-fluid image" alt="cart img" />
                                 </div>
 
                                 <!-- cart product details -->
@@ -107,9 +109,10 @@ Vue.component("shopping-cart",{
                                                     justify-content-between
                                                     remove_wish
                                                 ">
-                                            <a href="" v-on:click="removeItem(i)">
-                                                <i class="fas fa-trash-alt"></i> REMOVE ITEM
-                                            </a>
+                                            <button type="button" class="btn btn-sm btn-outline-secondary editItem" data-toggle="tooltip" data-placement="bottom" 
+                                    style="background: none; "  v-on:click="removeItem(i)">
+                                    <i class="fas fa-trash-alt"></i> REMOVE ITEM
+                                			</button>
                                         </div>
                                         <div class="
                                                     col-4
@@ -178,13 +181,17 @@ Vue.component("shopping-cart",{
                                     <span id="total_cart_amt">{{totalPrice}}</span> din
                                 </p>
                             </div>
-                            <button class="btn buttonGroup" data-bs-toggle="modal" data-bs-target="#checkoutModal">
+                            <div class="d-flex justify-content-center">
+                            <button  class="btn buttonGroup" data-bs-toggle="modal" data-bs-target="#checkoutModal">
                                 Checkout
                             </button>
+                            </div>
                         </div>
                         <div class="mt-3 shadow p-3 bg-white">
                             <div class="pt-4">
-                                <h5 class="mb-4">Discount codes</h5>
+                            	<div class="d-flex justify-content-center">
+                                	<h5 class="mb-4">Discount codes</h5>
+                                </div>
                                 <p>
                                     <i class="fas fa-medal" style="color:brown;" v-if="haveDiscount && medal == 'BRONZE'"></i>
                                     <i class="fas fa-medal" style="color:gold;" v-if="haveDiscount && medal == 'GOLD'"></i>
@@ -192,9 +199,11 @@ Vue.component("shopping-cart",{
                     
                                     {{paragraph}}
                                 </p>
+                                <div class="d-flex justify-content-center">
                                 <button class="btn buttonGroup active" v-bind:disabled="haveDiscount == false" v-on:click="useDiscount()">
                                     Use discount
                                 </button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -295,6 +304,10 @@ Vue.component("shopping-cart",{
 			for(var i of this.cart.items){
 				if(i.id === id){
 					i.quantity++;
+					this.cart.totalPrice = this.cart.totalPrice + i.price;
+					this.totalPrice = this.cart.totalPrice + 100;
+					this.points = this.points + i.points;
+					
 				}
 			}
 		},
@@ -302,6 +315,9 @@ Vue.component("shopping-cart",{
 			for(var i of this.cart.items){
 				if(i.id === id && i.quantity != 1){
 					i.quantity--;
+					this.cart.totalPrice = this.cart.totalPrice - i.price;
+					this.totalPrice = this.cart.totalPrice + 100;
+					this.points = this.points - i.points;
 				}
 			}
 		},

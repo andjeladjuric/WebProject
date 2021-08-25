@@ -81,7 +81,6 @@ public class RestaurantDAO {
 			if(r.getId().equals(id))
 				return r;
 		}
-		
 		return null;
 	}
 

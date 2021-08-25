@@ -61,9 +61,16 @@ a {
  .buttonGroup.active{
      background: #ecbeb1;
  }
- .card{
+ .card.cartItemCard{
      border: none;
+     border-color: white;
+     border-radius: 0px;
  }
+ 
+ .card.cartItemCard:hover {
+    transform: none;
+    transition: none;
+}
 
 .form-control,
 .form-select {

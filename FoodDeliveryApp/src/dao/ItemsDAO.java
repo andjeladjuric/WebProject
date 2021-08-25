@@ -28,6 +28,7 @@ public class ItemsDAO {
 	private void loadFromFile() {
 		ObjectMapper mapper = new ObjectMapper();
 	    String path = "src/files/items.json";
+
 	    
 	    items = new ArrayList<Item>();
 	    
