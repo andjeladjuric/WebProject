@@ -123,31 +123,23 @@ public class OrderDAO {
 	public List<Order> getOrderByRestaurant(String restaurantId) {
 		List<Order> ordersForRestaurant = new ArrayList<Order>();
 		for(Order o : orders) {
-			if(o.getRestaurantId().equals(restaurantId))
+			if(o.getRestaurant().getId().equals(restaurantId))
 				ordersForRestaurant.add(o);
 		}
 		
 		return ordersForRestaurant;
 	}
 	
-	public List<String> getRestaurantNames(User user, String choose){
+	public List<String> getCouriersFromRequests(String restaurantId){
 		List<String> names = new ArrayList<String>();
-		RestaurantDAO dao = new RestaurantDAO();
+		OrderRequestDAO requestsDAO = new OrderRequestDAO();
+		UsersDAO usersDAO = new UsersDAO();
+		usersDAO.load();
 		
-		if(choose.equals("WAITING")) {
-			for(Order o : getWaitingOrders(user)) {
-				for(Restaurant r : dao.findAll()) {
-					if(r.getId().equals(o.getRestaurantId()))
-						names.add(r.getName());
-				}
-			}
-		}
-		else {
-			for(Order o : getOrdersForCourier(user)) {
-				for(Restaurant r : dao.findAll()) {
-					if(r.getId().equals(o.getRestaurantId()))
-						names.add(r.getName());
-				}
+		for(OrderRequests r : requestsDAO.findAll()) {
+			if(r.getRestaurantId().equals(restaurantId)) {
+				User user = usersDAO.getByUsername(r.getCourier());
+				names.add(user.getName() + " " + user.getSurname());
 			}
 		}
 		

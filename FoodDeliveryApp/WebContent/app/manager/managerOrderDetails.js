@@ -5,7 +5,7 @@ Vue.component("manager-order-details", {
                 id: "",
                 deleted: false,
                 items: [],
-                restaurantId: "",
+                restaurant: "",
                 timeofOrder: "",
                 price: "",
                 customer: "",
@@ -13,7 +13,6 @@ Vue.component("manager-order-details", {
                 address: {},
             },
             currentUser: {},
-            restaurant: {},
         };
     },
     template: `
@@ -82,7 +81,7 @@ Vue.component("manager-order-details", {
                             <tr>
                                 <td id="restaurant">Restaurant</td>
                                 <td>
-                                    {{restaurant.name}}
+                                    {{order.restaurant.name}}
                                 </td>
                             </tr>
 
@@ -116,12 +115,7 @@ Vue.component("manager-order-details", {
             .get("rest/orders/getOrderById", {
                 params: { id: this.$route.query.id },
             })
-            .then((response) => {
-                this.order = response.data;
-                axios
-                    .post("rest/restaurants/getById", this.order.restaurantId)
-                    .then((response) => (this.restaurant = response.data));
-            });
+            .then((response) => (this.order = response.data));
 
         axios
             .get("rest/users/getCurrentUser")

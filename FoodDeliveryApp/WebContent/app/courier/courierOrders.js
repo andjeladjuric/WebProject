@@ -268,9 +268,7 @@ Vue.component("all-orders", {
         },
         changeStatus: function (id) {
             axios
-                .get("rest/orders/orderDelivered", {
-                    params: { id: id },
-                })
+                .post("rest/orders/orderDelivered", id)
                 .then((response) => (this.order = response.data));
         },
 

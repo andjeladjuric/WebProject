@@ -176,3 +176,37 @@ a {
         border-bottom: none;
     }
 }
+
+.singleRequest thead {
+    display: none;
+}
+
+.singleRequest,
+.singleRequest tbody,
+.singleRequest tr,
+.singleRequest td {
+    display: block;
+    width: 100%;
+}
+.singleRequest tr {
+    margin-bottom: 15px;
+}
+.singleRequest td {
+    border-bottom: 1px solid rgba(82, 81, 81, 0.096);
+    text-align: center;
+    padding-left: 50%;
+    position: relative;
+}
+.singleRequest td::before {
+    content: attr(data-label);
+    position: absolute;
+    left: 0;
+    width: 50%;
+    text-transform: uppercase;
+    font-weight: bold;
+    text-align: left;
+}
+
+.singleRequest td:last-child {
+    border-bottom: none;
+}

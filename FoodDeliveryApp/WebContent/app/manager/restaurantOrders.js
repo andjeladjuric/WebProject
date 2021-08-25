@@ -19,7 +19,8 @@ Vue.component("rest-orders", {
                 restaurantType: "",
                 status: "",
             },
-            restaurant: "",
+            hideRequests: true,
+            requests: [],
         };
     },
     template: `
@@ -128,14 +129,16 @@ Vue.component("rest-orders", {
             <!-- End of sort for orders -->
 
             <!-- Cards with my orders -->
-            <div class="row g-4 mb-4 cards align-contet-center justify-content-center" id="vue-orders" style="padding-left: 7%; padding-right: 7%">
+            <div class="row g-4 mb-4 cards align-contet-center justify-content-center" id="vue-orders" v-if="hideRequests"
+                style="padding-left: 7%; padding-right: 7%">
                 <div class="container">
-                    <button type="button" class="btn buttonGroup requests d-flex mb-2" style="white-space: normal">
+                    <button type="button" class="btn buttonGroup requests d-flex mb-2" style="white-space: normal"
+                        @click="hideRequests = !hideRequests">
                         <i class="fas fa-boxes me-2 p-1" style="color: #ecbeb1;"></i>Check requests
                     </button>
                 </div>
 
-                <div class="card shadow bg-light text-dark mb-5" v-for="(o, index) in orders">
+                <div class="card shadow bg-light text-dark mb-5" v-for="o in filteredOrders">
                     <div class="card-body text-center">
                         <div class="row g-2 align-items-center d-inline-flex">
                             <div class="col-md container buttons">
@@ -155,7 +158,7 @@ Vue.component("rest-orders", {
                                 <tbody>
                                     <tr>
                                         <td data-label="Ordered from:">
-                                            {{restaurant.name}}
+                                           {{o.restaurant.name}}
                                         </td>
                                         <td data-label="Total sum:" class="orderDetails">{{o.price}}</td>
                                         <td data-label="Date and time:" class="orderDetails">{{o.timeOfOrder | dateFormat('DD.MM.YYYY HH:mm')}}</td>
@@ -170,6 +173,46 @@ Vue.component("rest-orders", {
                 </div>
             </div>
             <!-- End of cards with orders -->
+
+            <!-- Cards with my requests -->
+            <div class="row g-4 mb-4 cards align-contet-center justify-content-center" id="vue-orders"  v-if="!hideRequests"
+                style="padding-left: 7%; padding-right: 7%">
+                <div class="container">
+                    <a @click="hideRequests = !hideRequests" class="link" style="cursor: pointer; font-style: italic; padding-left: 7%"><i class="fas fa-arrow-left me-3"></i>Back
+                        to all orders</a>
+                </div>
+
+                <div class="card shadow bg-light text-dark mb-5" v-for="r in requests" style="width: 86%">
+                    <div class="card-body text-center">
+                        <div class="row g-2 align-items-center d-inline-flex">
+                            <div class="col-md container buttons">
+                                <h1 class="mb-4 mt-1 orderID">Request for order #{{r.orderId}}</h1>
+                            </div>
+                        </div>
+                        <div class="container">
+                            <table class="singleRequest">
+                                <thead>
+                                    <td scope="col">Request from:</td>
+                                    <td scope="col">Status:</td>
+                                </thead>
+
+                                <tbody>
+                                    <tr>
+                                        <td data-label="Request from:">
+                                           {{r.courierName}}
+                                        </td>
+                                        <td data-label="Status:" class="orderDetails">
+                                            {{r.status}}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <a :href="'#/myRestaurant/orders/details?id=' + r.orderId" class="stretched-link"></a>
+                </div>
+            </div>
+            <!-- End of cards with requests -->
     </div>
     `,
     mounted() {
@@ -180,8 +223,82 @@ Vue.component("rest-orders", {
             .then((response) => (this.orders = response.data));
 
         axios
-            .post("rest/restaurants/getById", this.$route.query.id)
-            .then((response) => (this.restaurant = response.data));
+            .post("rest/orders/getRequestsByRestaurant", this.$route.query.id)
+            .then((response) => (this.requests = response.data))
+            .then((response) => {
+                axios
+                    .post(
+                        "rest/orders/getCouriersFromRequests",
+                        this.$route.query.id
+                    )
+                    .then((response) => (this.names = response.data))
+                    .then((response) => {
+                        for (i = 0; i < this.requests.length; i++) {
+                            this.$set(
+                                this.requests[i],
+                                "courierName",
+                                this.names[i]
+                            );
+                        }
+                    });
+            });
+    },
+    methods: {
+        searchOrders: function (order) {
+            if (
+                !order.restaurant.name
+                    .toLowerCase()
+                    .match(this.searchInput.restaurant.toLowerCase())
+            )
+                return false;
+
+            if (order.price < parseInt(this.searchInput.minPrice)) return false;
+
+            if (order.price > parseInt(this.searchInput.maxPrice)) return false;
+
+            if (order.timeOfOrder < Date.parse(this.searchInput.minDate))
+                return false;
+
+            if (order.timeOfOrder > Date.parse(this.searchInput.maxDate))
+                return false;
+
+            if (!order.restaurant.type.match(this.filterInput.restaurantType))
+                return false;
+
+            if (!order.status.match(this.filterInput.status)) return false;
+
+            return true;
+        },
+
+        sortOrders: function () {
+            if (this.selected === "1" && this.sort === "asc")
+                this.orders.sort((a, b) => (a.price > b.price ? 1 : -1));
+
+            if (this.selected === "1" && this.sort === "desc")
+                this.orders.sort((a, b) => (a.price < b.price ? 1 : -1));
+
+            if (this.selected === "2" && this.sort === "asc")
+                this.orders.sort((a, b) =>
+                    a.timeOfOrder > b.timeOfOrder ? 1 : -1
+                );
+
+            if (this.selected === "2" && this.sort === "desc")
+                this.orders.sort((a, b) =>
+                    a.timeOfOrder < b.timeOfOrder ? 1 : -1
+                );
+        },
+
+        noFilters: function () {
+            this.filterInput.restaurantType = "";
+            this.filterInput.status = "";
+        },
+    },
+    computed: {
+        filteredOrders: function () {
+            return this.orders.filter((o) => {
+                return this.searchOrders(o);
+            });
+        },
     },
     filters: {
         dateFormat: function (value, format) {
