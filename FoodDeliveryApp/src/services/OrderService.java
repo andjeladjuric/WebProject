@@ -21,6 +21,7 @@ import beans.Order;
 import beans.OrderRequests;
 import beans.User;
 import beans.Role;
+import beans.State;
 import beans.OrderStatus;
 import dao.OrderDAO;
 import dao.OrderRequestDAO;
@@ -199,4 +200,30 @@ public class OrderService {
 		OrderDAO dao = (OrderDAO) ctx.getAttribute("orders");
 		return dao.getCouriersFromRequests(id);
 	}
+	
+	@POST
+	@Path("/acceptRequest")
+	@Produces(MediaType.APPLICATION_JSON)
+	public void acceptRequest(String id){
+		OrderDAO dao = (OrderDAO) ctx.getAttribute("orders");
+		dao.acceptRequest(id, State.ACCEPTED);
+	}
+	
+	@POST
+	@Path("/rejectRequest")
+	@Produces(MediaType.APPLICATION_JSON)
+	public void rejectRequest(String id){
+		OrderDAO dao = (OrderDAO) ctx.getAttribute("orders");
+		dao.acceptRequest(id, State.REJECTED);
+	}
 }
+
+
+
+
+
+
+
+
+
+

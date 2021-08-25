@@ -46,9 +46,12 @@
                     "price": 300.0,
                     "type": "Food",
                     "amount": 500.0,
+                    "points": 0.0,
                     "description": "Pizza",
                     "imagePath": "",
-                    "restaurantId": "3"
+                    "restaurantId": "3",
+                    "quantity": 0.0,
+                    "category": null
                 },
                 "quantity": 2
             },
@@ -60,9 +63,12 @@
                     "price": 300.0,
                     "type": "Food",
                     "amount": 500.0,
+                    "points": 0.0,
                     "description": "Pizza",
                     "imagePath": "",
-                    "restaurantId": "3"
+                    "restaurantId": "3",
+                    "quantity": 0.0,
+                    "category": null
                 },
                 "quantity": 2
             }
@@ -131,7 +137,7 @@
         "timeOfOrder": 1335205543511,
         "price": 300.0,
         "customer": "Nikola Jovic",
-        "status": "WAITING",
+        "status": "TRANSPORTING",
         "address": {
             "street": "Katolicke porte",
             "number": 6,

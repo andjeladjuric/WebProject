@@ -6,6 +6,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -13,6 +14,7 @@ import beans.Order;
 import beans.OrderRequests;
 import beans.OrderStatus;
 import beans.Restaurant;
+import beans.State;
 import beans.User;
 
 public class OrderDAO {
@@ -103,9 +105,12 @@ public class OrderDAO {
 	
 	public void sendRequestToManager(OrderRequests r) {
 		OrderRequestDAO requestsDAO = new OrderRequestDAO();
+		String id = UUID.randomUUID().toString();
 		
 		for(Order o : orders) {
 			if(o.getId().equals(r.getOrderId())) {
+				r.setRequestId(id);
+				r.setDeleted(false);
 				requestsDAO.insert(r);
 			}
 		}
@@ -123,7 +128,7 @@ public class OrderDAO {
 	public List<Order> getOrderByRestaurant(String restaurantId) {
 		List<Order> ordersForRestaurant = new ArrayList<Order>();
 		for(Order o : orders) {
-			if(o.getRestaurant().getId().equals(restaurantId))
+			if(o.getRestaurant().getId().equals(restaurantId) && !o.isDeleted())
 				ordersForRestaurant.add(o);
 		}
 		
@@ -182,6 +187,30 @@ public class OrderDAO {
 		}
 		
 		return names;
+	}
+	
+	public void acceptRequest(String requestId, State state) {
+		OrderRequestDAO requestsDAO = new OrderRequestDAO();
+		UsersDAO usersDAO = new UsersDAO();
+		usersDAO.load();
+		
+		for(OrderRequests r : requestsDAO.findAll()) {
+			if(r.getRequestId().equals(requestId) && (!r.isDeleted())) {
+				r.setStatus(state);
+				
+				if(state == State.ACCEPTED) {
+					getOrderById(r.getOrderId()).setStatus(OrderStatus.TRANSPORTING);
+					usersDAO.getByUsername(r.getCourier()).getOrdersForCourier().add(r.getOrderId());
+				}
+				
+				r.setDeleted(true);
+				break;
+			}
+		}
+		
+		serialize();
+		usersDAO.serialize();
+		requestsDAO.serialize();
 	}
 }
 

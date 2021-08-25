@@ -455,7 +455,7 @@ Vue.component("restaurant-items", {
                     </div>
                     <div class="modal-footer justify-content-center">
                         <button type="button" class="btn" data-bs-dismiss="modal" @click="deleteItem(itemToDelete.id)">Confirm</button>
-                        <button type="button" class="btn" style="background: #ecbeb1">Cancel</button>
+                        <button type="button" class="btn" data-bs-dismiss="modal" style="background: #ecbeb1">Cancel</button>
                     </div>
                 </div>
             </div>

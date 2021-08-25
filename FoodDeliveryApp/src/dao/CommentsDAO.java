@@ -82,7 +82,7 @@ public class CommentsDAO {
 		for(Comment c : comments) {
 			if(c.getRestaurantId().equals(restaurantId)) {
 				User user = usersDAO.getByUsername(c.getCustomer());
-				usersWhoCommented.add(user.getName() + " " + user.getSurname() + " � " + user.getType().getName());
+				usersWhoCommented.add(user.getName() + " " + user.getSurname());
 			}
 		}
 		return usersWhoCommented;

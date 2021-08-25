@@ -1,25 +1,45 @@
 package beans;
 
 public class OrderRequests {
+	private String requestId;
 	private String orderId;
 	private String restaurantId;
 	private String manager;
 	private String courier;
 	private State status;
+	private boolean deleted;
 	
 	public OrderRequests() {
 		super();
 	}
 	
-	public OrderRequests(String orderId, String restaurantId, String manager, String courier, State status) {
+	public OrderRequests(String requestId, String orderId, String restaurantId, String manager, String courier, State status, boolean deleted) {
 		super();
+		this.requestId = requestId;
 		this.orderId = orderId;
 		this.restaurantId = restaurantId;
 		this.manager = manager;
 		this.courier = courier;
 		this.status = status;
+		this.deleted = deleted;
 	}
 	
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
+	}
+
+	public String getRequestId() {
+		return requestId;
+	}
+
+	public void setRequestId(String requestId) {
+		this.requestId = requestId;
+	}
+
 	public String getCourier() {
 		return courier;
 	}

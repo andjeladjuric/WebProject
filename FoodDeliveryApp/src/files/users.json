@@ -11,11 +11,7 @@
         "deleted": false,
         "blocked": false,
         "ordersForCourier": [],
-        "type": {
-            "name": "NONE",
-            "discount": 0.0,
-            "requiredPoints": 0
-        },
+        "type": { "name": "NONE", "discount": 0.0, "requiredPoints": 0 },
         "points": 0,
         "orders": []
     },
@@ -31,11 +27,7 @@
         "deleted": false,
         "blocked": false,
         "ordersForCourier": [],
-        "type": {
-            "name": "NONE",
-            "discount": 0.0,
-            "requiredPoints": 0
-        },
+        "type": { "name": "NONE", "discount": 0.0, "requiredPoints": 0 },
         "points": 0,
         "orders": []
     },
@@ -51,11 +43,7 @@
         "deleted": false,
         "blocked": false,
         "ordersForCourier": ["5as215fr48"],
-        "type": {
-            "name": "BRONZE",
-            "discount": 0.0,
-            "requiredPoints": 0
-        },
+        "type": { "name": "BRONZE", "discount": 0.0, "requiredPoints": 0 },
         "points": 0,
         "orders": []
     },
@@ -70,12 +58,8 @@
         "profilePicPath": "",
         "deleted": false,
         "blocked": false,
-        "ordersForCourier": ["5as215fr48"],
-        "type": {
-            "name": "NONE",
-            "discount": 0.0,
-            "requiredPoints": 0
-        },
+        "ordersForCourier": ["5as215fr48", "1234567a89"],
+        "type": { "name": "NONE", "discount": 0.0, "requiredPoints": 0 },
         "points": 0,
         "orders": []
     },
@@ -91,11 +75,7 @@
         "deleted": false,
         "blocked": false,
         "ordersForCourier": [],
-        "type": {
-            "name": "SILVER",
-            "discount": 20,
-            "requiredPoints": 100
-        },
+        "type": { "name": "SILVER", "discount": 20.0, "requiredPoints": 100 },
         "points": 0,
         "orders": []
     },
@@ -111,11 +91,7 @@
         "deleted": false,
         "blocked": false,
         "ordersForCourier": [],
-        "type": {
-            "name": "NONE",
-            "discount": 0.0,
-            "requiredPoints": 0
-        },
+        "type": { "name": "NONE", "discount": 0.0, "requiredPoints": 0 },
         "points": 0,
         "orders": []
     },
@@ -131,11 +107,7 @@
         "deleted": false,
         "blocked": false,
         "ordersForCourier": [],
-        "type": {
-            "name": "NONE",
-            "discount": 0.0,
-            "requiredPoints": 0
-        },
+        "type": { "name": "NONE", "discount": 0.0, "requiredPoints": 0 },
         "points": 0,
         "orders": []
     },
@@ -151,11 +123,7 @@
         "deleted": false,
         "blocked": false,
         "ordersForCourier": [],
-        "type": {
-            "name": "NONE",
-            "discount": 0.0,
-            "requiredPoints": 0
-        },
+        "type": { "name": "NONE", "discount": 0.0, "requiredPoints": 0 },
         "points": 0,
         "orders": []
     },
@@ -171,11 +139,7 @@
         "deleted": false,
         "blocked": false,
         "ordersForCourier": [],
-        "type": {
-            "name": "NONE",
-            "discount": 0.0,
-            "requiredPoints": 0
-        },
+        "type": { "name": "NONE", "discount": 0.0, "requiredPoints": 0 },
         "points": 0,
         "orders": []
     }

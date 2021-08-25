@@ -65,7 +65,7 @@ private List<OrderRequests> requests = new ArrayList<OrderRequests>();
 		List<OrderRequests> found = new ArrayList<OrderRequests>();
 		
 		for(OrderRequests r : requests) {
-			if(r.getRestaurantId().equals(restaurantId))
+			if(r.getRestaurantId().equals(restaurantId) && !r.isDeleted())
 				found.add(r);
 		}
 		

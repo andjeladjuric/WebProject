@@ -1,9 +1,20 @@
 [
     {
+        "requestId": "1",
         "orderId": "1234567a89",
         "restaurantId": "3",
         "manager": "andjela",
         "courier": "miki",
-        "status": "UNDEFINED"
+        "status": "ACCEPTED",
+        "deleted": true
+    },
+    {
+        "requestId": "8d13dfc5-0f12-4bd8-9a1d-22ece20688da",
+        "orderId": "1bgh256aj1",
+        "restaurantId": "3",
+        "manager": "andjela",
+        "courier": "miki",
+        "status": "UNDEFINED",
+        "deleted": false
     }
 ]

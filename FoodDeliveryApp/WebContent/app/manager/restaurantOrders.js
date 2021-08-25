@@ -203,15 +203,15 @@ Vue.component("rest-orders", {
                                         </td>
                                         <td data-label="Status:" class="orderDetails">
                                             <p v-if="r.status != 'UNDEFINED'">{{r.status}}</p>
-                                            <div class="pt-3 d-inline-flex" style="flex-wrap: wrap;">
-                                                <button type="button" class="btn d-flex me-3 mb-1" 
-                                                    style="white-space: normal; z-index: 2"
-                                                    @click="hideRequests = !hideRequests">
+                                            <div class="pt-3 d-inline-flex" style="flex-wrap: wrap;" v-if="r.status == 'UNDEFINED'">
+                                                <button type="button" class="btn d-flex me-3 mb-1"
+                                                    data-bs-toggle="modal" data-bs-target="#acceptModal"
+                                                    style="white-space: normal; z-index: 2">
                                                     <i class="fas fa-check me2 p-1"></i>Accept
                                                 </button>
-                                                <button type="button" class="btn d-flex p-2" 
-                                                    style="white-space: normal; z-index: 2; background-color: #ecbeb1; "
-                                                    @click="hideRequests = !hideRequests">
+                                                <button type="button" class="btn d-flex p-2"
+                                                    data-bs-toggle="modal" data-bs-target="#rejectModal"
+                                                    style="white-space: normal; z-index: 2; background-color: #ecbeb1;">
                                                     <i class="fas fa-times me-2 p-1"></i>Reject
                                                 </button>
                                             </div>
@@ -226,6 +226,52 @@ Vue.component("rest-orders", {
                 
             </div>
             <!-- End of cards with requests -->
+
+            <!-- Reject Modal -->
+            <div id="rejectModal" class="modal fade">
+                <div class="modal-dialog modal-confirm">
+                    <div class="modal-content">
+                        <div class="modal-header flex-column">
+                            <div class="icon-box">
+                            <i class="fas fa-times mt-3 mb-3"></i>
+                            </div>				
+                            <h4 class="modal-title w-100 mt-5">Are you sure?</h4>			
+                            <button type="button" class="close" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Do you really want to reject this request? This process cannot be undone.</p>
+                        </div>
+                        <div class="modal-footer justify-content-center">
+                            <button type="button" class="btn" data-bs-dismiss="modal"  @click="rejectRequest(r.requestId); reload()">Confirm</button>
+                            <button type="button" class="btn" data-bs-dismiss="modal" style="background: #ecbeb1">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End of modal -->
+
+            <!-- Accept Modal -->
+            <div id="acceptModal" class="modal fade">
+                <div class="modal-dialog modal-confirm">
+                    <div class="modal-content">
+                        <div class="modal-header flex-column">
+                            <div class="icon-box">
+                            <i class="fas fa-check mt-3 mb-3"></i>
+                            </div>				
+                            <h4 class="modal-title w-100 mt-5">Are you sure?</h4>			
+                            <button type="button" class="close" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Do you really want to accept this request? This process cannot be undone.</p>
+                        </div>
+                        <div class="modal-footer justify-content-center">
+                            <button type="button" class="btn" data-bs-dismiss="modal"  @click="acceptRequest(r.requestId); reload()">Confirm</button>
+                            <button type="button" class="btn" data-bs-dismiss="modal" style="background: #ecbeb1">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End of modal -->
     </div>
     `,
     mounted() {
@@ -304,6 +350,22 @@ Vue.component("rest-orders", {
         noFilters: function () {
             this.filterInput.restaurantType = "";
             this.filterInput.status = "";
+        },
+
+        acceptRequest: function (id) {
+            axios
+                .post("rest/orders/acceptRequest", id)
+                .then((response) => "Success");
+        },
+
+        rejectRequest: function (id) {
+            axios
+                .post("rest/orders/rejectRequest", id)
+                .then((response) => "Success");
+        },
+
+        reload() {
+            window.location.reload();
         },
     },
     computed: {
