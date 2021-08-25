@@ -1,6 +1,61 @@
 [
     {
-        "id": "af1ff042-598b-4360-b760-55fe6314cdfe",
+        "id": "b56ab9a1-33fa-455d-91e3-76d3f2cb9595",
+        "deleted": false,
+        "items": [
+            {
+                "item": {
+                    "id": "877",
+                    "deleted": false,
+                    "name": "Pizza",
+                    "price": 300.0,
+                    "type": "Food",
+                    "amount": 500.0,
+                    "points": 5.0,
+                    "description": "Pizza",
+                    "imagePath": "",
+                    "restaurantId": "2",
+                    "quantity": 2.0,
+                    "category": null
+                },
+                "quantity": 2
+            }
+        ],
+        "restaurant": {
+            "name": "Caribic",
+            "id": "2",
+            "deleted": false,
+            "type": "FASTFOOD",
+            "status": "Open",
+            "location": {
+                "address": {
+                    "street": "Maksima Gorkog",
+                    "number": 6,
+                    "city": "Novi Sad",
+                    "postcode": 21000
+                },
+                "latitude": 124.55500030517578,
+                "longitude": 245.63999938964844
+            },
+            "items": [
+                "caec61c7-21d3-4a2d-a9ff-2858efcf1ea3"
+            ],
+            "logo": "",
+            "menagerId": ""
+        },
+        "timeOfOrder": 1629921306672,
+        "price": 600.0,
+        "customer": "Jelena Djokic",
+        "status": "PROCESSING",
+        "address": {
+            "street": "Jovina",
+            "number": 1,
+            "city": "Irig",
+            "postcode": 22406
+        }
+    },
+    {
+        "id": "c35a5370-1c85-412a-b8a0-2605ec142fa3",
         "deleted": false,
         "items": [
             {
@@ -43,30 +98,15 @@
             "logo": "",
             "menagerId": ""
         },
-        "timeOfOrder": {
-            "year": 2021,
-            "monthValue": 8,
-            "dayOfMonth": 25,
-            "hour": 21,
-            "minute": 30,
-            "second": 16,
-            "nano": 271888200,
-            "month": "AUGUST",
-            "dayOfWeek": "WEDNESDAY",
-            "dayOfYear": 237,
-            "chronology": {
-                "id": "ISO",
-                "calendarType": "iso8601"
-            }
-        },
+        "timeOfOrder": 1629921390337,
         "price": 300.0,
         "customer": "Jelena Djokic",
-        "status": "PROCESSING",
+        "status": "DELIVERED",
         "address": {
-            "street": "Ulica",
-            "number": 1,
-            "city": "Grad",
-            "postcode": 57909
+            "street": "kl",
+            "number": 8,
+            "city": "jhjk",
+            "postcode": 89
         }
     }
 ]

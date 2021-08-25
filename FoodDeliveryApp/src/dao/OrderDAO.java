@@ -198,7 +198,7 @@ public class OrderDAO {
 			String id = UUID.randomUUID().toString();
 			List<OrderItemDTO> items = getItemsForRestaurant(dto.cart.getItems(), r.getId());
 			double price = getPrice(items);
-			Order newOrder = new Order(id, false, items, r, LocalDateTime.now(), price, customer, OrderStatus.PROCESSING, dto.address);
+			Order newOrder = new Order(id, false, items, r, new Date(), price, customer, OrderStatus.PROCESSING, dto.address);
 			orders.add(newOrder);
 		}
 		serialize();

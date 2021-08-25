@@ -156,6 +156,7 @@ public class OrderService {
 		return dao.getOrderByRestaurant(id);
 	}
 	
+	@GET
 	@Path("/getDeliveredForCustomer")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Collection<Order> getDeliveredForCustomer(){

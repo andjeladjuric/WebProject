@@ -14,7 +14,7 @@ public class Order {
 	private boolean deleted;
 	private List<OrderItemDTO> items = new ArrayList<OrderItemDTO>(); // Cuvati cijeli item ili kljuc napraviti?
 	private Restaurant restaurant;
-	private LocalDateTime timeOfOrder;
+	private Date timeOfOrder;
 	private double price;
 	private String customer; // full name
 	private OrderStatus status;
@@ -22,7 +22,7 @@ public class Order {
 	
 	public Order() {}
 
-	public Order(String id, boolean deleted, List<OrderItemDTO> items, Restaurant restaurant, LocalDateTime timeOfOrder,
+	public Order(String id, boolean deleted, List<OrderItemDTO> items, Restaurant restaurant, Date timeOfOrder,
 			double price, String customer, OrderStatus status, Address address) {
 		super();
 		this.id = id;
@@ -68,11 +68,11 @@ public class Order {
 		this.restaurant = restaurant;
 	}
 
-	public LocalDateTime getTimeOfOrder() {
+	public Date getTimeOfOrder() {
 		return timeOfOrder;
 	}
 
-	public void setTimeOfOrder(LocalDateTime timeOfOrder) {
+	public void setTimeOfOrder(Date timeOfOrder) {
 		this.timeOfOrder = timeOfOrder;
 	}
 
