@@ -181,7 +181,7 @@ Vue.component("rest-orders", {
                     <a @click="hideRequests = !hideRequests" class="link" style="cursor: pointer; font-style: italic; padding-left: 7%"><i class="fas fa-arrow-left me-3"></i>Back
                         to all orders</a>
                 </div>
-
+                
                 <div class="card shadow bg-light text-dark mb-5" v-for="r in requests" style="width: 86%">
                     <div class="card-body text-center">
                         <div class="row g-2 align-items-center d-inline-flex">
@@ -198,11 +198,23 @@ Vue.component("rest-orders", {
 
                                 <tbody>
                                     <tr>
-                                        <td data-label="Request from:">
+                                        <td data-label="Request from:" class="orderDetails">
                                            {{r.courierName}}
                                         </td>
                                         <td data-label="Status:" class="orderDetails">
-                                            {{r.status}}
+                                            <p v-if="r.status != 'UNDEFINED'">{{r.status}}</p>
+                                            <div class="pt-3 d-inline-flex" style="flex-wrap: wrap;">
+                                                <button type="button" class="btn d-flex me-3 mb-1" 
+                                                    style="white-space: normal; z-index: 2"
+                                                    @click="hideRequests = !hideRequests">
+                                                    <i class="fas fa-check me2 p-1"></i>Accept
+                                                </button>
+                                                <button type="button" class="btn d-flex p-2" 
+                                                    style="white-space: normal; z-index: 2; background-color: #ecbeb1; "
+                                                    @click="hideRequests = !hideRequests">
+                                                    <i class="fas fa-times me-2 p-1"></i>Reject
+                                                </button>
+                                            </div>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -211,6 +223,7 @@ Vue.component("rest-orders", {
                     </div>
                     <a :href="'#/myRestaurant/orders/details?id=' + r.orderId" class="stretched-link"></a>
                 </div>
+                
             </div>
             <!-- End of cards with requests -->
     </div>
