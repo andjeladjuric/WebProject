@@ -12,6 +12,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import beans.Order;
 import beans.OrderRequests;
 import beans.OrderStatus;
+import beans.Restaurant;
 import beans.User;
 
 public class OrderDAO {
@@ -25,7 +26,7 @@ public class OrderDAO {
 	
 	private void loadFromFile(String contextPath) {
 		ObjectMapper mapper = new ObjectMapper();
-	    String path = "C:\\Users\\jovic\\Desktop\\WebProject\\FoodDeliveryApp\\src\\files\\orders.json";
+	    String path = "src/files/orders.json";
 	    
 	    orders = new ArrayList<Order>();
 	    
@@ -39,7 +40,7 @@ public class OrderDAO {
 	
 	public void serialize() {
 		List<Order> allOrders = new ArrayList<Order>();
-		String path = "C:\\Users\\jovic\\Desktop\\WebProject\\FoodDeliveryApp\\src\\files\\orders.json";
+		String path = "src/files/orders.json";
 		
 		for (Order o : orders) {
 			allOrders.add(o);
@@ -167,6 +168,21 @@ public class OrderDAO {
 		 serialize();	
 	}
 	
+	public List<String> getCouriersFromRequests(String restaurantId){
+		List<String> names = new ArrayList<String>();
+		OrderRequestDAO requestsDAO = new OrderRequestDAO();
+		UsersDAO usersDAO = new UsersDAO();
+		usersDAO.load();
+		
+		for(OrderRequests r : requestsDAO.findAll()) {
+			if(r.getRestaurantId().equals(restaurantId)) {
+				User user = usersDAO.getByUsername(r.getCourier());
+				names.add(user.getName() + " " + user.getSurname());
+			}
+		}
+		
+		return names;
+	}
 }
 
 

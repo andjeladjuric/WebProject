@@ -5,7 +5,7 @@ Vue.component("manager-order-details", {
                 id: "",
                 deleted: false,
                 items: [],
-                restaurant: {},
+                restaurant: "",
                 timeofOrder: "",
                 price: "",
                 customer: "",
@@ -20,9 +20,9 @@ Vue.component("manager-order-details", {
             <div class="row">
                 <div class="col-md-2"></div>
                 <div class="col-md-8">
-                    <div class="row g-4">
+                    <div class="row g-4 mt-3">
                         <div class="col-md d-sm-flex justify-content-start mt-5 mb-4">
-                            <a :href="'#/myRestaurant/orders?id=' + order.restaurant.id"><i class="fas fa-arrow-left me-3"></i>Back
+                            <a @click="$router.go(-1)" class="link" style="cursor: pointer; font-style: italic"><i class="fas fa-arrow-left me-3"></i>Back
                                 to all orders</a>
                         </div>
                     </div>
@@ -61,19 +61,14 @@ Vue.component("manager-order-details", {
                         </table>
                     </div>
 
-                    <div class="row g-4 mb-5">
+                    <div class="row g-4 mb-5 table-responsive" style="overflow-x: auto">
                         <table class="bg-light">
                             <tr>
-                                <th colspan="3" id="additional">
-                                    Additional information
-                                </th>
+                                <th colspan="3">Info</th>
                             </tr>
                             <tr>
                                 <td id="customerName">Customer</td>
-                                <td>
-                                    {{order.customer}}
-                                </td>
-                                <td></td>
+                                <td>{{order.customer}}</td>
                             </tr>
 
                             <tr>
@@ -81,7 +76,6 @@ Vue.component("manager-order-details", {
                                 <td>
                                     {{order.timeOfOrder | dateFormat('DD.MM.YYYY HH:mm')}}
                                 </td>
-                                <td></td>
                             </tr>
 
                             <tr>
@@ -89,7 +83,6 @@ Vue.component("manager-order-details", {
                                 <td>
                                     {{order.restaurant.name}}
                                 </td>
-                                <td></td>
                             </tr>
 
                             <tr>
@@ -109,7 +102,6 @@ Vue.component("manager-order-details", {
                                 <td>
                                     {{order.id}}
                                 </td>
-                                <td></td>
                             </tr>
                         </table>
                     </div>

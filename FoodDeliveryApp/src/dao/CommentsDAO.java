@@ -25,7 +25,7 @@ public class CommentsDAO {
 	
 	private void loadFromFile() {
 		ObjectMapper mapper = new ObjectMapper();
-	    String path = "E:\\Projects\\WebProject\\FoodDeliveryApp\\src\\files\\comments.json";
+	    String path = "src/files/comments.json";
 	    
 	    comments = new ArrayList<Comment>();
 	    
@@ -39,7 +39,7 @@ public class CommentsDAO {
 	
 	public void serialize() {
 		List<Comment> allComments = new ArrayList<Comment>();
-		String path = "E:\\Projects\\WebProject\\FoodDeliveryApp\\src\\files\\comments.json";
+		String path = "src/files/comments.json";
 		
 		for (Comment o : comments) {
 			allComments.add(o);
@@ -69,16 +69,18 @@ public class CommentsDAO {
 		return commentsForRestaurant;
 	}
 	
-	public User getCustomer(String commentId){
+	public List<String> getCustomers(String restaurantId){
+		List<String> usersWhoCommented = new ArrayList<String>();
 		UsersDAO usersDAO = new UsersDAO();
 		usersDAO.load();
 		
 		for(Comment c : comments) {
-			if(c.getId().equals(commentId)) {
-				return usersDAO.getByUsername(c.getCustomer());
+			if(c.getRestaurantId().equals(restaurantId)) {
+				User user = usersDAO.getByUsername(c.getCustomer());
+				usersWhoCommented.add(user.getName() + " " + user.getSurname() + " · " + user.getType().getName());
 			}
 		}
-		return null;
+		return usersWhoCommented;
 	}
 	
 	public void changeStatus(String commentId, State status) {

@@ -93,11 +93,11 @@ public class OrderService {
 		return dao.getOrderById(id);
 	}
 	
-	@GET
+	@POST
 	@Path("/orderDelivered")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public void orderDelivered(@QueryParam("id") String id) {
+	public void orderDelivered(String id) {
 		User user = (User) request.getSession().getAttribute("loginUser");
 		
 		if(user!= null && (user.getRole() == (Role.COURIER))) {
@@ -184,5 +184,19 @@ public class OrderService {
 		 dao.cancelOrder(id);
 	}
 	
+	@POST
+	@Path("/getRequestsByRestaurant")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<OrderRequests> getRequestsForReataurant(String restaurantId){
+		OrderRequestDAO requestsDAO = new OrderRequestDAO();
+		return requestsDAO.getByRestaurant(restaurantId);
+	}
 	
+	@POST
+	@Path("/getCouriersFromRequests")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<String> getCouriersFromRequests(String id){
+		OrderDAO dao = (OrderDAO) ctx.getAttribute("orders");
+		return dao.getCouriersFromRequests(id);
+	}
 }

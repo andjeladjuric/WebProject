@@ -2,7 +2,17 @@ Vue.component("comments", {
     data: function () {
         return {
             allComments: [],
-            user: {},
+            users: [],
+            user: {
+                username: "",
+                name: "",
+                surname: "",
+                type: {
+                    name: "",
+                    discount: "",
+                    requiredPoints: "",
+                },
+            },
         };
     },
     template: `
@@ -12,14 +22,12 @@ Vue.component("comments", {
 
         <div class="col-md-8 ms-2">
             <h4 class="mb-3" id="item-1">All comments</h4>
-            <div class="card bg-light text-dark mb-2" id="itemAndCommentCards" v-for="comment in allComments"
+            <div class="card bg-light text-dark mb-2" id="itemAndCommentCards" v-for="(comment, index) in allComments"
                 style="border-top: 1px solid rgba(124, 124, 124, 0.404);">
                 <div class="card-body text-start">
                     <div class="container cardContent text-start">
                         <div class="container mb-2 d-inline-flex userNameAndType">
-                            <h1 class="me-2">{{comment.customer}}</h1>
-                            <p class="me-2">·</p>
-                            <p>golden</p>
+                            <h1 class="me-2"> {{users[index]}} </h1>
                         </div>
                         <p class="mb-2">{{comment.text}}</p>
                         <div class="more mb-2">
@@ -50,20 +58,17 @@ Vue.component("comments", {
                     .get("rest/comments/getCommentsForManager", {
                         params: { id: this.restaurant.id },
                     })
-                    .then((response) => (this.allComments = response.data));
+                    .then((response) => (this.allComments = response.data))
+                    .then((response) => {
+                        axios
+                            .get("rest/comments/getCustomers", {
+                                params: { id: this.restaurant.id },
+                            })
+                            .then((response) => (this.users = response.data));
+                    });
             });
     },
     methods: {
-        getCustomers: function (comment) {
-            axios
-                .get("rest/comments/getCustomer", {
-                    params: { id: comment.id },
-                })
-                .then((response) => {
-                    this.user = response.data;
-                });
-        },
-
         rejectComment: function (id) {
             axios
                 .post("rest/comments/rejectComment", id)

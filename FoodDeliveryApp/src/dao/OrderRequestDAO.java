@@ -10,6 +10,7 @@ import java.util.List;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import beans.OrderRequests;
+import beans.User;
 
 public class OrderRequestDAO {
 private List<OrderRequests> requests = new ArrayList<OrderRequests>();
@@ -22,7 +23,7 @@ private List<OrderRequests> requests = new ArrayList<OrderRequests>();
 	
 	private void loadFromFile() {
 		ObjectMapper mapper = new ObjectMapper();
-	    String path = "E:\\Projects\\WebProject\\FoodDeliveryApp\\src\\files\\requests.json";
+	    String path = "src/files/requests.json";
 	    
 	    requests = new ArrayList<OrderRequests>();
 	    
@@ -36,7 +37,7 @@ private List<OrderRequests> requests = new ArrayList<OrderRequests>();
 	
 	public void serialize() {
 		List<OrderRequests> allrequests = new ArrayList<OrderRequests>();
-		String path = "E:\\Projects\\WebProject\\FoodDeliveryApp\\src\\files\\requests.json";
+		String path = "src/files/requests.json";
 		
 		for (OrderRequests o : requests) {
 			allrequests.add(o);
@@ -59,4 +60,28 @@ private List<OrderRequests> requests = new ArrayList<OrderRequests>();
 		requests.add(o);
 		serialize();
 	}
+	
+	public List<OrderRequests> getByRestaurant(String restaurantId){
+		List<OrderRequests> found = new ArrayList<OrderRequests>();
+		
+		for(OrderRequests r : requests) {
+			if(r.getRestaurantId().equals(restaurantId))
+				found.add(r);
+		}
+		
+		return found;
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

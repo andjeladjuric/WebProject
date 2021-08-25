@@ -66,15 +66,14 @@ h4,
     height: auto;
     width: 100%;
     position: relative;
-    background-position: center;
-    background-size: cover;
 }
 
 .information {
     display: block;
 }
 
-.addItem {
+.addItem,
+.requests {
     background: none;
     font-size: 14px;
     text-transform: uppercase;
@@ -82,7 +81,8 @@ h4,
     align-items: flex-end;
 }
 
-.addItem:hover {
+.addItem:hover,
+.requests:hover {
     margin-left: 1rem;
     border: 1px solid rgba(124, 124, 124, 0.404);
 }
@@ -156,4 +156,8 @@ h4,
     color: #eca895;
     font-size: 64px;
     display: inline-block;
+}
+
+.categoryBox {
+    margin-bottom: 7rem;
 }

@@ -6,9 +6,11 @@
         "price": 300.0,
         "type": "Food",
         "amount": 500.0,
+        "points": 0.0,
         "description": "This is a pizza",
         "imagePath": "",
         "restaurantId": "3",
+        "quantity": 0.0,
         "category": "PIZZA"
     },
     {
@@ -18,9 +20,11 @@
         "price": 300.0,
         "type": "Food",
         "amount": 500.0,
+        "points": 0.0,
         "description": "This is a great pasta",
         "imagePath": "",
         "restaurantId": "3",
+        "quantity": 0.0,
         "category": "PASTA"
     },
     {
@@ -30,9 +34,11 @@
         "price": 300.0,
         "type": "Food",
         "amount": 500.0,
+        "points": 0.0,
         "description": "This is a cool salad",
         "imagePath": "",
         "restaurantId": "2",
+        "quantity": 0.0,
         "category": "SALADS"
     },
     {
@@ -42,9 +48,11 @@
         "price": 300.0,
         "type": "Food",
         "amount": 500.0,
+        "points": 0.0,
         "description": "This is a cool salad",
         "imagePath": "",
         "restaurantId": "3",
+        "quantity": 0.0,
         "category": "MAINDISHES"
     },
     {
@@ -54,9 +62,11 @@
         "price": 300.0,
         "type": "Food",
         "amount": 500.0,
+        "points": 0.0,
         "description": "This is a cool salad reallz",
         "imagePath": "",
         "restaurantId": "3",
+        "quantity": 0.0,
         "category": "SALADS"
     },
     {
@@ -66,21 +76,25 @@
         "price": 450.0,
         "type": "Drink",
         "amount": 0.0,
+        "points": 0.0,
         "description": "Unique coctail that everyone adores!",
         "imagePath": "",
         "restaurantId": "3",
+        "quantity": 0.0,
         "category": "DRINKS"
     },
     {
-        "id": "9ad493c8-0d69-40a3-9c8d-82110c841630",
+        "id": "0d12adf1-6bc9-4992-bsf9-a896288beaa4",
         "deleted": false,
-        "name": "resgwtgw",
-        "price": 145.0,
-        "type": "Food",
-        "amount": 500.0,
-        "description": "grdfsvsfvswr",
+        "name": "Blue Lagoon",
+        "price": 450.0,
+        "type": "Drink",
+        "amount": 0.0,
+        "points": 0.0,
+        "description": "Unique coctail that everyone adores!",
         "imagePath": "",
         "restaurantId": "3",
-        "category": "SALADS"
+        "quantity": 0.0,
+        "category": "DRINKS"
     }
 ]

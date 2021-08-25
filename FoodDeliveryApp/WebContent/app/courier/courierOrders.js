@@ -167,26 +167,26 @@ Vue.component("all-orders", {
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <table class="table-responsive singleOrderView">
+                                        <table class="singleOrderView">
                                             <thead>
-                                                <td>Ordered from:</td>
-                                                <td>Total sum:</td>
-                                                <td>Date and time:</td>
-                                                <td>Status:</td>
-                                                <td>Delivery Address:</td>
+                                                <td scope="col">Ordered from:</td>
+                                                <td scope="col">Total sum:</td>
+                                                <td scope="col">Date and time:</td>
+                                                <td scope="col">Status:</td>
+                                                <td scope="col">Delivery Address:</td>
                                             </thead>
     
                                             <tbody>
                                                 <tr>
-                                                    <td>
-                                                        <ol type="1">
+                                                    <td data-label="Ordered from:">
+                                                        <ul type="1">
                                                             <li>{{o.restaurant.name}}</li>
-                                                        </ol>
+                                                        </ul>
                                                     </td>
-                                                    <td>{{o.price}}</td>
-                                                    <td>{{o.timeOfOrder | dateFormat('DD.MM.YYYY HH:mm')}}</td>
-                                                    <td>{{o.status}}</td>
-                                                    <td>{{o.address.street}} {{o.address.number}}, {{o.address.city}} {{o.address.postcode}}</td>
+                                                    <td data-label="Total sum:" class="orderDetails">{{o.price}}</td>
+                                                    <td data-label="Date and time:" class="orderDetails">{{o.timeOfOrder | dateFormat('DD.MM.YYYY HH:mm')}}</td>
+                                                    <td data-label="Status:" class="orderDetails">{{o.status}}</td>
+                                                    <td data-label="Delivery address:" class="orderDetails">{{o.address.street}} {{o.address.number}}, {{o.address.city}} {{o.address.postcode}}</td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -204,27 +204,27 @@ Vue.component("all-orders", {
                                     <div class="row g-2">
                                         <h1 class="mb-4 orderID">Order #{{o.id}}</h1>
                                     </div>
-                                    <div class="row">
-                                        <table class="table-responsive singleOrderView">
+                                    <div class="row table-responsive">
+                                        <table class="singleOrderView">
                                             <thead>
-                                                <td>Ordered from:</td>
-                                                <td>Total sum:</td>
-                                                <td>Date and time:</td>
-                                                <td>Stauts:</td>
-                                                <td>Delivery Address:</td>
+                                                <td scope="col">Ordered from:</td>
+                                                <td scope="col">Total sum:</td>
+                                                <td scope="col">Date and time:</td>
+                                                <td scope="col">Status:</td>
+                                                <td scope="col">Delivery Address:</td>
                                             </thead>
     
                                             <tbody>
                                                 <tr>
-                                                    <td>
-                                                        <ol type="1">
+                                                    <td data-label="Ordered from:">
+                                                        <ul type="1">
                                                             <li>{{o.restaurant.name}}</li>
-                                                        </ol>
+                                                        </ul>
                                                     </td>
-                                                    <td>{{o.price}}</td>
-                                                    <td>{{o.timeOfOrder | dateFormat('DD.MM.YYYY HH:mm')}}</td>
-                                                    <td>{{o.status}}</td>
-                                                    <td>{{o.address.street}} {{o.address.number}}, {{o.address.city}} {{o.address.postcode}}</td>
+                                                    <td data-label="Total sum:">{{o.price}}</td>
+                                                    <td data-label="Date and time:">{{o.timeOfOrder | dateFormat('DD.MM.YYYY HH:mm')}}</td>
+                                                    <td data-label="Status:">{{o.status}}</td>
+                                                    <td data-label="Delivery address:">{{o.address.street}} {{o.address.number}}, {{o.address.city}} {{o.address.postcode}}</td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -268,9 +268,7 @@ Vue.component("all-orders", {
         },
         changeStatus: function (id) {
             axios
-                .get("rest/orders/orderDelivered", {
-                    params: { id: id },
-                })
+                .post("rest/orders/orderDelivered", id)
                 .then((response) => (this.order = response.data));
         },
 

@@ -5,19 +5,19 @@ public class OrderRequests {
 	private String restaurantId;
 	private String manager;
 	private String courier;
-	private boolean deleted;
+	private State status;
 	
 	public OrderRequests() {
 		super();
 	}
 	
-	public OrderRequests(String orderId, String restaurantId, String manager, String courier, boolean deleted) {
+	public OrderRequests(String orderId, String restaurantId, String manager, String courier, State status) {
 		super();
 		this.orderId = orderId;
 		this.restaurantId = restaurantId;
 		this.manager = manager;
 		this.courier = courier;
-		this.deleted = deleted;
+		this.status = status;
 	}
 	
 	public String getCourier() {
@@ -28,12 +28,12 @@ public class OrderRequests {
 		this.courier = courier;
 	}
 
-	public boolean isDeleted() {
-		return deleted;
+	public State getStatus() {
+		return status;
 	}
 
-	public void setDeleted(boolean deleted) {
-		this.deleted = deleted;
+	public void setStatus(State status) {
+		this.status = status;
 	}
 
 	public String getOrderId() {

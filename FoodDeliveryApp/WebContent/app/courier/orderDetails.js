@@ -17,6 +17,7 @@ Vue.component("order-details", {
                 restaurantId: "",
                 courier: "",
                 manager: "",
+                status: "",
             },
             requests: [],
             currentUser: {},
@@ -172,9 +173,7 @@ Vue.component("order-details", {
     methods: {
         changeStatus: function () {
             axios
-                .get("rest/orders/orderDelivered", {
-                    params: { id: this.$route.query.id },
-                })
+                .post("rest/orders/orderDelivered", id)
                 .then((response) => (this.order = response.data));
         },
         reload: function () {
@@ -186,6 +185,7 @@ Vue.component("order-details", {
             this.orderRequest.restaurantId = this.order.restaurant.id;
             this.orderRequest.courier = this.currentUser.username;
             this.orderRequest.manager = this.order.restaurant.menagerId;
+            this.orderRequest.status = "UNDEFINED";
 
             axios
                 .post(

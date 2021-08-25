@@ -27,7 +27,7 @@ public class RestaurantDAO {
 	
 	private void loadFromFile() {
 		ObjectMapper mapper = new ObjectMapper();
-	    String path = "C:\\Users\\jovic\\Desktop\\WebProject\\FoodDeliveryApp\\src\\files\\restaurants.json";
+	    String path = "src/files/restaurants.json";
 	    
 	    restaurants = new ArrayList<Restaurant>();
 	    
@@ -41,7 +41,7 @@ public class RestaurantDAO {
 	
 	public void serialize() {
 		List<Restaurant> allRestaurants = new ArrayList<Restaurant>();
-		String path = "E:\\Projects\\WebProject\\FoodDeliveryApp\\src\\files\\restaurants.json";
+		String path = "src/files/restaurants.json";
 		
 		for (Restaurant o : restaurants) {
 			allRestaurants.add(o);
@@ -81,6 +81,9 @@ public class RestaurantDAO {
 			if(r.getId().equals(id))
 				return r;
 		}
+		
+		return null;
+	}
 
 	public Restaurant getRestaurantByManager(String username) {
 		for(Restaurant r : restaurants) {
