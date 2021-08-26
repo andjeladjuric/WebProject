@@ -17,6 +17,7 @@ public class Restaurant {
 	private ArrayList<String> items = new ArrayList<String>();
 	private String logo; 
 	private String menagerId;
+	private double rating;
 	
 	public Restaurant() {}
 	
@@ -28,12 +29,12 @@ public class Restaurant {
 		this.status = Status.Open;
 		this.logo = rest.logo;
 		this.menagerId = rest.menagerId;
-		Address adr = new Address("Dr Sime Milosevica", 6, "Novi Sad", 2100);
+		Address adr = new Address("Dr Sime Milosevica", 6, "Novi Sad", "Serbia", 2100);
 		this.location = new Location(adr, 124.55, 245.64);
 	}
 
 	public Restaurant(String name, String id, boolean deleted, RestaurantType type, Status status, Location location,
-			ArrayList<String> items, String logo, String menagerId) {
+			ArrayList<String> items, String logo, String menagerId, double rating) {
 		super();
 		this.name = name;
 		this.id = id;
@@ -44,6 +45,15 @@ public class Restaurant {
 		this.items = items;
 		this.logo = logo;
 		this.menagerId = menagerId;
+		this.rating = rating;
+	}
+
+	public double getRating() {
+		return rating;
+	}
+
+	public void setRating(double rating) {
+		this.rating = rating;
 	}
 
 	public String getName() {

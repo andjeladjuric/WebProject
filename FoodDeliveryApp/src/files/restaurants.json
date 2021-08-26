@@ -9,7 +9,8 @@
             "address": {
                 "street": "Katolicke porte",
                 "number": 6,
-                "city": "Novi Sad",
+                "city": "Kragujevac",
+                "country": "Serbia",
                 "postcode": 21000
             },
             "latitude": 124.55500030517578,
@@ -17,19 +18,21 @@
         },
         "items": [],
         "logo": "",
-        "menagerId": ""
+        "menagerId": "",
+        "rating": 5.0
     },
     {
         "name": "Caribic",
         "id": "2",
         "deleted": false,
         "type": "FASTFOOD",
-        "status": "Open",
+        "status": "Closed",
         "location": {
             "address": {
                 "street": "Maksima Gorkog",
                 "number": 6,
-                "city": "Novi Sad",
+                "city": "Beograd",
+                "country": "Serbia",
                 "postcode": 21000
             },
             "latitude": 124.55500030517578,
@@ -37,7 +40,8 @@
         },
         "items": ["caec61c7-21d3-4a2d-a9ff-2858efcf1ea3"],
         "logo": "",
-        "menagerId": ""
+        "menagerId": "",
+        "rating": 4.0
     },
     {
         "name": "Corso",
@@ -50,6 +54,7 @@
                 "street": "Zmaj Jovina",
                 "number": 16,
                 "city": "Novi Sad",
+                "country": "Serbia",
                 "postcode": 21000
             },
             "latitude": 124.55500030517578,
@@ -63,6 +68,7 @@
             "0d12adf1-6bc9-4992-bsf9-a896288beaa4"
         ],
         "logo": "",
-        "menagerId": "andjela"
+        "menagerId": "andjela",
+        "rating": 3.0
     }
 ]

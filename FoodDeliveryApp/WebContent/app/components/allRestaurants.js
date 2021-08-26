@@ -5,6 +5,18 @@ Vue.component("all-restaurants", {
             showSearch: false,
             showFilter: false,
             showSort: false,
+            searchInput: {
+                restaurant: "",
+                type: "",
+                location: "",
+                rating: 0,
+            },
+            selected: "",
+            sort: "",
+            filterInput: {
+                restaurantType: "",
+                opened: "",
+            },
         };
     },
     template: `
@@ -82,28 +94,33 @@ Vue.component("all-restaurants", {
                     <!-- Search -->
                     <transition name="show">
                         <div class="container mb-3 searchInput" style="width: 85%;" v-if="showSearch">
-                            <div class="row g-4 justify-content-between align-items-center d-md-flex">
+                            <div class="row g-4 justify-content-center align-items-center d-md-flex">
                                 <div class="col-md">
-                                    <input type="text" class="form-control" placeholder="Name" aria-label="Name">
+                                    <input type="text" class="form-control" placeholder="Name" aria-label="Name" v-model="searchInput.restaurant">
                                 </div>
                                 <div class="col-md">
-                                    <input type="text" class="form-control" placeholder="Type" aria-label="Type">
-                                </div>
-                                <div class="col-md">
-                                    <input type="text" class="form-control" placeholder="Location" aria-label="Location">
-                                </div>
-                                <div class="col-md">
-                                    <select class="form-select" placeholder="Type" aria-label="Type">
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                        <option value="5">5</option>
+                                    <select class="form-select" placeholder="Restaurant type" aria-label="Restaurant type"
+                                        v-model="searchInput.type">
+                                        <option value="" disabled selected hidden>Restaurant type</option>
+                                        <option value="ITALIAN">Italian</option>
+                                        <option value="FASTFOD">Fast food</option>
+                                        <option value="CHINESE">Chinese</option>
+                                        <option value="SERBIAN">Serbian</option>
+                                        <option value="BARBEQUE">Barbeque</option>
                                     </select>
                                 </div>
-                                <div class="col-md p-0">
-                                    <button type="button" class="btn btn-sm search-button"><i
-                                            class="fa fa-search me-2"></i>Search</button>
+                                <div class="col-md">
+                                    <input type="text" class="form-control" placeholder="Location" aria-label="Location" v-model="searchInput.location">
+                                </div>
+                                <div class="col-md">
+                                    <select class="form-select" placeholder="Rating" aria-label="Rating" v-model="searchInput.rating">
+                                        <option value="" disabled selected hidden>Rating</option>
+                                        <option value="1.0">1</option>
+                                        <option value="2.0">2</option>
+                                        <option value="3.0">3</option>
+                                        <option value="4.0">4</option>
+                                        <option value="5.0">5</option>
+                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -115,22 +132,29 @@ Vue.component("all-restaurants", {
                         <div style="width: 85%;" class="container mb-3 filterInput" v-if="showFilter">
                             <div class="row justify-content-center align-items-center d-md-flex search-input">
                                 <div class="col-md">
-                                    <select class="form-select" placeholder="Order status" aria-label="Order status">
+                                    <select class="form-select" placeholder="Restaurant type" aria-label="Restaurant type"
+                                        v-model="filterInput.restaurantType">
                                         <option value="" disabled selected hidden>Restaurant type</option>
-                                        <option value="italian">Italian</option>
-                                        <option value="fast-food">Fast food</option>
+                                        <option value="ITALIAN">Italian</option>
+                                        <option value="FASTFOD">Fast food</option>
+                                        <option value="CHINESE">Chinese</option>
+                                        <option value="SERBIAN">Serbian</option>
+                                        <option value="BARBEQUE">Barbeque</option>
                                     </select>
                                 </div>
 
                                 <div class="col-md mt-2">
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="opened" value="" id="flexCheck">
+                                        <input class="form-check-input" type="radio" name="opened" value="" id="flexCheck"
+                                            v-model="filterInput.opened" v-bind:value="'Open'">
                                         <label class="form-check-label" for="flexCheckDefault">Show only opened restaurants</label>
                                     </div>
                                 </div>
                     
                                 <div class="col-md mt-1">
-                                    <button type="button" class="btn btn-sm filter-button">Filter</button>
+                                    <button type="button" class="btn btn-sm filter-button"@click="noFilters()">
+                                        <i class="fas fa-trash me-2"></i>Clear Filters
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -142,7 +166,7 @@ Vue.component("all-restaurants", {
                         <div class="container mb-3 sortInput" style="width: 85%;" v-if="showSort">
                             <div class="row g-4 justify-content-between align-items-center d-md-flex">
                                 <div class="col-md-3 me-5 select">
-                                    <select class="form-select" aria-label="Sort by" placeholder="Sort by">
+                                    <select class="form-select" aria-label="Sort by" placeholder="Sort by" v-model="selected">
                                         <option value="" disabled selected hidden>Sort by</option>
                                         <option value="1">Restaurant name</option>
                                         <option value="2">Location</option>
@@ -152,18 +176,19 @@ Vue.component("all-restaurants", {
                 
                                 <div class="col-md-3 p-2 d-inline-flex">
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="ascOrDsc" value="" id="flexCheck">
+                                        <input class="form-check-input" type="radio" name="ascOrDsc" id="flexCheck" v-model="sort" v-bind:value="'asc'">
                                         <label class="form-check-label" for="flexCheckDefault">Ascending</label>
                                     </div>
-                
+
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="ascOrDsc" value="" id="flexCheck">
+                                        <input class="form-check-input" type="radio" name="ascOrDsc" id="flexCheck" v-model="sort" v-bind:value="'desc'">
                                         <label class="form-check-label" for="flexCheckDefault">Descending</label>
                                     </div>
                                 </div>
-                
-                                <div class="col-md p-0">
-                                    <button type="button" class="btn btn-sm filter-button">Sort</button>
+
+                                <div class="col-md p-2">
+                                    <button type="button" class="btn btn-sm filter-button" @click="sortRestaurants()"><i
+                                    class="fa fa-sort me-2"></i>Sort</button>
                                 </div>
                             </div>
                         </div>
@@ -178,7 +203,7 @@ Vue.component("all-restaurants", {
                 <div class="container container-custom" id="vue-restaurants">
                     <div class="row text-center g-4">
 
-                        <div class="col-md-4" v-for="r in restaurants">
+                        <div class="col-md-4" v-for="r in filteredRestaurants">
                             <div class="card bg-light text-dark restaurantCards">
                                 <div class="cover">
                                     <img src="img/product-1.jpg" alt="" class="img-responsive cover">
@@ -195,6 +220,8 @@ Vue.component("all-restaurants", {
                                         {{r.location.address.street}} {{r.location.address.number}}
                                         <br>
                                         {{r.location.address.city}} {{r.location.address.postcode}} 
+                                        <br>
+                                        {{r.location.address.country}}
                                         <br>
                                         {{r.location.longitude}},  {{r.location.latitude}}
                                         <br>
@@ -220,5 +247,79 @@ Vue.component("all-restaurants", {
         axios
             .get("rest/restaurants/getAll")
             .then((response) => (this.restaurants = response.data));
+    },
+    methods: {
+        searchRest: function (restaurant) {
+            if (
+                !restaurant.name
+                    .toLowerCase()
+                    .match(this.searchInput.restaurant.toLowerCase())
+            )
+                return false;
+
+            if (!restaurant.type.match(this.searchInput.type)) return false;
+
+            if (
+                !restaurant.location.address.city
+                    .toLowerCase()
+                    .match(this.searchInput.location.toLowerCase())
+            ) {
+                if (
+                    !restaurant.location.address.country
+                        .toLowerCase()
+                        .match(this.searchInput.location.toLowerCase())
+                )
+                    return false;
+            }
+
+            // if (
+            //     parseFloat(restaurant.rating) !==
+            //     parseFloat(this.searchInput.rating)
+            // )
+            //     return false;
+
+            if (!restaurant.type.match(this.filterInput.restaurantType))
+                return false;
+
+            if (!restaurant.status.match(this.filterInput.opened)) return false;
+
+            return true;
+        },
+
+        sortRestaurants: function () {
+            if (this.selected === "1" && this.sort === "asc")
+                this.restaurants.sort((a, b) => (a.name > b.name ? 1 : -1));
+
+            if (this.selected === "1" && this.sort === "desc")
+                this.restaurants.sort((a, b) => (a.name < b.name ? 1 : -1));
+
+            if (this.selected === "2" && this.sort === "asc")
+                this.restaurants.sort((a, b) =>
+                    a.location.address.city > b.location.address.city ? 1 : -1
+                );
+
+            if (this.selected === "2" && this.sort === "desc")
+                this.restaurants.sort((a, b) =>
+                    a.location.address.city < b.location.address.city ? 1 : -1
+                );
+
+            if (this.selected === "3" && this.sort === "asc")
+                this.restaurants.sort((a, b) => (a.rating > b.rating ? 1 : -1));
+
+            if (this.selected === "3" && this.sort === "desc")
+                this.restaurants.sort((a, b) => (a.rating < b.rating ? 1 : -1));
+        },
+
+        noFilters: function () {
+            this.filterInput.restaurantType = "";
+            this.filterInput.opened = "";
+        },
+    },
+    computed: {
+        filteredRestaurants: function () {
+            return this.restaurants.filter((r) => {
+                return this.searchRest(r);
+            });
+        },
     },
 });
