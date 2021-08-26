@@ -3,12 +3,12 @@ package dao;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Paths;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
+
+import org.apache.commons.lang3.RandomStringUtils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -197,7 +197,7 @@ public class OrderDAO {
 
 		List<Restaurant> allRestaurants = getRestaurants(dto.cart.getItems());
 		for(Restaurant r : allRestaurants) {
-			String id = UUID.randomUUID().toString();
+			String id = getUniqueId();
 			List<OrderItemDTO> items = getItemsForRestaurant(dto.cart.getItems(), r.getId());
 			double price = getPrice(items);
 			Order newOrder = new Order(id, false, items, r, new Date(), price, customer, u.getUsername(), OrderStatus.PROCESSING, dto.address);
@@ -246,6 +246,24 @@ public class OrderDAO {
 		}
 		
 		return price;
+	}
+	
+	public String getUniqueId() {
+		String id;
+		while(true) {
+			 id = RandomStringUtils.randomAlphanumeric(10);
+			if(!alreadyExists(id))
+				return id;
+		}
+	}
+	
+	public boolean alreadyExists(String id) {
+		
+		for(Order o : orders) {
+			if(o.getId().equals(id))
+				return true;
+		}
+		return false;
 	}
 }
 
