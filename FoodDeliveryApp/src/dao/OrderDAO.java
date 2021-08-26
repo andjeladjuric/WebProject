@@ -139,9 +139,10 @@ public class OrderDAO {
 	public List<Order> getDeliveredForCustomer(User user){
 		List<Order> customerOrders = new ArrayList<Order>();
 		
-		for(String id : user.getOrders()) {
-			if(getOrderById(id) != null && (getOrderById(id).getStatus().equals(OrderStatus.DELIVERED)))  {
-				customerOrders.add(getOrderById(id));
+		for(Order o : orders) {
+			if(o.getCustomer().equals(user.getUsername()) && o.getStatus() == OrderStatus.DELIVERED
+					&& o.isDeleted() == false && o.getStatus() != OrderStatus.CANCELED)  {
+				customerOrders.add(o);
 			}
 		}
 		
@@ -151,9 +152,10 @@ public class OrderDAO {
 	public List<Order> getNotDeliveredForCustomer(User user){
 		List<Order> customerOrders = new ArrayList<Order>();
 		
-		for(String id : user.getOrders()) {
-			if(getOrderById(id) != null && (!getOrderById(id).getStatus().equals(OrderStatus.DELIVERED)))  {
-				customerOrders.add(getOrderById(id));
+		for(Order o : orders) {
+			if(o.getCustomer().equals(user.getUsername()) && o.getStatus() != OrderStatus.DELIVERED
+					&& o.isDeleted() == false && o.getStatus() != OrderStatus.CANCELED)  {
+				customerOrders.add(o);
 			}
 		}
 		
@@ -165,7 +167,7 @@ public class OrderDAO {
 		 
 		 for(Order o : orders) {
 			 if(o.getId().equals(id))
-				 o.setDeleted(true);
+				 o.setStatus(OrderStatus.CANCELED);
 			 allOrders.add(o);
 		 }
 		 
@@ -191,7 +193,7 @@ public class OrderDAO {
 	}
 
 	public void makeOrders(OrderDTO dto, User u) {
-		String customer = u.getName() + " " + u.getSurname();
+		String customer = u.getUsername();
 
 		List<Restaurant> allRestaurants = getRestaurants(dto.cart.getItems());
 		for(Restaurant r : allRestaurants) {
