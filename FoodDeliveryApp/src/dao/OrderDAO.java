@@ -140,7 +140,7 @@ public class OrderDAO {
 		List<Order> customerOrders = new ArrayList<Order>();
 		
 		for(Order o : orders) {
-			if(o.getCustomer().equals(user.getUsername()) && o.getStatus() == OrderStatus.DELIVERED
+			if(o.getCustomerId().equals(user.getUsername()) && o.getStatus() == OrderStatus.DELIVERED
 					&& o.isDeleted() == false && o.getStatus() != OrderStatus.CANCELED)  {
 				customerOrders.add(o);
 			}
@@ -153,7 +153,7 @@ public class OrderDAO {
 		List<Order> customerOrders = new ArrayList<Order>();
 		
 		for(Order o : orders) {
-			if(o.getCustomer().equals(user.getUsername()) && o.getStatus() != OrderStatus.DELIVERED
+			if(o.getCustomerId().equals(user.getUsername()) && o.getStatus() != OrderStatus.DELIVERED
 					&& o.isDeleted() == false && o.getStatus() != OrderStatus.CANCELED)  {
 				customerOrders.add(o);
 			}
@@ -193,14 +193,14 @@ public class OrderDAO {
 	}
 
 	public void makeOrders(OrderDTO dto, User u) {
-		String customer = u.getUsername();
+		String customer = u.getName() + " " + u.getSurname();
 
 		List<Restaurant> allRestaurants = getRestaurants(dto.cart.getItems());
 		for(Restaurant r : allRestaurants) {
 			String id = UUID.randomUUID().toString();
 			List<OrderItemDTO> items = getItemsForRestaurant(dto.cart.getItems(), r.getId());
 			double price = getPrice(items);
-			Order newOrder = new Order(id, false, items, r, new Date(), price, customer, OrderStatus.PROCESSING, dto.address);
+			Order newOrder = new Order(id, false, items, r, new Date(), price, customer, u.getUsername(), OrderStatus.PROCESSING, dto.address);
 			orders.add(newOrder);
 		}
 		serialize();

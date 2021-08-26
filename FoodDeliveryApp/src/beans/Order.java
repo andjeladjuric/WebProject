@@ -17,13 +17,14 @@ public class Order {
 	private Date timeOfOrder;
 	private double price;
 	private String customer; // full name
+	private String customerId; // full name
 	private OrderStatus status;
 	private Address address;
 	
 	public Order() {}
 
 	public Order(String id, boolean deleted, List<OrderItemDTO> items, Restaurant restaurant, Date timeOfOrder,
-			double price, String customer, OrderStatus status, Address address) {
+			double price, String customer,  String customerId, OrderStatus status, Address address) {
 		super();
 		this.id = id;
 		this.deleted = deleted;
@@ -32,8 +33,17 @@ public class Order {
 		this.timeOfOrder = timeOfOrder;
 		this.price = price;
 		this.customer = customer;
+		this.customerId = customerId;
 		this.status = status;
 		this.address = address;
+	}
+
+	public String getCustomerId() {
+		return customerId;
+	}
+
+	public void setCustomerId(String customerId) {
+		this.customerId = customerId;
 	}
 
 	public String getId() {

@@ -266,10 +266,6 @@ Vue.component("all-orders", {
         },
         cancelOrder: function (id) {
             axios
-                .get("rest/users/cancelOrder", {
-                    params: { id: id },
-                })
-            axios
                 .get("rest/orders/cancelOrder", {
                     params: { id: id },
                 })
