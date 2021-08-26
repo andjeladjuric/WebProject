@@ -1,10 +1,10 @@
 Vue.component("restaurant", {
     data: function () {
         return {
-			restaurant : {},
-			showItems: true,
-            showComments: false
-     	};
+            restaurant: {},
+            showItems: true,
+            showComments: false,
+        };
     },
     template: `
    <div>
@@ -48,6 +48,10 @@ Vue.component("restaurant", {
     </div>
     `,
     mounted() {
-       
+        axios
+            .get("rest/restaurants/getRestaurant", {
+                params: { id: this.$route.query.id },
+            })
+            .then((response) => (this.restaurant = response.data));
     },
 });

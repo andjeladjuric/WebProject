@@ -207,9 +207,8 @@ Vue.component("all-restaurants", {
                                         <i class="fa fa-star"></i>
                                         <i class="fa fa-star"></i>
                                     </div>
-
-                                    <a href="#" class="btn custom-btn">Select</a>
                                 </div>
+                                <a :href="'#/selectedRestaurant?id=' + r.id" class="stretched-link"></a>
                             </div>
                         </div>
                     </div>

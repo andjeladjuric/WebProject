@@ -1,11 +1,30 @@
 /**
- * 
+ *
  */
 Vue.component("restaurant-items", {
     data: function () {
         return {
-            restaurant: {},
-            items : []
+            restaurant: {
+                name: "",
+                id: "",
+                deleted: false,
+                type: "",
+                status: "",
+                location: {
+                    address: {
+                        street: "",
+                        number: "",
+                        city: "",
+                        postcode: "",
+                    },
+                    latitude: "",
+                    longitude: "",
+                },
+                items: [],
+                logo: "",
+                menagerId: "",
+            },
+            items: [],
         };
     },
     template: `
@@ -252,8 +271,10 @@ Vue.component("restaurant-items", {
     </div>
     `,
     mounted() {
-       axios
-            .get("rest/restaurants/getRestaurant")
+        axios
+            .get("rest/restaurants/getRestaurant", {
+                params: { id: this.$route.query.id },
+            })
             .then((response) => {
                 this.restaurant = response.data;
                 return axios
@@ -274,19 +295,18 @@ Vue.component("restaurant-items", {
 
             return false;
         },
-        addToCart : function(item) {
-        	axios 
-    			.post('rest/carts/addToCart', JSON.stringify(item),
-        	{ headers: {
-        		'Content-type': 'application/json',
-        		}
-        	})
-        }
+        addToCart: function (item) {
+            axios.post("rest/carts/addToCart", JSON.stringify(item), {
+                headers: {
+                    "Content-type": "application/json",
+                },
+            });
+        },
     },
     filters: {
         dateFormat: function (value, format) {
             var parsed = moment(value);
             return parsed.format(format);
-        }
-    }
+        },
+    },
 });

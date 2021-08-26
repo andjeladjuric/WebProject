@@ -59,10 +59,10 @@ public class RestaurantService {
 	@GET
 	@Path("/getRestaurant")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Restaurant getRestaurant(){
+	public Restaurant getRestaurant(@QueryParam("id") String id){
 		RestaurantDAO dao = (RestaurantDAO) ctx.getAttribute("restaurants");
 
-		return dao.getById("3");
+		return dao.getById(id);
 	}
 	
 	@POST

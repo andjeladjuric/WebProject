@@ -1,16 +1,16 @@
 /**
- * 
+ *
  */
 Vue.component("comments", {
     data: function () {
         return {
-        	restaurant : {},
+            restaurant: {},
             allComments: [],
-            comment : {
-            	text : "",
-            	rating : 0,
-            	restaurant : ""
-            }
+            comment: {
+                text: "",
+                rating: 0,
+                restaurant: "",
+            },
         };
     },
     template: `
@@ -60,7 +60,9 @@ Vue.component("comments", {
     `,
     mounted() {
         axios
-            .get("rest/restaurants/getRestaurant")
+            .get("rest/restaurants/getRestaurant", {
+                params: { id: this.restaurant.id },
+            })
             .then((response) => {
                 this.restaurant = response.data;
                 return axios
@@ -71,23 +73,26 @@ Vue.component("comments", {
             });
     },
     methods: {
-    	cancel : function(){
-    		this.comment.text = "";
-    		this.comment.rating = 0;
-    	},
-    	addComment : function(){
-    		this.comment.restaurant = this.restaurant.id;
-    		axios 
-    			.post('rest/comments/addComment', JSON.stringify(this.comment),
-        	{ headers: {
-        		'Content-type': 'application/json',
-        		}
-        	});
-        	
-        	this.comment.text = "";
-    		this.comment.rating = 0;
-    	}
-    }
+        cancel: function () {
+            this.comment.text = "";
+            this.comment.rating = 0;
+        },
+        addComment: function () {
+            this.comment.restaurant = this.restaurant.id;
+            axios.post(
+                "rest/comments/addComment",
+                JSON.stringify(this.comment),
+                {
+                    headers: {
+                        "Content-type": "application/json",
+                    },
+                }
+            );
+
+            this.comment.text = "";
+            this.comment.rating = 0;
+        },
+    },
 });
 
-Vue.component('star-rating', VueStarRating.default);
+Vue.component("star-rating", VueStarRating.default);
