@@ -10,7 +10,13 @@ Vue.component("shopping-cart",{
 			paragraph : "",
 			haveDiscount : true,
 			points : 0,
-			address : {}
+			address : {
+				street : '',
+				number : '',
+				city : '',
+				postcode : ''
+			},
+			errorMessage: ''
         }
     }
     ,
@@ -184,7 +190,7 @@ Vue.component("shopping-cart",{
                                 </p>
                             </div>
                             <div class="d-flex justify-content-center">
-                            <button  class="btn buttonGroup" data-bs-toggle="modal" data-bs-target="#checkoutModal">
+                            <button  class="btn buttonGroup" data-bs-toggle="modal" data-bs-target="#checkoutModal" v-bind:disabled="numOfItems === 0">
                                 Checkout
                             </button>
                             </div>
@@ -215,7 +221,7 @@ Vue.component("shopping-cart",{
     </div>
 
     <!--Modal-->
-    <div class="modal fade" id="checkoutModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade"  id="checkoutModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -258,12 +264,15 @@ Vue.component("shopping-cart",{
                             </form>
                         </div>
                     </div>
+                    <div class="d-flex justify-content-center">
+                    	<p class="mt-1" style="color: red; font-size : small">{{errorMessage}}</p>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn buttonGroup" data-bs-dismiss="modal">
                         Cancel
                     </button>
-                    <button type="button" class="btn buttonGroup active" v-on:click="makeOrder()" data-bs-dismiss="modal">
+                    <button type="button" class="btn buttonGroup active" v-on:click="makeOrder()">
                         Order
                     </button>
                 </div>
@@ -347,27 +356,33 @@ Vue.component("shopping-cart",{
 	    		.then((response) =>{( response.data);});
 		},
 		makeOrder : function(){
-			this.cart.totalPrice = this.totalPrice;
-			this.dto.cart = this.cart;
-			this.dto.points = this.points;
-			this.dto.address = this.address;
-						
-			axios 
-	    		.post('rest/orders/makeOrder', JSON.stringify(this.dto),
-        	{ headers: {
-        		'Content-type': 'application/json',
-        		}
-	        	})
-	        	
-	        axios
-			.get("rest/carts/emptyCart")
-            .then((response) =>{
-            ( this.cart = response.data);
-             this.numOfItems = this.cart.items.length;
-             this.totalPrice = this.cart.totalPrice + 100;
-             this.points = 0;
-             });
-	        
+		
+			if( this.address.street == '' || this.address.number == '' || this.address.city == '' || this.address.postcode == ''){
+				this.errorMessage = "All fields are required!";
+			}else{
+				this.cart.totalPrice = this.totalPrice;
+				this.dto.cart = this.cart;
+				this.dto.points = this.points;
+				this.dto.address = this.address;
+				this.errorMessage = '';
+							
+				axios 
+		    		.post('rest/orders/makeOrder', JSON.stringify(this.dto),
+	        	{ headers: {
+	        		'Content-type': 'application/json',
+	        		}
+		        	})
+		        	
+		        axios
+				.get("rest/carts/emptyCart")
+	            .then((response) =>{
+	            ( this.cart = response.data);
+	             this.numOfItems = this.cart.items.length;
+	             this.totalPrice = this.cart.totalPrice + 100;
+	             this.points = 0;
+	             this.modalShow = false;
+	             });
+             }
 		}
     },
 });
