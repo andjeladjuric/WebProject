@@ -5,14 +5,37 @@ Vue.component("manager-order-details", {
                 id: "",
                 deleted: false,
                 items: [],
-                restaurant: "",
+                restaurant: {
+                    name: "",
+                    id: "",
+                    deleted: false,
+                    type: "",
+                    status: "",
+                    location: {
+                        address: {
+                            street: "",
+                            number: "",
+                            city: "",
+                            postcode: "",
+                        },
+                        latitude: "",
+                        longitude: "",
+                    },
+                    items: [],
+                    logo: "",
+                    menagerId: "",
+                },
                 timeofOrder: "",
                 price: "",
                 customer: "",
-                stauts: "",
+                status: "",
                 address: {},
             },
             currentUser: {},
+            statusChangeInfo: {
+                orderId: "",
+                status: "",
+            },
         };
     },
     template: `
@@ -91,7 +114,9 @@ Vue.component("manager-order-details", {
                                     {{order.status}}
                                 </td>
                                 <td>
-                                    <button type="button" class="btn d-flex tableBtn">
+                                    <button type="button" class="btn d-flex tableBtn" 
+                                        v-bind:class="order.status === 'DELIVERED' || order.status === 'TRANSPORTING' 
+                                            || order.status === 'WAITING' ? 'disabled' : 'nothing'" @click="changeStatus(order.id)">
                                         Change status
                                     </button>
                                 </td>
@@ -120,6 +145,24 @@ Vue.component("manager-order-details", {
         axios
             .get("rest/users/getCurrentUser")
             .then((response) => (this.currentUser = response.data));
+    },
+    methods: {
+        changeStatus(id) {
+            let updated;
+            if (this.order.status === "PROCESSING") updated = "PREPARATION";
+            else if (this.order.status === "PREPARATION") updated = "WAITING";
+
+            this.statusChangeInfo = {
+                orderId: id,
+                status: updated,
+            };
+
+            this.order.status = updated;
+
+            axios
+                .post("rest/orders/changeStatus", this.statusChangeInfo)
+                .then((response) => "SUCCESS");
+        },
     },
     filters: {
         dateFormat: function (value, format) {

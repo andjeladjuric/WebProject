@@ -107,8 +107,8 @@ Vue.component("order-details", {
                                         {{order.status}}
                                     </td>
                                     <td>
-                                        <button type="button" class="btn d-flex tableBtn" v-if="isOrderInTransport" @click="changeStatus(); reload()">
-                                            Change status
+                                        <button type="button" class="btn d-flex tableBtn" v-if="isOrderInTransport" @click="changeStatus(order.id)">
+                                            Mark as delivered
                                         </button>
                                         <button type="button" class="btn d-flex tableBtn" v-if="isOrderWaiting" @click="sendRequest(); reload()"
                                             v-bind:class="isSent ? 'disabled' : 'nothing'">
@@ -171,10 +171,11 @@ Vue.component("order-details", {
         },
     },
     methods: {
-        changeStatus: function () {
+        changeStatus: function (id) {
+            this.order.status = "DELIVERED";
             axios
                 .post("rest/orders/orderDelivered", id)
-                .then((response) => (this.order = response.data));
+                .then((response) => "SUCCESS");
         },
         reload: function () {
             window.location.reload();

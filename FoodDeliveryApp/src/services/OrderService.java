@@ -25,6 +25,7 @@ import beans.State;
 import beans.OrderStatus;
 import dao.OrderDAO;
 import dao.OrderRequestDAO;
+import dto.ChangeStatusDTO;
 
 @Path("/orders")
 public class OrderService {
@@ -96,7 +97,6 @@ public class OrderService {
 	
 	@POST
 	@Path("/orderDelivered")
-	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public void orderDelivered(String id) {
 		User user = (User) request.getSession().getAttribute("loginUser");
@@ -105,8 +105,7 @@ public class OrderService {
 			OrderDAO dao = (OrderDAO) ctx.getAttribute("orders");
 			Order currentOrder = dao.getOrderById(id);
 			
-			if(currentOrder.getStatus() == OrderStatus.TRANSPORTING)
-				dao.changeStatus(OrderStatus.DELIVERED, id);
+			dao.changeStatus(OrderStatus.DELIVERED, id);
 		}
 	}
 	
@@ -215,6 +214,25 @@ public class OrderService {
 	public void rejectRequest(String id){
 		OrderDAO dao = (OrderDAO) ctx.getAttribute("orders");
 		dao.acceptRequest(id, State.REJECTED);
+	}
+	
+	@POST
+	@Path("/changeStatus")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public void changeStatus(ChangeStatusDTO dto) {
+		User user = (User) request.getSession().getAttribute("loginUser");
+		
+		if(user!= null && (user.getRole() == (Role.MANAGER))) {
+			OrderDAO dao = (OrderDAO) ctx.getAttribute("orders");
+			Order currentOrder = dao.getOrderById(dto.orderId);
+			
+			if((currentOrder.getStatus() == OrderStatus.PROCESSING) && (dto.status == OrderStatus.PREPARATION))
+				dao.changeStatus(dto.status, dto.orderId);
+			else if((currentOrder.getStatus() == OrderStatus.PREPARATION) && (dto.status == OrderStatus.WAITING)) {
+				dao.changeStatus(dto.status, dto.orderId);
+			}
+		}
 	}
 }
 

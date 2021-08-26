@@ -21,6 +21,7 @@ Vue.component("rest-orders", {
             },
             hideRequests: true,
             requests: [],
+            selectedRequest: {},
         };
     },
     template: `
@@ -206,12 +207,14 @@ Vue.component("rest-orders", {
                                             <div class="pt-3 d-inline-flex" style="flex-wrap: wrap;" v-if="r.status == 'UNDEFINED'">
                                                 <button type="button" class="btn d-flex me-3 mb-1"
                                                     data-bs-toggle="modal" data-bs-target="#acceptModal"
-                                                    style="white-space: normal; z-index: 2">
+                                                    style="white-space: normal; z-index: 2"
+                                                    @click="sendData(r);">
                                                     <i class="fas fa-check me2 p-1"></i>Accept
                                                 </button>
                                                 <button type="button" class="btn d-flex p-2"
                                                     data-bs-toggle="modal" data-bs-target="#rejectModal"
-                                                    style="white-space: normal; z-index: 2; background-color: #ecbeb1;">
+                                                    style="white-space: normal; z-index: 2; background-color: #ecbeb1;"
+                                                    @click="sendData(r);">
                                                     <i class="fas fa-times me-2 p-1"></i>Reject
                                                 </button>
                                             </div>
@@ -226,6 +229,12 @@ Vue.component("rest-orders", {
                 
             </div>
             <!-- End of cards with requests -->
+
+            <div class="row g-4 mb-4 cards align-contet-center justify-content-center" 
+                style="padding-left: 14%; padding-right: 7%; padding-bottom: 7%"
+                v-if="requests.length == 0 && !hideRequests">
+                <p style="font-size: 2rem; font-style: italic">There are currently no requests available!</p>
+            </div>
 
             <!-- Reject Modal -->
             <div id="rejectModal" class="modal fade">
@@ -242,7 +251,7 @@ Vue.component("rest-orders", {
                             <p>Do you really want to reject this request? This process cannot be undone.</p>
                         </div>
                         <div class="modal-footer justify-content-center">
-                            <button type="button" class="btn" data-bs-dismiss="modal"  @click="rejectRequest(r.requestId); reload()">Confirm</button>
+                            <button type="button" class="btn" data-bs-dismiss="modal"  @click="rejectRequest(selectedRequest.requestId); reload()">Confirm</button>
                             <button type="button" class="btn" data-bs-dismiss="modal" style="background: #ecbeb1">Cancel</button>
                         </div>
                     </div>
@@ -265,7 +274,7 @@ Vue.component("rest-orders", {
                             <p>Do you really want to accept this request? This process cannot be undone.</p>
                         </div>
                         <div class="modal-footer justify-content-center">
-                            <button type="button" class="btn" data-bs-dismiss="modal"  @click="acceptRequest(r.requestId); reload()">Confirm</button>
+                            <button type="button" class="btn" data-bs-dismiss="modal"  @click="acceptRequest(selectedRequest.requestId); reload()">Confirm</button>
                             <button type="button" class="btn" data-bs-dismiss="modal" style="background: #ecbeb1">Cancel</button>
                         </div>
                     </div>
@@ -303,6 +312,10 @@ Vue.component("rest-orders", {
             });
     },
     methods: {
+        sendData: function (r) {
+            this.selectedRequest = r;
+        },
+
         searchOrders: function (order) {
             if (
                 !order.restaurant.name

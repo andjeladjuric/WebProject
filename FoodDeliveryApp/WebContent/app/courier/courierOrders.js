@@ -162,7 +162,7 @@ Vue.component("all-orders", {
                                             <h3 style="z-index: 2;">
                                                 <button type="button" class="btn ms-4 mb-4" style="background: #ecbeb1;"
                                                     v-if="o.status == 'TRANSPORTING'"
-                                                    @click="changeStatus(o.id); reload()">Mark as delivered</button>
+                                                    @click="changeStatus(o)">Mark as delivered</button>
                                             </h3>
                                         </div>
                                     </div>
@@ -266,10 +266,11 @@ Vue.component("all-orders", {
             this.sort = "";
             this.selected = "";
         },
-        changeStatus: function (id) {
+        changeStatus: function (o) {
+            o.status = "DELIVERED";
             axios
-                .post("rest/orders/orderDelivered", id)
-                .then((response) => (this.order = response.data));
+                .post("rest/orders/orderDelivered", o.id)
+                .then((response) => "SUCCESS");
         },
 
         reload: function () {
