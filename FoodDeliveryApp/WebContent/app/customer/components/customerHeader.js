@@ -1,10 +1,9 @@
-Vue.component("customer-header",{
-    data: function(){
-        return{
-            fleg:0
-        }
-    }
-    ,
+Vue.component("customer-header", {
+    data: function () {
+        return {
+            fleg: 0,
+        };
+    },
     template: `
     <div>
 		<nav class="navbar sticky-top navbar-expand-lg bg-light navbar-light">
@@ -33,7 +32,7 @@ Vue.component("customer-header",{
 		                      <a href="#/profile" class="nav-link">Profile</a>
 		                  </li>
 		                  <li class="nav-item">
-		                      <a href="#logout" class="nav-link">Log Out</a>
+		                      <a @click=logout() class="nav-link" style="cursor: pointer">Log Out</a>
 		                  </li>
 		              </ul>
 		          </div>
@@ -43,5 +42,10 @@ Vue.component("customer-header",{
     
     `,
     methods: {
+        logout: function () {
+            axios
+                .get("rest/users/logout")
+                .then((response) => (location.href = "/FoodDeliveryApp"));
+        },
     },
 });

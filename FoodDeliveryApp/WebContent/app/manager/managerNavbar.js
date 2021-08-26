@@ -22,7 +22,7 @@ Vue.component("manager-navbar", {
                             <router-link to="/profile" exact class="nav-link"> Profile </router-link>
                         </li>
                         <li class="nav-item">
-                            <a href="#logout" class="nav-link">Log Out</a>
+                            <a @click=logout() class="nav-link" style="cursor: pointer">Log Out</a>
                         </li>
                     </ul>
                 </div>
@@ -30,4 +30,11 @@ Vue.component("manager-navbar", {
         </nav>
     </div>
     `,
+    methods: {
+        logout: function () {
+            axios
+                .get("rest/users/logout")
+                .then((response) => (location.href = "/FoodDeliveryApp"));
+        },
+    },
 });

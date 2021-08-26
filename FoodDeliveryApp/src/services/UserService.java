@@ -1,9 +1,11 @@
 package services;
 
+import java.net.http.HttpRequest;
 import java.util.List;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -90,6 +92,18 @@ public class UserService {
 		request.getSession().setAttribute("loginUser", newUser); // we give him a session
 
 		return ""; // stranica za kupca
+	}
+	
+	@GET
+	@Path("/logout")
+	@Produces(MediaType.TEXT_HTML)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void logOut() {
+		User user = (User) request.getSession().getAttribute("loginUser");
+		HttpSession session = request.getSession();
+		
+		if(session != null && user != null) 
+			session.invalidate();
 	}
 	
 	@GET

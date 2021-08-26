@@ -398,13 +398,13 @@ Vue.component("restaurant-items", {
                                 <td class="label">Type <span style="color: red;">*</span></td>
                                 <td style="text-indent: 0">
                                     <label style="white-space: nowrap;" class="me-5">
-                                        <input type="radio" class="radio" name="type" :checked="updatedItem.type == 'Food'"
-                                            v-bind:value="'Food'" v-model="updatedItem.type">
+                                        <input type="radio" class="radio" name="type" :checked="item.type == 'Food'"
+                                            v-bind:value="'Food'" v-model="item.type">
                                         Food
                                     </label>
                                     <label style="white-space: nowrap">
-                                        <input type="radio" class="radio" name="type" :checked="updatedItem.type == 'Drink'"
-                                            v-bind:value="'Drink'" v-model="updatedItem.type">
+                                        <input type="radio" class="radio" name="type" :checked="item.type == 'Drink'"
+                                            v-bind:value="'Drink'" v-model="item.type">
                                         Drink
                                     </label>
                                 </td>

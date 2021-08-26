@@ -37,7 +37,7 @@ Vue.component("comments", {
                         </div>
 
                         <div class="container d-inline-flex buttons p-0">
-                            <button type="button" class="btn d-sm-flex me-2 disabled">{{comment.status}}</button>
+                            <button type="button" class="btn d-sm-flex me-2 disabled" v-if="comment.status !== 'UNDEFINED'">{{comment.status}}</button>
                             <button type="button" class="btn d-sm-flex me-2" id="allowButton" v-if="comment.status === 'UNDEFINED'" @click="allowComment(comment.id)">Allow</button>
                             <button type="button" class="btn d-sm-flex" id="rejectButton" v-if="comment.status === 'UNDEFINED'" @click="rejectComment(comment.id)">Reject</button>
                         </div>
