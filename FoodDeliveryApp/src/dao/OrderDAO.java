@@ -293,6 +293,14 @@ public class OrderDAO {
 		}
 		return false;
 	}
+
+	public boolean canComment(String restaurantId, User user) {
+		for(Order o : orders) {
+			if(o.getRestaurant().getId().equals(restaurantId) && o.getCustomerId().equals(user.getUsername()))
+				return true;
+		}
+		return false;
+	}
 }
 
 

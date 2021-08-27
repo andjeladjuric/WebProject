@@ -26,7 +26,10 @@ Vue.component("selected-restaurant", {
                 text: "",
                 rating: 0,
                 restaurant: "",
-            }
+            },
+			canComment : false,
+			canOrder : false,
+			user : {}
         };
     },
     template: `
@@ -99,7 +102,7 @@ Vue.component("selected-restaurant", {
                 <div class="d-flex justify-content-end gap-1">
                     <button type="button" class="btn btn-sm buttonGroup" v-on:click="cancel()">cancel</button>
                     <button type="button" class="btn btn-sm buttonGroup active"
-                        v-on:click="addComment()">comment</button>
+                        v-on:click="addComment()" v-bind:disabled="!canComment">comment</button>
                 </div>
             </div>
 
@@ -145,7 +148,7 @@ Vue.component("selected-restaurant", {
                         <p id="price">RSD {{item.price}}</p>
 
                         <button type="button" class="btn btn-sm btn-outline-secondary editItem" data-toggle="tooltip"
-                            data-placement="bottom" style="background: none; " v-on:click="addToCart(item)">
+                            data-placement="bottom" style="background: none; " v-on:click="addToCart(item)" v-bind:disabled="!canOrder">
                             <i class="fas fa-shopping-cart"></i> Add to cart
                         </button>
 
@@ -173,7 +176,7 @@ Vue.component("selected-restaurant", {
 
                         <button type="button" class="btn btn-sm btn-outline-secondary editItem" data-toggle="tooltip"
                             data-placement="bottom" title="Add to cart" style="background: none; "
-                            v-on:click="addToCart(item)">
+                            v-on:click="addToCart(item)" v-bind:disabled="!canOrder">
                             <i class="fas fa-shopping-cart"></i> Add to cart
                         </button>
 
@@ -201,7 +204,7 @@ Vue.component("selected-restaurant", {
 
                         <button type="button" class="btn btn-sm btn-outline-secondary editItem" data-toggle="tooltip"
                             data-placement="bottom" title="Add to cart" style="background: none; "
-                            v-on:click="addToCart(item)">
+                            v-on:click="addToCart(item)" v-bind:disabled="!canOrder">
                             <i class="fas fa-shopping-cart"></i> Add to cart
                         </button>
 
@@ -229,7 +232,7 @@ Vue.component("selected-restaurant", {
 
                         <button type="button" class="btn btn-sm btn-outline-secondary editItem" data-toggle="tooltip"
                             data-placement="bottom" title="Add to cart" style="background: none; "
-                            v-on:click="addToCart(item)">
+                            v-on:click="addToCart(item)" v-bind:disabled="!canOrder">
                             <i class="fas fa-shopping-cart"></i> Add to cart
                         </button>
 
@@ -257,7 +260,7 @@ Vue.component("selected-restaurant", {
 
                         <button type="button" class="btn btn-sm btn-outline-secondary editItem" data-toggle="tooltip"
                             data-placement="bottom" title="Add to cart" style="background: none; "
-                            v-on:click="addToCart(item)">
+                            v-on:click="addToCart(item)" v-bind:disabled="!canOrder">
                             <i class="fas fa-shopping-cart"></i> Add to cart
                         </button>
 
@@ -285,7 +288,7 @@ Vue.component("selected-restaurant", {
 
                         <button type="button" class="btn btn-sm btn-outline-secondary editItem" data-toggle="tooltip"
                             data-placement="bottom" title="Add to cart" style="background: none; "
-                            v-on:click="addToCart(item)">
+                            v-on:click="addToCart(item)" v-bind:disabled="!canOrder">
                             <i class="fas fa-shopping-cart"></i> Add to cart
                         </button>
 
@@ -313,7 +316,7 @@ Vue.component("selected-restaurant", {
 
                         <button type="button" class="btn btn-sm btn-outline-secondary editItem" data-toggle="tooltip"
                             data-placement="bottom" title="Add to cart" style="background: none; "
-                            v-on:click="addToCart(item)">
+                            v-on:click="addToCart(item)" v-bind:disabled="!canOrder">
                             <i class="fas fa-shopping-cart"></i> Add to cart
                         </button>
 
@@ -372,16 +375,34 @@ Vue.component("selected-restaurant", {
 				this.restaurant = response.data;
 				
 				axios
-             .get("rest/items/getItemsForRestaurant", {
-                        params: { id: this.restaurant.id },
-                    })
-             .then((response) => (this.items = response.data));
+	             .get("rest/items/getItemsForRestaurant", {
+	                        params: { id: this.restaurant.id },
+	                    })
+	             .then((response) => (this.items = response.data));
 
-		axios
-             .get("rest/comments/getCommentsForUser", {
-                    params: { id: this.restaurant.id },
-                  })
-             .then((response) => (this.allComments = response.data));
+				axios
+	             .get("rest/comments/getCommentsForUser", {
+	                        params: { id: this.restaurant.id },
+	                    })
+	             .then((response) => (this.allComments = response.data));
+
+				axios
+		             .get("rest/users/getCurrentUser")
+		             .then((response) => {
+						this.user = response.data;
+						if(this.user.role === 'CUSTOMER'){
+							this.canOrder = true;
+							axios
+					             .get("rest/orders/canComment", {
+					                    params: { id: this.restaurant.id },
+					                  })
+					             .then((response) => (this.canComment = response.data));
+							
+						}else{
+							this.canOrder = false;
+							this.canComment = false;
+						}
+					});
 	
 });
 

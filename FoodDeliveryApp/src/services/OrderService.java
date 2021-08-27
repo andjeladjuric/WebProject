@@ -24,6 +24,7 @@ import beans.User;
 import beans.Role;
 import beans.State;
 import beans.OrderStatus;
+import dao.CommentsDAO;
 import dao.OrderDAO;
 import dao.OrderRequestDAO;
 import dto.ChangeStatusDTO;
@@ -251,6 +252,16 @@ public class OrderService {
 		userDAO.addPoints(user.getUsername(), dto.points);
 
 		dao.makeOrders(dto, user);
+	}
+	
+	@GET
+	@Path("/canComment")
+	public boolean canComment(@QueryParam("id") String restaurantId){
+		OrderDAO dao = (OrderDAO) ctx.getAttribute("orders");
+		User user = (User) request.getSession().getAttribute("loginUser");
+		
+		return dao.canComment(restaurantId, user);
+		
 	}
 	
 }
