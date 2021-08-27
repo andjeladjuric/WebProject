@@ -99,5 +99,22 @@ public class CartDAO {
 		carts = newCarts;
 		serialize();
 	}
+	
+	public ShoppingCart emptyCart(String user) {
+
+		List<ShoppingCart> newCarts = new ArrayList<ShoppingCart>();
+		
+		for(ShoppingCart cart : carts) {
+			if(cart.getCustomer().equals(user)) {
+					cart.setItems(new ArrayList<Item>());
+					cart.setTotalPrice();
+				}
+			newCarts.add(cart);
+
+			}
+		carts = newCarts;
+		serialize();
+		return getCart(user);
+	}
 
 }

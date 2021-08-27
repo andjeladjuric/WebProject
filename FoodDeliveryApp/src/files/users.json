@@ -11,9 +11,12 @@
         "deleted": false,
         "blocked": false,
         "ordersForCourier": [],
-        "type": { "name": "NONE", "discount": 0.0, "requiredPoints": 0 },
-        "points": 0,
-        "orders": []
+        "type": {
+            "name": "NONE",
+            "discount": 0.0,
+            "requiredPoints": 0
+        },
+        "points": 0
     },
     {
         "username": "andjela",
@@ -23,13 +26,16 @@
         "gender": "Female",
         "dateOfBirth": 944259506625,
         "role": "MANAGER",
-        "profilePicPath": "img/andjelaprofileImg.jpg",
+        "profilePicPath": "img/profile_picture.png",
         "deleted": false,
         "blocked": false,
         "ordersForCourier": [],
-        "type": { "name": "NONE", "discount": 0.0, "requiredPoints": 0 },
-        "points": 0,
-        "orders": []
+        "type": {
+            "name": "NONE",
+            "discount": 0.0,
+            "requiredPoints": 0
+        },
+        "points": 0
     },
     {
         "username": "zlatko",
@@ -42,10 +48,15 @@
         "profilePicPath": "",
         "deleted": false,
         "blocked": false,
-        "ordersForCourier": ["5as215fr48"],
-        "type": { "name": "BRONZE", "discount": 0.0, "requiredPoints": 0 },
-        "points": 0,
-        "orders": []
+        "ordersForCourier": [
+            "5as215fr48"
+        ],
+        "type": {
+            "name": "BRONZE",
+            "discount": 0.0,
+            "requiredPoints": 0
+        },
+        "points": 0
     },
     {
         "username": "miki",
@@ -58,10 +69,15 @@
         "profilePicPath": "",
         "deleted": false,
         "blocked": false,
-        "ordersForCourier": ["5as215fr48", "1234567a89", "1bgh256aj1"],
-        "type": { "name": "NONE", "discount": 0.0, "requiredPoints": 0 },
-        "points": 0,
-        "orders": []
+        "ordersForCourier": [
+            "5as215fr48"
+        ],
+        "type": {
+            "name": "NONE",
+            "discount": 0.0,
+            "requiredPoints": 0
+        },
+        "points": 0
     },
     {
         "username": "jele",
@@ -75,9 +91,12 @@
         "deleted": false,
         "blocked": false,
         "ordersForCourier": [],
-        "type": { "name": "SILVER", "discount": 20.0, "requiredPoints": 100 },
-        "points": 0,
-        "orders": []
+        "type": {
+            "name": "SILVER",
+            "discount": 20.0,
+            "requiredPoints": 100
+        },
+        "points": 30
     },
     {
         "username": "raske",
@@ -91,9 +110,12 @@
         "deleted": false,
         "blocked": false,
         "ordersForCourier": [],
-        "type": { "name": "NONE", "discount": 0.0, "requiredPoints": 0 },
-        "points": 0,
-        "orders": []
+        "type": {
+            "name": "NONE",
+            "discount": 0.0,
+            "requiredPoints": 0
+        },
+        "points": 0
     },
     {
         "username": "mikimilan",
@@ -107,9 +129,12 @@
         "deleted": false,
         "blocked": false,
         "ordersForCourier": [],
-        "type": { "name": "NONE", "discount": 0.0, "requiredPoints": 0 },
-        "points": 0,
-        "orders": []
+        "type": {
+            "name": "NONE",
+            "discount": 0.0,
+            "requiredPoints": 0
+        },
+        "points": 0
     },
     {
         "username": "ostoja",
@@ -123,9 +148,12 @@
         "deleted": false,
         "blocked": false,
         "ordersForCourier": [],
-        "type": { "name": "NONE", "discount": 0.0, "requiredPoints": 0 },
-        "points": 0,
-        "orders": []
+        "type": {
+            "name": "NONE",
+            "discount": 0.0,
+            "requiredPoints": 0
+        },
+        "points": 0
     },
     {
         "username": "any",
@@ -139,8 +167,11 @@
         "deleted": false,
         "blocked": false,
         "ordersForCourier": [],
-        "type": { "name": "NONE", "discount": 0.0, "requiredPoints": 0 },
-        "points": 0,
-        "orders": []
+        "type": {
+            "name": "NONE",
+            "discount": 0.0,
+            "requiredPoints": 0
+        },
+        "points": 0
     }
 ]

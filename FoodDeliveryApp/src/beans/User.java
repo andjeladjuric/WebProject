@@ -21,13 +21,12 @@ public class User {
 	
 	private CustomerType type;
 	private int points;
-	private ArrayList<String> orders = new ArrayList<String>(); // id porudzbina
 
 	public User() {}
 
 	public User(String username, String password, String name, String surname, Gender gender, Date dateOfBirth,
 			Role role, String profilePicPath, boolean deleted, boolean blocked, ArrayList<String> ordersForCourier,
-			CustomerType type, int points, ArrayList<String> orders) {
+			CustomerType type, int points) {
 		super();
 		this.username = username;
 		this.password = password;
@@ -42,7 +41,6 @@ public class User {
 		this.ordersForCourier = ordersForCourier;
 		this.type = type;
 		this.points = points;
-		this.orders = orders;
 	}
 
 	
@@ -174,13 +172,6 @@ public class User {
 		this.points = points;
 	}
 
-	public ArrayList<String> getOrders() {
-		return orders;
-	}
-
-	public void setOrders(ArrayList<String> orders) {
-		this.orders = orders;
-	}
 	
 	
 

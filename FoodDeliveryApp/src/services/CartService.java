@@ -60,6 +60,15 @@ public class CartService {
 
 	}
 	
+	@GET
+	@Path("/emptyCart")
+	@Produces(MediaType.APPLICATION_JSON)
+	public ShoppingCart emptyCart() {
+		User user = (User) request.getSession().getAttribute("loginUser");
+		CartDAO dao = getCarts();
+		return dao.emptyCart(user.getUsername());
+	}
+	
 	private CartDAO getCarts() {
 		
 		CartDAO carts = (CartDAO) ctx.getAttribute("carts");

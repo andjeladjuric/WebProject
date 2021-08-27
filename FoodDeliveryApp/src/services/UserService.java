@@ -215,12 +215,4 @@ public class UserService {
 		return users;
 	}
 	
-	@GET
-	@Path("/cancelOrder")
-	public void getOrderById(@QueryParam("id") String id){
-		UsersDAO dao = getUsers();
-		User user = (User) request.getSession().getAttribute("loginUser");
-		
-		 dao.cancelOrder(user.getUsername(), id);
-	}
 }

@@ -161,7 +161,7 @@ Vue.component("all-orders", {
                                         <h1 class="mb-4 mt-1 orderID">Order #{{o.id}}</h1>
                                         <h3 style="z-index: 2;">
                                             <button type="button" class="btn ms-4 mb-4" style="background: #ecbeb1;"
-                                                @click="cancelOrder(o.id); reload()">Cancel Order</button>
+                                                @click="cancelOrder(o.id); reload()" v-bind:disabled="o.status == 'TRANSPORTING'">Cancel Order</button>
                                         </h3>
                                     </div>
                                 </div>
@@ -265,10 +265,6 @@ Vue.component("all-orders", {
             this.selected = "";
         },
         cancelOrder: function (id) {
-            axios
-                .get("rest/users/cancelOrder", {
-                    params: { id: id },
-                })
             axios
                 .get("rest/orders/cancelOrder", {
                     params: { id: id },

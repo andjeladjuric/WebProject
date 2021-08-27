@@ -1,6 +1,7 @@
 Vue.component("shopping-cart",{
     data: function(){
         return{
+        	dto : {},
             cart : {},
 			numOfItems : 0,
 			totalPrice : 0,
@@ -8,7 +9,14 @@ Vue.component("shopping-cart",{
 			medal : "",
 			paragraph : "",
 			haveDiscount : true,
-			points : 0
+			points : 0,
+			address : {
+				street : '',
+				number : '',
+				city : '',
+				postcode : ''
+			},
+			errorMessage: ''
         }
     }
     ,
@@ -182,7 +190,7 @@ Vue.component("shopping-cart",{
                                 </p>
                             </div>
                             <div class="d-flex justify-content-center">
-                            <button  class="btn buttonGroup" data-bs-toggle="modal" data-bs-target="#checkoutModal">
+                            <button  class="btn buttonGroup" data-bs-toggle="modal" data-bs-target="#checkoutModal" v-bind:disabled="numOfItems === 0">
                                 Checkout
                             </button>
                             </div>
@@ -213,7 +221,7 @@ Vue.component("shopping-cart",{
     </div>
 
     <!--Modal-->
-    <div class="modal fade" id="checkoutModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade"  id="checkoutModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -231,13 +239,13 @@ Vue.component("shopping-cart",{
                     <div class="row justify-content-center mt-3">
                         <div class="col-6">
                             <form class="form-floating">
-                                <input type="text" class="form-control" value="Sutjeska" />
+                                <input type="text" class="form-control" v-model="address.street" />
                                 <label for="floatingInputValue">Street</label>
                             </form>
                         </div>
                         <div class="col-3">
                             <form class="form-floating">
-                                <input type="number" class="form-control" value="3" />
+                                <input type="number" class="form-control" v-model="address.number" />
                                 <label for="floatingInputValue">Number</label>
                             </form>
                         </div>
@@ -245,23 +253,26 @@ Vue.component("shopping-cart",{
                     <div class="row justify-content-center mt-3 mb-3">
                         <div class="col-6">
                             <form class="form-floating">
-                                <input type="text" class="form-control" value="Novi Sad" />
+                                <input type="text" class="form-control" v-model="address.city" />
                                 <label for="floatingInputValue">City</label>
                             </form>
                         </div>
                         <div class="col-3">
                             <form class="form-floating">
-                                <input type="number" class="form-control" value="21000" />
+                                <input type="number" class="form-control" v-model="address.postcode" />
                                 <label for="floatingInputValue">Postcode</label>
                             </form>
                         </div>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                    	<p class="mt-1" style="color: red; font-size : small">{{errorMessage}}</p>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn buttonGroup" data-bs-dismiss="modal">
                         Cancel
                     </button>
-                    <button type="button" class="btn buttonGroup active">
+                    <button type="button" class="btn buttonGroup active" v-on:click="makeOrder()">
                         Order
                     </button>
                 </div>
@@ -343,6 +354,35 @@ Vue.component("shopping-cart",{
 	        		}
 	        	})
 	    		.then((response) =>{( response.data);});
+		},
+		makeOrder : function(){
+		
+			if( this.address.street == '' || this.address.number == '' || this.address.city == '' || this.address.postcode == ''){
+				this.errorMessage = "All fields are required!";
+			}else{
+				this.cart.totalPrice = this.totalPrice;
+				this.dto.cart = this.cart;
+				this.dto.points = this.points;
+				this.dto.address = this.address;
+				this.errorMessage = '';
+							
+				axios 
+		    		.post('rest/orders/makeOrder', JSON.stringify(this.dto),
+	        	{ headers: {
+	        		'Content-type': 'application/json',
+	        		}
+		        	})
+		        	
+		        axios
+				.get("rest/carts/emptyCart")
+	            .then((response) =>{
+	            ( this.cart = response.data);
+	             this.numOfItems = this.cart.items.length;
+	             this.totalPrice = this.cart.totalPrice + 100;
+	             this.points = 0;
+	             this.modalShow = false;
+	             });
+             }
 		}
     },
 });
