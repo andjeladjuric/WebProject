@@ -12,6 +12,8 @@ Vue.component("currentUser-profile", {
             },
             errorMessage: "",
             isSidebarVisible: true,
+            isCustomer : false,
+            medal : "",
         };
     },
 
@@ -83,6 +85,15 @@ Vue.component("currentUser-profile", {
                                     <td>
                                         <input type="password" readonly class="form-control-plaintext text-start"
                                             v-model="currentUser.password" style="margin-left: 15px;"/>
+                                    </td>
+                                </tr>
+                                 <tr v-if="isCustomer">
+                                    <td>Status</td>
+                                    <td>
+                                    	<i class="fas fa-medal" style="color:brown;" v-if="medal == 'BRONZE'"></i>
+	                                    <i class="fas fa-medal" style="color:gold;" v-if="medal == 'GOLD'"></i>
+	                                    <i class="fas fa-medal" v-if="medal == 'SILVER'"></i>
+                                          {{currentUser.type.name}}  (  {{currentUser.points}}  points ) 
                                     </td>
                                 </tr>
                             </table>
@@ -205,7 +216,13 @@ Vue.component("currentUser-profile", {
     mounted() {
         axios
             .get("rest/users/getCurrentUser")
-            .then((response) => (this.currentUser = response.data));
+            .then((response) => {
+            	this.currentUser = response.data;
+            	if(this.currentUser.role === 'CUSTOMER'){
+            		this.isCustomer = true;
+            		this.medal = this.currentUser.type.name;
+            	}
+            });
     },
 
     methods: {

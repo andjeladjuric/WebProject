@@ -111,11 +111,11 @@
         "blocked": false,
         "ordersForCourier": [],
         "type": {
-            "name": "NONE",
+            "name": "GOLD",
             "discount": 0.0,
             "requiredPoints": 0
         },
-        "points": 0
+        "points": 100
     },
     {
         "username": "mikimilan",
