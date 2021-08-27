@@ -215,4 +215,14 @@ public class UserService {
 		return users;
 	}
 	
+	@POST
+	@Path("/removePoints")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void signup(Order o) {
+		UsersDAO allUsersDAO = getUsers();
+		User user = (User) request.getSession().getAttribute("loginUser");
+		double points = o.getPrice()/1000*133*4;
+		allUsersDAO.removePoints(user.getUsername(), points);
+	}
+	
 }

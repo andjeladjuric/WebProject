@@ -185,8 +185,7 @@ public class OrderService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Order> cancelOrder(@QueryParam("id") String id){
 		OrderDAO dao = (OrderDAO) ctx.getAttribute("orders");
-		User user = (User) request.getSession().getAttribute("loginUser");
-		
+		User user = (User) request.getSession().getAttribute("loginUser");		
 		 dao.cancelOrder(id);
 		return dao.getNotDeliveredForCustomer(user);
 	}

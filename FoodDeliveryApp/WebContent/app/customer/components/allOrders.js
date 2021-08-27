@@ -161,7 +161,7 @@ Vue.component("all-orders", {
                                         <h1 class="mb-4 mt-1 orderID">Order #{{o.id}}</h1>
                                         <h3 style="z-index: 2;">
                                             <button type="button" class="btn ms-4 mb-4" style="background: #ecbeb1;"
-                                                @click="cancelOrder(o.id); reload()" v-bind:disabled="o.status != 'PROCESSING'">Cancel Order</button>
+                                                @click="cancelOrder(o); reload()" v-bind:disabled="o.status != 'PROCESSING'">Cancel Order</button>
                                         </h3>
                                     </div>
                                 </div>
@@ -264,12 +264,18 @@ Vue.component("all-orders", {
             this.sort = "";
             this.selected = "";
         },
-        cancelOrder: function (id) {
+        cancelOrder: function (order) {
             axios
                 .get("rest/orders/cancelOrder", {
-                    params: { id: id },
+                    params: { id: order.id },
                 })
                  .then((response) => (this.orders = response.data));
+           axios
+                .post("rest/users/removePoints", JSON.stringify(order),
+	        	{ headers: {
+	        		'Content-type': 'application/json',
+	        		}
+                })
         },
 
         reload: function () {
