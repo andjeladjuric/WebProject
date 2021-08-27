@@ -1,11 +1,14 @@
 package dao;
 
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -80,7 +83,35 @@ public class UsersDAO {
 		return users.containsKey(username);
 	}
 	
+	
+	/*
+	 * reference
+	 * https://stackoverflow.com/questions/23979842/convert-base64-string-to-image#23979996
+	 * https://docs.oracle.com/javase/8/docs/api/java/util/Base64.Decoder.html
+	 */
+	public void Base64Decode(String base64, String imagePath) throws FileNotFoundException, IOException {
+		
+		
+		String part[] = base64.split(",");
+		String path = "./WebContent/" + imagePath;
+		
+		byte[] image = Base64.getDecoder().decode(part[1]);
+		
+		try (OutputStream stream = new FileOutputStream(path)) {
+		    stream.write(image);
+		}
+	}
+	
 	public void editUser(User updated, User currentUser) {
+		String path = "img/" + updated.getUsername() + "profileImg.jpg";
+		System.out.println(path);
+		
+		try {
+			Base64Decode(updated.getProfilePicPath(), path);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 		for(User u : users.values()) {
 			if(u.getUsername().equals(currentUser.getUsername())) {
 				u.setDateOfBirth(updated.getDateOfBirth());
@@ -88,6 +119,7 @@ public class UsersDAO {
 				u.setName(updated.getName());
 				u.setSurname(updated.getSurname());
 				u.setUsername(updated.getUsername());
+				u.setProfilePicPath(path);
 				serialize();
 				break;
 			}

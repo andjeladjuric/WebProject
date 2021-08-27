@@ -20,7 +20,7 @@ Vue.component("currentUser-profile", {
         <div class="d-flex" id="wrapper" v-bind:class="!isSidebarVisible ? 'toggled' : 'notoggle'">
             <!-- Sidebar -->
             <div id="sidebar-wrapper">
-                <img class="img-fluid d-sm-block" src="img/profile_picture.png" alt="" id="profile-picture">
+                <img class="img-fluid d-sm-block" v-bind:src="currentUser.profilePicPath" alt="" id="profile-picture">
                 <div class="list-group list-group-flush my-3">
                     <a href="#" data-bs-target=".profileOverview" id="profileOverviewButton" @click="showEdit = false" 
 							class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i class="fas fa-user me-2"></i>Profile overview</a>
@@ -112,7 +112,8 @@ Vue.component("currentUser-profile", {
                                     <td>Profile picture</td>
                                     <td>
                                     <div class="custom-file">
-                                        <input type="file" class="custom-file-input form-control" id="validatedCustomFile" required>
+                                        <input type="file" class="custom-file-input form-control" id="validatedCustomFile"
+                                            @change="addImage">
                                     </div>
                                     </td>
                                 </tr>
@@ -217,6 +218,7 @@ Vue.component("currentUser-profile", {
                 this.currentUser.username,
                 this.currentUser.name,
                 this.currentUser.surname,
+                this.currentUser.profilePicPath,
             ];
         },
         updateProfile: function (currentUser) {
@@ -240,6 +242,7 @@ Vue.component("currentUser-profile", {
             this.currentUser.username = this.backUp[3];
             this.currentUser.name = this.backUp[4];
             this.currentUser.surname = this.backUp[5];
+            this.currentUser.profilePicPath = this.backUp[6];
         },
 
         cancelChange: function () {
@@ -270,6 +273,17 @@ Vue.component("currentUser-profile", {
 
         reload: function () {
             window.location.reload();
+        },
+
+        addImage(e) {
+            const file = e.target.files[0];
+            const reader = new FileReader();
+
+            reader.onload = (e) => {
+                this.currentUser.profilePicPath = e.target.result;
+            };
+
+            reader.readAsDataURL(file);
         },
     },
     computed: {
