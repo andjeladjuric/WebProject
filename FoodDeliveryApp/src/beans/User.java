@@ -20,13 +20,13 @@ public class User {
 	private ArrayList<String> ordersForCourier = new ArrayList<String>(); 
 	
 	private CustomerType type;
-	private int points;
+	private double points;
 
 	public User() {}
 
 	public User(String username, String password, String name, String surname, Gender gender, Date dateOfBirth,
 			Role role, String profilePicPath, boolean deleted, boolean blocked, ArrayList<String> ordersForCourier,
-			CustomerType type, int points) {
+			CustomerType type, double points) {
 		super();
 		this.username = username;
 		this.password = password;
@@ -164,11 +164,11 @@ public class User {
 		}
 	}
 
-	public int getPoints() {
+	public double getPoints() {
 		return points;
 	}
 
-	public void setPoints(int points) {
+	public void setPoints(double points) {
 		this.points = points;
 	}
 

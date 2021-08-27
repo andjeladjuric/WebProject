@@ -68,13 +68,10 @@ Vue.component("shopping-cart",{
                                                 Description: {{i.description}}
                                             </p>
                                             <p class="mb-2">Size: {{i.amount}} mg</p>
-                                            <p class="mb-2">
+                                            <p class="mb-5">
                                                 Restaurant: ""
                                             </p>
-                                            <p class="mb-3">
-                                                <i class="fas fa-coins"></i>
-                                                {{i.points}}
-                                            </p>
+                    
                                         </div>
                                         <!-- quantity inc dec -->
                                         <div class="col-6">
@@ -288,9 +285,7 @@ Vue.component("shopping-cart",{
             ( this.cart = response.data);
              this.numOfItems = this.cart.items.length;
              this.totalPrice = this.cart.totalPrice + 100;
-              for(var i of this.cart.items){
-            	this.points = this.points + i.points;
-            };
+            	this.points = this.cart.totalPrice/1000*133;
               });
             
 		axios
@@ -317,7 +312,7 @@ Vue.component("shopping-cart",{
 					i.quantity++;
 					this.cart.totalPrice = this.cart.totalPrice + i.price;
 					this.totalPrice = this.cart.totalPrice + 100;
-					this.points = this.points + i.points;
+            		this.points = this.cart.totalPrice/1000*133;
 					
 				}
 			}
@@ -328,7 +323,7 @@ Vue.component("shopping-cart",{
 					i.quantity--;
 					this.cart.totalPrice = this.cart.totalPrice - i.price;
 					this.totalPrice = this.cart.totalPrice + 100;
-					this.points = this.points - i.points;
+            		this.points = this.cart.totalPrice/1000*133;
 				}
 			}
 		},
@@ -339,7 +334,8 @@ Vue.component("shopping-cart",{
 	        		'Content-type': 'text/plain',
 	        		}
 	        	})
-	    			.then((response) =>{( this.cart = response.data); this.numOfItems = this.cart.items.length; this.totalPrice = this.cart.totalPrice + 100; this.points = this.points - i.points});			
+	    			.then((response) =>{( this.cart = response.data); this.numOfItems = this.cart.items.length; this.totalPrice = this.cart.totalPrice + 100;             	this.points = this.cart.totalPrice/1000*133;
+	    			});			
 		},
 		useDiscount : function(){
 			this.totalPrice = this.totalPrice * (1 - this.user.type.discount * 0.01);

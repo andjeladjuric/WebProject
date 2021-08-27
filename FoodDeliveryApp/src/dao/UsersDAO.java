@@ -268,13 +268,30 @@ public class UsersDAO {
 		return getUsers();
 	}
 
-	public void addPoints(String user, int points) {
+	public void addPoints(String user, double points) {
 		load();
 		List<User> allUsers = new ArrayList<User>();
 		for (User u : users.values()) {
 			if(u.getUsername().equals(user))
 				{
 					u.setPoints(u.getPoints() + points);
+				}
+			allUsers.add(u);
+		}
+		users = new LinkedHashMap<String, User>();
+		for (User u : allUsers) {
+			users.put(u.getUsername(), u);
+		}
+		serialize();
+	}
+	
+	public void removePoints(String user, double points) {
+		load();
+		List<User> allUsers = new ArrayList<User>();
+		for (User u : users.values()) {
+			if(u.getUsername().equals(user))
+				{
+					u.setPoints(u.getPoints() - points);
 				}
 			allUsers.add(u);
 		}

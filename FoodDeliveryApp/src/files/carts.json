@@ -1,1 +1,1 @@
-[{"id":"1","customer":"jele","items":[],"totalPrice":0.0}]
+[{"id":"1","customer":"jele","items":[{"id":"2","deleted":false,"name":"Pasta","price":300.0,"type":"Food","amount":500.0,"points":0.0,"description":"This is a great pasta","imagePath":"","restaurantId":"3","quantity":0.0,"category":"PASTA"}],"totalPrice":300.0}]

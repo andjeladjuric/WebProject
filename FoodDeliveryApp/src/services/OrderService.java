@@ -249,7 +249,8 @@ public class OrderService {
 		OrderDAO dao = (OrderDAO) ctx.getAttribute("orders");
 		User user = (User) request.getSession().getAttribute("loginUser");
 		UsersDAO userDAO = new UsersDAO();
-		userDAO.addPoints(user.getUsername(), dto.points);
+		double points = dto.cart.getTotalPrice()/ 1000 * 133;
+		userDAO.addPoints(user.getUsername(), points);
 
 		dao.makeOrders(dto, user);
 	}
