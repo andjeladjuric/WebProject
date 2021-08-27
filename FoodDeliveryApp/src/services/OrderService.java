@@ -238,6 +238,7 @@ public class OrderService {
 		}
 	}
 
+	@POST
 	@Path("/makeOrder")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public void makeOrder(OrderDTO dto) {

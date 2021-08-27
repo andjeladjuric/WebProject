@@ -34,6 +34,7 @@ public class Item {
 		this.imagePath = imagePath;
 		this.restaurantId = restaurantId;
 		this.quantity = 1;
+		this.category = category;
 	}
 
 	public double getPoints() {

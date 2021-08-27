@@ -219,6 +219,7 @@ public class OrderDAO {
 		serialize();
 		usersDAO.serialize();
 		requestsDAO.serialize();
+	}
 
 	public void makeOrders(OrderDTO dto, User u) {
 		String customer = u.getName() + " " + u.getSurname();
