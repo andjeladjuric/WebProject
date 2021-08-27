@@ -3,6 +3,7 @@ package services;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.ServletContext;
@@ -181,10 +182,12 @@ public class OrderService {
 	@GET
 	@Path("/cancelOrder")
 	@Produces(MediaType.APPLICATION_JSON)
-	public void cancelOrder(@QueryParam("id") String id){
+	public List<Order> cancelOrder(@QueryParam("id") String id){
 		OrderDAO dao = (OrderDAO) ctx.getAttribute("orders");
+		User user = (User) request.getSession().getAttribute("loginUser");
 		
 		 dao.cancelOrder(id);
+		return dao.getNotDeliveredForCustomer(user);
 	}
 	
 	@POST
@@ -238,6 +241,7 @@ public class OrderService {
 		}
 	}
 
+	@POST
 	@Path("/makeOrder")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public void makeOrder(OrderDTO dto) {

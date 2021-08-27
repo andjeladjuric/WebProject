@@ -269,9 +269,7 @@ Vue.component("all-orders", {
                 .get("rest/orders/cancelOrder", {
                     params: { id: id },
                 })
-            axios
-            .get("rest/orders/getNotDeliveredForCustomer")
-            .then((response) => (this.orders = response.data));
+                 .then((response) => (this.orders = response.data));
         },
 
         reload: function () {
