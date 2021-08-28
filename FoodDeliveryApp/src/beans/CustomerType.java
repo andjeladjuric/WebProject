@@ -20,19 +20,19 @@ public class CustomerType {
 		this.name = name;
 
 		if(name == Type.BRONZE) {
-			this.requiredPoints = 25;
-			this.discount = 10;
+			this.requiredPoints = 2000;
+			this.discount = 2;
 		}
 		else if(name == Type.SILVER) {
-			this.requiredPoints = 50;
-			this.discount = 15;
+			this.requiredPoints = 3000;
+			this.discount = 3;
 		}
 		else if(name == Type.GOLD) {
-			this.requiredPoints = 100;
-			this.discount = 20;
+			this.requiredPoints = 4000;
+			this.discount = 4;
 		}else {
-			this.requiredPoints = 100;
-			this.discount = 20;
+			this.requiredPoints = 0;
+			this.discount = 0;
 		}
 	}
 

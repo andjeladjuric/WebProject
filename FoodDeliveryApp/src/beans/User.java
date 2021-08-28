@@ -153,11 +153,11 @@ public class User {
 	}
 
 	public void setType() {
-		if(points >= 25 && points <= 50) {
+		if(points >= 2000 && points < 3000) {
 			this.type = new CustomerType(Type.BRONZE);
-		}else if(points >= 25 && points <= 50) {
+		}else if(points >= 3000 && points < 4000) {
 			this.type = new CustomerType(Type.SILVER);	
-		}else if(points >= 25 && points <= 50){
+		}else if(points >= 4000){
 			this.type = new CustomerType(Type.GOLD);	
 		}else {
 			this.type = new CustomerType(Type.NONE);	

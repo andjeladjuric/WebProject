@@ -275,6 +275,7 @@ public class UsersDAO {
 			if(u.getUsername().equals(user))
 				{
 					u.setPoints(u.getPoints() + points);
+					u.setType();
 				}
 			allUsers.add(u);
 		}
@@ -292,6 +293,7 @@ public class UsersDAO {
 			if(u.getUsername().equals(user))
 				{
 					u.setPoints(u.getPoints() - points);
+					u.setType();
 				}
 			allUsers.add(u);
 		}

@@ -294,11 +294,11 @@ Vue.component("shopping-cart",{
 				( this.user = response.data);
 				this.medal = this.user.type.name;
 				if(this.user.type.name === "GOLD"){
-					this.paragraph = "You have 20% discount as a GOLD user.";
+					this.paragraph = "You have 4% discount as a GOLD user.";
 				}else if(this.user.type.name === "SILVER"){
-					this.paragraph = "You have 15% discount as a SILVER user.";
+					this.paragraph = "You have 3% discount as a SILVER user.";
 				}else if(this.user.type.name === "BRONZE"){
-					this.paragraph = "You have 10% discount as a BRONZE user." 
+					this.paragraph = "You have 2% discount as a BRONZE user." 
 				}else if(this.user.type.name === "NONE"){
 					this.paragraph = "You do not have any discount currently." 
 					this.haveDiscount = false;
@@ -334,7 +334,10 @@ Vue.component("shopping-cart",{
 	        		'Content-type': 'text/plain',
 	        		}
 	        	})
-	    			.then((response) =>{( this.cart = response.data); this.numOfItems = this.cart.items.length; this.totalPrice = this.cart.totalPrice + 100;             	this.points = this.cart.totalPrice/1000*133;
+	    			.then((response) =>{( this.cart = response.data);
+	    			 this.numOfItems = this.cart.items.length;
+	    			 this.totalPrice = this.cart.totalPrice + 100;
+	    		     this.points = this.cart.totalPrice/1000*133;
 	    			});			
 		},
 		useDiscount : function(){
