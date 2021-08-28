@@ -133,9 +133,10 @@ Vue.component("rest-orders", {
             <div class="row g-4 mb-4 cards align-contet-center justify-content-center" id="vue-orders" v-if="hideRequests"
                 style="padding-left: 7%; padding-right: 7%">
                 <div class="container">
-                    <button type="button" class="btn buttonGroup requests d-flex mb-2" style="white-space: normal"
+                    <button type="button" class="btn buttonGroup requests d-block mb-2" style="white-space: normal; position:relative"
                         @click="hideRequests = !hideRequests">
                         <i class="fas fa-boxes me-2 p-1" style="color: #ecbeb1;"></i>Check requests
+                        <span class="badges" v-if="requests.length > 0">{{requests.length}}</span>
                     </button>
                 </div>
 

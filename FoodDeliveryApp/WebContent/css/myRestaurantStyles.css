@@ -81,6 +81,10 @@ h4,
     align-items: flex-end;
 }
 
+.requests {
+    border: 1px solid rgba(124, 124, 124, 0.404);
+}
+
 .addItem:hover,
 .requests:hover {
     margin-left: 1rem;
@@ -160,4 +164,14 @@ h4,
 
 .categoryBox {
     margin-bottom: 7rem;
+}
+
+.badges {
+    position: absolute;
+    top: -10px;
+    right: -12px;
+    width: 1.5rem;
+    border-radius: 50%;
+    background-color: #e97f61;
+    color: white;
 }
