@@ -68,7 +68,15 @@ public class CartService {
 		CartDAO dao = getCarts();
 		return dao.emptyCart(user.getUsername());
 	}
-	
+	@POST
+	@Path("/restaurantDeleted")
+	@Consumes(MediaType.TEXT_PLAIN)
+	public void restaurantDeleted(String id) {
+		
+		CartDAO dao = getCarts();
+		dao.restaurantDeleted(id);
+
+	}
 	private CartDAO getCarts() {
 		
 		CartDAO carts = (CartDAO) ctx.getAttribute("carts");

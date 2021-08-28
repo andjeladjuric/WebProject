@@ -86,7 +86,7 @@ Vue.component("selected-restaurant", {
 			                
 			                <br><br>
 			                    <h4 style="margin-left: 1rem;" class="mb-2">Options</h4>
-			                    <button type="button" class="btn buttonGroup addItem">
+			                    <button type="button" class="btn buttonGroup addItem" v-on:click="deleteRestaurant">
 			                            <i class="fas fa-trash me-2 p-1" style="color: #ecbeb1;"></i>Delete
 			                    </button>
 			
@@ -388,7 +388,20 @@ Vue.component("selected-restaurant", {
 
             return false;
         },
-        removeItem: function (item) {
+        deleteRestaurant: function () {
+        	 axios
+                  .get("rest/restaurants/deleteRestaurant", {
+                        params: { id: this.restaurant.id },
+                    })
+                  .then((response) =>{
+                  	axios 
+	    			.post('rest/carts/restaurantDeleted', this.restaurant.id,
+		        	{ headers: {
+		        		'Content-type': 'text/plain',
+		        		}
+		        	}) 
+                  	location.href = response.data;
+                  });
 
         },
         removeComment: function (comment) {

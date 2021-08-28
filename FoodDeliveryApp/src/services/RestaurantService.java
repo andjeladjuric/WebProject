@@ -22,6 +22,7 @@ import beans.Role;
 import beans.User;
 import dao.RestaurantDAO;
 import dao.UsersDAO;
+import dto.LoginDTO;
 import dto.RestaurantDTO;
 import dto.SignupDTO;
 
@@ -94,6 +95,17 @@ public class RestaurantService {
 			return dao.getRestaurantByManager(user.getUsername());
 		
 		return null;
+	}
+	
+	@GET
+	@Path("/deleteRestaurant")
+	@Produces(MediaType.TEXT_HTML)
+	public String deleteRestaurant(@QueryParam("id") String id) {
+		RestaurantDAO dao = (RestaurantDAO) ctx.getAttribute("restaurants");
+
+		dao.deleteRestaurant(id);
+		
+		return "/FoodDeliveryApp/administratorPage.html#/";
 	}
 
 }
