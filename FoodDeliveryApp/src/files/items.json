@@ -10,6 +10,7 @@
         "description": "This is a pizza",
         "imagePath": "",
         "restaurantId": "3",
+        "restaurant": "Corso",
         "quantity": 0.0,
         "category": "PIZZA"
     },
@@ -24,6 +25,7 @@
         "description": "This is a great pasta",
         "imagePath": "",
         "restaurantId": "3",
+        "restaurant": "Corso",
         "quantity": 0.0,
         "category": "PASTA"
     },
@@ -38,6 +40,7 @@
         "description": "This is a cool salad",
         "imagePath": "",
         "restaurantId": "2",
+        "restaurant": "Caribic",
         "quantity": 0.0,
         "category": "SALADS"
     },
@@ -52,6 +55,7 @@
         "description": "Chicken wrap with salad",
         "imagePath": "",
         "restaurantId": "3",
+        "restaurant": "Corso",
         "quantity": 0.0,
         "category": "MAINDISHES"
     },
@@ -66,6 +70,7 @@
         "description": "This is a cool salad reallz",
         "imagePath": "",
         "restaurantId": "3",
+        "restaurant": "Corso",
         "quantity": 0.0,
         "category": "SALADS"
     },
@@ -80,6 +85,7 @@
         "description": "Unique coctail that everyone adores!",
         "imagePath": "",
         "restaurantId": "3",
+        "restaurant": "Corso",
         "quantity": 0.0,
         "category": "DRINKS"
     },
@@ -94,6 +100,7 @@
         "description": "Unique coctail that everyone adores!",
         "imagePath": "",
         "restaurantId": "3",
+        "restaurant": "Corso",
         "quantity": 0.0,
         "category": "DRINKS"
     }

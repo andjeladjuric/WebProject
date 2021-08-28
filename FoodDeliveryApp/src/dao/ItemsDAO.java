@@ -106,8 +106,8 @@ public class ItemsDAO {
 	
 	public void insert(Item i) {
 		String id = UUID.randomUUID().toString();
-		Item createdItem = new Item(id, false, i.getName(), i.getPrice(), i.getType(), i.getAmount(), i.getDescription(), i.getImagePath(), i.getRestaurantId(),
-				i.getCategory());
+		Item createdItem = new Item(id, false, i.getName(), i.getPrice(), i.getType(), i.getAmount(), i.getDescription(), i.getImagePath(), i.getRestaurantId(), i.getRestaurant()
+				, i.getCategory());
 		items.add(createdItem);
 		serialize();
 		addItemToRestaurant(i.getRestaurantId(), createdItem.getId());

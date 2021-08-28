@@ -69,7 +69,7 @@ Vue.component("shopping-cart",{
                                             </p>
                                             <p class="mb-2">Size: {{i.amount}} mg</p>
                                             <p class="mb-5">
-                                                Restaurant: ""
+                                                Restaurant: "{{i.restaurant}}"
                                             </p>
                     
                                         </div>

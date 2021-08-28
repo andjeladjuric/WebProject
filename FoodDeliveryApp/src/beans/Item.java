@@ -15,6 +15,7 @@ public class Item {
 	private String description;
 	private String imagePath;
 	private String restaurantId;
+	private String restaurant;
 	private double quantity;
 	private Category category;
 	
@@ -22,7 +23,7 @@ public class Item {
 	public Item() {}
 
 	public Item(String id, boolean deleted, String name, double price, ItemType type, double amount, String description,
-			String imagePath, String restaurantId, Category category) {
+			String imagePath, String restaurantId, String restaurant, Category category) {
 		super();
 		this.id = id;
 		this.deleted = deleted;
@@ -33,7 +34,16 @@ public class Item {
 		this.description = description;
 		this.imagePath = imagePath;
 		this.restaurantId = restaurantId;
+		this.restaurant = restaurant;
 		this.quantity = 1;
+	}
+
+	public String getRestaurant() {
+		return restaurant;
+	}
+
+	public void setRestaurant(String restaurant) {
+		this.restaurant = restaurant;
 	}
 
 	public double getPoints() {
