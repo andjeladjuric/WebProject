@@ -5,7 +5,7 @@ function fixDate(users) {
 	return users;
 }
 
-Vue.component("administrator-home",{
+Vue.component("administrator-users",{
     data: function(){
         return{
 			users:[],

@@ -19,14 +19,17 @@ Vue.component("administrator-header", {
 		
 		          <div class="collapse navbar-collapse" id="navmenu">
 		              <ul class="navbar-nav ms-auto">
+		              		<li class="nav-item">
+		                      <a href="#/" class="nav-link">Home</a>
+		                  </li>
 		                  <li class="nav-item">
 		                      <a href="#/newRestaurant" class="nav-link">New Restaurant</a>
 		                  </li>
 		                  <li class="nav-item dropdown">
-		                      <a href="" class="nav-link">Users</a>
+		                      <a href="#/users" class="nav-link">Users</a>
 		                  </li>
 		                  <li class="nav-item">
-		                      <a href="" class="nav-link">Profile</a>
+		                      <a href="#/profile" class="nav-link">Profile</a>
 		                  </li>
 		                  <li class="nav-item">
 		                      <a @click=logout() class="nav-link" style="cursor: pointer">Log Out</a>
