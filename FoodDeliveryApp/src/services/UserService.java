@@ -178,9 +178,14 @@ public class UserService {
 	@Path("/updateUser")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public void updateUser(User updated) {
+	public String updateUser(User updated) {
 		UsersDAO dao = getUsers();
-		dao.editUser(updated, getCurrentUser());
+		if (dao.alreadyExists(updated.getUsername()))
+			return "Username taken";
+		else
+			dao.editUser(updated, getCurrentUser());
+		
+		return "Success";
 	}
 	
 	@POST
