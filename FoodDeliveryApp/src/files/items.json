@@ -11,7 +11,7 @@
         "imagePath": "",
         "restaurantId": "3",
         "restaurant": "Corso",
-        "quantity": 0.0,
+        "quantity": 1,
         "category": "PIZZA"
     },
     {
@@ -26,7 +26,7 @@
         "imagePath": "",
         "restaurantId": "3",
         "restaurant": "Corso",
-        "quantity": 0.0,
+        "quantity": 1,
         "category": "PASTA"
     },
     {
@@ -41,7 +41,7 @@
         "imagePath": "",
         "restaurantId": "2",
         "restaurant": "Caribic",
-        "quantity": 0.0,
+        "quantity": 1,
         "category": "SALADS"
     },
     {
@@ -56,7 +56,7 @@
         "imagePath": "",
         "restaurantId": "3",
         "restaurant": "Corso",
-        "quantity": 0.0,
+        "quantity": 1,
         "category": "MAINDISHES"
     },
     {
@@ -71,7 +71,7 @@
         "imagePath": "",
         "restaurantId": "3",
         "restaurant": "Corso",
-        "quantity": 0.0,
+        "quantity": 1,
         "category": "SALADS"
     },
     {
@@ -86,7 +86,7 @@
         "imagePath": "",
         "restaurantId": "3",
         "restaurant": "Corso",
-        "quantity": 0.0,
+        "quantity": 1,
         "category": "DRINKS"
     },
     {
@@ -101,7 +101,7 @@
         "imagePath": "",
         "restaurantId": "3",
         "restaurant": "Corso",
-        "quantity": 0.0,
+        "quantity": 1,
         "category": "DRINKS"
     }
 ]

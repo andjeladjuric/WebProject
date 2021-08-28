@@ -381,6 +381,8 @@ Vue.component("shopping-cart",{
 	             this.points = 0;
 	             this.modalShow = false;
 	             });
+	             
+	             window.location.reload();
              }
 		}
     },
