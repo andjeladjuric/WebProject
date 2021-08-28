@@ -407,7 +407,12 @@ Vue.component("selected-restaurant", {
                         .then((response) => (this.allComments = response.data));
                 })
 
-        }
+        },
+        removeItem: function (item) {
+            axios
+                .post("rest/items/deleteItem", item.id)
+                .then((response) => window.location.reload());
+        },
     },
     filters: {
         dateFormat: function (value, format) {
