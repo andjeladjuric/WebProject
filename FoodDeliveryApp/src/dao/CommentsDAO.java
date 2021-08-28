@@ -117,6 +117,17 @@ public class CommentsDAO {
 		return commentsForRestaurant;
 		
 	}
+
+	public List<Comment> getCommentsForAdmin(String restaurantId) {
+		List<Comment> commentsForRestaurant = new ArrayList<Comment>();
+		
+		for(Comment c : comments) {
+			if(c.getRestaurantId().equals(restaurantId))
+				commentsForRestaurant.add(c);
+		}
+	
+		return commentsForRestaurant;
+	}
 	
 	
 	
