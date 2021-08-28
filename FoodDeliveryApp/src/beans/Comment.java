@@ -8,6 +8,7 @@ public class Comment {
 	private String text;
 	private int stars;
 	private State status;
+	private boolean deleted;
 	
 	public Comment() {}
 	
@@ -19,7 +20,16 @@ public class Comment {
 		this.text = text;
 		this.stars = stars;
 		this.status = status;
+		this.deleted = false;
 	}
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
+	}
+
 	public String getId() {
 		return id;
 	}

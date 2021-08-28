@@ -23,7 +23,7 @@ Vue.component("selected-restaurant", {
             showOrders: false,
             items: [],
             allComments: []
-            
+
         };
     },
     template: `
@@ -341,7 +341,7 @@ Vue.component("selected-restaurant", {
 				                    <div class="d-flex justify-content-between">
 				                        <p>Status: {{comment.status}}</p>
   										<button type="button" class="btn btn-sm btn-outline-secondary editItem" data-toggle="tooltip"
-			                            data-placement="bottom" style="background: none; ">
+			                            data-placement="bottom" style="background: none; " v-on:click="removeComment(comment.id)">
 			                            <i class="fas fa-trash"></i> Remove
 			                        	</button>
 				                    </div>
@@ -391,7 +391,21 @@ Vue.component("selected-restaurant", {
         removeItem: function (item) {
 
         },
-         delete: function (comment) {
+        removeComment: function (comment) {
+            axios
+                .post('rest/comments/removeComment', comment,
+                    {
+                        headers: {
+                            'Content-type': 'text/plain',
+                        }
+                    })
+                .then(response => {
+                    axios
+                        .get("rest/comments/getCommentsForAdmin", {
+                            params: { id: this.restaurant.id },
+                        })
+                        .then((response) => (this.allComments = response.data));
+                })
 
         }
     },

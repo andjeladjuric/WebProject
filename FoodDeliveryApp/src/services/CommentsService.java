@@ -101,6 +101,14 @@ public class CommentsService {
 		
 	}
 	
+	@POST
+	@Path("/removeComment")
+	@Consumes(MediaType.TEXT_PLAIN)
+	public void removeComment(String comment) {
+		CommentsDAO dao = (CommentsDAO) ctx.getAttribute("comments");
+		dao.removeComment(comment);
+	}
+	
 	
 	@POST
 	@Path("/addComment")
