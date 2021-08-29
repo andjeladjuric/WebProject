@@ -11,6 +11,7 @@ Vue.component("currentUser-profile", {
                 repeatPassword: "",
             },
             errorMessage: "",
+            editErrorMessage: "",
             isSidebarVisible: true,
             isCustomer : false,
             medal : "",
@@ -24,11 +25,11 @@ Vue.component("currentUser-profile", {
             <div id="sidebar-wrapper">
                 <img class="img-fluid d-sm-block" v-bind:src="currentUser.profilePicPath" alt="" id="profile-picture">
                 <div class="list-group list-group-flush my-3">
-                    <a href="#" data-bs-target=".profileOverview" id="profileOverviewButton" @click="showEdit = false" 
+                    <a href="#/profile" id="profileOverviewButton" @click="showEdit = false" 
 							class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i class="fas fa-user me-2"></i>Profile overview</a>
-                    <a href="#" data-bs-target=".editProfile" id="editProfileButton" @click="showEdit = !showEdit; backUpInfo();"
+                    <a href="#/profile" id="editProfileButton" @click="showEdit = !showEdit; backUpInfo();"
 							class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i class="fas fa-edit me-2"></i>Edit profile</a>
-                    <a href="#" data-bs-toggle="modal" data-bs-target="#modalForm" 
+                    <a href="#/profile" data-bs-toggle="modal" data-bs-target="#modalForm" 
 							class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i class="fas fa-lock me-2"></i>Change password</a>
                 </div>
             </div>
@@ -165,9 +166,10 @@ Vue.component("currentUser-profile", {
                                 </tr>
                             </table>
                         </div>
+                        <p style="color: red; font-size: small;" class="text-center mt-3">{{editErrorMessage}}</p>
                         <div class="row my-5">
                             <div class="col d-inline-flex justify-content-center">
-                                <button type="button" class="btn profileBtn me-4" v-on:click="updateProfile(currentUser); showEdit = !showEdit">Save</button>
+                                <button type="button" class="btn profileBtn me-4" v-on:click="updateProfile(currentUser);">Save</button>
                                 <button type="button" class="btn profileBtn" style="background: #ecbeb1" v-on:click="cancelEditing(); showEdit = !showEdit">Cancel</button>
                             </div>
                         </div>
@@ -179,7 +181,7 @@ Vue.component("currentUser-profile", {
             <div class="col-md-2"></div>
         </div>
         <!-- Change password -->
-        <div class="modal" id="modalForm">
+        <div class="modal" id="modalForm" data-bs-backdrop="static" data-bs-keyboard="false">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -249,7 +251,15 @@ Vue.component("currentUser-profile", {
                         },
                     }
                 )
-                .then((response) => "Success");
+                .then((response) => {
+                    if (response.data === "Username taken")
+                        this.editErrorMessage =
+                            "An account with this username already exist!";
+                    else {
+                        this.showEdit = !this.showEdit;
+                        this.editErrorMessage = "";
+                    }
+                });
         },
 
         cancelEditing: function () {
@@ -260,6 +270,7 @@ Vue.component("currentUser-profile", {
             this.currentUser.name = this.backUp[4];
             this.currentUser.surname = this.backUp[5];
             this.currentUser.profilePicPath = this.backUp[6];
+            this.editErrorMessage = "";
         },
 
         cancelChange: function () {

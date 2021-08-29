@@ -93,7 +93,7 @@ public class UsersDAO {
 		
 		
 		String part[] = base64.split(",");
-		String path = "./WebContent/" + imagePath;
+		String path = "WebContent/" + imagePath;
 		
 		byte[] image = Base64.getDecoder().decode(part[1]);
 		
@@ -102,7 +102,33 @@ public class UsersDAO {
 		}
 	}
 	
-	public void editUser(User updated, User currentUser) {
+	public String editUser(User updated, User currentUser) {
+		for(User u : users.values()) {
+			if(u.getUsername().equals(currentUser.getUsername())) {
+				u.setDateOfBirth(updated.getDateOfBirth());
+				u.setGender(updated.getGender());
+				u.setName(updated.getName());
+				u.setSurname(updated.getSurname());
+				
+				if(!u.getUsername().equals(updated.getUsername())) {
+					if (alreadyExists(updated.getUsername()))
+						return "Username taken";
+				}
+				
+				
+				if(!u.getProfilePicPath().equals(updated.getProfilePicPath())) {
+					String path = convertImage(updated);
+					u.setProfilePicPath(path);
+				}
+				serialize();
+				break;
+			}
+		}
+		
+		return "Success";
+	}
+
+	private String convertImage(User updated) {
 		String path = "img/" + updated.getUsername() + "profileImg.jpg";
 		System.out.println(path);
 		
@@ -111,19 +137,7 @@ public class UsersDAO {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
-		for(User u : users.values()) {
-			if(u.getUsername().equals(currentUser.getUsername())) {
-				u.setDateOfBirth(updated.getDateOfBirth());
-				u.setGender(updated.getGender());
-				u.setName(updated.getName());
-				u.setSurname(updated.getSurname());
-				u.setUsername(updated.getUsername());
-				u.setProfilePicPath(path);
-				serialize();
-				break;
-			}
-		}
+		return path;
 	}
 	
 	public void changePassword(User updated, String newPassword) {

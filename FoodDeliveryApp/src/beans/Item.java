@@ -36,6 +36,7 @@ public class Item {
 		this.restaurantId = restaurantId;
 		this.restaurant = restaurant;
 		this.quantity = 1;
+		this.category = category;
 	}
 
 	public String getRestaurant() {

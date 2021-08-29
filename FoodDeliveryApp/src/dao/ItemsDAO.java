@@ -5,8 +5,11 @@ import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+
+import org.apache.commons.lang3.RandomStringUtils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -106,8 +109,11 @@ public class ItemsDAO {
 	
 	public void insert(Item i) {
 		String id = UUID.randomUUID().toString();
-		Item createdItem = new Item(id, false, i.getName(), i.getPrice(), i.getType(), i.getAmount(), i.getDescription(), i.getImagePath(), i.getRestaurantId(), i.getRestaurant()
-				, i.getCategory());
+		
+		String path = convertImage(i);
+		
+		Item createdItem = new Item(id, false, i.getName(), i.getPrice(), i.getType(), i.getAmount(), i.getDescription(), path, i.getRestaurantId(),
+				i.getCategory());
 		items.add(createdItem);
 		serialize();
 		addItemToRestaurant(i.getRestaurantId(), createdItem.getId());
@@ -134,12 +140,28 @@ public class ItemsDAO {
 				i.setType(updatedItem.getType());
 				i.setCategory(updatedItem.getCategory());
 				i.setAmount(updatedItem.getAmount());
-				i.setImagePath(updatedItem.getImagePath());
+				if(!updatedItem.getImagePath().equals(i.getImagePath())) {
+					String imgPath = convertImage(updatedItem);
+					i.setImagePath(imgPath);
+				}
 				i.setDescription(updatedItem.getDescription());
 				serialize();
 				break;
 			}
 		}
+	}
+
+	private String convertImage(Item updatedItem) {
+		UsersDAO dao = new UsersDAO();
+		String path = "img/" + updatedItem.getName() + "-" + updatedItem.getRestaurantId() + ".jpg";
+		System.out.println(path);
+		
+		try {
+			dao.Base64Decode(updatedItem.getImagePath(), path);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return path;
 	}
 	
 	public void deleteItem(String id) {

@@ -21,6 +21,9 @@ Vue.component("all-orders", {
                 restaurantType: "",
                 status: "",
             },
+            requests: [],
+            currentUser: {},
+            count: 0,
         };
     },
     template: `
@@ -31,7 +34,7 @@ Vue.component("all-orders", {
                         <div class="container buttons mt-5 mb-1">
                             <button type="button" class="btn d-sm-flex buttonGroup me-2" id="btn1" @click="isHidden = true; hideOnClick();"
                                 v-bind:class="isHidden ? 'active' : 'notActive'">My Orders</button>
-                            <button type="button" class="btn d-sm-flex buttonGroup" @click="isHidden = !isHidden; hideOnClick();" id="btn2"
+                            <button type="button" class="btn d-sm-flex buttonGroup" @click="isHidden = !isHidden; hideOnClick(); showNotifications() " id="btn2"
                                 v-bind:class="!isHidden ? 'active' : 'notActive'">Awaiting</button>
                         </div>
                     </div>
@@ -157,7 +160,7 @@ Vue.component("all-orders", {
                             <div class="card shadow bg-light text-dark">
                                 <div class="card-body text-center">
                                     <div class="row g-2 align-items-center d-inline-flex">
-                                        <div class="container buttons">
+                                        <div class="container buttons align-items-center justify-content-center" style="flex-wrap: wrap;">
                                             <h1 class="mb-4 mt-1 orderID">Order #{{o.id}}</h1>
                                             <h3 style="z-index: 2;">
                                                 <button type="button" class="btn ms-4 mb-4" style="background: #ecbeb1;"
@@ -201,8 +204,15 @@ Vue.component("all-orders", {
                     <div class="row g-4 mb-4 cards" id="waiting-orders" v-for="o in filteredWaitingOrders" v-if="!isHidden">
                             <div class="card shadow bg-light text-dark">
                                 <div class="card-body text-center">
-                                    <div class="row g-2">
-                                        <h1 class="mb-4 orderID">Order #{{o.id}}</h1>
+                                    <div class="row g-2 align-items-center d-inline-flex">
+                                        <div class="container buttons align-items-center justify-content-center" style="flex-wrap: wrap;">
+                                            <h1 class="mb-4 mt-2 orderID d-flex">Order #{{o.id}}</h1>
+                                            <h3 class="ms-2" v-if="count > 1">
+                                                <button type="button" class="btn d-flex tableBtn disabled" v-if="isRejected(o.id)" style="background: #ecbeb1;">
+                                                    Request for order rejected!
+                                                </button>
+                                            </h3>
+                                        </div>
                                     </div>
                                     <div class="row table-responsive">
                                         <table class="singleOrderView">
@@ -246,6 +256,13 @@ Vue.component("all-orders", {
         axios
             .get("rest/orders/getWaitingOrders")
             .then((response) => (this.allWaitingOrders = response.data));
+
+        axios
+            .get("rest/orders/getAllRequests")
+            .then((response) => (this.requests = response.data));
+        axios
+            .get("rest/users/getCurrentUser")
+            .then((response) => (this.currentUser = response.data));
     },
     methods: {
         hideOnClick: function () {
@@ -324,6 +341,50 @@ Vue.component("all-orders", {
         noFilters: function () {
             this.filterInput.restaurantType = "";
             this.filterInput.status = "";
+        },
+
+        showNotifications() {
+            this.count = this.count + 1;
+
+            if (this.count === 1) {
+                for (let order of this.allWaitingOrders) {
+                    for (let request of this.requests) {
+                        if (
+                            order.id === request.orderId &&
+                            this.currentUser.username === request.courier &&
+                            request.status === "REJECTED"
+                        ) {
+                            const Toast = Swal.mixin({
+                                toast: true,
+                                text:
+                                    "Request for order #" +
+                                    order.id +
+                                    " has been rejected!",
+                                position: "bottom-end",
+                                timer: 3500,
+                                showConfirmButton: false,
+                            });
+
+                            Toast.fire({
+                                icon: "error",
+                            });
+                        }
+                    }
+                }
+            }
+        },
+
+        isRejected(orderId) {
+            for (let r of this.requests) {
+                if (
+                    r.orderId === orderId &&
+                    r.courier === this.currentUser.username &&
+                    r.status === "REJECTED"
+                )
+                    return true;
+            }
+
+            return false;
         },
     },
     computed: {

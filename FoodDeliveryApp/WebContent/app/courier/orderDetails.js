@@ -21,6 +21,7 @@ Vue.component("order-details", {
             },
             requests: [],
             currentUser: {},
+            requestSent: false,
         };
     },
     template: `
@@ -110,9 +111,14 @@ Vue.component("order-details", {
                                         <button type="button" class="btn d-flex tableBtn" v-if="isOrderInTransport" @click="changeStatus(order.id)">
                                             Mark as delivered
                                         </button>
-                                        <button type="button" class="btn d-flex tableBtn" v-if="isOrderWaiting" @click="sendRequest(); reload()"
-                                            v-bind:class="isSent ? 'disabled' : 'nothing'">
+                                        <button type="button" class="btn d-flex tableBtn" v-if="isOrderWaiting && !isSent && !requestSent" @click="sendRequest(); showAlert()">
                                             Send delivery request
+                                        </button>
+                                        <button type="button" class="btn d-flex tableBtn disabled" v-if="(isSent || requestSent) && !requestRejected" style="background: #ecbeb1;">
+                                            Request for order sent!
+                                        </button>
+                                        <button type="button" class="btn d-flex tableBtn disabled" v-if="requestRejected" style="background: #ecbeb1;">
+                                            Request for order rejected!
                                         </button>
                                     </td>
                                 </tr>
@@ -169,6 +175,19 @@ Vue.component("order-details", {
 
             return false;
         },
+
+        requestRejected() {
+            for (let r of this.requests) {
+                if (
+                    r.orderId === this.order.id &&
+                    r.courier === this.currentUser.username &&
+                    r.status === "REJECTED"
+                )
+                    return true;
+            }
+
+            return false;
+        },
     },
     methods: {
         changeStatus: function (id) {
@@ -197,10 +216,29 @@ Vue.component("order-details", {
                     }
                 )
                 .then((response) => (this.orderRequest = response.data));
+
+            this.requestSent = true;
+        },
+
+        showAlert: function () {
+            const Toast = Swal.mixin({
+                toast: true,
+                text:
+                    "Request for order #" +
+                    this.order.id +
+                    " succesfully sent!",
+                position: "bottom-end",
+                timer: 3500,
+                showConfirmButton: false,
+            });
+
+            Toast.fire({
+                icon: "success",
+            });
         },
     },
     components: {
-        toast,
+        swal,
     },
     filters: {
         dateFormat: function (value, format) {

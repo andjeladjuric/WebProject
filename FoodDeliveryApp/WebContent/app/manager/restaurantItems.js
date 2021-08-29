@@ -38,6 +38,8 @@ Vue.component("restaurant-items", {
             currentUser: {},
             showAddItem: false,
             errorMessage: "",
+            imagePath: "",
+            count: 0,
         };
     },
     template: `
@@ -96,7 +98,7 @@ Vue.component("restaurant-items", {
                         </div>
 
                         <div class="image-wrapper mt-2">
-                            <img class="img-responsive img-rounded image-wrapper" src="img/pizza.jpeg" alt="Chania">
+                            <img class="img-responsive img-rounded image-wrapper" :src="item.imagePath" alt="Item">
                         </div>
                     </div>
                 </div>
@@ -131,7 +133,7 @@ Vue.component("restaurant-items", {
                         </div>
 
                         <div class="image-wrapper mt-2">
-                            <img class="img-responsive img-rounded image-wrapper" src="img/pizza.jpeg" alt="Chania">
+                            <img class="img-responsive img-rounded image-wrapper" :src="item.imagePath" alt="Item">
                         </div>
                     </div>
                 </div>
@@ -166,7 +168,7 @@ Vue.component("restaurant-items", {
                         </div>
 
                         <div class="image-wrapper mt-2">
-                            <img class="img-responsive img-rounded image-wrapper" src="img/pizza.jpeg" alt="Chania">
+                            <img class="img-responsive img-rounded image-wrapper" :src="item.imagePath" alt="Item">
                         </div>
                     </div>
                 </div>
@@ -201,7 +203,7 @@ Vue.component("restaurant-items", {
                         </div>
 
                         <div class="image-wrapper mt-2">
-                            <img class="img-responsive img-rounded image-wrapper" src="img/pizza.jpeg" alt="Chania">
+                            <img class="img-responsive img-rounded image-wrapper" :src="item.imagePath" alt="Item">
                         </div>
                     </div>
                 </div>
@@ -236,7 +238,7 @@ Vue.component("restaurant-items", {
                         </div>
 
                         <div class="image-wrapper mt-2">
-                            <img class="img-responsive img-rounded image-wrapper" src="img/pizza.jpeg" alt="Chania">
+                            <img class="img-responsive img-rounded image-wrapper" :src="item.imagePath" alt="Item">
                         </div>
                     </div>
                 </div>
@@ -271,7 +273,7 @@ Vue.component("restaurant-items", {
                         </div>
 
                         <div class="image-wrapper mt-2">
-                            <img class="img-responsive img-rounded image-wrapper" src="img/pizza.jpeg" alt="Chania">
+                            <img class="img-responsive img-rounded image-wrapper" :src="item.imagePath" alt="Item">
                         </div>
                     </div>
                 </div>
@@ -279,9 +281,9 @@ Vue.component("restaurant-items", {
                 <!-- End of drinks -->
 
                 <!-- Desserts -->
-                <div class="categoryBox" v-if="!isCategoryEmpty('DESSERTS')">
+                <div class="categoryBox" v-if="!isCategoryEmpty('DESSERT')">
                 <h4 class="mb-3 title" id="item-7">Desserts</h4>
-                <div class="card bg-light text-dark mb-4" id="itemAndCommentCards" v-for="item in items" v-if="item.category == 'DESSERTS'">
+                <div class="card bg-light text-dark mb-4" id="itemAndCommentCards" v-for="item in items" v-if="item.category == 'DESSERT'">
                     <div class="card-body text-start itemBody">
                         <div class="container cardContent text-start">
                             <h1 class="mt-1 mb-3">{{item.name}}</h1>
@@ -306,7 +308,7 @@ Vue.component("restaurant-items", {
                         </div>
 
                         <div class="image-wrapper mt-2">
-                            <img class="img-responsive img-rounded image-wrapper" src="img/pizza.jpeg" alt="Chania">
+                            <img class="img-responsive img-rounded image-wrapper" :src="item.imagePath" alt="Item">
                         </div>
                     </div>
                 </div>
@@ -326,10 +328,12 @@ Vue.component("restaurant-items", {
                         </div>
                     </div>
 
-                    <div class="container d-block">
+                    <div class="container d-block mb-3">
                         <h5><b>Address</b></h5>
-                        <p>{{restaurant.location.address.street}}  {{restaurant.location.address.number}} <br> 
-                        {{restaurant.location.address.city}}, {{restaurant.location.address.postcode}}</p>
+                        <a href="#myRestaurant" @click="openMap()" id="locationLink" style="color: #7fd2c0;" data-bs-toggle="modal" data-bs-target="#mapModal">
+                            {{restaurant.location.address.street}}  {{restaurant.location.address.number}} <br> 
+                            {{restaurant.location.address.city}}, {{restaurant.location.address.postcode}}
+                        </a>
                     </div>
 
                     <div class="container d-block">
@@ -376,7 +380,7 @@ Vue.component("restaurant-items", {
                                 <td class="label">Image <span style="color: red;">*</span></td>
                                 <td>
                                 <div class="custom-file">
-                                    <input type="file" class="custom-file-input form-control">
+                                    <input type="file" class="custom-file-input form-control" @change="addImage">
                                 </div>
                                 </td>
                             </tr>
@@ -390,7 +394,7 @@ Vue.component("restaurant-items", {
                                         <option value="PASTA">Pasta</option>
                                         <option value="MAINDISHES">Main dishes</option>
                                         <option value="DRINKS">Drinks</option>
-                                        <option value="DELIVERED">Desserts</option>
+                                        <option value="DESSERT">Desserts</option>
                                     </select>
                                 </td>
                             </tr>
@@ -461,6 +465,25 @@ Vue.component("restaurant-items", {
             </div>
         </div>
         <!-- End of delete item modal -->
+
+        <!-- Map modal -->
+        <div id="mapModal" class="modal fade responsive">
+            <div class="modal-dialog modal-dialog-centered modal-map">
+                <div class="modal-content">
+                    <div class="modal-header flex-column">		
+                        <h4 class="modal-title w-100">
+                            {{restaurant.location.address.street}}  {{restaurant.location.address.number}} <br> 
+                            {{restaurant.location.address.city}} {{restaurant.location.address.postcode}}, {{restaurant.location.address.country}}
+                        </h4>	
+                        <button type="button" class="close" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="map"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End of map modal -->
     </div>
     `,
     mounted() {
@@ -487,6 +510,14 @@ Vue.component("restaurant-items", {
             return false;
         },
 
+        alreadyExists(name) {
+            for (let i of this.items) {
+                if (i.name === name) return true;
+            }
+
+            return false;
+        },
+
         addNewItem: function () {
             if (
                 this.item.name === "" ||
@@ -496,7 +527,7 @@ Vue.component("restaurant-items", {
                 this.item.imagePath === ""
             ) {
                 this.errorMessage = "Please fill in the required fields!";
-            } else if (this.items.indexOf(this.item.name) === -1) {
+            } else if (this.alreadyExists(this.item.name)) {
                 this.errorMessage =
                     "Item with the name '" +
                     this.item.name +
@@ -532,11 +563,72 @@ Vue.component("restaurant-items", {
                 .post("rest/items/deleteItem", id)
                 .then((response) => window.location.reload());
         },
+
+        addImage(e) {
+            const file = e.target.files[0];
+            const reader = new FileReader();
+
+            reader.onload = (e) => {
+                this.item.imagePath = e.target.result;
+            };
+
+            this.imagePath = URL.createObjectURL(file);
+            reader.readAsDataURL(file);
+            e.target.value = "";
+        },
+
+        openMap: function () {
+            this.count = this.count + 1;
+
+            if (this.count === 1) {
+                var map = new ol.Map({
+                    target: "map",
+                    layers: [
+                        new ol.layer.Tile({ source: new ol.source.OSM() }),
+                    ],
+                    view: new ol.View({
+                        center: ol.proj.fromLonLat([
+                            this.restaurant.location.longitude,
+                            this.restaurant.location.latitude,
+                        ]),
+                        zoom: 14,
+                    }),
+                });
+
+                var markers = new ol.layer.Vector({
+                    source: new ol.source.Vector(),
+                    style: new ol.style.Style({
+                        image: new ol.style.Icon({
+                            anchor: [0.5, 1],
+                            src: "img/marker.png",
+                        }),
+                    }),
+                });
+                map.addLayer(markers);
+
+                var marker = new ol.Feature(
+                    new ol.geom.Point(
+                        ol.proj.fromLonLat([
+                            this.restaurant.location.longitude,
+                            this.restaurant.location.latitude,
+                        ])
+                    )
+                );
+                markers.getSource().addFeature(marker);
+
+                window.setTimeout(function () {
+                    map.updateSize();
+                }, 200);
+            }
+        },
     },
     filters: {
         dateFormat: function (value, format) {
             var parsed = moment(value);
             return parsed.format(format);
         },
+    },
+    components: {
+        swal,
     },
 });

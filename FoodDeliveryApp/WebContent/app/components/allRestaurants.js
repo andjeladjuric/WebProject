@@ -103,7 +103,7 @@ Vue.component("all-restaurants", {
                                         v-model="searchInput.type">
                                         <option value="" disabled selected hidden>Restaurant type</option>
                                         <option value="ITALIAN">Italian</option>
-                                        <option value="FASTFOD">Fast food</option>
+                                        <option value="FASTFOOD">Fast food</option>
                                         <option value="CHINESE">Chinese</option>
                                         <option value="SERBIAN">Serbian</option>
                                         <option value="BARBEQUE">Barbeque</option>
@@ -136,7 +136,7 @@ Vue.component("all-restaurants", {
                                         v-model="filterInput.restaurantType">
                                         <option value="" disabled selected hidden>Restaurant type</option>
                                         <option value="ITALIAN">Italian</option>
-                                        <option value="FASTFOD">Fast food</option>
+                                        <option value="FASTFOOD">Fast food</option>
                                         <option value="CHINESE">Chinese</option>
                                         <option value="SERBIAN">Serbian</option>
                                         <option value="BARBEQUE">Barbeque</option>
