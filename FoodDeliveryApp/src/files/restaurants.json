@@ -1,1 +1,75 @@
-[{"name":"La Forza","id":"1","deleted":false,"type":"ITALIAN","status":"Open","location":{"address":{"street":"Katolicke porte","number":6,"city":"Kragujevac","country":"Serbia","postcode":21000},"latitude":124.55500030517578,"longitude":245.63999938964844},"items":[],"logo":"","menagerId":"","rating":5.0},{"name":"Caribic","id":"2","deleted":false,"type":"FASTFOOD","status":"Closed","location":{"address":{"street":"Maksima Gorkog","number":6,"city":"Beograd","country":"Serbia","postcode":21000},"latitude":124.55500030517578,"longitude":245.63999938964844},"items":["caec61c7-21d3-4a2d-a9ff-2858efcf1ea3"],"logo":"","menagerId":"","rating":4.0},{"name":"Corso","id":"3","deleted":false,"type":"ITALIAN","status":"Open","location":{"address":{"street":"Zmaj Jovina","number":16,"city":"Novi Sad","country":"Serbia","postcode":21000},"latitude":124.55500030517578,"longitude":245.63999938964844},"items":["1","2","8bc9a5aa-3df0-4eeb-8b18-78df23b8f8a2","0d21adf1-6ec9-4992-baf9-a896277beaa4","0d12adf1-6bc9-4992-bsf9-a896288beaa4","7002d8dc-27b2-42e5-8891-a42e4de19273","7a5cb073-3e17-4ed6-ac36-f4efe3b6cf8e","fe00756f-dc0f-4743-a90f-3a182f633bc3"],"logo":"","menagerId":"andjela","rating":3.0}]
+[
+    {
+        "name": "La Forza",
+        "id": "1",
+        "deleted": false,
+        "type": "ITALIAN",
+        "status": "Open",
+        "location": {
+            "address": {
+                "street": "Katolicke porte",
+                "number": 6,
+                "city": "Kragujevac",
+                "country": "Serbia",
+                "postcode": 21000
+            },
+            "latitude": 124.55500030517578,
+            "longitude": 245.63999938964844
+        },
+        "items": [],
+        "logo": "",
+        "menagerId": "",
+        "rating": 5.0
+    },
+    {
+        "name": "Caribic",
+        "id": "2",
+        "deleted": false,
+        "type": "FASTFOOD",
+        "status": "Closed",
+        "location": {
+            "address": {
+                "street": "Maksima Gorkog",
+                "number": 6,
+                "city": "Beograd",
+                "country": "Serbia",
+                "postcode": 21000
+            },
+            "latitude": 124.55500030517578,
+            "longitude": 245.63999938964844
+        },
+        "items": ["caec61c7-21d3-4a2d-a9ff-2858efcf1ea3"],
+        "logo": "",
+        "menagerId": "",
+        "rating": 4.0
+    },
+    {
+        "name": "Corso",
+        "id": "3",
+        "deleted": false,
+        "type": "ITALIAN",
+        "status": "Open",
+        "location": {
+            "address": {
+                "street": "Zmaj Jovina",
+                "number": 16,
+                "city": "Novi Sad",
+                "country": "Serbia",
+                "postcode": 21000
+            },
+            "latitude": 45.25588732783064,
+            "longitude": 19.846720916589984
+        },
+        "items": [
+            "1",
+            "2",
+            "8bc9a5aa-3df0-4eeb-8b18-78df23b8f8a2",
+            "0d21adf1-6ec9-4992-baf9-a896277beaa4",
+            "0d12adf1-6bc9-4992-bsf9-a896288beaa4",
+            "7002d8dc-27b2-42e5-8891-a42e4de19273"
+        ],
+        "logo": "",
+        "menagerId": "andjela",
+        "rating": 3.0
+    }
+]
