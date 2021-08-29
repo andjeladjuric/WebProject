@@ -3,8 +3,10 @@ package dao;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -12,6 +14,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import beans.Item;
 import beans.Restaurant;
 import beans.User;
+import beans.WorkingHours;
 import dto.RestaurantDTO;
 
 public class RestaurantDAO {
@@ -105,6 +108,24 @@ public class RestaurantDAO {
 				r.setDeleted(true);
 		}
 		serialize();
+	}
+	
+	public boolean isOpened(String id) {
+		
+		Restaurant restaurant = getById(id);
+		Calendar calendar = Calendar.getInstance();
+		int day = calendar.get(Calendar.DAY_OF_WEEK);
+		LocalTime now = LocalTime.now();
+		
+		for(WorkingHours w : restaurant.getWorkingHours()) {
+			if(w.getDayOfWeek() == day) {
+				if(w.isClosed()) 
+					return false;
+				if(now.compareTo(w.getStartTime()) >= 0 && now.compareTo(w.getEndTime()) < 0) 
+					return true;
+			}
+		}
+		return false;
 	}
 }
 

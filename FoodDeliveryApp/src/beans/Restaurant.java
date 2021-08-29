@@ -18,7 +18,8 @@ public class Restaurant {
 	private String logo; 
 	private String menagerId;
 	private double rating;
-	
+	private ArrayList<WorkingHours> workingHours;
+
 	public Restaurant() {}
 	
 	public Restaurant(RestaurantDTO rest) {
@@ -128,7 +129,13 @@ public class Restaurant {
 		this.menagerId = menagerId;
 	}
 	
-	
+	public ArrayList<WorkingHours> getWorkingHours() {
+		return workingHours;
+	}
+
+	public void setWorkingHours(ArrayList<WorkingHours> workingHours) {
+		this.workingHours = workingHours;
+	}
 	
 	
 }
