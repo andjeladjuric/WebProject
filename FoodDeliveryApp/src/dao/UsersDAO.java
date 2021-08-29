@@ -102,14 +102,20 @@ public class UsersDAO {
 		}
 	}
 	
-	public void editUser(User updated, User currentUser) {
+	public String editUser(User updated, User currentUser) {
 		for(User u : users.values()) {
 			if(u.getUsername().equals(currentUser.getUsername())) {
 				u.setDateOfBirth(updated.getDateOfBirth());
 				u.setGender(updated.getGender());
 				u.setName(updated.getName());
 				u.setSurname(updated.getSurname());
-				u.setUsername(updated.getUsername());
+				
+				if(!u.getUsername().equals(updated.getUsername())) {
+					if (alreadyExists(updated.getUsername()))
+						return "Username taken";
+				}
+				
+				
 				if(!u.getProfilePicPath().equals(updated.getProfilePicPath())) {
 					String path = convertImage(updated);
 					u.setProfilePicPath(path);
@@ -118,6 +124,8 @@ public class UsersDAO {
 				break;
 			}
 		}
+		
+		return "Success";
 	}
 
 	private String convertImage(User updated) {

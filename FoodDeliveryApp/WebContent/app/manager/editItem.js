@@ -45,7 +45,7 @@ Vue.component("edit-item", {
                                 <td>Image <span style="color: red;">*</span></td>
                                 <td>
                                 <div class="custom-file">
-                                    <input type="file" class="custom-file-input form-control">
+                                    <input type="file" class="custom-file-input form-control" @change="addImage">
                                 </div>
                                 </td>
                             </tr>
@@ -59,7 +59,7 @@ Vue.component("edit-item", {
                                         <option value="PASTA">Pasta</option>
                                         <option value="MAINDISHES">Main dishes</option>
                                         <option value="DRINKS">Drinks</option>
-                                        <option value="DELIVERED">Desserts</option>
+                                        <option value="DESSERT">Desserts</option>
                                     </select>
                                 </td>
                             </tr>
@@ -151,6 +151,19 @@ Vue.component("edit-item", {
         cancelEditing: function () {
             window.location =
                 "/FoodDeliveryApp/managerHomePage.html#/myRestaurant/";
+        },
+
+        addImage(e) {
+            const file = e.target.files[0];
+            const reader = new FileReader();
+
+            reader.onload = (e) => {
+                this.updatedItem.imagePath = e.target.result;
+            };
+
+            reader.readAsDataURL(file);
+            e.target.value = "";
+            e.target.result = "";
         },
     },
 });

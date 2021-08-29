@@ -180,12 +180,7 @@ public class UserService {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public String updateUser(User updated) {
 		UsersDAO dao = getUsers();
-		if (dao.alreadyExists(updated.getUsername()))
-			return "Username taken";
-		else
-			dao.editUser(updated, getCurrentUser());
-		
-		return "Success";
+		return dao.editUser(updated, getCurrentUser());
 	}
 	
 	@POST

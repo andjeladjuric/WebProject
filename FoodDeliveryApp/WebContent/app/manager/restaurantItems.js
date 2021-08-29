@@ -38,6 +38,7 @@ Vue.component("restaurant-items", {
             currentUser: {},
             showAddItem: false,
             errorMessage: "",
+            imagePath: "",
         };
     },
     template: `
@@ -96,7 +97,7 @@ Vue.component("restaurant-items", {
                         </div>
 
                         <div class="image-wrapper mt-2">
-                            <img class="img-responsive img-rounded image-wrapper" src="img/pizza.jpeg" alt="Chania">
+                            <img class="img-responsive img-rounded image-wrapper" :src="item.imagePath" alt="Item">
                         </div>
                     </div>
                 </div>
@@ -131,7 +132,7 @@ Vue.component("restaurant-items", {
                         </div>
 
                         <div class="image-wrapper mt-2">
-                            <img class="img-responsive img-rounded image-wrapper" src="img/pizza.jpeg" alt="Chania">
+                            <img class="img-responsive img-rounded image-wrapper" :src="item.imagePath" alt="Item">
                         </div>
                     </div>
                 </div>
@@ -166,7 +167,7 @@ Vue.component("restaurant-items", {
                         </div>
 
                         <div class="image-wrapper mt-2">
-                            <img class="img-responsive img-rounded image-wrapper" src="img/pizza.jpeg" alt="Chania">
+                            <img class="img-responsive img-rounded image-wrapper" :src="item.imagePath" alt="Item">
                         </div>
                     </div>
                 </div>
@@ -201,7 +202,7 @@ Vue.component("restaurant-items", {
                         </div>
 
                         <div class="image-wrapper mt-2">
-                            <img class="img-responsive img-rounded image-wrapper" src="img/pizza.jpeg" alt="Chania">
+                            <img class="img-responsive img-rounded image-wrapper" :src="item.imagePath" alt="Item">
                         </div>
                     </div>
                 </div>
@@ -236,7 +237,7 @@ Vue.component("restaurant-items", {
                         </div>
 
                         <div class="image-wrapper mt-2">
-                            <img class="img-responsive img-rounded image-wrapper" src="img/pizza.jpeg" alt="Chania">
+                            <img class="img-responsive img-rounded image-wrapper" :src="item.imagePath" alt="Item">
                         </div>
                     </div>
                 </div>
@@ -271,7 +272,7 @@ Vue.component("restaurant-items", {
                         </div>
 
                         <div class="image-wrapper mt-2">
-                            <img class="img-responsive img-rounded image-wrapper" src="img/pizza.jpeg" alt="Chania">
+                            <img class="img-responsive img-rounded image-wrapper" :src="item.imagePath" alt="Item">
                         </div>
                     </div>
                 </div>
@@ -279,9 +280,9 @@ Vue.component("restaurant-items", {
                 <!-- End of drinks -->
 
                 <!-- Desserts -->
-                <div class="categoryBox" v-if="!isCategoryEmpty('DESSERTS')">
+                <div class="categoryBox" v-if="!isCategoryEmpty('DESSERT')">
                 <h4 class="mb-3 title" id="item-7">Desserts</h4>
-                <div class="card bg-light text-dark mb-4" id="itemAndCommentCards" v-for="item in items" v-if="item.category == 'DESSERTS'">
+                <div class="card bg-light text-dark mb-4" id="itemAndCommentCards" v-for="item in items" v-if="item.category == 'DESSERT'">
                     <div class="card-body text-start itemBody">
                         <div class="container cardContent text-start">
                             <h1 class="mt-1 mb-3">{{item.name}}</h1>
@@ -306,7 +307,7 @@ Vue.component("restaurant-items", {
                         </div>
 
                         <div class="image-wrapper mt-2">
-                            <img class="img-responsive img-rounded image-wrapper" src="img/pizza.jpeg" alt="Chania">
+                            <img class="img-responsive img-rounded image-wrapper" :src="item.imagePath" alt="Item">
                         </div>
                     </div>
                 </div>
@@ -376,7 +377,7 @@ Vue.component("restaurant-items", {
                                 <td class="label">Image <span style="color: red;">*</span></td>
                                 <td>
                                 <div class="custom-file">
-                                    <input type="file" class="custom-file-input form-control">
+                                    <input type="file" class="custom-file-input form-control" @change="addImage">
                                 </div>
                                 </td>
                             </tr>
@@ -390,7 +391,7 @@ Vue.component("restaurant-items", {
                                         <option value="PASTA">Pasta</option>
                                         <option value="MAINDISHES">Main dishes</option>
                                         <option value="DRINKS">Drinks</option>
-                                        <option value="DELIVERED">Desserts</option>
+                                        <option value="DESSERT">Desserts</option>
                                     </select>
                                 </td>
                             </tr>
@@ -487,6 +488,14 @@ Vue.component("restaurant-items", {
             return false;
         },
 
+        alreadyExists(name) {
+            for (let i of this.items) {
+                if (i.name === name) return true;
+            }
+
+            return false;
+        },
+
         addNewItem: function () {
             if (
                 this.item.name === "" ||
@@ -496,7 +505,7 @@ Vue.component("restaurant-items", {
                 this.item.imagePath === ""
             ) {
                 this.errorMessage = "Please fill in the required fields!";
-            } else if (this.items.indexOf(this.item.name) === -1) {
+            } else if (this.alreadyExists(this.item.name)) {
                 this.errorMessage =
                     "Item with the name '" +
                     this.item.name +
@@ -531,6 +540,19 @@ Vue.component("restaurant-items", {
             axios
                 .post("rest/items/deleteItem", id)
                 .then((response) => window.location.reload());
+        },
+
+        addImage(e) {
+            const file = e.target.files[0];
+            const reader = new FileReader();
+
+            reader.onload = (e) => {
+                this.item.imagePath = e.target.result;
+            };
+
+            this.imagePath = URL.createObjectURL(file);
+            reader.readAsDataURL(file);
+            e.target.value = "";
         },
     },
     filters: {

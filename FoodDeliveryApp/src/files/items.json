@@ -8,7 +8,7 @@
         "amount": 500.0,
         "points": 0.0,
         "description": "This is a pizza",
-        "imagePath": "",
+        "imagePath": "img/pizza.jpeg",
         "restaurantId": "3",
         "quantity": 0.0,
         "category": "PIZZA"
@@ -22,7 +22,7 @@
         "amount": 500.0,
         "points": 0.0,
         "description": "This is a great pasta",
-        "imagePath": "",
+        "imagePath": "img/pizza.jpeg",
         "restaurantId": "3",
         "quantity": 0.0,
         "category": "PASTA"
@@ -36,7 +36,7 @@
         "amount": 500.0,
         "points": 0.0,
         "description": "This is a cool salad",
-        "imagePath": "",
+        "imagePath": "img/pizza.jpeg",
         "restaurantId": "2",
         "quantity": 0.0,
         "category": "SALADS"
@@ -50,7 +50,7 @@
         "amount": 500.0,
         "points": 0.0,
         "description": "Chicken wrap with salad",
-        "imagePath": "",
+        "imagePath": "img/pizza.jpeg",
         "restaurantId": "3",
         "quantity": 0.0,
         "category": "MAINDISHES"
@@ -64,7 +64,7 @@
         "amount": 500.0,
         "points": 0.0,
         "description": "This is a cool salad reallz",
-        "imagePath": "",
+        "imagePath": "img/pizza.jpeg",
         "restaurantId": "3",
         "quantity": 0.0,
         "category": "SALADS"
@@ -78,7 +78,7 @@
         "amount": 0.0,
         "points": 0.0,
         "description": "Unique coctail that everyone adores!",
-        "imagePath": "",
+        "imagePath": "img/pizza.jpeg",
         "restaurantId": "3",
         "quantity": 0.0,
         "category": "DRINKS"
@@ -92,9 +92,37 @@
         "amount": 0.0,
         "points": 0.0,
         "description": "Unique coctail that everyone adores!",
-        "imagePath": "",
+        "imagePath": "img/pizza.jpeg",
         "restaurantId": "3",
         "quantity": 0.0,
         "category": "DRINKS"
+    },
+    {
+        "id": "7002d8dc-27b2-42e5-8891-a42e4de19273",
+        "deleted": false,
+        "name": "Margarita",
+        "price": 400.0,
+        "type": "Food",
+        "amount": 300.0,
+        "points": 0.0,
+        "description": "Cheesy pizza",
+        "imagePath": "img/Margarita-3.jpg",
+        "restaurantId": "3",
+        "quantity": 1.0,
+        "category": "PIZZA"
+    },
+    {
+        "id": "7a5cb073-3e17-4ed6-ac36-f4efe3b6cf8e",
+        "deleted": false,
+        "name": "Cheese cake",
+        "price": 200.0,
+        "type": "Food",
+        "amount": 100.0,
+        "points": 0.0,
+        "description": "Forest fruit cheese cake",
+        "imagePath": "img/Cheese cake-3.jpg",
+        "restaurantId": "3",
+        "quantity": 1.0,
+        "category": "DESSERT"
     }
 ]
