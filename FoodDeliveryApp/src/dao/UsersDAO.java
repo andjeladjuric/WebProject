@@ -319,4 +319,20 @@ public class UsersDAO {
 		}
 		serialize();
 	}
+
+	public void setSuspicious(String customer) {
+		load();
+		List<User> allUsers = new ArrayList<User>();
+		for (User u : users.values()) {
+			if(u.getUsername().equals(customer))
+					u.setSuspicious(true);
+			allUsers.add(u);
+		}
+		users = new LinkedHashMap<String, User>();
+		for (User u : allUsers) {
+			users.put(u.getUsername(), u);
+		}
+		serialize();
+		
+	}
 }

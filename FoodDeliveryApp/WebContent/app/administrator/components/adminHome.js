@@ -85,7 +85,8 @@ Vue.component("administrator-users", {
                                             <td>{{u.surname}}</td>
                                             <td>{{u.username}}
                                             	<i class="fa fa-ban" v-if="u.blocked == true"></i>
-                                            	<i class="fas fa-check" v-if="u.blocked == false"></i>
+                                            	<i class="fas fa-check" v-if="u.blocked == false && u.suspicious == false"></i>
+                                            	<i class="fas fa-exclamation-circle" v-if="u.suspicious == true && u.blocked == false"></i>
                                             </td>
                                         </tr>
                                     </tbody>

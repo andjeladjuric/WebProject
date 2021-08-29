@@ -10,6 +10,7 @@
         "profilePicPath": "",
         "deleted": false,
         "blocked": false,
+        "suspicious": false,
         "ordersForCourier": [],
         "type": {
             "name": "NONE",
@@ -29,6 +30,7 @@
         "profilePicPath": "img/profile_picture.png",
         "deleted": false,
         "blocked": false,
+        "suspicious": false,
         "ordersForCourier": [],
         "type": {
             "name": "NONE",
@@ -48,6 +50,7 @@
         "profilePicPath": "",
         "deleted": false,
         "blocked": false,
+        "suspicious": false,
         "ordersForCourier": [
             "5as215fr48"
         ],
@@ -69,6 +72,7 @@
         "profilePicPath": "",
         "deleted": false,
         "blocked": false,
+        "suspicious": false,
         "ordersForCourier": [
             "5as215fr48"
         ],
@@ -90,13 +94,14 @@
         "profilePicPath": "",
         "deleted": false,
         "blocked": false,
+        "suspicious": true,
         "ordersForCourier": [],
         "type": {
-            "name": "SILVER",
-            "discount": 0.0,
-            "requiredPoints": 0
+            "name": "BRONZE",
+            "discount": 2.0,
+            "requiredPoints": 2000
         },
-        "points": 3200
+        "points": 2880.8
     },
     {
         "username": "raske",
@@ -109,6 +114,7 @@
         "profilePicPath": "",
         "deleted": false,
         "blocked": false,
+        "suspicious": false,
         "ordersForCourier": [],
         "type": {
             "name": "GOLD",
@@ -128,6 +134,7 @@
         "profilePicPath": "",
         "deleted": false,
         "blocked": false,
+        "suspicious": false,
         "ordersForCourier": [],
         "type": {
             "name": "NONE",
@@ -147,6 +154,7 @@
         "profilePicPath": "",
         "deleted": false,
         "blocked": false,
+        "suspicious": false,
         "ordersForCourier": [],
         "type": {
             "name": "NONE",
@@ -166,6 +174,7 @@
         "profilePicPath": "",
         "deleted": false,
         "blocked": false,
+        "suspicious": false,
         "ordersForCourier": [],
         "type": {
             "name": "NONE",

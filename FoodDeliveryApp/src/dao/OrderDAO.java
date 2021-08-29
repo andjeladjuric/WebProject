@@ -171,14 +171,18 @@ public class OrderDAO {
 		 List<Order> allOrders = new ArrayList<Order>();
 		 
 		 for(Order o : orders) {
-			 if(o.getId().equals(id))
+			 if(o.getId().equals(id)) {
 				 o.setStatus(OrderStatus.CANCELED);
+				 new CanceledOrdersDAO().addOrder(o);
+				 }
 			 allOrders.add(o);
 		 }
 		 
 		 orders = allOrders;
 		 
-		 serialize();	
+		 serialize();
+		 
+		 
 	}
 	
 	public List<String> getCouriersFromRequests(String restaurantId){

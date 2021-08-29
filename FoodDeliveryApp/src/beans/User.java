@@ -16,6 +16,7 @@ public class User {
 
 	private boolean deleted;
 	private boolean blocked;
+	private boolean suspicious;
 	
 	private ArrayList<String> ordersForCourier = new ArrayList<String>(); 
 	
@@ -41,6 +42,7 @@ public class User {
 		this.ordersForCourier = ordersForCourier;
 		this.type = type;
 		this.points = points;
+		this.suspicious = false;
 	}
 
 	
@@ -55,9 +57,22 @@ public class User {
 		this.role = role;
 		this.blocked = false;
 		this.deleted = false;
+		this.suspicious = false;
 		this.profilePicPath = "";
 		this.points = 0;
 		this.type = new CustomerType(Type.NONE, 0, 0);
+	}
+
+	public boolean isSuspicious() {
+		return suspicious;
+	}
+
+	public void setSuspicious(boolean suspicious) {
+		this.suspicious = suspicious;
+	}
+
+	public void setType(CustomerType type) {
+		this.type = type;
 	}
 
 	public String getUsername() {
