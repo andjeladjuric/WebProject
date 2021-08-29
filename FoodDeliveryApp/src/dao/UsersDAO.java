@@ -140,7 +140,7 @@ public class UsersDAO {
 		List<User> customers = new ArrayList<User>();
 		
 		for (User u : users.values()) {
-			if(u.getRole() == Role.CUSTOMER && u.isDeleted() == false && u.isBlocked() == false )
+			if(u.getRole() == Role.CUSTOMER && u.isDeleted() == false)
 				customers.add(u);
 		}
 		return customers;
@@ -182,7 +182,7 @@ public class UsersDAO {
 		List<User> allUsers = new ArrayList<User>();
 		
 		for (User u : users.values()) {
-			if(u.getRole() != Role.ADMINISTRATOR  && u.isDeleted() == false && u.isBlocked() == false )
+			if(u.getRole() != Role.ADMINISTRATOR  && u.isDeleted() == false )
 				allUsers.add(u);
 		}
 		return allUsers;
@@ -258,6 +258,22 @@ public class UsersDAO {
 		for (User u : users.values()) {
 			if(u.getUsername().equals(username))
 				u.setDeleted(true);
+			allUsers.add(u);
+		}
+		users = new LinkedHashMap<String, User>();
+		for (User u : allUsers) {
+			users.put(u.getUsername(), u);
+		}
+		serialize();
+		return getUsers();
+	}
+	
+	public List<User> blockUser(String username){
+		List<User> allUsers = new ArrayList<User>();
+		
+		for (User u : users.values()) {
+			if(u.getUsername().equals(username))
+				u.setBlocked(!u.isBlocked());
 			allUsers.add(u);
 		}
 		users = new LinkedHashMap<String, User>();

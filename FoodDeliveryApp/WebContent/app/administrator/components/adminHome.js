@@ -5,23 +5,25 @@ function fixDate(users) {
 	return users;
 }
 
-Vue.component("administrator-users",{
-    data: function(){
-        return{
-			users:[],
-			selectedUser : {
-				username : ''
+Vue.component("administrator-users", {
+	data: function () {
+		return {
+			users: [],
+			selectedUser: {
+				username: ''
 			},
-			searchInput : '',
-			selectedFilter : 'All',
-			selectedOptionForSort : '',
-			newUser : {},
-			errorMessage : '',
-			gender : ''
-        }
-    }
-    ,
-    template: `
+			searchInput: '',
+			selectedFilter: 'All',
+			selectedOptionForSort: '',
+			newUser: {},
+			errorMessage: '',
+			gender: '',
+			canBlock: false,
+			canUnblock: false
+		}
+	}
+	,
+	template: `
 <div>
 <div class="container-fluid mt-3">
         <div class="row">
@@ -69,7 +71,7 @@ Vue.component("administrator-users",{
                     <div class="row mt-3" style="height: 400px;">
                         <div class="col-11 mx-auto">
                             <div style="height:350px; overflow:auto;">
-                                <table class="table table-hover">
+                                <table class="table table-hover tableOfUsers">
                                     <thead>
                                         <tr>
                                             <th scope="col">Name</th>
@@ -78,10 +80,13 @@ Vue.component("administrator-users",{
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr v-for="u in users" v-on:click="selectUser(u)" v-bind:class="{selected : selectedUser.username===u.username}">
+                                        <tr v-for="u in users" v-on:click="selectUser(u)" v-bind:class="{selected : selectedUser.username===u.username}" >
                                             <td>{{u.name}}</td>
                                             <td>{{u.surname}}</td>
-                                            <td>{{u.username}}</td>
+                                            <td>{{u.username}}
+                                            	<i class="fa fa-ban" v-if="u.blocked == true"></i>
+                                            	<i class="fas fa-check" v-if="u.blocked == false"></i>
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -92,10 +97,13 @@ Vue.component("administrator-users",{
                         <div class="col-4">
                             <button class="btn buttonGroup" v-on:click="remove()"><i class="fa fa-trash"></i> Remove</button>
                         </div>
-                        <div class="col-4">
-                            <button class="btn buttonGroup active"><i class="fa fa-ban"></i>
-                                Block</button>
-                        </div>
+                    
+						<div class="col-4">
+							<button class="btn buttonGroup active" v-on:click="blockUser()" v-if="canBlock"><i class="fa fa-ban"></i>
+							Block</button>
+							<button class="btn buttonGroup active" v-on:click="blockUser()" v-if="canUnblock"><i class="fa fa-ban"></i>
+								Unblock</button>
+						</div>
                         <div class="col-4">
                             <button class="btn buttonGroup" data-bs-toggle="modal" data-bs-target="#menagerModal"><i class="fa fa-plus"></i>
                                 Add</button>
@@ -264,119 +272,139 @@ Vue.component("administrator-users",{
 	, mounted() {
 		axios
 			.get("rest/users/getUsers")
-            .then((response) =>( this.users = fixDate(response.data)));
-    },
-    methods: {
-		selectUser : function(user) {
-    			this.selectedUser = user;
-    	},
-		doSearch : function() {
-		let matches = [];
-	    for(var u of this.users) {
-	        if (u.name.toLowerCase().search(searchInput.toLowerCase()) || u.surname.toLowerCase().contains(searchInput.toLowerCase()) || u.username.toLowerCase().contains(searchInput.toLowerCase()) ) {
-	            matches.add(u);
-	        }	        
-	       }
-	      	this.users = matches;
-    	},
-		filter : function() {
-    		axios
-			.post('rest/users/filter', this.selectedFilter,
-        	{ headers: {
-        		'Content-type': 'text/plain',
-        		}
-        	})
-			.then(response => (this.users = fixDate(response.data)));
-    	},
-		sort : function() {
-		
-		switch(this.selectedOptionForSort) {
-		   case "Name Desc":
-			  this.users.sort((a, b) => (a.name < b.name ? 1 : -1));
-		    break;
-		  case "Surname Asc":
-			  this.users.sort((a, b) => (a.surname > b.surname ? 1 : -1));
-		    break;
-		  case "Surname Desc":
-			  this.users.sort((a, b) => (a.surname < b.surname ? 1 : -1));
-		    break;
-		  case "Username Asc":
-			  this.users.sort((a, b) => (a.username > b.username ? 1 : -1));
-		    break;
-		  case "Username Desc":
-			  this.users.sort((a, b) => (a.username < b.username ? 1 : -1));
-		    break;
-		  case "Points Asc":
-			  this.users.sort((a, b) => (a.points > b.points ? 1 : -1));
-			break;
-		   case "Points Desc":
-			  this.users.sort((a, b) => (a.points < b.points ? 1 : -1));
-			break;
-		  default:
-			  this.users.sort((a, b) => (a.name > b.name ? 1 : -1));
-		}
-    		
-    	},addUser : function() {
-
-			if(this.newUser.username =='' || this.newUser.password=='' || this.newUser.name =='' || this.newUser.surname=='' || this.gender =='' || this.newUser.role == '')
-			{
-				this.errorMessage="All fields are required!";
+			.then((response) => (this.users = fixDate(response.data)));
+	},
+	methods: {
+		selectUser: function (user) {
+			this.selectedUser = user;
+			if (this.selectedUser.blocked){
+				this.canUnblock = true;
+				this.canBlock = false;}
+			else{
+				this.canBlock = true;
+				this.canUnblock = false;
+				}
+		},
+		doSearch: function () {
+			let matches = [];
+			for (var u of this.users) {
+				if (u.name.toLowerCase().search(searchInput.toLowerCase()) || u.surname.toLowerCase().contains(searchInput.toLowerCase()) || u.username.toLowerCase().contains(searchInput.toLowerCase())) {
+					matches.add(u);
+				}
 			}
-			else
-			{
+			this.users = matches;
+		},
+		filter: function () {
+			axios
+				.post('rest/users/filter', this.selectedFilter,
+					{
+						headers: {
+							'Content-type': 'text/plain',
+						}
+					})
+				.then(response => (this.users = fixDate(response.data)));
+		},
+		sort: function () {
+
+			switch (this.selectedOptionForSort) {
+				case "Name Desc":
+					this.users.sort((a, b) => (a.name < b.name ? 1 : -1));
+					break;
+				case "Surname Asc":
+					this.users.sort((a, b) => (a.surname > b.surname ? 1 : -1));
+					break;
+				case "Surname Desc":
+					this.users.sort((a, b) => (a.surname < b.surname ? 1 : -1));
+					break;
+				case "Username Asc":
+					this.users.sort((a, b) => (a.username > b.username ? 1 : -1));
+					break;
+				case "Username Desc":
+					this.users.sort((a, b) => (a.username < b.username ? 1 : -1));
+					break;
+				case "Points Asc":
+					this.users.sort((a, b) => (a.points > b.points ? 1 : -1));
+					break;
+				case "Points Desc":
+					this.users.sort((a, b) => (a.points < b.points ? 1 : -1));
+					break;
+				default:
+					this.users.sort((a, b) => (a.name > b.name ? 1 : -1));
+			}
+
+		}, addUser: function () {
+
+			if (this.newUser.username == '' || this.newUser.password == '' || this.newUser.name == '' || this.newUser.surname == '' || this.gender == '' || this.newUser.role == '') {
+				this.errorMessage = "All fields are required!";
+			}
+			else {
 				let selectedGender;
 				if (this.gender == 'male') {
 					selectedGender = 0;
 				} else {
 					selectedGender = 1;
 				}
-				
+
 				this.newUser.gender = selectedGender;
-    		
-    		axios 
-    			.post('rest/users/addNewUser', JSON.stringify(this.newUser),
-        	{ headers: {
-        		'Content-type': 'application/json',
-        		}
-        	})
-    			.then(response => {
-    				if (response.data == "Username taken") {
-						this.errorMessage="Username is already taken.";
-					}
-					else {
-						location.href = response.data; 
-    				}
-				})
-				.catch(err => { 
-                    this.errorMessage="error";
-                })
+
+				axios
+					.post('rest/users/addNewUser', JSON.stringify(this.newUser),
+						{
+							headers: {
+								'Content-type': 'application/json',
+							}
+						})
+					.then(response => {
+						if (response.data == "Username taken") {
+							this.errorMessage = "Username is already taken.";
+						}
+						else {
+							location.href = response.data;
+						}
+					})
+					.catch(err => {
+						this.errorMessage = "error";
+					})
 			}
-    		
-    	},
-		signalChange : function()
-		{
-			this.errorMessage="";
+
 		},
-		remove : function()
-		{
-				if(this.selectedUser.username == '' ){
-					alert("You must select a user.");
-				}else{
-					let user = this.selectedUser;
-					axios 
-	    			.post('rest/users/removeUser', this.selectedUser.username,
-	        	{ headers: {
-	        		'Content-type': 'text/plain',
-	        		}
-	        	})
-	    			.then((response) =>( this.users = fixDate(response.data)));
-				}			
-		}  
-    },
-    filters: {
-    	dateFormat: function (value, format) {
-    		var parsed = moment(value);
-    		return parsed.format(format);
-    	}
+		signalChange: function () {
+			this.errorMessage = "";
+		},
+		remove: function () {
+			if (this.selectedUser.username == '') {
+				alert("You must select a user.");
+			} else {
+				let user = this.selectedUser;
+				axios
+					.post('rest/users/removeUser', this.selectedUser.username,
+						{
+							headers: {
+								'Content-type': 'text/plain',
+							}
+						})
+					.then((response) => (this.users = fixDate(response.data)));
+			}
+		},
+		blockUser: function () {
+			axios
+				.post('rest/users/blockUser', this.selectedUser.username,
+					{
+						headers: {
+							'Content-type': 'text/plain',
+						}
+					})
+				.then((response) => {
+					this.users = fixDate(response.data);
+					this.canBlock = !this.canBlock;
+					this.canUnblock = !this.canUnblock;
+				});
+		}
+	},
+	filters: {
+		dateFormat: function (value, format) {
+			var parsed = moment(value);
+			return parsed.format(format);
+		}
 	}
 });

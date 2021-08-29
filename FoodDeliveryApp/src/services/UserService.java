@@ -165,6 +165,17 @@ public class UserService {
 		return allUsersDAO.remove(username); 
 	}
 	
+	@POST
+	@Path("/blockUser")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.TEXT_PLAIN)
+	public List<User> blockUser(String username) {
+		
+		UsersDAO allUsersDAO = getUsers();
+
+		return allUsersDAO.blockUser(username); 
+	}
+	
 	
 	@GET
 	@Path("/getCurrentUser")

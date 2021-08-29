@@ -13,7 +13,7 @@ body{
     background: #f8f9fa;
 }
 
-table{
+table.tableOfUsers{
   table-layout: fixed;
   align-content: center;
   border-spacing: 0;
@@ -45,7 +45,7 @@ tr{
 }
 
 tr.selected {
-	 background-color: #ecbeb1;
+	 background-color: #f8f9fa;
 }
 
 .card{
