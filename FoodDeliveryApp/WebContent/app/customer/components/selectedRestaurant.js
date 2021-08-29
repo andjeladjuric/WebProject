@@ -16,20 +16,21 @@ Vue.component("selected-restaurant", {
                     },
                     latitude: "",
                     longitude: "",
-                }
-			},
+                },
+            },
             showItems: true,
             showComments: false,
-			items: [],
-			allComments: [],
+            items: [],
+            allComments: [],
             comment: {
                 text: "",
                 rating: 0,
                 restaurant: "",
             },
-			canComment : false,
-			canOrder : false,
-			user : {}
+            canComment: false,
+            canOrder: false,
+            user: {},
+            count: 0,
         };
     },
     template: `
@@ -340,10 +341,11 @@ Vue.component("selected-restaurant", {
                     </div>
                 </div>
 
-                <div class="container d-block">
-                    <h5><b>Address</b></h5>
-                    <p>{{restaurant.location.address.street}} {{restaurant.location.address.number}} <br>
-                        {{restaurant.location.address.city}}, {{restaurant.location.address.postcode}}</p>
+                <div class="container d-block mb-3">
+                    <a href="#myRestaurant" @click="openMap()" id="locationLink" style="color: #7fd2c0;" data-bs-toggle="modal" data-bs-target="#mapModal">
+                            {{restaurant.location.address.street}}  {{restaurant.location.address.number}} <br> 
+                            {{restaurant.location.address.city}}, {{restaurant.location.address.postcode}}
+                        </a>
                 </div>
 
                 <div class="container d-block">
@@ -363,6 +365,25 @@ Vue.component("selected-restaurant", {
     </div>
     <!-- End of items -->
 </div>
+
+<!-- Map modal -->
+        <div id="mapModal" class="modal fade responsive">
+            <div class="modal-dialog modal-dialog-centered modal-map">
+                <div class="modal-content">
+                    <div class="modal-header flex-column">		
+                        <h4 class="modal-title w-100">
+                            {{restaurant.location.address.street}}  {{restaurant.location.address.number}} <br> 
+                            {{restaurant.location.address.city}} {{restaurant.location.address.postcode}}, {{restaurant.location.address.country}}
+                        </h4>	
+                        <button type="button" class="close" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="map"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End of map modal -->
       
     </div>
     `,
@@ -372,42 +393,39 @@ Vue.component("selected-restaurant", {
                 params: { id: this.$route.query.id },
             })
             .then((response) => {
-				this.restaurant = response.data;
-				
-				axios
-	             .get("rest/items/getItemsForRestaurant", {
-	                        params: { id: this.restaurant.id },
-	                    })
-	             .then((response) => (this.items = response.data));
+                this.restaurant = response.data;
 
-				axios
-	             .get("rest/comments/getCommentsForUser", {
-	                        params: { id: this.restaurant.id },
-	                    })
-	             .then((response) => (this.allComments = response.data));
+                axios
+                    .get("rest/items/getItemsForRestaurant", {
+                        params: { id: this.restaurant.id },
+                    })
+                    .then((response) => (this.items = response.data));
 
-				axios
-		             .get("rest/users/getCurrentUser")
-		             .then((response) => {
-						this.user = response.data;
-						if(this.user.role === 'CUSTOMER'){
-							this.canOrder = true;
-							axios
-					             .get("rest/orders/canComment", {
-					                    params: { id: this.restaurant.id },
-					                  })
-					             .then((response) => (this.canComment = response.data));
-							
-						}else{
-							this.canOrder = false;
-							this.canComment = false;
-						}
-					});
-	
-});
+                axios
+                    .get("rest/comments/getCommentsForUser", {
+                        params: { id: this.restaurant.id },
+                    })
+                    .then((response) => (this.allComments = response.data));
 
-
-    },methods: {
+                axios.get("rest/users/getCurrentUser").then((response) => {
+                    this.user = response.data;
+                    if (this.user.role === "CUSTOMER") {
+                        this.canOrder = true;
+                        axios
+                            .get("rest/orders/canComment", {
+                                params: { id: this.restaurant.id },
+                            })
+                            .then(
+                                (response) => (this.canComment = response.data)
+                            );
+                    } else {
+                        this.canOrder = false;
+                        this.canComment = false;
+                    }
+                });
+            });
+    },
+    methods: {
         isCategoryEmpty: function (category) {
             let itemsInCategory = new Array();
             for (let i of this.items) {
@@ -425,7 +443,7 @@ Vue.component("selected-restaurant", {
                 },
             });
         },
-		cancel: function () {
+        cancel: function () {
             this.comment.text = "";
             this.comment.rating = 0;
         },
@@ -444,6 +462,51 @@ Vue.component("selected-restaurant", {
             this.comment.text = "";
             this.comment.rating = 0;
         },
+
+        openMap: function () {
+            this.count = this.count + 1;
+
+            if (this.count === 1) {
+                var map = new ol.Map({
+                    target: "map",
+                    layers: [
+                        new ol.layer.Tile({ source: new ol.source.OSM() }),
+                    ],
+                    view: new ol.View({
+                        center: ol.proj.fromLonLat([
+                            this.restaurant.location.longitude,
+                            this.restaurant.location.latitude,
+                        ]),
+                        zoom: 14,
+                    }),
+                });
+
+                var markers = new ol.layer.Vector({
+                    source: new ol.source.Vector(),
+                    style: new ol.style.Style({
+                        image: new ol.style.Icon({
+                            anchor: [0.5, 1],
+                            src: "img/marker.png",
+                        }),
+                    }),
+                });
+                map.addLayer(markers);
+
+                var marker = new ol.Feature(
+                    new ol.geom.Point(
+                        ol.proj.fromLonLat([
+                            this.restaurant.location.longitude,
+                            this.restaurant.location.latitude,
+                        ])
+                    )
+                );
+                markers.getSource().addFeature(marker);
+
+                window.setTimeout(function () {
+                    map.updateSize();
+                }, 200);
+            }
+        },
     },
     filters: {
         dateFormat: function (value, format) {
@@ -454,4 +517,3 @@ Vue.component("selected-restaurant", {
 });
 
 Vue.component("star-rating", VueStarRating.default);
-
