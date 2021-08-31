@@ -29,7 +29,7 @@ Vue.component("administrator-users", {
         <div class="row">
             <!--Card for table of users-->
             <div class="col-lg-8 col-sm-11 mx-auto">
-                <div class="card text-center shadow-sm mb-3" style="height: 600px;">
+                <div class="card noHover text-center shadow-sm mb-3" style="height: 600px;">
                     <h6 class="card-subtitle mb-3 mt-3 text-muted">List of Users</h6>
                     <div class="row mt-3 mx-2 ">
                             <div class="col-3 mx-auto">
@@ -43,7 +43,7 @@ Vue.component("administrator-users", {
                                         <option>Silver</option>
                                         <option>Bronze</option>
                                     </select>
-                                    <label>Filter By</label>
+                                    <label style="height: 35px;">Filter By</label>
                                 </div>
                             </div>
                             <div class="col-3 mx-auto">
@@ -58,13 +58,13 @@ Vue.component("administrator-users", {
                                         <option>Points Asc</option>
                                         <option>Points Desc</option>
                                     </select>
-                                    <label>Sort By</label>
+                                    <label style="height: 35px;">Sort By</label>
                                 </div>
                             </div>
                             <div class="col-4 mx-auto">
                                 <div class="input-group mt-2">
                                     <input type="text" class="form-control" v-model="searchInput" v-on:change="doSearch()">
-                                    <button class="btn buttonGroup active" type="button" v-on:click="doSearch()"><i class="fas fa-search"></i></button>     
+                                    <button class="btn buttonGroup active" type="button" style="height: 35px;" v-on:click="doSearch()"><i class="fas fa-search"></i></button>     
                                 </div>
                             </div>
                         </div>
@@ -84,9 +84,9 @@ Vue.component("administrator-users", {
                                             <td>{{u.name}}</td>
                                             <td>{{u.surname}}</td>
                                             <td>{{u.username}}
-                                            	<i class="fa fa-ban" v-if="u.blocked == true"></i>
-                                            	<i class="fas fa-check" v-if="u.blocked == false && u.suspicious == false"></i>
-                                            	<i class="fas fa-exclamation-circle" v-if="u.suspicious == true && u.blocked == false"></i>
+                                            	<i class="fa fa-ban" v-if="u.blocked == true" id="blocked"></i>
+                                            	<i class="fas fa-check"  v-if="u.blocked == false && u.suspicious == false" id="regular"></i>
+                                            	<i class="fas fa-exclamation-circle" v-if="u.suspicious == true && u.blocked == false" id="suspicious"></i>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -115,7 +115,7 @@ Vue.component("administrator-users", {
 
             <!--Card for user info-->
             <div class="col-lg-4 col-sm-11 mx-auto">
-                <div class="card text-center shadow-sm mb-3" style="height: 600px;">
+                <div class="card noHover text-center shadow-sm mb-3" style="height: 600px;">
                     <div class="row" style="height: 250px;">
                         <div class="col-10 mx-auto bg-light mt-2" style="border-radius: 30px;">
                             <img src="img/profile_picture.png" class="card-img-top"
@@ -268,7 +268,7 @@ Vue.component("administrator-users", {
                 </div>
             </div>
         </div>
-</div>
+
 `
 	, mounted() {
 		axios

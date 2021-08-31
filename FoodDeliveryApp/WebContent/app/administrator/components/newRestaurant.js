@@ -28,7 +28,7 @@ Vue.component("restaurant-form",{
 	<div class="container-fluid">
         <div class="row">
             <div class="col-lg-6 col-sm-11 mx-auto">
-                <div class="card shadow-sm my-3 align-items-center" style="height: 600px;">
+                <div class="card noHover shadow-sm my-3 align-items-center" style="height: 600px;">
                     <form style="height: 520px;">
 						<section v-if="step == 1">
                                 <div class="d-flex justify-content-center">
@@ -75,7 +75,7 @@ Vue.component("restaurant-form",{
                             </div>
                             <div class="d-grid gap-3">
                                 <div class="row">
-                                    <div class="card shadow-sm bg-light">
+                                    <div class="card noHover shadow-sm bg-light">
                                         <div class="d-grid gap-2">
                                             <div class="row mt-3">
                                                 <div class="col-6 mx-auto">
@@ -143,7 +143,7 @@ Vue.component("restaurant-form",{
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="card shadow-sm bg-light">
+                                    <div class="card noHover shadow-sm bg-light">
                                         <div class="d-grid gap-2">
                                             <div class="row mt-3">
                                                 <div class="col-6 mx-auto">
@@ -219,17 +219,10 @@ Vue.component("restaurant-form",{
                                         <h4 class="card-title my-5">Choose Manager</h4>
                                     </div>
                                     <div class="d-grid gap-3">
-                                        <div class="row justify-content-center">
+                                        <div class="row justify-content-evenly mx-3">
                                             <div class="col-5 mx-auto">
                                                 <div class="input-group mb-3">
-                                                    <input type="text" class="form-control" v-model="searchInput">
-                                                    <button class="btn btn-outline-secondary" type="button" @click ="search"><i
-                                                            class="fas fa-search"></i></button>
-                                                </div>
-                                            </div>
-                                            <div class="col-5 mx-auto">
-                                                <div class="input-group mb-3">
-                                                    <label class="input-group-text">Sort By</label>
+                                                    <label class="input-group-text" style="height: 35px; border-radius: 15px 0px 0px 15px;">Sort By</label>
                                                     <select class="form-select" v-model="selectedOptionForSort" v-on:change="sort()">
                                                         <option>Name Asc</option>
                                         				<option>Name Desc</option>
@@ -240,12 +233,20 @@ Vue.component("restaurant-form",{
                                                     </select>
                                                 </div>
                                             </div>
+                                            
+                                            <div class="col-5 mx-auto">
+                                                <div class="input-group mb-3">
+                                                    <input type="text" class="form-control" v-model="searchInput">
+                                                    <button class="btn buttonGroup active" type="button" @click ="search" style="height: 35px;"><i
+                                                            class="fas fa-search"></i></button>
+                                                </div>
+                                            </div>
                                         </div>
 
                                         <div class="row">
                                             <div class="col-10 mx-auto">
                                                 <div style="height:250px;overflow:auto;">
-                                                    <table class="table table-sm table-hover">
+                                                    <table class="table table-sm table-hover tableOfUsers">
                                                         <thead>
                                                             <tr>
                                                                 <th scope="col">Name</th>
@@ -265,8 +266,8 @@ Vue.component("restaurant-form",{
                                             </div>
                                         </div>
 
-                                        <div class="row">
-                                            <div class="col-6 justify-content-center">
+                                        <div class="row ms-5">
+                                            <div class="col-6">
                                                 <a href="" @click.prevent="addNewManager">
                                                     Create New Menager
                                                 </a>
