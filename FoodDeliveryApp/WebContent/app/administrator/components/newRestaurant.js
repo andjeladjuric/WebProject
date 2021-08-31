@@ -53,7 +53,8 @@ Vue.component("restaurant-form",{
                                                 <option>ITALIAN</option>
                                                 <option>FASTFOOD</option>
                                                 <option>SERBIAN</option>
-                                                <option>Three</option>
+                                                <option>CHINEESE</option>
+                                                <option>BARBEQUE</option>
                                             </select>
                                         </div>
                                     </div>
@@ -421,6 +422,7 @@ Vue.component("restaurant-form",{
 							.get("rest/users/getManagers")
             				.then((response) =>( this.managers = fixDate(response.data)));
 						this.table = 1; 
+						this.selectedManager = this.newManager;
     				}
 				})
 				.catch(err => { 

@@ -42,6 +42,7 @@ Vue.component("administrator-users", {
                                         <option>Golden</option>
                                         <option>Silver</option>
                                         <option>Bronze</option>
+                                        <option>Suspicious</option>
                                     </select>
                                     <label style="height: 35px;">Filter By</label>
                                 </div>

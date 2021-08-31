@@ -146,6 +146,16 @@ public class UsersDAO {
 		return customers;
 	}
 	
+	public List<User> getSuspicious() {
+		List<User> customers = new ArrayList<User>();
+		
+		for (User u : users.values()) {
+			if(u.getRole() == Role.CUSTOMER && u.isDeleted() == false && u.isSuspicious())
+				customers.add(u);
+		}
+		return customers;
+	}
+	
 	public List<User> getFreeManagers() {
 		List<User> freeManagers = new ArrayList<User>();
 		List<User> managers = getManagers();
@@ -245,6 +255,9 @@ public class UsersDAO {
 		  case "Bronze":
 			retVal = getBronze();
 			  break;
+		  case "Suspicious":
+				retVal = getSuspicious();
+				  break;
 		  default:
 			retVal = getUsers();
 		}
