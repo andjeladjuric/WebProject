@@ -17,6 +17,7 @@ Vue.component("all-restaurants", {
                 restaurantType: "",
                 opened: "",
             },
+            count: 0,
         };
     },
     template: `
@@ -110,9 +111,6 @@ Vue.component("all-restaurants", {
                                     </select>
                                 </div>
                                 <div class="col-md">
-                                    <input type="text" class="form-control" placeholder="Location" aria-label="Location" v-model="searchInput.location">
-                                </div>
-                                <div class="col-md">
                                     <select class="form-select" placeholder="Rating" aria-label="Rating" v-model="searchInput.rating">
                                         <option value="" disabled selected hidden>Rating</option>
                                         <option value="1.0">1</option>
@@ -121,6 +119,15 @@ Vue.component("all-restaurants", {
                                         <option value="4.0">4</option>
                                         <option value="5.0">5</option>
                                     </select>
+                                </div>
+                                <div class="col-md">
+                                    <input type="text" class="form-control" placeholder="Location" aria-label="Location" id="locationInput"
+                                    v-model="searchInput.location">
+                                </div>
+                                <div class="col-md mt-4">
+                                    <button type="button" class="btn btn-sm filter-button" @click="openMap()" data-bs-toggle="modal" data-bs-target="#mapModal">
+                                        <i class="fas fa-map me-2"></i>Open map
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -241,6 +248,24 @@ Vue.component("all-restaurants", {
                     </div>
                 </div>
             </section>
+
+            <!-- Map modal -->
+            <div id="mapModal" class="modal fade responsive">
+                <div class="modal-dialog modal-dialog-centered modal-map">
+                    <div class="modal-content">
+                        <div class="modal-header flex-column">		
+                            <h4 class="modal-title w-100">
+                                Select location
+                            </h4>	
+                            <button type="button" class="close" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <div id="map"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End of map modal -->
         </div>
         `,
     mounted() {
@@ -313,6 +338,56 @@ Vue.component("all-restaurants", {
         noFilters: function () {
             this.filterInput.restaurantType = "";
             this.filterInput.opened = "";
+        },
+
+        openMap: function () {
+            this.count = this.count + 1;
+
+            if (this.count === 1) {
+                var map = new ol.Map({
+                    target: "map",
+                    layers: [
+                        new ol.layer.Tile({ source: new ol.source.OSM() }),
+                    ],
+                    view: new ol.View({
+                        center: ol.proj.fromLonLat([20.9224158, 44.2107675]),
+                        zoom: 5,
+                    }),
+                });
+
+                window.setTimeout(function () {
+                    map.updateSize();
+                }, 200);
+
+                /*
+                 * reference: https://stackoverflow.com/questions/50882125/open-layers-maps-with-longitude-and-latitude-get-address
+                 *
+                 *
+                 */
+                map.on("click", function (evt) {
+                    var coordinates = ol.proj.toLonLat(evt.coordinate);
+                    fetch(
+                        "http://nominatim.openstreetmap.org/reverse?format=json&lon=" +
+                            coordinates[0] +
+                            "&lat=" +
+                            coordinates[1]
+                    )
+                        .then(function (response) {
+                            return response.json();
+                        })
+                        .then(function (json) {
+                            console.log(json.address.city);
+
+                            // trigger input event to search immediatelly (????)
+                            let input =
+                                document.getElementById("locationInput");
+                            input.value = json.address.city;
+
+                            var event = new Event("input");
+                            input.dispatchEvent(event);
+                        });
+                });
+            }
         },
     },
     computed: {
