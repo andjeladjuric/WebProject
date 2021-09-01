@@ -370,7 +370,7 @@ Vue.component("selected-restaurant", {
                         <p>Do you really want to delete this restaurant? This process cannot be undone.</p>
                     </div>
                     <div class="modal-footer justify-content-center">
-                        <button type="button" class="btn" data-bs-dismiss="modal" @click="deleteRestaurant">Confirm</button>
+                        <button type="button" class="btn" data-bs-dismiss="modal" @click="deleteRestaurant" @click="showToast">Confirm</button>
                         <button type="button" class="btn" data-bs-dismiss="modal" style="background: #ecbeb1">Cancel</button>
                     </div>
                 </div>
@@ -493,19 +493,40 @@ Vue.component("selected-restaurant", {
                             params: { id: this.restaurant.id },
                         })
                         .then((response) => (this.allComments = response.data));
+                         this.showToast();
                 })
 
         },
         removeItem: function () {
             axios
                 .post("rest/items/deleteItem", this.deleteItem.id)
-                .then((response) => window.location.reload());
+                .then((response) => {
+                	axios
+                    .get("rest/items/getItemsForRestaurant", {
+                        params: { id: this.restaurant.id },
+                    })
+                    .then((response) => {
+                    	(this.items = response.data);
+                    	this.showToast();
+                    	});
+                	
+                });
         },
         selectItem: function(item) {
         	this.deleteItem = item;
         },
         selectComment: function(comment){
         	this.deleteComment = comment;
+        },
+        showToast: function(){
+        	const Toast = Swal.mixin({
+        		toast: true,
+        		text: "Succesfully deleted!",
+        		position: "bottom-end",
+        		timer: 2000,
+        		showConfirmButton: false,
+        		});
+        	Toast.fire({icon: "success"});
         }
     },
     filters: {
@@ -514,6 +535,9 @@ Vue.component("selected-restaurant", {
             return parsed.format(format);
         },
     },
+    components:{
+    	swal
+    }
 
 });
 

@@ -407,14 +407,26 @@ Vue.component("administrator-users", {
 							this.errorMessage = "Username is already taken.";
 						}
 						else {
-							location.href = response.data;
+							window.location.reload();
+							this.showMess();
 						}
 					})
 					.catch(err => {
 						this.errorMessage = "error";
 					})
+					
 			}
 
+		},
+		showMess: function(){
+			const Toast = Swal.mixin({
+	        		toast: true,
+	        		text: "Succesfully added!",
+	        		position: "bottom-end",
+	        		timer: 3000,
+	        		showConfirmButton: false,
+	        		});
+	        		Toast.fire({icon: "success"});
 		},
 		signalChange: function () {
 			this.errorMessage = "";
@@ -428,7 +440,10 @@ Vue.component("administrator-users", {
 							}
 						})
 					.then((response) => (this.users = fixDate(response.data)))
-					.then((response) => (this.selectedUser = { username : ''}));
+					.then((response) => {
+						(this.selectedUser = { username : ''});
+						this.showToast();
+						});
 		},
 		blockUser: function () {
 			axios
@@ -443,12 +458,25 @@ Vue.component("administrator-users", {
 					this.canBlock = !this.canBlock;
 					this.canUnblock = !this.canUnblock;
 				});
-		}
+		},
+        showToast: function(){
+        	const Toast = Swal.mixin({
+        		toast: true,
+        		text: "Succesfully deleted!",
+        		position: "bottom-end",
+        		timer: 2000,
+        		showConfirmButton: false,
+        		});
+        	Toast.fire({icon: "success"});
+        }
 	},
 	filters: {
 		dateFormat: function (value, format) {
 			var parsed = moment(value);
 			return parsed.format(format);
 		}
-	}
+	},
+    components:{
+    	swal
+    }
 });
