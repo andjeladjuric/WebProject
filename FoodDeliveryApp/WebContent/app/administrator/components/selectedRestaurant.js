@@ -399,7 +399,15 @@ Vue.component("selected-restaurant", {
 		        	{ headers: {
 		        		'Content-type': 'text/plain',
 		        		}
+		        	})
+		        	
+		        	axios 
+	    			.post('rest/orders/restaurantDeleted', this.restaurant.id,
+		        	{ headers: {
+		        		'Content-type': 'text/plain',
+		        		}
 		        	}) 
+		        	 
                   	location.href = response.data;
                   });
 

@@ -158,8 +158,7 @@ Vue.component("administrator-users", {
                      <div class="row mt-2" v-if="selectedUser.role === 'MANAGER'">
                         <div class="col-11 mx-auto">
                             <p v-if="restaurant != ''">Restaurant: "{{restaurant}}" </p>
-                             <p v-if="restaurant == ''">No Restaurant </p>
-                            
+                            <p v-if="restaurant == ''">No Restaurant </p>
                                 <hr>
                         </div>
                     </div>

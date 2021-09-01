@@ -305,6 +305,16 @@ public class OrderDAO {
 		}
 		return false;
 	}
+
+	public void restaurantDeleted(String id) {
+		 
+		 for(Order o : orders) {
+				if(o.getRestaurant().getId().equals(id) && o.getStatus() == OrderStatus.PROCESSING) {
+					o.setDeleted(true);
+				 }
+		 }
+		 serialize();
+	}
 }
 
 
