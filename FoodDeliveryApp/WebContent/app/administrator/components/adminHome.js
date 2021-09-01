@@ -99,7 +99,7 @@ Vue.component("administrator-users", {
                     </div>
                     <div class="row mb-3">
                         <div class="col-4">
-                            <button class="btn buttonGroup" v-on:click="remove()"><i class="fa fa-trash"></i> Remove</button>
+                            <button class="btn buttonGroup" data-bs-toggle="modal" data-bs-target="#deleteModal" v-bind:disabled="selectedUser.username === ''"><i class="fa fa-trash"></i> Remove</button>
                         </div>
                     
 						<div class="col-4">
@@ -281,6 +281,29 @@ Vue.component("administrator-users", {
                 </div>
             </div>
         </div>
+        
+        <!-- Delete item modal -->
+        <div id="deleteModal" class="modal fade">
+            <div class="modal-dialog modal-confirm">
+                <div class="modal-content">
+                    <div class="modal-header flex-column">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <div class="icon-box">
+                        <i class="fas fa-trash mt-3 mb-3"></i>
+                        </div>						
+                        <h4 class="modal-title w-100 mt-5">Are you sure?</h4>	
+                    </div>
+                    <div class="modal-body">
+                        <p>Do you really want to delete user "{{selectedUser.username}}"? This process cannot be undone.</p>
+                    </div>
+                    <div class="modal-footer justify-content-center">
+                        <button type="button" class="btn" data-bs-dismiss="modal" @click="remove">Confirm</button>
+                        <button type="button" class="btn" data-bs-dismiss="modal" style="background: #ecbeb1">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
        </div>
 `
 	, mounted() {
@@ -397,10 +420,6 @@ Vue.component("administrator-users", {
 			this.errorMessage = "";
 		},
 		remove: function () {
-			if (this.selectedUser.username == '') {
-				alert("You must select a user.");
-			} else {
-				let user = this.selectedUser;
 				axios
 					.post('rest/users/removeUser', this.selectedUser.username,
 						{
@@ -410,7 +429,6 @@ Vue.component("administrator-users", {
 						})
 					.then((response) => (this.users = fixDate(response.data)))
 					.then((response) => (this.selectedUser = { username : ''}));
-			}
 		},
 		blockUser: function () {
 			axios

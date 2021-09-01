@@ -22,7 +22,9 @@ Vue.component("selected-restaurant", {
             showComments: false,
             showOrders: false,
             items: [],
-            allComments: []
+            allComments: [],
+            deleteItem : {},
+            deleteComment : {}
 
         };
     },
@@ -86,7 +88,7 @@ Vue.component("selected-restaurant", {
 			                
 			                <br><br>
 			                    <h4 style="margin-left: 1rem;" class="mb-2">Options</h4>
-			                    <button type="button" class="btn buttonGroup addItem" v-on:click="deleteRestaurant">
+			                    <button type="button" class="btn buttonGroup addItem" data-bs-toggle="modal" data-bs-target="#deleteRestaurantModal">
 			                            <i class="fas fa-trash me-2 p-1" style="color: #ecbeb1;"></i>Delete
 			                    </button>
 			
@@ -111,7 +113,7 @@ Vue.component("selected-restaurant", {
 			                        <p id="price">RSD {{item.price}}</p>
 			
 			                        <button type="button" class="btn btn-sm btn-outline-secondary editItem" data-toggle="tooltip"
-			                            data-placement="bottom" style="background: none; " v-on:click="removeItem(item)">
+			                            data-placement="bottom" style="background: none; " v-on:click="selectItem(item)" data-bs-toggle="modal" data-bs-target="#deleteItemModal">
 			                            <i class="fas fa-trash"></i> Remove
 			                        </button>
 			
@@ -138,7 +140,7 @@ Vue.component("selected-restaurant", {
 			                        <p id="price">RSD {{item.price}}</p>
 			
 			                        <button type="button" class="btn btn-sm btn-outline-secondary editItem" data-toggle="tooltip"
-			                            data-placement="bottom" style="background: none; " v-on:click="removeItem(item)">
+			                            data-placement="bottom" style="background: none; " v-on:click="selectItem(item)" data-bs-toggle="modal" data-bs-target="#deleteItemModal">
 			                            <i class="fas fa-trash"></i> Remove
 			                        </button>
 			
@@ -165,7 +167,7 @@ Vue.component("selected-restaurant", {
 			                        <p id="price">RSD {{item.price}}</p>
 			
 			                        <button type="button" class="btn btn-sm btn-outline-secondary editItem" data-toggle="tooltip"
-			                            data-placement="bottom" style="background: none; " v-on:click="removeItem(item)">
+			                            data-placement="bottom" style="background: none; " v-on:click="selectItem(item)" data-bs-toggle="modal" data-bs-target="#deleteItemModal">
 			                            <i class="fas fa-trash"></i> Remove
 			                        </button>
 			
@@ -192,7 +194,7 @@ Vue.component("selected-restaurant", {
 			                        <p id="price">RSD {{item.price}}</p>
 			
 			                        <button type="button" class="btn btn-sm btn-outline-secondary editItem" data-toggle="tooltip"
-			                            data-placement="bottom" style="background: none; " v-on:click="removeItem(item)">
+			                            data-placement="bottom" style="background: none; " v-on:click="selectItem(item)" data-bs-toggle="modal" data-bs-target="#deleteItemModal">
 			                            <i class="fas fa-trash"></i> Remove
 			                        </button>
 			
@@ -219,7 +221,7 @@ Vue.component("selected-restaurant", {
 			                        <p id="price">RSD {{item.price}}</p>
 			
 			                        <button type="button" class="btn btn-sm btn-outline-secondary editItem" data-toggle="tooltip"
-			                            data-placement="bottom" style="background: none; " v-on:click="removeItem(item)">
+			                            data-placement="bottom" style="background: none; " v-on:click="selectItem(item)" data-bs-toggle="modal" data-bs-target="#deleteItemModal">
 			                            <i class="fas fa-trash"></i> Remove
 			                        </button>
 			
@@ -246,7 +248,7 @@ Vue.component("selected-restaurant", {
 			                        <p id="price">RSD {{item.price}}</p>
 			
 			                        <button type="button" class="btn btn-sm btn-outline-secondary editItem" data-toggle="tooltip"
-			                            data-placement="bottom" style="background: none; " v-on:click="removeItem(item)">
+			                            data-placement="bottom" style="background: none; " v-on:click="selectItem(item)" data-bs-toggle="modal" data-bs-target="#deleteItemModal">
 			                            <i class="fas fa-trash"></i> Remove
 			                        </button>
 			
@@ -273,7 +275,7 @@ Vue.component("selected-restaurant", {
 			                        <p id="price">RSD {{item.price}}</p>
 			
 			                        <button type="button" class="btn btn-sm btn-outline-secondary editItem" data-toggle="tooltip"
-			                            data-placement="bottom" style="background: none; " v-on:click="removeItem(item)">
+			                            data-placement="bottom" style="background: none; " v-on:click="selectItem(item)" data-bs-toggle="modal" data-bs-target="#deleteItemModal">
 			                            <i class="fas fa-trash"></i> Remove
 			                        </button>
 			
@@ -341,7 +343,7 @@ Vue.component("selected-restaurant", {
 				                    <div class="d-flex justify-content-between">
 				                        <p>Status: {{comment.status}}</p>
   										<button type="button" class="btn btn-sm btn-outline-secondary editItem" data-toggle="tooltip"
-			                            data-placement="bottom" style="background: none; " v-on:click="removeComment(comment.id)">
+			                            data-placement="bottom" style="background: none; "  v-on:click="selectComment(comment)" data-bs-toggle="modal" data-bs-target="#deleteCommentModal">
 			                            <i class="fas fa-trash"></i> Remove
 			                        	</button>
 				                    </div>
@@ -352,6 +354,71 @@ Vue.component("selected-restaurant", {
 				    <!-- End of comments -->
 				</div>
 			</div>
+			
+			 <!-- Delete item modal -->
+        <div id="deleteRestaurantModal" class="modal fade">
+            <div class="modal-dialog modal-confirm">
+                <div class="modal-content">
+                    <div class="modal-header flex-column">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <div class="icon-box">
+                        <i class="fas fa-trash mt-3 mb-3"></i>
+                        </div>						
+                        <h4 class="modal-title w-100 mt-5">Are you sure?</h4>	
+                    </div>
+                    <div class="modal-body">
+                        <p>Do you really want to delete this restaurant? This process cannot be undone.</p>
+                    </div>
+                    <div class="modal-footer justify-content-center">
+                        <button type="button" class="btn" data-bs-dismiss="modal" @click="deleteRestaurant">Confirm</button>
+                        <button type="button" class="btn" data-bs-dismiss="modal" style="background: #ecbeb1">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="deleteItemModal" class="modal fade">
+            <div class="modal-dialog modal-confirm">
+                <div class="modal-content">
+                    <div class="modal-header flex-column">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <div class="icon-box">
+                        <i class="fas fa-trash mt-3 mb-3"></i>
+                        </div>						
+                        <h4 class="modal-title w-100 mt-5">Are you sure?</h4>	
+                    </div>
+                    <div class="modal-body">
+                        <p>Do you really want to delete this item? This process cannot be undone.</p>
+                    </div>
+                    <div class="modal-footer justify-content-center">
+                        <button type="button" class="btn" data-bs-dismiss="modal" @click="removeItem">Confirm</button>
+                        <button type="button" class="btn" data-bs-dismiss="modal" style="background: #ecbeb1">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="deleteCommentModal" class="modal fade">
+            <div class="modal-dialog modal-confirm">
+                <div class="modal-content">
+                    <div class="modal-header flex-column">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <div class="icon-box">
+                        <i class="fas fa-trash mt-3 mb-3"></i>
+                        </div>						
+                        <h4 class="modal-title w-100 mt-5">Are you sure?</h4>	
+                    </div>
+                    <div class="modal-body">
+                        <p>Do you really want to delete this comment? This process cannot be undone.</p>
+                    </div>
+                    <div class="modal-footer justify-content-center">
+                        <button type="button" class="btn" data-bs-dismiss="modal" @click="removeComment">Confirm</button>
+                        <button type="button" class="btn" data-bs-dismiss="modal" style="background: #ecbeb1">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
     </div>
     `,
     mounted() {
@@ -412,9 +479,9 @@ Vue.component("selected-restaurant", {
                   });
 
         },
-        removeComment: function (comment) {
+        removeComment: function () {
             axios
-                .post('rest/comments/removeComment', comment,
+                .post('rest/comments/removeComment', this.deleteComment.id,
                     {
                         headers: {
                             'Content-type': 'text/plain',
@@ -429,11 +496,17 @@ Vue.component("selected-restaurant", {
                 })
 
         },
-        removeItem: function (item) {
+        removeItem: function () {
             axios
-                .post("rest/items/deleteItem", item.id)
+                .post("rest/items/deleteItem", this.deleteItem.id)
                 .then((response) => window.location.reload());
         },
+        selectItem: function(item) {
+        	this.deleteItem = item;
+        },
+        selectComment: function(comment){
+        	this.deleteComment = comment;
+        }
     },
     filters: {
         dateFormat: function (value, format) {
