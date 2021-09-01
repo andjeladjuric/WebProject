@@ -40,6 +40,9 @@ Vue.component("restaurant-items", {
             errorMessage: "",
             imagePath: "",
             count: 0,
+            chosenImg: {},
+            imageSrc: "",
+            images: [],
         };
     },
     template: `
@@ -98,7 +101,7 @@ Vue.component("restaurant-items", {
                         </div>
 
                         <div class="image-wrapper mt-2">
-                            <img class="img-responsive img-rounded image-wrapper" :src="item.imagePath" alt="Item">
+                            <img class="img-responsive img-rounded image-wrapper" :src="getImage(item)" alt="Item">
                         </div>
                     </div>
                 </div>
@@ -133,7 +136,7 @@ Vue.component("restaurant-items", {
                         </div>
 
                         <div class="image-wrapper mt-2">
-                            <img class="img-responsive img-rounded image-wrapper" :src="item.imagePath" alt="Item">
+                            <img class="img-responsive img-rounded image-wrapper" :src="getImage(item)" alt="Item">
                         </div>
                     </div>
                 </div>
@@ -168,7 +171,7 @@ Vue.component("restaurant-items", {
                         </div>
 
                         <div class="image-wrapper mt-2">
-                            <img class="img-responsive img-rounded image-wrapper" :src="item.imagePath" alt="Item">
+                            <img class="img-responsive img-rounded image-wrapper" :src="getImage(item)" alt="Item">
                         </div>
                     </div>
                 </div>
@@ -203,7 +206,7 @@ Vue.component("restaurant-items", {
                         </div>
 
                         <div class="image-wrapper mt-2">
-                            <img class="img-responsive img-rounded image-wrapper" :src="item.imagePath" alt="Item">
+                            <img class="img-responsive img-rounded image-wrapper" :src="getImage(item)" alt="Item">
                         </div>
                     </div>
                 </div>
@@ -238,7 +241,7 @@ Vue.component("restaurant-items", {
                         </div>
 
                         <div class="image-wrapper mt-2">
-                            <img class="img-responsive img-rounded image-wrapper" :src="item.imagePath" alt="Item">
+                            <img class="img-responsive img-rounded image-wrapper" :src="getImage(item)" alt="Item">
                         </div>
                     </div>
                 </div>
@@ -273,7 +276,7 @@ Vue.component("restaurant-items", {
                         </div>
 
                         <div class="image-wrapper mt-2">
-                            <img class="img-responsive img-rounded image-wrapper" :src="item.imagePath" alt="Item">
+                            <img class="img-responsive img-rounded image-wrapper" :src="getImage(item)" alt="Item">
                         </div>
                     </div>
                 </div>
@@ -308,7 +311,7 @@ Vue.component("restaurant-items", {
                         </div>
 
                         <div class="image-wrapper mt-2">
-                            <img class="img-responsive img-rounded image-wrapper" :src="item.imagePath" alt="Item">
+                            <img class="img-responsive img-rounded image-wrapper" :src="getImage(item)" alt="Item">
                         </div>
                     </div>
                 </div>
@@ -433,7 +436,7 @@ Vue.component("restaurant-items", {
                     <p style="color: red; font-size: small;" class="text-center mt-5">{{errorMessage}}</p>
                     <div class="row mt-5">
                         <div class="col d-inline-flex justify-content-center">
-                            <button type="button" class="btn me-4" @click="addNewItem()">Save</button>
+                            <button type="button" class="btn me-4" @click="sendImgToBack()">Save</button>
                             <button type="button" class="btn" style="background: #ecbeb1" @click="cancelAdding()">Cancel</button>
                         </div>
                     </div>
@@ -497,6 +500,10 @@ Vue.component("restaurant-items", {
                     })
                     .then((response) => (this.items = response.data));
             });
+
+        axios
+            .get("rest/images/getAllImages")
+            .then((response) => (this.images = response.data));
     },
     methods: {
         isCategoryEmpty: function (category) {
@@ -569,12 +576,49 @@ Vue.component("restaurant-items", {
             const reader = new FileReader();
 
             reader.onload = (e) => {
-                this.item.imagePath = e.target.result;
+                this.imageSrc = e.target.result;
             };
-
-            this.imagePath = URL.createObjectURL(file);
             reader.readAsDataURL(file);
-            e.target.value = "";
+        },
+
+        imageAlreadyExists() {
+            for (let i of this.images) {
+                if (i.imageCode === this.imageSrc) {
+                    return i;
+                }
+            }
+
+            return null;
+        },
+
+        sendImgToBack: function () {
+            var image = this.imageAlreadyExists();
+            if (image !== null) {
+                this.item.imagePath = image.imageId;
+                this.addNewItem();
+                window.location.reload();
+            } else {
+                axios
+                    .post("rest/images/addNewImage", this.imageSrc, {
+                        headers: {
+                            "Content-type": "text/plain",
+                        },
+                    })
+                    .then((response) => {
+                        this.chosenImg = response.data;
+                        this.item.imagePath = this.chosenImg.imageId;
+                        this.addNewItem();
+                        window.location.reload();
+                    });
+            }
+        },
+
+        getImage: function (item) {
+            for (let i of this.images) {
+                if (i.imageId === item.imagePath) return i.imageCode;
+            }
+
+            return "";
         },
 
         openMap: function () {

@@ -257,7 +257,8 @@ Vue.component("all-restaurants", {
                             <h4 class="modal-title w-100">
                                 Select location
                             </h4>	
-                            <button type="button" class="close" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
+                            <button class="btn-close" data-bs-dismiss="modal" aria-hidden="true" 
+                                style="position: absolute; top: -5px; right: -2px;"></button>
                         </div>
                         <div class="modal-body">
                             <div id="map"></div>

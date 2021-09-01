@@ -15,6 +15,9 @@ Vue.component("edit-item", {
                 category: "",
             },
             errorMessage: "",
+            chosenImg: {},
+            imageSrc: "",
+            images: [],
         };
     },
     template: `
@@ -98,7 +101,7 @@ Vue.component("edit-item", {
                     <p style="color: red; font-size: small;" class="text-center mt-5">{{errorMessage}}</p>
                     <div class="row mt-5">
                         <div class="col d-inline-flex justify-content-center">
-                            <button type="button" class="btn me-4" @click="addNewItem()">Save</button>
+                            <button type="button" class="btn me-4" @click="sendImgToBack()">Save</button>
                             <button type="button" class="btn" style="background: #ecbeb1" @click="cancelEditing()">Cancel</button>
                         </div>
                     </div>
@@ -128,6 +131,10 @@ Vue.component("edit-item", {
                     category: this.item.category,
                 };
             });
+
+        axios
+            .get("rest/images/getAllImages")
+            .then((response) => (this.images = response.data));
     },
     methods: {
         addNewItem: function () {
@@ -158,12 +165,39 @@ Vue.component("edit-item", {
             const reader = new FileReader();
 
             reader.onload = (e) => {
-                this.updatedItem.imagePath = e.target.result;
+                this.imageSrc = e.target.result;
             };
-
             reader.readAsDataURL(file);
-            e.target.value = "";
-            e.target.result = "";
+        },
+
+        imageAlreadyExists() {
+            for (let i of this.images) {
+                if (i.imageCode === this.imageSrc) {
+                    return i;
+                }
+            }
+
+            return null;
+        },
+
+        sendImgToBack: function () {
+            var image = this.imageAlreadyExists();
+            if (image !== null) {
+                this.updatedItem.imagePath = image.imageId;
+                this.addNewItem();
+            } else {
+                axios
+                    .post("rest/images/addNewImage", this.imageSrc, {
+                        headers: {
+                            "Content-type": "text/plain",
+                        },
+                    })
+                    .then((response) => {
+                        this.chosenImg = response.data;
+                        this.updatedItem.imagePath = this.chosenImg.imageId;
+                        this.addNewItem();
+                    });
+            }
         },
     },
 });

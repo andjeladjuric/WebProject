@@ -110,9 +110,7 @@ public class ItemsDAO {
 	public void insert(Item i) {
 		String id = UUID.randomUUID().toString();
 		
-		String path = convertImage(i);
-		
-		Item createdItem = new Item(id, false, i.getName(), i.getPrice(), i.getType(), i.getAmount(), i.getDescription(), path, i.getRestaurantId(),
+		Item createdItem = new Item(id, false, i.getName(), i.getPrice(), i.getType(), i.getAmount(), i.getDescription(), i.getImagePath(), i.getRestaurantId(),
 				i.getRestaurant(), i.getCategory());
 		items.add(createdItem);
 		serialize();
@@ -141,8 +139,7 @@ public class ItemsDAO {
 				i.setCategory(updatedItem.getCategory());
 				i.setAmount(updatedItem.getAmount());
 				if(!updatedItem.getImagePath().equals(i.getImagePath())) {
-					String imgPath = convertImage(updatedItem);
-					i.setImagePath(imgPath);
+					i.setImagePath(updatedItem.getImagePath());
 				}
 				i.setDescription(updatedItem.getDescription());
 				serialize();
