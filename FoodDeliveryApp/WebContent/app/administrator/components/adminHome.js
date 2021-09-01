@@ -10,7 +10,7 @@ Vue.component("administrator-users", {
 		return {
 			users: [],
 			selectedUser: {
-				username: ''
+				username : ''
 			},
 			searchInput: '',
 			selectedFilter: 'All',
@@ -19,7 +19,9 @@ Vue.component("administrator-users", {
 			errorMessage: '',
 			gender: '',
 			canBlock: false,
-			canUnblock: false
+			canUnblock: false,
+			medal : "",
+			restaurant : ''
 		}
 	}
 	,
@@ -84,10 +86,10 @@ Vue.component("administrator-users", {
                                         <tr v-for="u in users" v-on:click="selectUser(u)" v-bind:class="{selected : selectedUser.username===u.username}" >
                                             <td>{{u.name}}</td>
                                             <td>{{u.surname}}</td>
-                                            <td>{{u.username}}
-                                            	<i class="fa fa-ban" v-if="u.blocked == true" id="blocked"></i>
-                                            	<i class="fas fa-check"  v-if="u.blocked == false && u.suspicious == false" id="regular"></i>
-                                            	<i class="fas fa-exclamation-circle" v-if="u.suspicious == true && u.blocked == false" id="suspicious"></i>
+                                            <td class="justify-content-center" style="text-align : right;">{{u.username}}
+                                            	<i class="fa fa-ban" style="text-align : right; " v-if="u.blocked == true" id="blocked"></i>
+                                            	<i class="fas fa-check" style="text-align : right; "  v-if="u.blocked == false && u.suspicious == false" id="regular"></i>
+                                            	<i class="fas fa-exclamation-circle" style="text-align : right; " v-if="u.suspicious == true && u.blocked == false" id="suspicious"></i>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -115,7 +117,7 @@ Vue.component("administrator-users", {
             </div>
 
             <!--Card for user info-->
-            <div class="col-lg-4 col-sm-11 mx-auto">
+            <div class="col-lg-4 col-sm-11 mx-auto" v-if="selectedUser.username != ''">
                 <div class="card noHover text-center shadow-sm mb-3" style="height: 600px;">
                     <div class="row" style="height: 250px;">
                         <div class="col-10 mx-auto bg-light mt-2" style="border-radius: 30px;">
@@ -125,7 +127,7 @@ Vue.component("administrator-users", {
                     </div>
                     <div class="row mt-2">
                         <div class="col-11 mx-auto">
-                            <h4>{{selectedUser.name}} {{selectedUser.surname}}( {{selectedUser.role}} )</h4>
+                            <h4 class="mt-2">{{selectedUser.name}} {{selectedUser.surname}}( {{selectedUser.role}} )</h4>
                             <hr>
                         </div>
                     </div>
@@ -143,10 +145,21 @@ Vue.component("administrator-users", {
                                 <hr>
                         </div>
                     </div>
-                    <div class="row mt-2">
+                    <div class="row mt-2" v-if="selectedUser.role === 'CUSTOMER'">
                         <div class="col-11 mx-auto">
-                            <p>Points: {{selectedUser.points}}
+                            <p>Points: {{selectedUser.points}} 
+                            	<i class="fas fa-medal" style="color:brown;" v-if="medal == 'BRONZE'"></i>
+                                    <i class="fas fa-medal" style="color:gold;" v-if="medal == 'GOLD'"></i>
+                                    <i class="fas fa-medal" v-if="medal == 'SILVER'"></i>
                             <p>
+                                <hr>
+                        </div>
+                    </div>
+                     <div class="row mt-2" v-if="selectedUser.role === 'MANAGER'">
+                        <div class="col-11 mx-auto">
+                            <p v-if="restaurant != ''">Restaurant: "{{restaurant}}" </p>
+                             <p v-if="restaurant == ''">No Restaurant </p>
+                            
                                 <hr>
                         </div>
                     </div>
@@ -269,16 +282,19 @@ Vue.component("administrator-users", {
                 </div>
             </div>
         </div>
-
+       </div>
 `
 	, mounted() {
 		axios
 			.get("rest/users/getUsers")
-			.then((response) => (this.users = fixDate(response.data)));
+			.then((response) => 
+				this.users = fixDate(response.data))
 	},
 	methods: {
 		selectUser: function (user) {
 			this.selectedUser = user;
+			this.medal = this.selectedUser.type.name;
+			
 			if (this.selectedUser.blocked){
 				this.canUnblock = true;
 				this.canBlock = false;}
@@ -286,6 +302,13 @@ Vue.component("administrator-users", {
 				this.canBlock = true;
 				this.canUnblock = false;
 				}
+			if(user.role == 'MANAGER'){
+			axios
+                .get("rest/restaurants/getRestaurantName", {
+                    params: { id: this.selectedUser.username },
+                })
+                 .then((response) => (this.restaurant = response.data));
+             }
 		},
 		doSearch: function () {
 			let matches = [];
@@ -304,7 +327,8 @@ Vue.component("administrator-users", {
 							'Content-type': 'text/plain',
 						}
 					})
-				.then(response => (this.users = fixDate(response.data)));
+				.then(response => (this.users = fixDate(response.data)))
+				.then((response) => (this.selectedUser = { username : ''}));
 		},
 		sort: function () {
 
@@ -385,7 +409,8 @@ Vue.component("administrator-users", {
 								'Content-type': 'text/plain',
 							}
 						})
-					.then((response) => (this.users = fixDate(response.data)));
+					.then((response) => (this.users = fixDate(response.data)))
+					.then((response) => (this.selectedUser = { username : ''}));
 			}
 		},
 		blockUser: function () {

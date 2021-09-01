@@ -107,6 +107,18 @@ public class RestaurantService {
 		
 		return "/FoodDeliveryApp/administratorPage.html#/";
 	}
+	
+	@GET
+	@Path("/getRestaurantName")
+	public String getRestaurantName(@QueryParam("id") String id){
+		RestaurantDAO dao = (RestaurantDAO) ctx.getAttribute("restaurants");
+		Restaurant found = dao.getRestaurantByManager(id);
+
+		if( found == null)
+			return "";
+		else
+			return found.getName();
+	}
 
 }
 
