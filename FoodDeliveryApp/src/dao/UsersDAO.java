@@ -115,11 +115,7 @@ public class UsersDAO {
 						return "Username taken";
 				}
 				
-				
-				if(!u.getProfilePicPath().equals(updated.getProfilePicPath())) {
-					String path = convertImage(updated);
-					u.setProfilePicPath(path);
-				}
+				u.setProfilePicPath(updated.getProfilePicPath());
 				serialize();
 				break;
 			}

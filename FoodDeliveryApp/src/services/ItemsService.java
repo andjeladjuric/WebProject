@@ -16,7 +16,6 @@ import javax.ws.rs.core.MediaType;
 
 import beans.Item;
 import dao.ItemsDAO;
-import dao.RestaurantDAO;
 
 @Path("/items")
 public class ItemsService {

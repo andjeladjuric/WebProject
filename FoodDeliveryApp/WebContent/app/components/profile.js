@@ -13,8 +13,14 @@ Vue.component("currentUser-profile", {
             errorMessage: "",
             editErrorMessage: "",
             isSidebarVisible: true,
-            isCustomer : false,
-            medal : "",
+            isCustomer: false,
+            medal: "",
+            images: [],
+            editedImageSrc: "",
+            editedImg: {
+                imageId: "",
+                imageCode: "",
+            },
         };
     },
 
@@ -23,7 +29,7 @@ Vue.component("currentUser-profile", {
         <div class="d-flex" id="wrapper" v-bind:class="!isSidebarVisible ? 'toggled' : 'notoggle'">
             <!-- Sidebar -->
             <div id="sidebar-wrapper">
-                <img class="img-fluid d-sm-block" v-bind:src="currentUser.profilePicPath" alt="" id="profile-picture">
+                <img class="img-fluid d-sm-block" v-bind:src="getImage()" alt="" id="profile-picture">
                 <div class="list-group list-group-flush my-3">
                     <a href="#/profile" id="profileOverviewButton" @click="showEdit = false" 
 							class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i class="fas fa-user me-2"></i>Profile overview</a>
@@ -169,10 +175,12 @@ Vue.component("currentUser-profile", {
                         <p style="color: red; font-size: small;" class="text-center mt-3">{{editErrorMessage}}</p>
                         <div class="row my-5">
                             <div class="col d-inline-flex justify-content-center">
-                                <button type="button" class="btn profileBtn me-4" v-on:click="updateProfile(currentUser);">Save</button>
-                                <button type="button" class="btn profileBtn" style="background: #ecbeb1" v-on:click="cancelEditing(); showEdit = !showEdit">Cancel</button>
+                                <button type="button" class="btn profileBtn me-4" v-on:click="sendImgToBack();">Save</button>
+                                <button type="button" class="btn profileBtn" style="background: #ecbeb1" v-on:click="cancelEditing(); showEdit = !showEdit; reload()">Cancel</button>
                             </div>
                         </div>
+
+                        <img class="img-fluid d-sm-block" v-bind:src="editedImageSrc" alt="" id="editedImage">
                     </div>
                     <!-- End of edit profile -->
                 </div>
@@ -180,6 +188,7 @@ Vue.component("currentUser-profile", {
             <!-- End of page content -->
             <div class="col-md-2"></div>
         </div>
+
         <!-- Change password -->
         <div class="modal" id="modalForm" data-bs-backdrop="static" data-bs-keyboard="false">
             <div class="modal-dialog modal-dialog-centered">
@@ -216,15 +225,17 @@ Vue.component("currentUser-profile", {
     </div>
     `,
     mounted() {
+        axios.get("rest/users/getCurrentUser").then((response) => {
+            this.currentUser = response.data;
+            if (this.currentUser.role === "CUSTOMER") {
+                this.isCustomer = true;
+                this.medal = this.currentUser.type.name;
+            }
+        });
+
         axios
-            .get("rest/users/getCurrentUser")
-            .then((response) => {
-            	this.currentUser = response.data;
-            	if(this.currentUser.role === 'CUSTOMER'){
-            		this.isCustomer = true;
-            		this.medal = this.currentUser.type.name;
-            	}
-            });
+            .get("rest/images/getAllImages")
+            .then((response) => (this.images = response.data));
     },
 
     methods: {
@@ -240,7 +251,7 @@ Vue.component("currentUser-profile", {
                 this.currentUser.profilePicPath,
             ];
         },
-        updateProfile: function (currentUser) {
+        updateProfile: function () {
             axios
                 .post(
                     "rest/users/updateUser",
@@ -308,10 +319,33 @@ Vue.component("currentUser-profile", {
             const reader = new FileReader();
 
             reader.onload = (e) => {
-                this.currentUser.profilePicPath = e.target.result;
+                this.editedImageSrc = e.target.result;
             };
-
             reader.readAsDataURL(file);
+        },
+
+        sendImgToBack: function () {
+            axios
+                .post("rest/images/addNewImage", this.editedImageSrc, {
+                    headers: {
+                        "Content-type": "text/plain",
+                    },
+                })
+                .then((response) => {
+                    this.editedImg = response.data;
+                    this.currentUser.profilePicPath = this.editedImg.imageId;
+                    this.updateProfile();
+                    window.location.reload();
+                });
+        },
+
+        getImage: function () {
+            for (let i of this.images) {
+                if (i.imageId === this.currentUser.profilePicPath)
+                    return i.imageCode;
+            }
+
+            return "";
         },
     },
     computed: {

@@ -51,9 +51,7 @@
         "deleted": false,
         "blocked": false,
         "suspicious": false,
-        "ordersForCourier": [
-            "5as215fr48"
-        ],
+        "ordersForCourier": ["5as215fr48"],
         "type": {
             "name": "BRONZE",
             "discount": 0.0,
@@ -73,9 +71,7 @@
         "deleted": false,
         "blocked": false,
         "suspicious": false,
-        "ordersForCourier": [
-            "5as215fr48"
-        ],
+        "ordersForCourier": ["5as215fr48"],
         "type": {
             "name": "NONE",
             "discount": 0.0,
