@@ -86,10 +86,10 @@ Vue.component("administrator-users", {
                                         <tr v-for="u in users" v-on:click="selectUser(u)" v-bind:class="{selected : selectedUser.username===u.username}" >
                                             <td>{{u.name}}</td>
                                             <td>{{u.surname}}</td>
-                                            <td class="justify-content-center" style="text-align : right;">{{u.username}}
-                                            	<i class="fa fa-ban" style="text-align : right; " v-if="u.blocked == true" id="blocked"></i>
-                                            	<i class="fas fa-check" style="text-align : right; "  v-if="u.blocked == false && u.suspicious == false" id="regular"></i>
-                                            	<i class="fas fa-exclamation-circle" style="text-align : right; " v-if="u.suspicious == true && u.blocked == false" id="suspicious"></i>
+                                            <td style="text-align : right">{{u.username}}
+                                            	<i class="fa fa-ban" v-if="u.blocked == true" id="blocked"></i>
+		                                        <i class="fas fa-check " v-if="u.blocked == false && u.suspicious == false" id="regular"></i>
+		                                        <i class="fas fa-exclamation-circle"  v-if="u.suspicious == true && u.blocked == false" id="suspicious"></i>
                                             </td>
                                         </tr>
                                     </tbody>
