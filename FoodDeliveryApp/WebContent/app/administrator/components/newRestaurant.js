@@ -18,7 +18,8 @@ Vue.component("restaurant-form",{
 				errorMessage : '',
 				gender : '',
 				searchInput : '',
-				selectedOptionForSort : ''
+				selectedOptionForSort : '',
+				matches : []
             
         }
     }
@@ -237,8 +238,8 @@ Vue.component("restaurant-form",{
                                             
                                             <div class="col-5 mx-auto">
                                                 <div class="input-group mb-3">
-                                                    <input type="text" class="form-control" v-model="searchInput">
-                                                    <button class="btn buttonGroup active" type="button" @click ="search" style="height: 35px;"><i
+                                                    <input type="text" class="form-control" v-model="searchInput" v-on:keyup="doSearch">
+                                                    <button class="btn buttonGroup active" type="button" @click ="doSearch" style="height: 35px;"><i
                                                             class="fas fa-search"></i></button>
                                                 </div>
                                             </div>
@@ -435,14 +436,22 @@ Vue.component("restaurant-form",{
 		{
 			this.errorMessage="";
 		},
-		search : function() {
-		let matches = [];
-	    for(var u of this.managers) {
-	        if (u.name.toLowerCase().search(searchInput.toLowerCase()) || u.surname.toLowerCase().contains(searchInput.toLowerCase()) || u.username.toLowerCase().contains(searchInput.toLowerCase()) ) {
-	            matches.add(u);
-	        }	        
-	       }
-	      	this.managers = matches;
+		doSearch : function() {
+			axios
+			.get("rest/users/getManagers")
+            .then((response) => {
+            	this.managers = fixDate(response.data);
+            	this.matches = [];
+					for (var u of this.managers) {
+						if (u.name.toLowerCase().match(this.searchInput.toLowerCase()) ||
+							u.surname.toLowerCase().match(this.searchInput.toLowerCase()) ||
+							u.username.toLowerCase().match(this.searchInput.toLowerCase())) {
+							this.matches.push(u);
+						}
+					}
+					this.managers = this.matches;
+            	});
+		
     	},
 		sort : function() {
 		

@@ -21,7 +21,8 @@ Vue.component("administrator-users", {
 			canBlock: false,
 			canUnblock: false,
 			medal : "",
-			restaurant : ''
+			restaurant : '',
+			matches : []
 		}
 	}
 	,
@@ -66,8 +67,8 @@ Vue.component("administrator-users", {
                             </div>
                             <div class="col-4 mx-auto">
                                 <div class="input-group mt-2">
-                                    <input type="text" class="form-control" v-model="searchInput" v-on:change="doSearch()">
-                                    <button class="btn buttonGroup active" type="button" style="height: 35px;" v-on:click="doSearch()"><i class="fas fa-search"></i></button>     
+                                    <input type="text" class="form-control" v-model="searchInput" v-on:keyup="doSearch">
+                                    <button class="btn buttonGroup active" type="button" style="height: 35px;" v-on:click="doSearch"><i class="fas fa-search"></i></button>     
                                 </div>
                             </div>
                         </div>
@@ -333,13 +334,26 @@ Vue.component("administrator-users", {
              }
 		},
 		doSearch: function () {
-			let matches = [];
-			for (var u of this.users) {
-				if (u.name.toLowerCase().search(searchInput.toLowerCase()) || u.surname.toLowerCase().contains(searchInput.toLowerCase()) || u.username.toLowerCase().contains(searchInput.toLowerCase())) {
-					matches.add(u);
-				}
-			}
-			this.users = matches;
+				axios
+				.post('rest/users/filter', this.selectedFilter,
+					{
+						headers: {
+							'Content-type': 'text/plain',
+						}
+					})
+				.then(response => {
+					this.users = fixDate(response.data);
+					this.matches = [];
+					for (var u of this.users) {
+						if (u.name.toLowerCase().match(this.searchInput.toLowerCase()) ||
+							u.surname.toLowerCase().match(this.searchInput.toLowerCase()) ||
+							u.username.toLowerCase().match(this.searchInput.toLowerCase())) {
+							this.matches.push(u);
+						}
+					}
+					this.users = this.matches;
+				});
+				
 		},
 		filter: function () {
 			axios
