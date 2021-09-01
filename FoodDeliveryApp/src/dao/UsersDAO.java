@@ -154,7 +154,17 @@ public class UsersDAO {
 		List<User> customers = new ArrayList<User>();
 		
 		for (User u : users.values()) {
-			if(u.getRole() == Role.CUSTOMER && u.isDeleted() == false && u.isBlocked() == false )
+			if(u.getRole() == Role.CUSTOMER && u.isDeleted() == false)
+				customers.add(u);
+		}
+		return customers;
+	}
+	
+	public List<User> getSuspicious() {
+		List<User> customers = new ArrayList<User>();
+		
+		for (User u : users.values()) {
+			if(u.getRole() == Role.CUSTOMER && u.isDeleted() == false && u.isSuspicious())
 				customers.add(u);
 		}
 		return customers;
@@ -196,7 +206,7 @@ public class UsersDAO {
 		List<User> allUsers = new ArrayList<User>();
 		
 		for (User u : users.values()) {
-			if(u.getRole() != Role.ADMINISTRATOR  && u.isDeleted() == false && u.isBlocked() == false )
+			if(u.getRole() != Role.ADMINISTRATOR  && u.isDeleted() == false )
 				allUsers.add(u);
 		}
 		return allUsers;
@@ -259,6 +269,9 @@ public class UsersDAO {
 		  case "Bronze":
 			retVal = getBronze();
 			  break;
+		  case "Suspicious":
+				retVal = getSuspicious();
+				  break;
 		  default:
 			retVal = getUsers();
 		}
@@ -272,6 +285,22 @@ public class UsersDAO {
 		for (User u : users.values()) {
 			if(u.getUsername().equals(username))
 				u.setDeleted(true);
+			allUsers.add(u);
+		}
+		users = new LinkedHashMap<String, User>();
+		for (User u : allUsers) {
+			users.put(u.getUsername(), u);
+		}
+		serialize();
+		return getUsers();
+	}
+	
+	public List<User> blockUser(String username){
+		List<User> allUsers = new ArrayList<User>();
+		
+		for (User u : users.values()) {
+			if(u.getUsername().equals(username))
+				u.setBlocked(!u.isBlocked());
 			allUsers.add(u);
 		}
 		users = new LinkedHashMap<String, User>();
@@ -316,5 +345,21 @@ public class UsersDAO {
 			users.put(u.getUsername(), u);
 		}
 		serialize();
+	}
+
+	public void setSuspicious(String customer) {
+		load();
+		List<User> allUsers = new ArrayList<User>();
+		for (User u : users.values()) {
+			if(u.getUsername().equals(customer))
+					u.setSuspicious(true);
+			allUsers.add(u);
+		}
+		users = new LinkedHashMap<String, User>();
+		for (User u : allUsers) {
+			users.put(u.getUsername(), u);
+		}
+		serialize();
+		
 	}
 }

@@ -91,6 +91,24 @@ public class CommentsService {
 		
 	}
 	
+	@GET
+	@Path("/getCommentsForAdmin")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Comment> getCommentsForAdmin(@QueryParam("id") String restaurantId){
+		CommentsDAO dao = (CommentsDAO) ctx.getAttribute("comments");
+		
+		return dao.getCommentsForAdmin(restaurantId);
+		
+	}
+	
+	@POST
+	@Path("/removeComment")
+	@Consumes(MediaType.TEXT_PLAIN)
+	public void removeComment(String comment) {
+		CommentsDAO dao = (CommentsDAO) ctx.getAttribute("comments");
+		dao.removeComment(comment);
+	}
+	
 	
 	@POST
 	@Path("/addComment")

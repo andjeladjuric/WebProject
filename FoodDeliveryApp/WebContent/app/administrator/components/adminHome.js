@@ -5,29 +5,34 @@ function fixDate(users) {
 	return users;
 }
 
-Vue.component("administrator-home",{
-    data: function(){
-        return{
-			users:[],
-			selectedUser : {
+Vue.component("administrator-users", {
+	data: function () {
+		return {
+			users: [],
+			selectedUser: {
 				username : ''
 			},
-			searchInput : '',
-			selectedFilter : 'All',
-			selectedOptionForSort : '',
-			newUser : {},
-			errorMessage : '',
-			gender : ''
-        }
-    }
-    ,
-    template: `
+			searchInput: '',
+			selectedFilter: 'All',
+			selectedOptionForSort: '',
+			newUser: {},
+			errorMessage: '',
+			gender: '',
+			canBlock: false,
+			canUnblock: false,
+			medal : "",
+			restaurant : '',
+			matches : []
+		}
+	}
+	,
+	template: `
 <div>
 <div class="container-fluid mt-3">
         <div class="row">
             <!--Card for table of users-->
             <div class="col-lg-8 col-sm-11 mx-auto">
-                <div class="card text-center shadow-sm mb-3" style="height: 600px;">
+                <div class="card noHover text-center shadow-sm mb-3" style="height: 600px;">
                     <h6 class="card-subtitle mb-3 mt-3 text-muted">List of Users</h6>
                     <div class="row mt-3 mx-2 ">
                             <div class="col-3 mx-auto">
@@ -40,8 +45,9 @@ Vue.component("administrator-home",{
                                         <option>Golden</option>
                                         <option>Silver</option>
                                         <option>Bronze</option>
+                                        <option>Suspicious</option>
                                     </select>
-                                    <label>Filter By</label>
+                                    <label style="height: 35px;">Filter By</label>
                                 </div>
                             </div>
                             <div class="col-3 mx-auto">
@@ -56,20 +62,20 @@ Vue.component("administrator-home",{
                                         <option>Points Asc</option>
                                         <option>Points Desc</option>
                                     </select>
-                                    <label>Sort By</label>
+                                    <label style="height: 35px;">Sort By</label>
                                 </div>
                             </div>
                             <div class="col-4 mx-auto">
                                 <div class="input-group mt-2">
-                                    <input type="text" class="form-control" v-model="searchInput" v-on:change="doSearch()">
-                                    <button class="btn buttonGroup active" type="button" v-on:click="doSearch()"><i class="fas fa-search"></i></button>     
+                                    <input type="text" class="form-control" v-model="searchInput" v-on:keyup="doSearch">
+                                    <button class="btn buttonGroup active" type="button" style="height: 35px;" v-on:click="doSearch"><i class="fas fa-search"></i></button>     
                                 </div>
                             </div>
                         </div>
                     <div class="row mt-3" style="height: 400px;">
                         <div class="col-11 mx-auto">
                             <div style="height:350px; overflow:auto;">
-                                <table class="table table-hover">
+                                <table class="table table-hover tableOfUsers">
                                     <thead>
                                         <tr>
                                             <th scope="col">Name</th>
@@ -78,10 +84,14 @@ Vue.component("administrator-home",{
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr v-for="u in users" v-on:click="selectUser(u)" v-bind:class="{selected : selectedUser.username===u.username}">
+                                        <tr v-for="u in users" v-on:click="selectUser(u)" v-bind:class="{selected : selectedUser.username===u.username}" >
                                             <td>{{u.name}}</td>
                                             <td>{{u.surname}}</td>
-                                            <td>{{u.username}}</td>
+                                            <td style="text-align : right">{{u.username}}
+                                            	<i class="fa fa-ban" v-if="u.blocked == true" id="blocked"></i>
+		                                        <i class="fas fa-check " v-if="u.blocked == false && u.suspicious == false" id="regular"></i>
+		                                        <i class="fas fa-exclamation-circle"  v-if="u.suspicious == true && u.blocked == false" id="suspicious"></i>
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -90,12 +100,15 @@ Vue.component("administrator-home",{
                     </div>
                     <div class="row mb-3">
                         <div class="col-4">
-                            <button class="btn buttonGroup" v-on:click="remove()"><i class="fa fa-trash"></i> Remove</button>
+                            <button class="btn buttonGroup" data-bs-toggle="modal" data-bs-target="#deleteModal" v-bind:disabled="selectedUser.username === ''"><i class="fa fa-trash"></i> Remove</button>
                         </div>
-                        <div class="col-4">
-                            <button class="btn buttonGroup active"><i class="fa fa-ban"></i>
-                                Block</button>
-                        </div>
+                    
+						<div class="col-4">
+							<button class="btn buttonGroup active" v-on:click="blockUser()" v-if="canBlock"><i class="fa fa-ban"></i>
+							Block</button>
+							<button class="btn buttonGroup active" v-on:click="blockUser()" v-if="canUnblock"><i class="fa fa-ban"></i>
+								Unblock</button>
+						</div>
                         <div class="col-4">
                             <button class="btn buttonGroup" data-bs-toggle="modal" data-bs-target="#menagerModal"><i class="fa fa-plus"></i>
                                 Add</button>
@@ -105,8 +118,8 @@ Vue.component("administrator-home",{
             </div>
 
             <!--Card for user info-->
-            <div class="col-lg-4 col-sm-11 mx-auto">
-                <div class="card text-center shadow-sm mb-3" style="height: 600px;">
+            <div class="col-lg-4 col-sm-11 mx-auto" v-if="selectedUser.username != ''">
+                <div class="card noHover text-center shadow-sm mb-3" style="height: 600px;">
                     <div class="row" style="height: 250px;">
                         <div class="col-10 mx-auto bg-light mt-2" style="border-radius: 30px;">
                             <img src="img/profile_picture.png" class="card-img-top"
@@ -115,7 +128,7 @@ Vue.component("administrator-home",{
                     </div>
                     <div class="row mt-2">
                         <div class="col-11 mx-auto">
-                            <h4>{{selectedUser.name}} {{selectedUser.surname}}( {{selectedUser.role}} )</h4>
+                            <h4 class="mt-2">{{selectedUser.name}} {{selectedUser.surname}}( {{selectedUser.role}} )</h4>
                             <hr>
                         </div>
                     </div>
@@ -133,10 +146,20 @@ Vue.component("administrator-home",{
                                 <hr>
                         </div>
                     </div>
-                    <div class="row mt-2">
+                    <div class="row mt-2" v-if="selectedUser.role === 'CUSTOMER'">
                         <div class="col-11 mx-auto">
-                            <p>Points: {{selectedUser.points}}
+                            <p>Points: {{selectedUser.points}} 
+                            	<i class="fas fa-medal" style="color:brown;" v-if="medal == 'BRONZE'"></i>
+                                    <i class="fas fa-medal" style="color:gold;" v-if="medal == 'GOLD'"></i>
+                                    <i class="fas fa-medal" v-if="medal == 'SILVER'"></i>
                             <p>
+                                <hr>
+                        </div>
+                    </div>
+                     <div class="row mt-2" v-if="selectedUser.role === 'MANAGER'">
+                        <div class="col-11 mx-auto">
+                            <p v-if="restaurant != ''">Restaurant: "{{restaurant}}" </p>
+                            <p v-if="restaurant == ''">No Restaurant </p>
                                 <hr>
                         </div>
                     </div>
@@ -259,124 +282,215 @@ Vue.component("administrator-home",{
                 </div>
             </div>
         </div>
-</div>
+        
+        <!-- Delete item modal -->
+        <div id="deleteModal" class="modal fade">
+            <div class="modal-dialog modal-confirm">
+                <div class="modal-content">
+                    <div class="modal-header flex-column">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <div class="icon-box">
+                        <i class="fas fa-trash mt-3 mb-3"></i>
+                        </div>						
+                        <h4 class="modal-title w-100 mt-5">Are you sure?</h4>	
+                    </div>
+                    <div class="modal-body">
+                        <p>Do you really want to delete user "{{selectedUser.username}}"? This process cannot be undone.</p>
+                    </div>
+                    <div class="modal-footer justify-content-center">
+                        <button type="button" class="btn" data-bs-dismiss="modal" @click="remove">Confirm</button>
+                        <button type="button" class="btn" data-bs-dismiss="modal" style="background: #ecbeb1">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+       </div>
 `
 	, mounted() {
 		axios
 			.get("rest/users/getUsers")
-            .then((response) =>( this.users = fixDate(response.data)));
-    },
-    methods: {
-		selectUser : function(user) {
-    			this.selectedUser = user;
-    	},
-		doSearch : function() {
-		let matches = [];
-	    for(var u of this.users) {
-	        if (u.name.toLowerCase().search(searchInput.toLowerCase()) || u.surname.toLowerCase().contains(searchInput.toLowerCase()) || u.username.toLowerCase().contains(searchInput.toLowerCase()) ) {
-	            matches.add(u);
-	        }	        
-	       }
-	      	this.users = matches;
-    	},
-		filter : function() {
-    		axios
-			.post('rest/users/filter', this.selectedFilter,
-        	{ headers: {
-        		'Content-type': 'text/plain',
-        		}
-        	})
-			.then(response => (this.users = fixDate(response.data)));
-    	},
-		sort : function() {
-		
-		switch(this.selectedOptionForSort) {
-		   case "Name Desc":
-			  this.users.sort((a, b) => (a.name < b.name ? 1 : -1));
-		    break;
-		  case "Surname Asc":
-			  this.users.sort((a, b) => (a.surname > b.surname ? 1 : -1));
-		    break;
-		  case "Surname Desc":
-			  this.users.sort((a, b) => (a.surname < b.surname ? 1 : -1));
-		    break;
-		  case "Username Asc":
-			  this.users.sort((a, b) => (a.username > b.username ? 1 : -1));
-		    break;
-		  case "Username Desc":
-			  this.users.sort((a, b) => (a.username < b.username ? 1 : -1));
-		    break;
-		  case "Points Asc":
-			  this.users.sort((a, b) => (a.points > b.points ? 1 : -1));
-			break;
-		   case "Points Desc":
-			  this.users.sort((a, b) => (a.points < b.points ? 1 : -1));
-			break;
-		  default:
-			  this.users.sort((a, b) => (a.name > b.name ? 1 : -1));
-		}
-    		
-    	},addUser : function() {
+			.then((response) => 
+				this.users = fixDate(response.data))
+	},
+	methods: {
+		selectUser: function (user) {
+			this.selectedUser = user;
+			this.medal = this.selectedUser.type.name;
+			
+			if (this.selectedUser.blocked){
+				this.canUnblock = true;
+				this.canBlock = false;}
+			else{
+				this.canBlock = true;
+				this.canUnblock = false;
+				}
+			if(user.role == 'MANAGER'){
+			axios
+                .get("rest/restaurants/getRestaurantName", {
+                    params: { id: this.selectedUser.username },
+                })
+                 .then((response) => (this.restaurant = response.data));
+             }
+		},
+		doSearch: function () {
+				axios
+				.post('rest/users/filter', this.selectedFilter,
+					{
+						headers: {
+							'Content-type': 'text/plain',
+						}
+					})
+				.then(response => {
+					this.users = fixDate(response.data);
+					this.matches = [];
+					for (var u of this.users) {
+						if (u.name.toLowerCase().match(this.searchInput.toLowerCase()) ||
+							u.surname.toLowerCase().match(this.searchInput.toLowerCase()) ||
+							u.username.toLowerCase().match(this.searchInput.toLowerCase())) {
+							this.matches.push(u);
+						}
+					}
+					this.users = this.matches;
+				});
+				
+		},
+		filter: function () {
+			axios
+				.post('rest/users/filter', this.selectedFilter,
+					{
+						headers: {
+							'Content-type': 'text/plain',
+						}
+					})
+				.then(response => (this.users = fixDate(response.data)))
+				.then((response) => (this.selectedUser = { username : ''}));
+		},
+		sort: function () {
 
-			if(this.newUser.username =='' || this.newUser.password=='' || this.newUser.name =='' || this.newUser.surname=='' || this.gender =='' || this.newUser.role == '')
-			{
-				this.errorMessage="All fields are required!";
+			switch (this.selectedOptionForSort) {
+				case "Name Desc":
+					this.users.sort((a, b) => (a.name < b.name ? 1 : -1));
+					break;
+				case "Surname Asc":
+					this.users.sort((a, b) => (a.surname > b.surname ? 1 : -1));
+					break;
+				case "Surname Desc":
+					this.users.sort((a, b) => (a.surname < b.surname ? 1 : -1));
+					break;
+				case "Username Asc":
+					this.users.sort((a, b) => (a.username > b.username ? 1 : -1));
+					break;
+				case "Username Desc":
+					this.users.sort((a, b) => (a.username < b.username ? 1 : -1));
+					break;
+				case "Points Asc":
+					this.users.sort((a, b) => (a.points > b.points ? 1 : -1));
+					break;
+				case "Points Desc":
+					this.users.sort((a, b) => (a.points < b.points ? 1 : -1));
+					break;
+				default:
+					this.users.sort((a, b) => (a.name > b.name ? 1 : -1));
 			}
-			else
-			{
+
+		}, addUser: function () {
+
+			if (this.newUser.username == '' || this.newUser.password == '' || this.newUser.name == '' || this.newUser.surname == '' || this.gender == '' || this.newUser.role == '') {
+				this.errorMessage = "All fields are required!";
+			}
+			else {
 				let selectedGender;
 				if (this.gender == 'male') {
 					selectedGender = 0;
 				} else {
 					selectedGender = 1;
 				}
-				
+
 				this.newUser.gender = selectedGender;
-    		
-    		axios 
-    			.post('rest/users/addNewUser', JSON.stringify(this.newUser),
-        	{ headers: {
-        		'Content-type': 'application/json',
-        		}
-        	})
-    			.then(response => {
-    				if (response.data == "Username taken") {
-						this.errorMessage="Username is already taken.";
-					}
-					else {
-						location.href = response.data; 
-    				}
-				})
-				.catch(err => { 
-                    this.errorMessage="error";
-                })
+
+				axios
+					.post('rest/users/addNewUser', JSON.stringify(this.newUser),
+						{
+							headers: {
+								'Content-type': 'application/json',
+							}
+						})
+					.then(response => {
+						if (response.data == "Username taken") {
+							this.errorMessage = "Username is already taken.";
+						}
+						else {
+							window.location.reload();
+							this.showMess();
+						}
+					})
+					.catch(err => {
+						this.errorMessage = "error";
+					})
+					
 			}
-    		
-    	},
-		signalChange : function()
-		{
-			this.errorMessage="";
+
 		},
-		remove : function()
-		{
-				if(this.selectedUser.username == '' ){
-					alert("You must select a user.");
-				}else{
-					let user = this.selectedUser;
-					axios 
-	    			.post('rest/users/removeUser', this.selectedUser.username,
-	        	{ headers: {
-	        		'Content-type': 'text/plain',
-	        		}
-	        	})
-	    			.then((response) =>( this.users = fixDate(response.data)));
-				}			
-		}  
-    },
-    filters: {
-    	dateFormat: function (value, format) {
-    		var parsed = moment(value);
-    		return parsed.format(format);
-    	}
-	}
+		showMess: function(){
+			const Toast = Swal.mixin({
+	        		toast: true,
+	        		text: "Succesfully added!",
+	        		position: "bottom-end",
+	        		timer: 3000,
+	        		showConfirmButton: false,
+	        		});
+	        		Toast.fire({icon: "success"});
+		},
+		signalChange: function () {
+			this.errorMessage = "";
+		},
+		remove: function () {
+				axios
+					.post('rest/users/removeUser', this.selectedUser.username,
+						{
+							headers: {
+								'Content-type': 'text/plain',
+							}
+						})
+					.then((response) => (this.users = fixDate(response.data)))
+					.then((response) => {
+						(this.selectedUser = { username : ''});
+						this.showToast();
+						});
+		},
+		blockUser: function () {
+			axios
+				.post('rest/users/blockUser', this.selectedUser.username,
+					{
+						headers: {
+							'Content-type': 'text/plain',
+						}
+					})
+				.then((response) => {
+					this.users = fixDate(response.data);
+					this.canBlock = !this.canBlock;
+					this.canUnblock = !this.canUnblock;
+				});
+		},
+        showToast: function(){
+        	const Toast = Swal.mixin({
+        		toast: true,
+        		text: "Succesfully deleted!",
+        		position: "bottom-end",
+        		timer: 2000,
+        		showConfirmButton: false,
+        		});
+        	Toast.fire({icon: "success"});
+        }
+	},
+	filters: {
+		dateFormat: function (value, format) {
+			var parsed = moment(value);
+			return parsed.format(format);
+		}
+	},
+    components:{
+    	swal
+    }
 });

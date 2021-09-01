@@ -24,6 +24,7 @@ import beans.User;
 import beans.Role;
 import beans.State;
 import beans.OrderStatus;
+import dao.CartDAO;
 import dao.CommentsDAO;
 import dao.OrderDAO;
 import dao.OrderRequestDAO;
@@ -262,6 +263,16 @@ public class OrderService {
 		
 		return dao.canComment(restaurantId, user);
 		
+	}
+	
+	@POST
+	@Path("/restaurantDeleted")
+	@Consumes(MediaType.TEXT_PLAIN)
+	public void restaurantDeleted(String id) {
+		OrderDAO dao = (OrderDAO) ctx.getAttribute("orders");
+		
+		dao.restaurantDeleted(id);
+
 	}
 	
 }

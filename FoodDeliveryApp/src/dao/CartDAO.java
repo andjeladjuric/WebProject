@@ -116,5 +116,23 @@ public class CartDAO {
 		serialize();
 		return getCart(user);
 	}
+	
+	public void restaurantDeleted(String id) {
+		List<ShoppingCart> newCarts = new ArrayList<ShoppingCart>();
+		List<Item> items = new ArrayList<Item>();
+		
+		for(ShoppingCart cart : carts) {
+				for(Item i : cart.getItems()) {
+					if(!i.getRestaurantId().equals(id)) {
+						items.add(i);
+					}
+				cart.setItems(items);
+				cart.setTotalPrice();
+			}
+			newCarts.add(cart);
+		}
+		carts = newCarts;
+		serialize();
+	}
 
 }

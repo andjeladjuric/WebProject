@@ -67,7 +67,7 @@ public class CommentsDAO {
 		List<Comment> commentsForRestaurant = new ArrayList<Comment>();
 		
 		for(Comment c : comments) {
-			if(c.getRestaurantId().equals(restaurantId))
+			if(c.getRestaurantId().equals(restaurantId) && !c.isDeleted())
 				commentsForRestaurant.add(c);
 		}
 	
@@ -110,14 +110,35 @@ public class CommentsDAO {
 		List<Comment> commentsForRestaurant = new ArrayList<Comment>();
 		
 		for(Comment c : comments) {
-			if(c.getRestaurantId().equals(restaurantId) && (c.getStatus() == State.ACCEPTED))
+			if(c.getRestaurantId().equals(restaurantId) && (c.getStatus() == State.ACCEPTED) && !c.isDeleted())
 				commentsForRestaurant.add(c);
 		}
 	
 		return commentsForRestaurant;
 		
 	}
+
+	public List<Comment> getCommentsForAdmin(String restaurantId) {
+		List<Comment> commentsForRestaurant = new ArrayList<Comment>();
+		
+		for(Comment c : comments) {
+			if(c.getRestaurantId().equals(restaurantId) && !c.isDeleted())
+				commentsForRestaurant.add(c);
+		}
 	
+		return commentsForRestaurant;
+	}
+
+	public void removeComment(String comment) {
+		for(Comment c : comments) {
+			if(c.getId().equals(comment)) {
+				c.setDeleted(true);
+				break;
+			}
+		}
+		serialize();
+		
+	}
 	
 	
 }

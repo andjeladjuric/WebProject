@@ -3,8 +3,10 @@ package dao;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -12,6 +14,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import beans.Item;
 import beans.Restaurant;
 import beans.User;
+import beans.WorkingHours;
 import dto.RestaurantDTO;
 
 public class RestaurantDAO {
@@ -56,13 +59,19 @@ public class RestaurantDAO {
 	}
 	
 	public List<Restaurant> findAll(){
-		return restaurants;
+		List<Restaurant> allRestaurants = new ArrayList<Restaurant>();
+		
+		for(Restaurant r : restaurants)
+			if(r.isDeleted() == false)
+				allRestaurants.add(r);
+		
+		return allRestaurants;
 	}
 	
 	public boolean hasRestaurant(String username) {
 		
 		for(Restaurant r : restaurants) {
-			if(r.getMenagerId().equals(username)) {
+			if(r.getMenagerId().equals(username) && !r.isDeleted()) {
 				return true;
 			}
 		}
@@ -78,7 +87,7 @@ public class RestaurantDAO {
 	
 	public Restaurant getById(String id) {
 		for(Restaurant r : restaurants) {
-			if(r.getId().equals(id))
+			if(r.getId().equals(id) && !r.isDeleted())
 				return r;
 		}
 		return null;
@@ -86,12 +95,39 @@ public class RestaurantDAO {
 
 	public Restaurant getRestaurantByManager(String username) {
 		for(Restaurant r : restaurants) {
-			if(r.getMenagerId().equals(username))
+			if(r.getMenagerId().equals(username) && !r.isDeleted())
 				return r;
 		}
 	
 		return null;
 	}
+	
+	public void deleteRestaurant(String id) {
+		for(Restaurant r : restaurants) {
+			if(r.getId().equals(id))
+				r.setDeleted(true);
+		}
+		serialize();
+	}
+	
+	public boolean isOpened(String id) {
+		
+		Restaurant restaurant = getById(id);
+		Calendar calendar = Calendar.getInstance();
+		int day = calendar.get(Calendar.DAY_OF_WEEK);
+		LocalTime now = LocalTime.now();
+		
+		for(WorkingHours w : restaurant.getWorkingHours()) {
+			if(w.getDayOfWeek() == day) {
+				if(w.isClosed()) 
+					return false;
+				if(now.compareTo(w.getStartTime()) >= 0 && now.compareTo(w.getEndTime()) < 0) 
+					return true;
+			}
+		}
+		return false;
+	}
+
 }
 
 

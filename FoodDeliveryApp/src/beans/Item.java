@@ -11,7 +11,6 @@ public class Item {
 	private double price;
 	private ItemType type;
 	private double amount;
-	private double points;
 	private String description;
 	private String imagePath;
 	private String restaurantId;
@@ -45,14 +44,6 @@ public class Item {
 
 	public void setRestaurant(String restaurant) {
 		this.restaurant = restaurant;
-	}
-
-	public double getPoints() {
-		return points;
-	}
-
-	public void setPoints(double points) {
-		this.points = points;
 	}
 
 	public Category getCategory() {

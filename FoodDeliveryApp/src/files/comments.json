@@ -5,7 +5,8 @@
         "restaurantId": "3",
         "text": "Odlicno sve, nemam zamerke radan",
         "stars": 5,
-        "status": "ACCEPTED"
+        "status": "ACCEPTED",
+        "deleted": false
     },
     {
         "id": "3",
@@ -13,7 +14,8 @@
         "restaurantId": "3",
         "text": "Odlicno sve, nemam zamerke zlatko",
         "stars": 5,
-        "status": "UNDEFINED"
+        "status": "UNDEFINED",
+        "deleted": false
     },
     {
         "id": "2",
@@ -21,6 +23,7 @@
         "restaurantId": "3",
         "text": "Odlicno sve, nemam zamerke jelena",
         "stars": 5,
-        "status": "ACCEPTED"
+        "status": "ACCEPTED",
+        "deleted": false
     }
 ]
