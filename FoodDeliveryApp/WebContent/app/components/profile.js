@@ -324,19 +324,37 @@ Vue.component("currentUser-profile", {
             reader.readAsDataURL(file);
         },
 
+        alreadyExists() {
+            for (let i of this.images) {
+                if (i.imageCode === this.editedImageSrc) {
+                    return i;
+                }
+            }
+
+            return null;
+        },
+
         sendImgToBack: function () {
-            axios
-                .post("rest/images/addNewImage", this.editedImageSrc, {
-                    headers: {
-                        "Content-type": "text/plain",
-                    },
-                })
-                .then((response) => {
-                    this.editedImg = response.data;
-                    this.currentUser.profilePicPath = this.editedImg.imageId;
-                    this.updateProfile();
-                    window.location.reload();
-                });
+            var image = this.alreadyExists();
+            if (image !== null) {
+                this.currentUser.profilePicPath = image.imageId;
+                this.updateProfile();
+                window.location.reload();
+            } else {
+                axios
+                    .post("rest/images/addNewImage", this.editedImageSrc, {
+                        headers: {
+                            "Content-type": "text/plain",
+                        },
+                    })
+                    .then((response) => {
+                        this.editedImg = response.data;
+                        this.currentUser.profilePicPath =
+                            this.editedImg.imageId;
+                        this.updateProfile();
+                        window.location.reload();
+                    });
+            }
         },
 
         getImage: function () {

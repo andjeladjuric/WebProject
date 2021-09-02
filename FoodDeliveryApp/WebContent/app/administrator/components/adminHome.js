@@ -1,32 +1,32 @@
 function fixDate(users) {
-	for (var u of users) {
-		u.dateOfBirth = new Date(parseInt(u.dateOfBirth));
-	}
-	return users;
+    for (var u of users) {
+        u.dateOfBirth = new Date(parseInt(u.dateOfBirth));
+    }
+    return users;
 }
 
 Vue.component("administrator-users", {
-	data: function () {
-		return {
-			users: [],
-			selectedUser: {
-				username : ''
-			},
-			searchInput: '',
-			selectedFilter: 'All',
-			selectedOptionForSort: '',
-			newUser: {},
-			errorMessage: '',
-			gender: '',
-			canBlock: false,
-			canUnblock: false,
-			medal : "",
-			restaurant : '',
-			matches : []
-		}
-	}
-	,
-	template: `
+    data: function () {
+        return {
+            users: [],
+            selectedUser: {
+                username: "",
+            },
+            searchInput: "",
+            selectedFilter: "All",
+            selectedOptionForSort: "",
+            newUser: {},
+            errorMessage: "",
+            gender: "",
+            canBlock: false,
+            canUnblock: false,
+            medal: "",
+            restaurant: "",
+            matches: [],
+            images: [],
+        };
+    },
+    template: `
 <div>
 <div class="container-fluid mt-3">
         <div class="row">
@@ -122,7 +122,7 @@ Vue.component("administrator-users", {
                 <div class="card noHover text-center shadow-sm mb-3" style="height: 600px;">
                     <div class="row" style="height: 250px;">
                         <div class="col-10 mx-auto bg-light mt-2" style="border-radius: 30px;">
-                            <img src="img/profile_picture.png" class="card-img-top"
+                            <img v-bind:src="getImage()" class="card-img-top"
                                 style="height: 250px; width: 250px;" alt="...">
                         </div>
                     </div>
@@ -306,191 +306,213 @@ Vue.component("administrator-users", {
         </div>
         
        </div>
-`
-	, mounted() {
-		axios
-			.get("rest/users/getUsers")
-			.then((response) => 
-				this.users = fixDate(response.data))
-	},
-	methods: {
-		selectUser: function (user) {
-			this.selectedUser = user;
-			this.medal = this.selectedUser.type.name;
-			
-			if (this.selectedUser.blocked){
-				this.canUnblock = true;
-				this.canBlock = false;}
-			else{
-				this.canBlock = true;
-				this.canUnblock = false;
-				}
-			if(user.role == 'MANAGER'){
-			axios
-                .get("rest/restaurants/getRestaurantName", {
-                    params: { id: this.selectedUser.username },
+`,
+    mounted() {
+        axios
+            .get("rest/users/getUsers")
+            .then((response) => (this.users = fixDate(response.data)));
+
+        axios
+            .get("rest/images/getAllImages")
+            .then((response) => (this.images = response.data));
+    },
+    methods: {
+        selectUser: function (user) {
+            this.selectedUser = user;
+            this.medal = this.selectedUser.type.name;
+
+            if (this.selectedUser.blocked) {
+                this.canUnblock = true;
+                this.canBlock = false;
+            } else {
+                this.canBlock = true;
+                this.canUnblock = false;
+            }
+            if (user.role == "MANAGER") {
+                axios
+                    .get("rest/restaurants/getRestaurantName", {
+                        params: { id: this.selectedUser.username },
+                    })
+                    .then((response) => (this.restaurant = response.data));
+            }
+        },
+        doSearch: function () {
+            axios
+                .post("rest/users/filter", this.selectedFilter, {
+                    headers: {
+                        "Content-type": "text/plain",
+                    },
                 })
-                 .then((response) => (this.restaurant = response.data));
-             }
-		},
-		doSearch: function () {
-				axios
-				.post('rest/users/filter', this.selectedFilter,
-					{
-						headers: {
-							'Content-type': 'text/plain',
-						}
-					})
-				.then(response => {
-					this.users = fixDate(response.data);
-					this.matches = [];
-					for (var u of this.users) {
-						if (u.name.toLowerCase().match(this.searchInput.toLowerCase()) ||
-							u.surname.toLowerCase().match(this.searchInput.toLowerCase()) ||
-							u.username.toLowerCase().match(this.searchInput.toLowerCase())) {
-							this.matches.push(u);
-						}
-					}
-					this.users = this.matches;
-				});
-				
-		},
-		filter: function () {
-			axios
-				.post('rest/users/filter', this.selectedFilter,
-					{
-						headers: {
-							'Content-type': 'text/plain',
-						}
-					})
-				.then(response => (this.users = fixDate(response.data)))
-				.then((response) => (this.selectedUser = { username : ''}));
-		},
-		sort: function () {
+                .then((response) => {
+                    this.users = fixDate(response.data);
+                    this.matches = [];
+                    for (var u of this.users) {
+                        if (
+                            u.name
+                                .toLowerCase()
+                                .match(this.searchInput.toLowerCase()) ||
+                            u.surname
+                                .toLowerCase()
+                                .match(this.searchInput.toLowerCase()) ||
+                            u.username
+                                .toLowerCase()
+                                .match(this.searchInput.toLowerCase())
+                        ) {
+                            this.matches.push(u);
+                        }
+                    }
+                    this.users = this.matches;
+                });
+        },
+        filter: function () {
+            axios
+                .post("rest/users/filter", this.selectedFilter, {
+                    headers: {
+                        "Content-type": "text/plain",
+                    },
+                })
+                .then((response) => (this.users = fixDate(response.data)))
+                .then((response) => (this.selectedUser = { username: "" }));
+        },
+        sort: function () {
+            switch (this.selectedOptionForSort) {
+                case "Name Desc":
+                    this.users.sort((a, b) => (a.name < b.name ? 1 : -1));
+                    break;
+                case "Surname Asc":
+                    this.users.sort((a, b) => (a.surname > b.surname ? 1 : -1));
+                    break;
+                case "Surname Desc":
+                    this.users.sort((a, b) => (a.surname < b.surname ? 1 : -1));
+                    break;
+                case "Username Asc":
+                    this.users.sort((a, b) =>
+                        a.username > b.username ? 1 : -1
+                    );
+                    break;
+                case "Username Desc":
+                    this.users.sort((a, b) =>
+                        a.username < b.username ? 1 : -1
+                    );
+                    break;
+                case "Points Asc":
+                    this.users.sort((a, b) => (a.points > b.points ? 1 : -1));
+                    break;
+                case "Points Desc":
+                    this.users.sort((a, b) => (a.points < b.points ? 1 : -1));
+                    break;
+                default:
+                    this.users.sort((a, b) => (a.name > b.name ? 1 : -1));
+            }
+        },
+        addUser: function () {
+            if (
+                this.newUser.username == "" ||
+                this.newUser.password == "" ||
+                this.newUser.name == "" ||
+                this.newUser.surname == "" ||
+                this.gender == "" ||
+                this.newUser.role == ""
+            ) {
+                this.errorMessage = "All fields are required!";
+            } else {
+                let selectedGender;
+                if (this.gender == "male") {
+                    selectedGender = 0;
+                } else {
+                    selectedGender = 1;
+                }
 
-			switch (this.selectedOptionForSort) {
-				case "Name Desc":
-					this.users.sort((a, b) => (a.name < b.name ? 1 : -1));
-					break;
-				case "Surname Asc":
-					this.users.sort((a, b) => (a.surname > b.surname ? 1 : -1));
-					break;
-				case "Surname Desc":
-					this.users.sort((a, b) => (a.surname < b.surname ? 1 : -1));
-					break;
-				case "Username Asc":
-					this.users.sort((a, b) => (a.username > b.username ? 1 : -1));
-					break;
-				case "Username Desc":
-					this.users.sort((a, b) => (a.username < b.username ? 1 : -1));
-					break;
-				case "Points Asc":
-					this.users.sort((a, b) => (a.points > b.points ? 1 : -1));
-					break;
-				case "Points Desc":
-					this.users.sort((a, b) => (a.points < b.points ? 1 : -1));
-					break;
-				default:
-					this.users.sort((a, b) => (a.name > b.name ? 1 : -1));
-			}
+                this.newUser.gender = selectedGender;
 
-		}, addUser: function () {
+                axios
+                    .post(
+                        "rest/users/addNewUser",
+                        JSON.stringify(this.newUser),
+                        {
+                            headers: {
+                                "Content-type": "application/json",
+                            },
+                        }
+                    )
+                    .then((response) => {
+                        if (response.data == "Username taken") {
+                            this.errorMessage = "Username is already taken.";
+                        } else {
+                            window.location.reload();
+                            this.showMess();
+                        }
+                    })
+                    .catch((err) => {
+                        this.errorMessage = "error";
+                    });
+            }
+        },
+        showMess: function () {
+            const Toast = Swal.mixin({
+                toast: true,
+                text: "Succesfully added!",
+                position: "bottom-end",
+                timer: 3000,
+                showConfirmButton: false,
+            });
+            Toast.fire({ icon: "success" });
+        },
+        signalChange: function () {
+            this.errorMessage = "";
+        },
+        remove: function () {
+            axios
+                .post("rest/users/removeUser", this.selectedUser.username, {
+                    headers: {
+                        "Content-type": "text/plain",
+                    },
+                })
+                .then((response) => (this.users = fixDate(response.data)))
+                .then((response) => {
+                    this.selectedUser = { username: "" };
+                    this.showToast();
+                });
+        },
+        blockUser: function () {
+            axios
+                .post("rest/users/blockUser", this.selectedUser.username, {
+                    headers: {
+                        "Content-type": "text/plain",
+                    },
+                })
+                .then((response) => {
+                    this.users = fixDate(response.data);
+                    this.canBlock = !this.canBlock;
+                    this.canUnblock = !this.canUnblock;
+                });
+        },
+        showToast: function () {
+            const Toast = Swal.mixin({
+                toast: true,
+                text: "Succesfully deleted!",
+                position: "bottom-end",
+                timer: 2000,
+                showConfirmButton: false,
+            });
+            Toast.fire({ icon: "success" });
+        },
+        getImage: function () {
+            for (let i of this.images) {
+                if (i.imageId === this.selectedUser.profilePicPath)
+                    return i.imageCode;
+            }
 
-			if (this.newUser.username == '' || this.newUser.password == '' || this.newUser.name == '' || this.newUser.surname == '' || this.gender == '' || this.newUser.role == '') {
-				this.errorMessage = "All fields are required!";
-			}
-			else {
-				let selectedGender;
-				if (this.gender == 'male') {
-					selectedGender = 0;
-				} else {
-					selectedGender = 1;
-				}
-
-				this.newUser.gender = selectedGender;
-
-				axios
-					.post('rest/users/addNewUser', JSON.stringify(this.newUser),
-						{
-							headers: {
-								'Content-type': 'application/json',
-							}
-						})
-					.then(response => {
-						if (response.data == "Username taken") {
-							this.errorMessage = "Username is already taken.";
-						}
-						else {
-							window.location.reload();
-							this.showMess();
-						}
-					})
-					.catch(err => {
-						this.errorMessage = "error";
-					})
-					
-			}
-
-		},
-		showMess: function(){
-			const Toast = Swal.mixin({
-	        		toast: true,
-	        		text: "Succesfully added!",
-	        		position: "bottom-end",
-	        		timer: 3000,
-	        		showConfirmButton: false,
-	        		});
-	        		Toast.fire({icon: "success"});
-		},
-		signalChange: function () {
-			this.errorMessage = "";
-		},
-		remove: function () {
-				axios
-					.post('rest/users/removeUser', this.selectedUser.username,
-						{
-							headers: {
-								'Content-type': 'text/plain',
-							}
-						})
-					.then((response) => (this.users = fixDate(response.data)))
-					.then((response) => {
-						(this.selectedUser = { username : ''});
-						this.showToast();
-						});
-		},
-		blockUser: function () {
-			axios
-				.post('rest/users/blockUser', this.selectedUser.username,
-					{
-						headers: {
-							'Content-type': 'text/plain',
-						}
-					})
-				.then((response) => {
-					this.users = fixDate(response.data);
-					this.canBlock = !this.canBlock;
-					this.canUnblock = !this.canUnblock;
-				});
-		},
-        showToast: function(){
-        	const Toast = Swal.mixin({
-        		toast: true,
-        		text: "Succesfully deleted!",
-        		position: "bottom-end",
-        		timer: 2000,
-        		showConfirmButton: false,
-        		});
-        	Toast.fire({icon: "success"});
-        }
-	},
-	filters: {
-		dateFormat: function (value, format) {
-			var parsed = moment(value);
-			return parsed.format(format);
-		}
-	},
-    components:{
-    	swal
-    }
+            return "";
+        },
+    },
+    filters: {
+        dateFormat: function (value, format) {
+            var parsed = moment(value);
+            return parsed.format(format);
+        },
+    },
+    components: {
+        swal,
+    },
 });

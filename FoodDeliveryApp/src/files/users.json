@@ -12,12 +12,8 @@
         "blocked": false,
         "suspicious": false,
         "ordersForCourier": [],
-        "type": {
-            "name": "NONE",
-            "discount": 0.0,
-            "requiredPoints": 0
-        },
-        "points": 0
+        "type": { "name": "NONE", "discount": 0.0, "requiredPoints": 0 },
+        "points": 0.0
     },
     {
         "username": "andjela",
@@ -27,17 +23,13 @@
         "gender": "Female",
         "dateOfBirth": 944259506625,
         "role": "MANAGER",
-        "profilePicPath": "img/profile_picture.png",
+        "profilePicPath": "c7055caa-8ed0-4f85-b9e7-e9d320913675",
         "deleted": false,
         "blocked": false,
         "suspicious": false,
         "ordersForCourier": [],
-        "type": {
-            "name": "NONE",
-            "discount": 0.0,
-            "requiredPoints": 0
-        },
-        "points": 0
+        "type": { "name": "NONE", "discount": 0.0, "requiredPoints": 0 },
+        "points": 0.0
     },
     {
         "username": "zlatko",
@@ -52,11 +44,7 @@
         "blocked": false,
         "suspicious": false,
         "ordersForCourier": ["5as215fr48"],
-        "type": {
-            "name": "BRONZE",
-            "discount": 0.0,
-            "requiredPoints": 0
-        },
+        "type": { "name": "BRONZE", "discount": 0.0, "requiredPoints": 0 },
         "points": 0.0
     },
     {
@@ -72,11 +60,7 @@
         "blocked": false,
         "suspicious": false,
         "ordersForCourier": ["5as215fr48"],
-        "type": {
-            "name": "NONE",
-            "discount": 0.0,
-            "requiredPoints": 0
-        },
+        "type": { "name": "NONE", "discount": 0.0, "requiredPoints": 0 },
         "points": 0.0
     },
     {
@@ -92,11 +76,7 @@
         "blocked": false,
         "suspicious": true,
         "ordersForCourier": [],
-        "type": {
-            "name": "BRONZE",
-            "discount": 2.0,
-            "requiredPoints": 2000
-        },
+        "type": { "name": "BRONZE", "discount": 2.0, "requiredPoints": 2000 },
         "points": 2880.8
     },
     {
@@ -112,12 +92,8 @@
         "blocked": false,
         "suspicious": false,
         "ordersForCourier": [],
-        "type": {
-            "name": "NONE",
-            "discount": 0.0,
-            "requiredPoints": 0
-        },
-        "points": 0
+        "type": { "name": "NONE", "discount": 0.0, "requiredPoints": 0 },
+        "points": 0.0
     },
     {
         "username": "mikimilan",
@@ -132,12 +108,8 @@
         "blocked": false,
         "suspicious": false,
         "ordersForCourier": [],
-        "type": {
-            "name": "NONE",
-            "discount": 0.0,
-            "requiredPoints": 0
-        },
-        "points": 0
+        "type": { "name": "NONE", "discount": 0.0, "requiredPoints": 0 },
+        "points": 0.0
     },
     {
         "username": "ostoja",
@@ -152,12 +124,8 @@
         "blocked": false,
         "suspicious": false,
         "ordersForCourier": [],
-        "type": {
-            "name": "NONE",
-            "discount": 0.0,
-            "requiredPoints": 0
-        },
-        "points": 0
+        "type": { "name": "NONE", "discount": 0.0, "requiredPoints": 0 },
+        "points": 0.0
     },
     {
         "username": "any",
@@ -172,11 +140,7 @@
         "blocked": false,
         "suspicious": false,
         "ordersForCourier": [],
-        "type": {
-            "name": "NONE",
-            "discount": 0.0,
-            "requiredPoints": 0
-        },
-        "points": 0
+        "type": { "name": "NONE", "discount": 0.0, "requiredPoints": 0 },
+        "points": 0.0
     }
 ]

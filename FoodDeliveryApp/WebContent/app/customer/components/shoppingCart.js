@@ -1,25 +1,25 @@
-Vue.component("shopping-cart",{
-    data: function(){
-        return{
-        	dto : {},
-            cart : {},
-			numOfItems : 0,
-			totalPrice : 0,
-			user : {},
-			medal : "",
-			paragraph : "",
-			haveDiscount : true,
-			points : 0,
-			address : {
-				street : '',
-				number : '',
-				city : '',
-				postcode : ''
-			},
-			errorMessage: ''
-        }
-    }
-    ,
+Vue.component("shopping-cart", {
+    data: function () {
+        return {
+            dto: {},
+            cart: {},
+            numOfItems: 0,
+            totalPrice: 0,
+            user: {},
+            medal: "",
+            paragraph: "",
+            haveDiscount: true,
+            points: 0,
+            address: {
+                street: "",
+                number: "",
+                city: "",
+                postcode: "",
+            },
+            errorMessage: "",
+            images: [],
+        };
+    },
     template: `
     <div>
 		<div class="container-fluid">
@@ -44,11 +44,8 @@ Vue.component("shopping-cart",{
                                 <div class="
                                             col-md-5 col-11
                                             mx-auto
-                                            bg-light
-                                            d-flex
-                                            product_img
                                         " style="border-radius: 15px">
-                                    <img src="img/product-1.jpg" class="img-fluid image" alt="cart img" />
+                                    <img :src="getImage(i)" class="image-wrapper image" alt="cart img" />
                                 </div>
 
                                 <!-- cart product details -->
@@ -114,9 +111,9 @@ Vue.component("shopping-cart",{
                                                     justify-content-between
                                                     remove_wish
                                                 ">
-                                            <button type="button" class="btn btn-sm btn-outline-secondary editItem" data-toggle="tooltip" data-placement="bottom" 
-                                    style="background: none; "  v-on:click="removeItem(i)">
-                                    <i class="fas fa-trash-alt"></i> REMOVE ITEM
+                                            <button type="button" class="btn btn-sm btn-outline-secondary d-block" data-toggle="tooltip" data-placement="bottom" 
+                                                style="background: none; white-space: normal; word-break: normal;"  v-on:click="removeItem(i)">
+                                                <i class="fas fa-trash-alt"></i> REMOVE ITEM
                                 			</button>
                                         </div>
                                         <div class="
@@ -278,112 +275,123 @@ Vue.component("shopping-cart",{
     </div>
 	</div>
     
-    `, mounted() {
-		axios
-			.get("rest/carts/getCart")
-            .then((response) =>{
-            ( this.cart = response.data);
-             this.numOfItems = this.cart.items.length;
-             this.totalPrice = this.cart.totalPrice + 100;
-            	this.points = this.cart.totalPrice/1000*133;
-              });
-            
-		axios
-			.get("rest/users/getCurrentUser")
-            .then((response) =>{
-				( this.user = response.data);
-				this.medal = this.user.type.name;
-				if(this.user.type.name === "GOLD"){
-					this.paragraph = "You have 4% discount as a GOLD user.";
-				}else if(this.user.type.name === "SILVER"){
-					this.paragraph = "You have 3% discount as a SILVER user.";
-				}else if(this.user.type.name === "BRONZE"){
-					this.paragraph = "You have 2% discount as a BRONZE user." 
-				}else if(this.user.type.name === "NONE"){
-					this.paragraph = "You do not have any discount currently." 
-					this.haveDiscount = false;
-				}
-			})
+    `,
+    mounted() {
+        axios.get("rest/carts/getCart").then((response) => {
+            this.cart = response.data;
+            this.numOfItems = this.cart.items.length;
+            this.totalPrice = this.cart.totalPrice + 100;
+            this.points = (this.cart.totalPrice / 1000) * 133;
+        });
+
+        axios.get("rest/users/getCurrentUser").then((response) => {
+            this.user = response.data;
+            this.medal = this.user.type.name;
+            if (this.user.type.name === "GOLD") {
+                this.paragraph = "You have 4% discount as a GOLD user.";
+            } else if (this.user.type.name === "SILVER") {
+                this.paragraph = "You have 3% discount as a SILVER user.";
+            } else if (this.user.type.name === "BRONZE") {
+                this.paragraph = "You have 2% discount as a BRONZE user.";
+            } else if (this.user.type.name === "NONE") {
+                this.paragraph = "You do not have any discount currently.";
+                this.haveDiscount = false;
+            }
+        });
+
+        axios
+            .get("rest/images/getAllImages")
+            .then((response) => (this.images = response.data));
     },
     methods: {
-		incr : function(id){
-			for(var i of this.cart.items){
-				if(i.id === id){
-					i.quantity++;
-					this.cart.totalPrice = this.cart.totalPrice + i.price;
-					this.totalPrice = this.cart.totalPrice + 100;
-            		this.points = this.cart.totalPrice/1000*133;
-					
-				}
-			}
-		},
-		decr : function(id){
-			for(var i of this.cart.items){
-				if(i.id === id && i.quantity != 1){
-					i.quantity--;
-					this.cart.totalPrice = this.cart.totalPrice - i.price;
-					this.totalPrice = this.cart.totalPrice + 100;
-            		this.points = this.cart.totalPrice/1000*133;
-				}
-			}
-		},
-		removeItem : function(i){
-			axios 
-	    			.post('rest/carts/removeItem', i.id,
-	        	{ headers: {
-	        		'Content-type': 'text/plain',
-	        		}
-	        	})
-	    			.then((response) =>{( this.cart = response.data);
-	    			 this.numOfItems = this.cart.items.length;
-	    			 this.totalPrice = this.cart.totalPrice + 100;
-	    		     this.points = this.cart.totalPrice/1000*133;
-	    			});			
-		},
-		useDiscount : function(){
-			this.totalPrice = this.totalPrice * (1 - this.user.type.discount * 0.01);
-			this.haveDiscount = false;
-			
-		},
-		getRestaurant : function(id){
-			axios 
-	    		.post('rest/restaurants/getById', id,
-	        	{ headers: {
-	        		'Content-type': 'text/plain',
-	        		}
-	        	})
-	    		.then((response) =>{( response.data);});
-		},
-		makeOrder : function(){
-		
-			if( this.address.street == '' || this.address.number == '' || this.address.city == '' || this.address.postcode == ''){
-				this.errorMessage = "All fields are required!";
-			}else{
-				this.cart.totalPrice = this.totalPrice;
-				this.dto.cart = this.cart;
-				this.dto.points = this.points;
-				this.dto.address = this.address;
-				this.errorMessage = '';
-							
-				axios 
-		    		.post('rest/orders/makeOrder', JSON.stringify(this.dto),
-	        	{ headers: {
-	        		'Content-type': 'application/json',
-	        		}
-		        	})
-		        	
-		        axios
-				.get("rest/carts/emptyCart")
-	            .then((response) =>{
-	            ( this.cart = response.data);
-	             this.numOfItems = this.cart.items.length;
-	             this.totalPrice = this.cart.totalPrice + 100;
-	             this.points = 0;
-	             this.modalShow = false;
-	             });
-	             
-	             window.location.reload();
-             }
-		}
+        incr: function (id) {
+            for (var i of this.cart.items) {
+                if (i.id === id) {
+                    i.quantity++;
+                    this.cart.totalPrice = this.cart.totalPrice + i.price;
+                    this.totalPrice = this.cart.totalPrice + 100;
+                    this.points = (this.cart.totalPrice / 1000) * 133;
+                }
+            }
+        },
+        decr: function (id) {
+            for (var i of this.cart.items) {
+                if (i.id === id && i.quantity != 1) {
+                    i.quantity--;
+                    this.cart.totalPrice = this.cart.totalPrice - i.price;
+                    this.totalPrice = this.cart.totalPrice + 100;
+                    this.points = (this.cart.totalPrice / 1000) * 133;
+                }
+            }
+        },
+        removeItem: function (i) {
+            axios
+                .post("rest/carts/removeItem", i.id, {
+                    headers: {
+                        "Content-type": "text/plain",
+                    },
+                })
+                .then((response) => {
+                    this.cart = response.data;
+                    this.numOfItems = this.cart.items.length;
+                    this.totalPrice = this.cart.totalPrice + 100;
+                    this.points = (this.cart.totalPrice / 1000) * 133;
+                });
+        },
+        useDiscount: function () {
+            this.totalPrice =
+                this.totalPrice * (1 - this.user.type.discount * 0.01);
+            this.haveDiscount = false;
+        },
+        getRestaurant: function (id) {
+            axios
+                .post("rest/restaurants/getById", id, {
+                    headers: {
+                        "Content-type": "text/plain",
+                    },
+                })
+                .then((response) => {
+                    response.data;
+                });
+        },
+        makeOrder: function () {
+            if (
+                this.address.street == "" ||
+                this.address.number == "" ||
+                this.address.city == "" ||
+                this.address.postcode == ""
+            ) {
+                this.errorMessage = "All fields are required!";
+            } else {
+                this.cart.totalPrice = this.totalPrice;
+                this.dto.cart = this.cart;
+                this.dto.points = this.points;
+                this.dto.address = this.address;
+                this.errorMessage = "";
+
+                axios.post("rest/orders/makeOrder", JSON.stringify(this.dto), {
+                    headers: {
+                        "Content-type": "application/json",
+                    },
+                });
+
+                axios.get("rest/carts/emptyCart").then((response) => {
+                    this.cart = response.data;
+                    this.numOfItems = this.cart.items.length;
+                    this.totalPrice = this.cart.totalPrice + 100;
+                    this.points = 0;
+                    this.modalShow = false;
+                });
+
+                window.location.reload();
+            }
+        },
+        getImage: function (item) {
+            for (let i of this.images) {
+                if (i.imageId === item.imagePath) return i.imageCode;
+            }
+
+            return "";
+        },
     },
 });

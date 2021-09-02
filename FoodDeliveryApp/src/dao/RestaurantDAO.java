@@ -130,7 +130,6 @@ public class RestaurantDAO {
 		}
 		return false;
 	}*/
-	
 	public String getUniqueId() {
 		String id;
 		while(true) {
@@ -148,8 +147,6 @@ public class RestaurantDAO {
 		}
 		return false;
 	}
-
-}
 
 
 

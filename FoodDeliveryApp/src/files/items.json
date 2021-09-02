@@ -7,10 +7,10 @@
         "type": "Food",
         "amount": 500.0,
         "description": "This is a pizza",
-        "imagePath": "img/pizza.jpeg",
+        "imagePath": "59a2944d-2bea-44b8-aaca-4658954c232e",
         "restaurantId": "3",
         "restaurant": "Corso",
-        "quantity": 1,
+        "quantity": 1.0,
         "category": "PIZZA"
     },
     {
@@ -21,10 +21,10 @@
         "type": "Food",
         "amount": 500.0,
         "description": "This is a great pasta",
-        "imagePath": "img/pizza.jpeg",
+        "imagePath": "59a2944d-2bea-44b8-aaca-4658954c232e",
         "restaurantId": "3",
         "restaurant": "Corso",
-        "quantity": 1,
+        "quantity": 1.0,
         "category": "PASTA"
     },
     {
@@ -35,10 +35,10 @@
         "type": "Food",
         "amount": 500.0,
         "description": "This is a cool salad",
-        "imagePath": "img/pizza.jpeg",
+        "imagePath": "59a2944d-2bea-44b8-aaca-4658954c232e",
         "restaurantId": "2",
         "restaurant": "Caribic",
-        "quantity": 1,
+        "quantity": 1.0,
         "category": "SALADS"
     },
     {
@@ -49,10 +49,10 @@
         "type": "Food",
         "amount": 500.0,
         "description": "Chicken wrap with salad",
-        "imagePath": "img/pizza.jpeg",
+        "imagePath": "871dfc7d-f188-4009-a969-d5877034ec10",
         "restaurantId": "3",
         "restaurant": "Corso",
-        "quantity": 1,
+        "quantity": 1.0,
         "category": "MAINDISHES"
     },
     {
@@ -63,10 +63,10 @@
         "type": "Food",
         "amount": 500.0,
         "description": "This is a cool salad reallz",
-        "imagePath": "img/pizza.jpeg",
+        "imagePath": "59a2944d-2bea-44b8-aaca-4658954c232e",
         "restaurantId": "3",
         "restaurant": "Corso",
-        "quantity": 1,
+        "quantity": 1.0,
         "category": "SALADS"
     },
     {
@@ -77,10 +77,10 @@
         "type": "Drink",
         "amount": 0.0,
         "description": "Unique coctail that everyone adores!",
-        "imagePath": "img/pizza.jpeg",
+        "imagePath": "59a2944d-2bea-44b8-aaca-4658954c232e",
         "restaurantId": "3",
         "restaurant": "Corso",
-        "quantity": 1,
+        "quantity": 1.0,
         "category": "DRINKS"
     },
     {
@@ -91,10 +91,10 @@
         "type": "Drink",
         "amount": 0.0,
         "description": "Unique coctail that everyone adores!",
-        "imagePath": "img/pizza.jpeg",
+        "imagePath": "59a2944d-2bea-44b8-aaca-4658954c232e",
         "restaurantId": "3",
         "restaurant": "Corso",
-        "quantity": 1,
+        "quantity": 1.0,
         "category": "DRINKS"
     },
     {
@@ -105,8 +105,9 @@
         "type": "Food",
         "amount": 300.0,
         "description": "Cheesy pizza",
-        "imagePath": "img/Margarita-3.jpg",
+        "imagePath": "871dfc7d-f188-4009-a969-d5877034ec10",
         "restaurantId": "3",
+        "restaurant": null,
         "quantity": 1.0,
         "category": "PIZZA"
     },
@@ -118,9 +119,38 @@
         "type": "Food",
         "amount": 100.0,
         "description": "Forest fruit cheese cake",
-        "imagePath": "img/Cheese cake-3.jpg",
+        "imagePath": "59a2944d-2bea-44b8-aaca-4658954c232e",
         "restaurantId": "3",
+        "restaurant": null,
         "quantity": 1.0,
         "category": "DESSERT"
+    },
+    {
+        "id": "6ce86a58-f855-4389-9aa1-84c265011ab2",
+        "deleted": false,
+        "name": "Carbonara",
+        "price": 400.0,
+        "type": "Food",
+        "amount": 200.0,
+        "description": "This is a pasta really great",
+        "imagePath": "2117bff2-4e25-4fcd-9a1c-90f5d680176d",
+        "restaurantId": "3",
+        "restaurant": null,
+        "quantity": 1.0,
+        "category": "PASTA"
+    },
+    {
+        "id": "ce5951bf-49fc-4f10-84b3-597d69375999",
+        "deleted": false,
+        "name": "Cosmopolitian",
+        "price": 500.0,
+        "type": "Drink",
+        "amount": 100.0,
+        "description": "Cool cocktail",
+        "imagePath": "e3891878-bb3e-4a7c-b9ae-dccd697df4a1",
+        "restaurantId": "3",
+        "restaurant": null,
+        "quantity": 1.0,
+        "category": "DRINKS"
     }
 ]
