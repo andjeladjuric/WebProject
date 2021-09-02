@@ -110,7 +110,7 @@ public class RestaurantDAO {
 		serialize();
 	}
 	
-	public boolean isOpened(String id) {
+	/*public boolean isOpened(String id) {
 		
 		Restaurant restaurant = getById(id);
 		Calendar calendar = Calendar.getInstance();
@@ -126,7 +126,7 @@ public class RestaurantDAO {
 			}
 		}
 		return false;
-	}
+	}*/
 
 }
 

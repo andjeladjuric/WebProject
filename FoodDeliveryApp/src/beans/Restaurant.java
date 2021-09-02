@@ -18,7 +18,7 @@ public class Restaurant {
 	private String logo; 
 	private String menagerId;
 	private double rating;
-	private ArrayList<WorkingHours> workingHours;
+	//private ArrayList<WorkingHours> workingHours;
 
 	public Restaurant() {}
 	
@@ -129,13 +129,13 @@ public class Restaurant {
 		this.menagerId = menagerId;
 	}
 	
-	public ArrayList<WorkingHours> getWorkingHours() {
+/*	public ArrayList<WorkingHours> getWorkingHours() {
 		return workingHours;
 	}
 
 	public void setWorkingHours(ArrayList<WorkingHours> workingHours) {
 		this.workingHours = workingHours;
-	}
+	}*/
 	
 	
 }
