@@ -147,6 +147,7 @@ public class RestaurantDAO {
 		}
 		return false;
 	}
+}
 
 
 

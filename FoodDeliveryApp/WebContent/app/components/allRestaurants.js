@@ -18,6 +18,7 @@ Vue.component("all-restaurants", {
                 opened: "",
             },
             count: 0,
+            images: [],
         };
     },
     template: `
@@ -213,7 +214,7 @@ Vue.component("all-restaurants", {
                         <div class="col-md-4" v-for="r in filteredRestaurants">
                             <div class="card bg-light text-dark restaurantCards">
                                 <div class="cover">
-                                    <img src="img/product-1.jpg" alt="" class="img-responsive cover">
+                                    <img v-bind:src="getImage(r)" alt="RestaurantLogo" class="img-responsive cover">
                                 </div>
                                 <div class="card-body text-center">
                                     <h3 class="card-title mb-2">{{r.name}}</h3>
@@ -275,6 +276,10 @@ Vue.component("all-restaurants", {
         axios
             .get("rest/restaurants/getAll")
             .then((response) => (this.restaurants = response.data));
+
+        axios
+            .get("rest/images/getAllImages")
+            .then((response) => (this.images = response.data));
 
         $("#mapModal").on("shown.bs.modal", (response) => {
             this.count = this.count + 1;
@@ -390,6 +395,14 @@ Vue.component("all-restaurants", {
                         this.searchInput.location = json.address.city;
                     });
             });
+        },
+
+        getImage: function (rest) {
+            for (let i of this.images) {
+                if (i.imageId === rest.logo) return i.imageCode;
+            }
+
+            return "";
         },
     },
     computed: {

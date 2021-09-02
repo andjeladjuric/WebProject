@@ -383,199 +383,55 @@ Vue.component("selected-restaurant", {
                         </div>						
                         <h4 class="modal-title w-100 mt-5">Are you sure?</h4>	
                     </div>
-                </div>
-                <!-- End of main dishes -->
-
-                <!-- Drinks -->
-                <h4 class="mb-3 mt-5" id="item-6" v-if="!isCategoryEmpty('DRINKS')">Drinks</h4>
-                <div class="card bg-light text-dark mb-2" id="itemAndCommentCards" v-for="item in items"
-                    v-if="item.category == 'DRINKS'">
-                    <div class="card-body text-start itemBody">
-                        <div class="container cardContent text-start">
-                            <h1 class="mt-1 mb-3">{{item.name}}</h1>
-                            <p class="mb-1">{{item.description}}</p>
-                            <div class="more mb-2">
-                                <p class="me-2">{{item.type}}</p>
-                                <p>·</p>
-                                <p class="ms-2">{{item.amount}}</p>
-                            </div>
-                            <p id="price">RSD {{item.price}}</p>
-
-                            <button type="button" class="btn btn-sm btn-outline-secondary editItem"
-                                data-toggle="tooltip" data-placement="bottom" style="background: none; "
-                                v-on:click="selectItem(item)" data-bs-toggle="modal" data-bs-target="#deleteItemModal">
-                                <i class="fas fa-trash"></i> Remove
-                            </button>
-
-                        </div>
-
-                        <div class="image-wrapper py-5" style="background-image: url(img/pizza.jpeg);"></div>
+                    <div class="modal-body">
+                        <p>Do you really want to delete this restaurant? This process cannot be undone.</p>
                     </div>
-                </div>
-                <!-- End of drinks -->
-
-                <!-- Desserts -->
-                <h4 class="mb-3 mt-5" id="item-7" v-if="!isCategoryEmpty('DESSERTS')">Desserts</h4>
-                <div class="card bg-light text-dark mb-2" id="itemAndCommentCards" v-for="item in items"
-                    v-if="item.category == 'DESSERTS'">
-                    <div class="card-body text-start itemBody">
-                        <div class="container cardContent text-start">
-                            <h1 class="mt-1 mb-3">{{item.name}}</h1>
-                            <p class="mb-1">{{item.description}}</p>
-                            <div class="more mb-2">
-                                <p class="me-2">{{item.type}}</p>
-                                <p>·</p>
-                                <p class="ms-2">{{item.amount}}</p>
-                            </div>
-                            <p id="price">RSD {{item.price}}</p>
-
-                            <button type="button" class="btn btn-sm btn-outline-secondary editItem"
-                                data-toggle="tooltip" data-placement="bottom" style="background: none; "
-                                v-on:click="selectItem(item)" data-bs-toggle="modal" data-bs-target="#deleteItemModal">
-                                <i class="fas fa-trash"></i> Remove
-                            </button>
-
-                        </div>
-
-                        <div class="image-wrapper py-5" style="background-image: url(img/pizza.jpeg);"></div>
-                    </div>
-                </div>
-                <!-- End of desserts -->
-            </div>
-
-            <div class="col-md-3">
-                <div class="information" style="margin-left: 6rem">
-                    <div class="container d-block">
-                        <h4 class="card-title mb-4">About</h4>
-                        <h5><b>Rating</b></h5>
-                        <div class="container d-inline-flex p-0">
-                            <i class="fa fa-star checked me-2" style="color: gold;"></i>
-                            <p>·</p>
-                            <p class="ms-2">5.0</p>
-                        </div>
-                    </div>
-
-                    <div class="container d-block">
-                        <h5><b>Address</b></h5>
-                        <p>{{restaurant.location.address.street}} {{restaurant.location.address.number}} <br>
-                            {{restaurant.location.address.city}}, {{restaurant.location.address.postcode}}</p>
-                    </div>
-
-                    <div class="container d-block">
-                        <h5><b>Type</b></h5>
-                        <p>{{restaurant.type}}</p>
-                    </div>
-
-                    <div class="container d-block">
-                        <h5><b>Working hours:</b></h5>
-                        <p>7am - 9pm</p>
-                        <h5><b>Currently:</b></h5>
-                        <p style="color: red; text-transform: uppercase">{{restaurant.status}}</p>
+                    <div class="modal-footer justify-content-center">
+                        <button type="button" class="btn" data-bs-dismiss="modal" @click="deleteRestaurant" @click="showToast">Confirm</button>
+                        <button type="button" class="btn" data-bs-dismiss="modal" style="background: #ecbeb1">Cancel</button>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- End of items -->
-
-        <div class="row g-2 comments mt-5 justify-content-center" v-if="showComments">
-            <!-- Comments -->
-            <div class="col-lg-7 mx-auto">
-                <h4 class="mb-3" id="item-1">All comments</h4>
-                <div class="card bg-light text-dark mb-2" id="itemAndCommentCards" v-for="comment in allComments"
-                    style="border-top: 1px solid rgba(124, 124, 124, 0.404);">
-                    <div class="card-body text-start">
-                        <div class="container cardContent text-start">
-                            <div class="container mb-2 d-inline-flex userNameAndType">
-                                <h1 class="me-2">{{comment.customer}}</h1>
-                                <p class="me-2">·</p>
-                                <p>golden</p>
-                            </div>
-                            <p class="mb-2">{{comment.text}}</p>
-                            <div class="more mb-2">
-                                <i class="fas fa-star me-2" style="color: gold;"></i>
-                                <p>·</p>
-                                <p class="ms-2">{{comment.stars}}</p>
-                            </div>
-                            <div class="d-flex justify-content-between">
-                                <p>Status: {{comment.status}}</p>
-                                <button type="button" class="btn btn-sm btn-outline-secondary editItem"
-                                    data-toggle="tooltip" data-placement="bottom" style="background: none; "
-                                    v-on:click="selectComment(comment)" data-bs-toggle="modal"
-                                    data-bs-target="#deleteCommentModal">
-                                    <i class="fas fa-trash"></i> Remove
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- End of comments -->
-        </div>
-    </div>
-
-    <!-- Delete item modal -->
-    <div id="deleteRestaurantModal" class="modal fade">
-        <div class="modal-dialog modal-confirm">
-            <div class="modal-content">
-                <div class="modal-header flex-column">
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    <div class="icon-box">
+        
+        <div id="deleteItemModal" class="modal fade">
+            <div class="modal-dialog modal-confirm">
+                <div class="modal-content">
+                    <div class="modal-header flex-column">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <div class="icon-box">
                         <i class="fas fa-trash mt-3 mb-3"></i>
+                        </div>						
+                        <h4 class="modal-title w-100 mt-5">Are you sure?</h4>	
                     </div>
-                    <h4 class="modal-title w-100 mt-5">Are you sure?</h4>
-                </div>
-                <div class="modal-body">
-                    <p>Do you really want to delete this restaurant? This process cannot be undone.</p>
-                </div>
-                <div class="modal-footer justify-content-center">
-                    <button type="button" class="btn" data-bs-dismiss="modal"
-                        @click="deleteRestaurant; showToast">Confirm</button>
-                    <button type="button" class="btn" data-bs-dismiss="modal"
-                        style="background: #ecbeb1">Cancel</button>
+                    <div class="modal-body">
+                        <p>Do you really want to delete this item? This process cannot be undone.</p>
+                    </div>
+                    <div class="modal-footer justify-content-center">
+                        <button type="button" class="btn" data-bs-dismiss="modal" @click="removeItem">Confirm</button>
+                        <button type="button" class="btn" data-bs-dismiss="modal" style="background: #ecbeb1">Cancel</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-
-    <div id="deleteItemModal" class="modal fade">
-        <div class="modal-dialog modal-confirm">
-            <div class="modal-content">
-                <div class="modal-header flex-column">
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    <div class="icon-box">
+        
+        <div id="deleteCommentModal" class="modal fade">
+            <div class="modal-dialog modal-confirm">
+                <div class="modal-content">
+                    <div class="modal-header flex-column">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <div class="icon-box">
                         <i class="fas fa-trash mt-3 mb-3"></i>
+                        </div>						
+                        <h4 class="modal-title w-100 mt-5">Are you sure?</h4>	
                     </div>
-                    <h4 class="modal-title w-100 mt-5">Are you sure?</h4>
-                </div>
-                <div class="modal-body">
-                    <p>Do you really want to delete this item? This process cannot be undone.</p>
-                </div>
-                <div class="modal-footer justify-content-center">
-                    <button type="button" class="btn" data-bs-dismiss="modal" @click="removeItem">Confirm</button>
-                    <button type="button" class="btn" data-bs-dismiss="modal"
-                        style="background: #ecbeb1">Cancel</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div id="deleteCommentModal" class="modal fade">
-        <div class="modal-dialog modal-confirm">
-            <div class="modal-content">
-                <div class="modal-header flex-column">
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    <div class="icon-box">
-                        <i class="fas fa-trash mt-3 mb-3"></i>
+                    <div class="modal-body">
+                        <p>Do you really want to delete this comment? This process cannot be undone.</p>
                     </div>
-                    <h4 class="modal-title w-100 mt-5">Are you sure?</h4>
-                </div>
-                <div class="modal-body">
-                    <p>Do you really want to delete this comment? This process cannot be undone.</p>
-                </div>
-                <div class="modal-footer justify-content-center">
-                    <button type="button" class="btn" data-bs-dismiss="modal" @click="removeComment">Confirm</button>
-                    <button type="button" class="btn" data-bs-dismiss="modal"
-                        style="background: #ecbeb1">Cancel</button>
+                    <div class="modal-footer justify-content-center">
+                        <button type="button" class="btn" data-bs-dismiss="modal" @click="removeComment">Confirm</button>
+                        <button type="button" class="btn" data-bs-dismiss="modal" style="background: #ecbeb1">Cancel</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -601,8 +457,6 @@ Vue.component("selected-restaurant", {
         <!-- End of map modal -->
         
     </div>
-
-</div>
     `,
     mounted() {
         axios

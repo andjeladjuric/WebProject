@@ -419,7 +419,7 @@ Vue.component("restaurant-form", {
                 <div class="d-flex gap-5" v-if="table == 1">
                     <button v-if="step != 1" class="btn buttonGroup" @click.prevent="prevStep">Prev</button>
                     <button v-if="step != totalSteps" class="btn buttonGroup" @click.prevent="nextStep">Next</button>
-                    <button v-if="step == totalSteps" class="btn buttonGroup" @click.prevent="submit">Submit</button>
+                    <button v-if="step == totalSteps" class="btn buttonGroup" @click.prevent="sendImgToBack">Submit</button>
                 </div>
 
             </div>
@@ -578,7 +578,6 @@ Vue.component("restaurant-form", {
         },
         submit: function () {
             this.restaurant.menagerId = this.selectedManager.username;
-            this.restaurant.logo = "";
             axios.post(
                 "rest/restaurants/addNewRestaurant",
                 JSON.stringify(this.restaurant),
@@ -668,7 +667,7 @@ Vue.component("restaurant-form", {
             var image = this.imageAlreadyExists();
             if (image !== null) {
                 this.restaurant.logo = image.imageId;
-                //this.submit();
+                this.submit();
                 //window.location.reload();
             } else {
                 axios
@@ -680,7 +679,7 @@ Vue.component("restaurant-form", {
                     .then((response) => {
                         this.chosenImg = response.data;
                         this.restaurant.logo = this.chosenImg.imageId;
-                        //this.submit();
+                        this.submit();
                         //window.location.reload();
                     });
             }
