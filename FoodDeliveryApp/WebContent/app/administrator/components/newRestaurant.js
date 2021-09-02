@@ -20,7 +20,8 @@ Vue.component("restaurant-form",{
 				searchInput : '',
 				selectedOptionForSort : '',
 				matches : [],
-				count: 0
+				count: 0,
+				selectedLocation : {}
             
         }
     }
@@ -76,13 +77,13 @@ Vue.component("restaurant-form",{
                                 </div>
                                 <div class="col-5 mx-auto">
                                     <div class="form-floating">
-                                        <input type="text" class="form-control">
+                                        <input type="text" class="form-control" id="streetInput">
                                         <label>Street</label>
                                     </div>
                                 </div>
                                 <div class="col-3 mx-auto">
                                     <div class="form-floating">
-                                        <input type="text" class="form-control">
+                                        <input type="text" class="form-control" id="numInput">
                                         <label>Number</label>
                                     </div>
                                 </div>
@@ -93,13 +94,13 @@ Vue.component("restaurant-form",{
                                 </div>
                                 <div class="col-5 mx-auto">
                                     <div class="form-floating">
-                                        <input type="text" class="form-control">
+                                        <input type="text" class="form-control" id="cityInput">
                                         <label>City</label>
                                     </div>
                                 </div>
                                 <div class="col-3 mx-auto">
                                     <div class="form-floating">
-                                        <input type="text" class="form-control">
+                                        <input type="text" class="form-control" id="postcodeInput">
                                         <label>Postcode</label>
                                     </div>
                                 </div>
@@ -594,15 +595,24 @@ Vue.component("restaurant-form",{
                             return response.json();
                         })
                         .then(function (json) {
-                            console.log(json.address.city);
-
-                            // trigger input event to search immediatelly (????)
-                            let input =
-                                document.getElementById("locationInput");
-                            input.value = json.address.city;
-
-                            var event = new Event("input");
-                            input.dispatchEvent(event);
+                            console.log(json);
+                            this.selectedLocation = json.address;
+                          	
+                          	 let input =
+                                document.getElementById("streetInput");
+                            input.value = json.address.road;
+                            
+                             let input2 =
+                                document.getElementById("numInput");
+                            input2.value = json.address.house_number;
+                            
+                             let input3 =
+                                document.getElementById("cityInput");
+                            input3.value = json.address.city;
+                            
+                             let input4 =
+                                document.getElementById("postcodeInput");
+                            input4.value = json.address.postcode;
                         });
                 });
             }
