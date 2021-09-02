@@ -68,12 +68,10 @@ public class RestaurantService {
 	
 	@POST
 	@Path("/addNewRestaurant")
-	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Collection<Restaurant> addNewRestaurant(RestaurantDTO rest) {
+	public void addNewRestaurant(RestaurantDTO rest) {
 		RestaurantDAO dao = (RestaurantDAO) ctx.getAttribute("restaurants");
 		dao.addNew(rest);
-		return dao.findAll();
 	}
 	
 	@POST

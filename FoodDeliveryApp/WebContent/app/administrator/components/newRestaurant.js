@@ -21,8 +21,17 @@ Vue.component("restaurant-form",{
 				selectedOptionForSort : '',
 				matches : [],
 				count: 0,
-				selectedLocation : {}
-            
+				location : {
+					address : {
+						street : ' ',
+						number : '',
+						city : ' ',
+						country : ' ',
+						postcode : ''
+					},
+					latitude : 0,
+					longitude : 0
+				},
         }
     }
     ,
@@ -77,13 +86,13 @@ Vue.component("restaurant-form",{
                                 </div>
                                 <div class="col-5 mx-auto">
                                     <div class="form-floating">
-                                        <input type="text" class="form-control" id="streetInput">
+                                        <input type="text" class="form-control" readonly v-model="location.address.street" style="background-color:transparent;">
                                         <label>Street</label>
                                     </div>
                                 </div>
                                 <div class="col-3 mx-auto">
                                     <div class="form-floating">
-                                        <input type="text" class="form-control" id="numInput">
+                                        <input type="text" class="form-control" readonly v-model="location.address.number" style="background-color:transparent;">
                                         <label>Number</label>
                                     </div>
                                 </div>
@@ -94,13 +103,13 @@ Vue.component("restaurant-form",{
                                 </div>
                                 <div class="col-5 mx-auto">
                                     <div class="form-floating">
-                                        <input type="text" class="form-control" id="cityInput">
+                                        <input type="text" class="form-control" v-model="location.address.city" readonly style="background-color:transparent;">
                                         <label>City</label>
                                     </div>
                                 </div>
                                 <div class="col-3 mx-auto">
                                     <div class="form-floating">
-                                        <input type="text" class="form-control" id="postcodeInput">
+                                        <input type="text" class="form-control" v-model="location.address.postcode" readonly style="background-color:transparent;">
                                         <label>Postcode</label>
                                     </div>
                                 </div>
@@ -559,6 +568,8 @@ Vue.component("restaurant-form",{
         		'Content-type': 'application/json',
         		}
         	})
+        	window.location = "/FoodDeliveryApp/administratorPage.html#/";
+        	location.reload();
 		},openMap: function () {
             this.count = this.count + 1;
 
@@ -583,7 +594,7 @@ Vue.component("restaurant-form",{
                  *
                  *
                  */
-                map.on("click", function (evt) {
+                map.on("click", (evt) => {
                     var coordinates = ol.proj.toLonLat(evt.coordinate);
                     fetch(
                         "http://nominatim.openstreetmap.org/reverse?format=json&lon=" +
@@ -591,28 +602,21 @@ Vue.component("restaurant-form",{
                             "&lat=" +
                             coordinates[1]
                     )
-                        .then(function (response) {
+                        .then((response) => {
                             return response.json();
                         })
-                        .then(function (json) {
+                        .then( (json) =>{
                             console.log(json);
-                            this.selectedLocation = json.address;
-                          	
-                          	 let input =
-                                document.getElementById("streetInput");
-                            input.value = json.address.road;
-                            
-                             let input2 =
-                                document.getElementById("numInput");
-                            input2.value = json.address.house_number;
-                            
-                             let input3 =
-                                document.getElementById("cityInput");
-                            input3.value = json.address.city;
-                            
-                             let input4 =
-                                document.getElementById("postcodeInput");
-                            input4.value = json.address.postcode;
+                      
+                            this.location.address.street = json.address.road;
+                            this.location.address.city = json.address.city;
+                            this.location.address.number = json.address.house_number;
+                            this.location.address.postcode = json.address.postcode;
+                            this.location.address.country = json.address.country;
+                            this.location.latitude = json.lat;
+                            this.location.longitude = json.lon;
+                            this.restaurant.location = this.location;
+  
                         });
                 });
             }

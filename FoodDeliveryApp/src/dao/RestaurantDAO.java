@@ -9,9 +9,12 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
+import org.apache.commons.lang3.RandomStringUtils;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import beans.Item;
+import beans.Order;
 import beans.Restaurant;
 import beans.User;
 import beans.WorkingHours;
@@ -79,7 +82,7 @@ public class RestaurantDAO {
 	}
 	
 	public void addNew(RestaurantDTO rest) {
-		Restaurant newRest = new Restaurant(rest);
+		Restaurant newRest = new Restaurant(rest, getUniqueId());
 		restaurants.add(newRest);
 		serialize();
 		
@@ -127,6 +130,24 @@ public class RestaurantDAO {
 		}
 		return false;
 	}*/
+	
+	public String getUniqueId() {
+		String id;
+		while(true) {
+			 id = RandomStringUtils.randomAlphanumeric(10);
+			if(!alreadyExists(id))
+				return id;
+		}
+	}
+	
+	public boolean alreadyExists(String id) {
+		
+		for(Restaurant r : restaurants) {
+			if(r.getId().equals(id))
+				return true;
+		}
+		return false;
+	}
 
 }
 

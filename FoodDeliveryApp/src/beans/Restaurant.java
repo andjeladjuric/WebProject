@@ -22,16 +22,15 @@ public class Restaurant {
 
 	public Restaurant() {}
 	
-	public Restaurant(RestaurantDTO rest) {
+	public Restaurant(RestaurantDTO rest, String id) {
 		this.name = rest.name;
-		this.id = "";
+		this.id = id;
 		this.deleted = false;
 		this.type = rest.type;
 		this.status = Status.Open;
 		this.logo = rest.logo;
 		this.menagerId = rest.menagerId;
-		Address adr = new Address("Dr Sime Milosevica", 6, "Novi Sad", "Serbia", 2100);
-		this.location = new Location(adr, 124.55, 245.64);
+		this.location = rest.location;
 	}
 
 	public Restaurant(String name, String id, boolean deleted, RestaurantType type, Status status, Location location,
