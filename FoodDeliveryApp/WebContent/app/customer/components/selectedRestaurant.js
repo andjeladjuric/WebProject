@@ -31,6 +31,7 @@ Vue.component("selected-restaurant", {
             canOrder: false,
             user: {},
             count: 0,
+            images: [],
         };
     },
     template: `
@@ -155,7 +156,9 @@ Vue.component("selected-restaurant", {
 
                     </div>
 
-                    <div class="image-wrapper py-5" style="background-image: url(img/pizza.jpeg);"></div>
+                    <div class="image-wrapper mt-2">
+                        <img class="img-responsive img-rounded image-wrapper" :src="getImage(item)" alt="Item">
+                    </div>
                 </div>
             </div>
             <!-- End of breakfast -->
@@ -183,7 +186,9 @@ Vue.component("selected-restaurant", {
 
                     </div>
 
-                    <div class="image-wrapper py-5" style="background-image: url(img/pizza.jpeg);"></div>
+                    <div class="image-wrapper mt-2">
+                        <img class="img-responsive img-rounded image-wrapper" :src="getImage(item)" alt="Item">
+                    </div>
                 </div>
             </div>
             <!-- End of salads -->
@@ -211,7 +216,9 @@ Vue.component("selected-restaurant", {
 
                     </div>
 
-                    <div class="image-wrapper py-5" style="background-image: url(img/pizza.jpeg);"></div>
+                    <div class="image-wrapper mt-2">
+                        <img class="img-responsive img-rounded image-wrapper" :src="getImage(item)" alt="Item">
+                    </div>
                 </div>
             </div>
             <!-- End of pizza -->
@@ -239,7 +246,9 @@ Vue.component("selected-restaurant", {
 
                     </div>
 
-                    <div class="image-wrapper py-5" style="background-image: url(img/pizza.jpeg);"></div>
+                    <div class="image-wrapper mt-2">
+                        <img class="img-responsive img-rounded image-wrapper" :src="getImage(item)" alt="Item">
+                    </div>
                 </div>
             </div>
             <!-- End of pasta -->
@@ -267,7 +276,9 @@ Vue.component("selected-restaurant", {
 
                     </div>
 
-                    <div class="image-wrapper py-5" style="background-image: url(img/pizza.jpeg);"></div>
+                    <div class="image-wrapper mt-2">
+                        <img class="img-responsive img-rounded image-wrapper" :src="getImage(item)" alt="Item">
+                    </div>
                 </div>
             </div>
             <!-- End of main dishes -->
@@ -295,7 +306,9 @@ Vue.component("selected-restaurant", {
 
                     </div>
 
-                    <div class="image-wrapper py-5" style="background-image: url(img/pizza.jpeg);"></div>
+                    <div class="image-wrapper mt-2">
+                        <img class="img-responsive img-rounded image-wrapper" :src="getImage(item)" alt="Item">
+                    </div>
                 </div>
             </div>
             <!-- End of drinks -->
@@ -323,7 +336,9 @@ Vue.component("selected-restaurant", {
 
                     </div>
 
-                    <div class="image-wrapper py-5" style="background-image: url(img/pizza.jpeg);"></div>
+                    <div class="image-wrapper mt-2">
+                        <img class="img-responsive img-rounded image-wrapper" :src="getImage(item)" alt="Item">
+                    </div>
                 </div>
             </div>
             <!-- End of desserts -->
@@ -342,10 +357,11 @@ Vue.component("selected-restaurant", {
                 </div>
 
                 <div class="container d-block mb-3">
+                    <h5><b>Address</b></h5>
                     <a href="#myRestaurant" @click="openMap()" id="locationLink" style="color: #7fd2c0;" data-bs-toggle="modal" data-bs-target="#mapModal">
-                            {{restaurant.location.address.street}}  {{restaurant.location.address.number}} <br> 
-                            {{restaurant.location.address.city}}, {{restaurant.location.address.postcode}}
-                        </a>
+                        {{restaurant.location.address.street}}  {{restaurant.location.address.number}} <br> 
+                        {{restaurant.location.address.city}}, {{restaurant.location.address.postcode}}
+                    </a>
                 </div>
 
                 <div class="container d-block">
@@ -375,7 +391,8 @@ Vue.component("selected-restaurant", {
                             {{restaurant.location.address.street}}  {{restaurant.location.address.number}} <br> 
                             {{restaurant.location.address.city}} {{restaurant.location.address.postcode}}, {{restaurant.location.address.country}}
                         </h4>	
-                        <button type="button" class="close" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true" 
+                            style="position: absolute; top: -5px; right: -2px;"></button>
                     </div>
                     <div class="modal-body">
                         <div id="map"></div>
@@ -424,6 +441,10 @@ Vue.component("selected-restaurant", {
                     }
                 });
             });
+
+        axios
+            .get("rest/images/getAllImages")
+            .then((response) => (this.images = response.data));
     },
     methods: {
         isCategoryEmpty: function (category) {
@@ -506,6 +527,13 @@ Vue.component("selected-restaurant", {
                     map.updateSize();
                 }, 200);
             }
+        },
+        getImage: function (item) {
+            for (let i of this.images) {
+                if (i.imageId === item.imagePath) return i.imageCode;
+            }
+
+            return "";
         },
     },
     filters: {

@@ -16,16 +16,17 @@ Vue.component("selected-restaurant", {
                     },
                     latitude: "",
                     longitude: "",
-                }
+                },
             },
             showItems: true,
             showComments: false,
             showOrders: false,
             items: [],
             allComments: [],
-            deleteItem : {},
-            deleteComment : {}
-
+            deleteItem: {},
+            deleteComment: {},
+            images: [],
+            count: 0,
         };
     },
     template: `
@@ -119,7 +120,9 @@ Vue.component("selected-restaurant", {
 			
 			                    </div>
 			
-			                    <div class="image-wrapper py-5" style="background-image: url(img/pizza.jpeg);"></div>
+			                    <div class="image-wrapper mt-2">
+									<img class="img-responsive img-rounded image-wrapper" :src="getImage(item)" alt="Item">
+								</div>
 			                </div>
 			            </div>
 			            <!-- End of breakfast -->
@@ -146,7 +149,9 @@ Vue.component("selected-restaurant", {
 			
 			                    </div>
 			
-			                    <div class="image-wrapper py-5" style="background-image: url(img/pizza.jpeg);"></div>
+			                    <div class="image-wrapper mt-2">
+									<img class="img-responsive img-rounded image-wrapper" :src="getImage(item)" alt="Item">
+								</div>
 			                </div>
 			            </div>
 			            <!-- End of salads -->
@@ -173,7 +178,9 @@ Vue.component("selected-restaurant", {
 			
 			                    </div>
 			
-			                    <div class="image-wrapper py-5" style="background-image: url(img/pizza.jpeg);"></div>
+			                    <div class="image-wrapper mt-2">
+									<img class="img-responsive img-rounded image-wrapper" :src="getImage(item)" alt="Item">
+								</div>
 			                </div>
 			            </div>
 			            <!-- End of pizza -->
@@ -200,7 +207,9 @@ Vue.component("selected-restaurant", {
 			
 			                    </div>
 			
-			                    <div class="image-wrapper py-5" style="background-image: url(img/pizza.jpeg);"></div>
+			                    <div class="image-wrapper mt-2">
+									<img class="img-responsive img-rounded image-wrapper" :src="getImage(item)" alt="Item">
+								</div>
 			                </div>
 			            </div>
 			            <!-- End of pasta -->
@@ -227,7 +236,9 @@ Vue.component("selected-restaurant", {
 			
 			                    </div>
 			
-			                    <div class="image-wrapper py-5" style="background-image: url(img/pizza.jpeg);"></div>
+			                    <div class="image-wrapper mt-2">
+									<img class="img-responsive img-rounded image-wrapper" :src="getImage(item)" alt="Item">
+								</div>
 			                </div>
 			            </div>
 			            <!-- End of main dishes -->
@@ -254,7 +265,9 @@ Vue.component("selected-restaurant", {
 			
 			                    </div>
 			
-			                    <div class="image-wrapper py-5" style="background-image: url(img/pizza.jpeg);"></div>
+			                    <div class="image-wrapper mt-2">
+                            		<img class="img-responsive img-rounded image-wrapper" :src="getImage(item)" alt="Item">
+                        		</div>
 			                </div>
 			            </div>
 			            <!-- End of drinks -->
@@ -281,7 +294,9 @@ Vue.component("selected-restaurant", {
 			
 			                    </div>
 			
-			                    <div class="image-wrapper py-5" style="background-image: url(img/pizza.jpeg);"></div>
+			                    <div class="image-wrapper mt-2">
+                            		<img class="img-responsive img-rounded image-wrapper" :src="getImage(item)" alt="Item">
+                        		</div>
 			                </div>
 			            </div>
 			            <!-- End of desserts -->
@@ -299,11 +314,13 @@ Vue.component("selected-restaurant", {
 			                    </div>
 			                </div>
 			
-			                <div class="container d-block">
-			                    <h5><b>Address</b></h5>
-			                    <p>{{restaurant.location.address.street}} {{restaurant.location.address.number}} <br>
-			                        {{restaurant.location.address.city}}, {{restaurant.location.address.postcode}}</p>
-			                </div>
+			                <div class="container d-block mb-3">
+                        		<h5><b>Address</b></h5>
+								<a href="#myRestaurant" @click="openMap()" id="locationLink" style="color: #7fd2c0;" data-bs-toggle="modal" data-bs-target="#mapModal">
+									{{restaurant.location.address.street}}  {{restaurant.location.address.number}} <br> 
+									{{restaurant.location.address.city}}, {{restaurant.location.address.postcode}}
+								</a>
+							</div>
 			
 			                <div class="container d-block">
 			                    <h5><b>Type</b></h5>
@@ -418,6 +435,26 @@ Vue.component("selected-restaurant", {
                 </div>
             </div>
         </div>
+
+		<!-- Map modal -->
+        <div id="mapModal" class="modal fade responsive">
+            <div class="modal-dialog modal-dialog-centered modal-map">
+                <div class="modal-content">
+                    <div class="modal-header flex-column">		
+                        <h4 class="modal-title w-100">
+                            {{restaurant.location.address.street}}  {{restaurant.location.address.number}} <br> 
+                            {{restaurant.location.address.city}} {{restaurant.location.address.postcode}}, {{restaurant.location.address.country}}
+                        </h4>	
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true" 
+                            style="position: absolute; top: -5px; right: -2px;"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="map"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End of map modal -->
         
     </div>
     `,
@@ -440,11 +477,13 @@ Vue.component("selected-restaurant", {
                         params: { id: this.restaurant.id },
                     })
                     .then((response) => (this.allComments = response.data));
-
             });
 
-
-    }, methods: {
+        axios
+            .get("rest/images/getAllImages")
+            .then((response) => (this.images = response.data));
+    },
+    methods: {
         isCategoryEmpty: function (category) {
             let itemsInCategory = new Array();
             for (let i of this.items) {
@@ -456,78 +495,131 @@ Vue.component("selected-restaurant", {
             return false;
         },
         deleteRestaurant: function () {
-        	 axios
-                  .get("rest/restaurants/deleteRestaurant", {
-                        params: { id: this.restaurant.id },
-                    })
-                  .then((response) =>{
-                  	axios 
-	    			.post('rest/carts/restaurantDeleted', this.restaurant.id,
-		        	{ headers: {
-		        		'Content-type': 'text/plain',
-		        		}
-		        	})
-		        	
-		        	axios 
-	    			.post('rest/orders/restaurantDeleted', this.restaurant.id,
-		        	{ headers: {
-		        		'Content-type': 'text/plain',
-		        		}
-		        	}) 
-		        	 
-                  	location.href = response.data;
-                  });
+            axios
+                .get("rest/restaurants/deleteRestaurant", {
+                    params: { id: this.restaurant.id },
+                })
+                .then((response) => {
+                    axios.post(
+                        "rest/carts/restaurantDeleted",
+                        this.restaurant.id,
+                        {
+                            headers: {
+                                "Content-type": "text/plain",
+                            },
+                        }
+                    );
 
+                    axios.post(
+                        "rest/orders/restaurantDeleted",
+                        this.restaurant.id,
+                        {
+                            headers: {
+                                "Content-type": "text/plain",
+                            },
+                        }
+                    );
+
+                    location.href = response.data;
+                });
         },
         removeComment: function () {
             axios
-                .post('rest/comments/removeComment', this.deleteComment.id,
-                    {
-                        headers: {
-                            'Content-type': 'text/plain',
-                        }
-                    })
-                .then(response => {
+                .post("rest/comments/removeComment", this.deleteComment.id, {
+                    headers: {
+                        "Content-type": "text/plain",
+                    },
+                })
+                .then((response) => {
                     axios
                         .get("rest/comments/getCommentsForAdmin", {
                             params: { id: this.restaurant.id },
                         })
                         .then((response) => (this.allComments = response.data));
-                         this.showToast();
-                })
-
+                    this.showToast();
+                });
         },
         removeItem: function () {
             axios
                 .post("rest/items/deleteItem", this.deleteItem.id)
                 .then((response) => {
-                	axios
-                    .get("rest/items/getItemsForRestaurant", {
-                        params: { id: this.restaurant.id },
-                    })
-                    .then((response) => {
-                    	(this.items = response.data);
-                    	this.showToast();
-                    	});
-                	
+                    axios
+                        .get("rest/items/getItemsForRestaurant", {
+                            params: { id: this.restaurant.id },
+                        })
+                        .then((response) => {
+                            this.items = response.data;
+                            this.showToast();
+                        });
                 });
         },
-        selectItem: function(item) {
-        	this.deleteItem = item;
+        selectItem: function (item) {
+            this.deleteItem = item;
         },
-        selectComment: function(comment){
-        	this.deleteComment = comment;
+        selectComment: function (comment) {
+            this.deleteComment = comment;
         },
-        showToast: function(){
-        	const Toast = Swal.mixin({
-        		toast: true,
-        		text: "Succesfully deleted!",
-        		position: "bottom-end",
-        		timer: 2000,
-        		showConfirmButton: false,
-        		});
-        	Toast.fire({icon: "success"});
-        }
+        showToast: function () {
+            const Toast = Swal.mixin({
+                toast: true,
+                text: "Succesfully deleted!",
+                position: "bottom-end",
+                timer: 2000,
+                showConfirmButton: false,
+            });
+            Toast.fire({ icon: "success" });
+        },
+        getImage: function (item) {
+            for (let i of this.images) {
+                if (i.imageId === item.imagePath) return i.imageCode;
+            }
+
+            return "";
+        },
+        openMap: function () {
+            this.count = this.count + 1;
+
+            if (this.count === 1) {
+                var map = new ol.Map({
+                    target: "map",
+                    layers: [
+                        new ol.layer.Tile({ source: new ol.source.OSM() }),
+                    ],
+                    view: new ol.View({
+                        center: ol.proj.fromLonLat([
+                            this.restaurant.location.longitude,
+                            this.restaurant.location.latitude,
+                        ]),
+                        zoom: 14,
+                    }),
+                });
+
+                var markers = new ol.layer.Vector({
+                    source: new ol.source.Vector(),
+                    style: new ol.style.Style({
+                        image: new ol.style.Icon({
+                            anchor: [0.5, 1],
+                            src: "img/marker.png",
+                        }),
+                    }),
+                });
+                map.addLayer(markers);
+
+                var marker = new ol.Feature(
+                    new ol.geom.Point(
+                        ol.proj.fromLonLat([
+                            this.restaurant.location.longitude,
+                            this.restaurant.location.latitude,
+                        ])
+                    )
+                );
+                markers.getSource().addFeature(marker);
+
+                window.setTimeout(function () {
+                    map.updateSize();
+                }, 200);
+            }
+        },
     },
     filters: {
         dateFormat: function (value, format) {
@@ -535,10 +627,7 @@ Vue.component("selected-restaurant", {
             return parsed.format(format);
         },
     },
-    components:{
-    	swal
-    }
-
+    components: {
+        swal,
+    },
 });
-
-

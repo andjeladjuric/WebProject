@@ -1,29 +1,30 @@
 function fixDate(users) {
-	for (var u of users) {
-		u.dateOfBirth = new Date(parseInt(u.dateOfBirth));
-	}
-	return users;
+    for (var u of users) {
+        u.dateOfBirth = new Date(parseInt(u.dateOfBirth));
+    }
+    return users;
 }
 
-Vue.component("restaurant-form",{
-    data: function(){
-        return{
-				step : 1,
-				totalSteps : 3,
-				table : 1,
-				managers : [],
-				restaurant : {},
-				selectedManager : {},
-				newManager : {},
-				errorMessage : '',
-				gender : '',
-				searchInput : '',
-				selectedOptionForSort : '',
-				matches : []
-            
-        }
-    }
-    ,
+Vue.component("restaurant-form", {
+    data: function () {
+        return {
+            step: 1,
+            totalSteps: 3,
+            table: 1,
+            managers: [],
+            restaurant: {},
+            selectedManager: {},
+            newManager: {},
+            errorMessage: "",
+            gender: "",
+            searchInput: "",
+            selectedOptionForSort: "",
+            matches: [],
+            images: [],
+            imageSrc: "",
+            chosenImg: {},
+        };
+    },
     template: `
     <div>
 	<div class="container-fluid">
@@ -65,7 +66,7 @@ Vue.component("restaurant-form",{
                                             <label class="form-label">Logo:</label>
                                         </div>
                                         <div class="col-8  mx-auto">
-                                            <input class="form-control" type="file">
+                                            <input type="file" class="custom-file-input form-control" @change="addImage">
                                         </div>
                                     </div>
                                 </div>
@@ -364,129 +365,188 @@ Vue.component("restaurant-form",{
 
 	</div>
     
-    `, mounted() {
-		axios
-			.get("rest/users/getManagers")
-            .then((response) =>( this.managers = fixDate(response.data)));
+    `,
+    mounted() {
+        axios
+            .get("rest/users/getManagers")
+            .then((response) => (this.managers = fixDate(response.data)));
+
+        axios
+            .get("rest/images/getAllImages")
+            .then((response) => (this.images = response.data));
     },
     methods: {
-		nextStep : function()
-		{
-			this.step++;
-		},
-		prevStep : function()
-		{
-			this.step--;
-		},
-		addNewManager : function()
-		{
-			this.table = 0;
-		},
-		cancel : function()
-		{
-			this.table = 1;
-		},
-		selectManager : function(manager)
-		{
-			this.selectedManager = manager;
-		},
-		addManager : function() {
+        nextStep: function () {
+            this.step++;
+        },
+        prevStep: function () {
+            this.step--;
+        },
+        addNewManager: function () {
+            this.table = 0;
+        },
+        cancel: function () {
+            this.table = 1;
+        },
+        selectManager: function (manager) {
+            this.selectedManager = manager;
+        },
+        addManager: function () {
+            if (
+                this.newManager.username == "" ||
+                this.newManager.password == "" ||
+                this.newManager.name == "" ||
+                this.newManager.surname == "" ||
+                this.gender == ""
+            ) {
+                this.errorMessage = "All fields are required!";
+            } else {
+                let selectedGender;
+                if (this.gender == "male") {
+                    selectedGender = 0;
+                } else {
+                    selectedGender = 1;
+                }
 
-			if(this.newManager.username =='' || this.newManager.password=='' || this.newManager.name =='' || this.newManager.surname=='' || this.gender =='')
-			{
-				this.errorMessage="All fields are required!";
-			}
-			else
-			{
-				let selectedGender;
-				if (this.gender == 'male') {
-					selectedGender = 0;
-				} else {
-					selectedGender = 1;
-				}
-				
-				this.newManager.gender = selectedGender;
-				this.newManager.role = 'MANAGER';
-    		
-    		axios 
-    			.post('rest/users/addNewUser', JSON.stringify(this.newManager),
-        	{ headers: {
-        		'Content-type': 'application/json',
-        		}
-        	})
-    			.then(response => {
-    				if (response.data == "Username taken") {
-						this.errorMessage="Username is already taken.";
-					}
-					else {
-						axios
-							.get("rest/users/getManagers")
-            				.then((response) =>( this.managers = fixDate(response.data)));
-						this.table = 1; 
-						this.selectedManager = this.newManager;
-    				}
-				})
-				.catch(err => { 
-                    this.errorMessage="error";
-                })
-			}
-    		
-    	},
-		signalChange : function()
-		{
-			this.errorMessage="";
-		},
-		doSearch : function() {
-			axios
-			.get("rest/users/getManagers")
-            .then((response) => {
-            	this.managers = fixDate(response.data);
-            	this.matches = [];
-					for (var u of this.managers) {
-						if (u.name.toLowerCase().match(this.searchInput.toLowerCase()) ||
-							u.surname.toLowerCase().match(this.searchInput.toLowerCase()) ||
-							u.username.toLowerCase().match(this.searchInput.toLowerCase())) {
-							this.matches.push(u);
-						}
-					}
-					this.managers = this.matches;
-            	});
-		
-    	},
-		sort : function() {
-		
-		switch(this.selectedOptionForSort) {
-		   case "Name Desc":
-			  this.managers.sort((a, b) => (a.name < b.name ? 1 : -1));
-		    break;
-		  case "Surname Asc":
-			  this.managers.sort((a, b) => (a.surname > b.surname ? 1 : -1));
-		    break;
-		  case "Surname Desc":
-			  this.managers.sort((a, b) => (a.surname < b.surname ? 1 : -1));
-		    break;
-		  case "Username Asc":
-			  this.managers.sort((a, b) => (a.username > b.username ? 1 : -1));
-		    break;
-		  case "Username Desc":
-			  this.managers.sort((a, b) => (a.username < b.username ? 1 : -1));
-		    break;
-		  default:
-			  this.managers.sort((a, b) => (a.name > b.name ? 1 : -1));
-		}
-    		
-    	},
-		submit : function()
-		{
-			this.restaurant.menagerId = this.selectedManager.username;
-			this.restaurant.logo = '';
-			axios 
-    			.post('rest/restaurants/addNewRestaurant', JSON.stringify(this.restaurant),
-        	{ headers: {
-        		'Content-type': 'application/json',
-        		}
-        	})
-		}	
-		
+                this.newManager.gender = selectedGender;
+                this.newManager.role = "MANAGER";
+
+                axios
+                    .post(
+                        "rest/users/addNewUser",
+                        JSON.stringify(this.newManager),
+                        {
+                            headers: {
+                                "Content-type": "application/json",
+                            },
+                        }
+                    )
+                    .then((response) => {
+                        if (response.data == "Username taken") {
+                            this.errorMessage = "Username is already taken.";
+                        } else {
+                            axios
+                                .get("rest/users/getManagers")
+                                .then(
+                                    (response) =>
+                                        (this.managers = fixDate(response.data))
+                                );
+                            this.table = 1;
+                            this.selectedManager = this.newManager;
+                        }
+                    })
+                    .catch((err) => {
+                        this.errorMessage = "error";
+                    });
+            }
+        },
+        signalChange: function () {
+            this.errorMessage = "";
+        },
+        doSearch: function () {
+            axios.get("rest/users/getManagers").then((response) => {
+                this.managers = fixDate(response.data);
+                this.matches = [];
+                for (var u of this.managers) {
+                    if (
+                        u.name
+                            .toLowerCase()
+                            .match(this.searchInput.toLowerCase()) ||
+                        u.surname
+                            .toLowerCase()
+                            .match(this.searchInput.toLowerCase()) ||
+                        u.username
+                            .toLowerCase()
+                            .match(this.searchInput.toLowerCase())
+                    ) {
+                        this.matches.push(u);
+                    }
+                }
+                this.managers = this.matches;
+            });
+        },
+        sort: function () {
+            switch (this.selectedOptionForSort) {
+                case "Name Desc":
+                    this.managers.sort((a, b) => (a.name < b.name ? 1 : -1));
+                    break;
+                case "Surname Asc":
+                    this.managers.sort((a, b) =>
+                        a.surname > b.surname ? 1 : -1
+                    );
+                    break;
+                case "Surname Desc":
+                    this.managers.sort((a, b) =>
+                        a.surname < b.surname ? 1 : -1
+                    );
+                    break;
+                case "Username Asc":
+                    this.managers.sort((a, b) =>
+                        a.username > b.username ? 1 : -1
+                    );
+                    break;
+                case "Username Desc":
+                    this.managers.sort((a, b) =>
+                        a.username < b.username ? 1 : -1
+                    );
+                    break;
+                default:
+                    this.managers.sort((a, b) => (a.name > b.name ? 1 : -1));
+            }
+        },
+        submit: function () {
+            this.restaurant.menagerId = this.selectedManager.username;
+            this.restaurant.logo = "";
+            axios.post(
+                "rest/restaurants/addNewRestaurant",
+                JSON.stringify(this.restaurant),
+                {
+                    headers: {
+                        "Content-type": "application/json",
+                    },
+                }
+            );
+        },
+        addImage(e) {
+            const file = e.target.files[0];
+            const reader = new FileReader();
+
+            reader.onload = (e) => {
+                this.imageSrc = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        },
+
+        imageAlreadyExists() {
+            for (let i of this.images) {
+                if (i.imageCode === this.imageSrc) {
+                    return i;
+                }
+            }
+
+            return null;
+        },
+
+        sendImgToBack: function () {
+            var image = this.imageAlreadyExists();
+            if (image !== null) {
+                this.restaurant.logo = image.imageId;
+                //this.submit();
+                //window.location.reload();
+            } else {
+                axios
+                    .post("rest/images/addNewImage", this.imageSrc, {
+                        headers: {
+                            "Content-type": "text/plain",
+                        },
+                    })
+                    .then((response) => {
+                        this.chosenImg = response.data;
+                        this.restaurant.logo = this.chosenImg.imageId;
+                        //this.submit();
+                        //window.location.reload();
+                    });
+            }
+        },
     },
 });
