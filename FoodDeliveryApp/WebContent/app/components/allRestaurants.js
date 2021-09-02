@@ -125,7 +125,7 @@ Vue.component("all-restaurants", {
                                     v-model="searchInput.location">
                                 </div>
                                 <div class="col-md mt-4">
-                                    <button type="button" class="btn btn-sm filter-button" @click="openMap()" data-bs-toggle="modal" data-bs-target="#mapModal">
+                                    <button type="button" class="btn btn-sm filter-button" data-bs-toggle="modal" data-bs-target="#mapModal">
                                         <i class="fas fa-map me-2"></i>Open map
                                     </button>
                                 </div>
@@ -250,7 +250,7 @@ Vue.component("all-restaurants", {
             </section>
 
             <!-- Map modal -->
-            <div id="mapModal" class="modal fade responsive">
+            <div id="mapModal" class="modal fade responsive" ref="vuemodal" @show="openMap()">
                 <div class="modal-dialog modal-dialog-centered modal-map">
                     <div class="modal-content">
                         <div class="modal-header flex-column">		
@@ -262,6 +262,8 @@ Vue.component("all-restaurants", {
                         </div>
                         <div class="modal-body">
                             <div id="map"></div>
+                            <div id="marker">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -273,6 +275,28 @@ Vue.component("all-restaurants", {
         axios
             .get("rest/restaurants/getAll")
             .then((response) => (this.restaurants = response.data));
+
+        $("#mapModal").on("shown.bs.modal", (response) => {
+            this.count = this.count + 1;
+            console.log(this.count);
+
+            if (this.count === 1) {
+                var map = new ol.Map({
+                    target: "map",
+                    layers: [
+                        new ol.layer.Tile({
+                            source: new ol.source.OSM(),
+                        }),
+                    ],
+                    view: new ol.View({
+                        center: ol.proj.fromLonLat([20.9224158, 44.2107675]),
+                        zoom: 5,
+                    }),
+                });
+
+                this.clickOnMap(map);
+            }
+        });
     },
     methods: {
         searchRest: function (restaurant) {
@@ -341,54 +365,31 @@ Vue.component("all-restaurants", {
             this.filterInput.opened = "";
         },
 
-        openMap: function () {
-            this.count = this.count + 1;
+        clickOnMap: function (map) {
+            /*
+             * reference: https://stackoverflow.com/questions/50882125/open-layers-maps-with-longitude-and-latitude-get-address
+             *
+             *
+             */
 
-            if (this.count === 1) {
-                var map = new ol.Map({
-                    target: "map",
-                    layers: [
-                        new ol.layer.Tile({ source: new ol.source.OSM() }),
-                    ],
-                    view: new ol.View({
-                        center: ol.proj.fromLonLat([20.9224158, 44.2107675]),
-                        zoom: 5,
-                    }),
-                });
+            map.on("click", (evt) => {
+                var coordinates = ol.proj.toLonLat(evt.coordinate);
+                fetch(
+                    "http://nominatim.openstreetmap.org/reverse?format=json&lon=" +
+                        coordinates[0] +
+                        "&lat=" +
+                        coordinates[1]
+                )
+                    .then((response) => {
+                        return response.json();
+                    })
+                    .then((json) => {
+                        console.log(json.address.city);
 
-                window.setTimeout(function () {
-                    map.updateSize();
-                }, 200);
-
-                /*
-                 * reference: https://stackoverflow.com/questions/50882125/open-layers-maps-with-longitude-and-latitude-get-address
-                 *
-                 *
-                 */
-                map.on("click", function (evt) {
-                    var coordinates = ol.proj.toLonLat(evt.coordinate);
-                    fetch(
-                        "http://nominatim.openstreetmap.org/reverse?format=json&lon=" +
-                            coordinates[0] +
-                            "&lat=" +
-                            coordinates[1]
-                    )
-                        .then(function (response) {
-                            return response.json();
-                        })
-                        .then(function (json) {
-                            console.log(json.address.city);
-
-                            // trigger input event to search immediatelly (????)
-                            let input =
-                                document.getElementById("locationInput");
-                            input.value = json.address.city;
-
-                            var event = new Event("input");
-                            input.dispatchEvent(event);
-                        });
-                });
-            }
+                        // trigger event to search immediatelly
+                        this.searchInput.location = json.address.city;
+                    });
+            });
         },
     },
     computed: {
