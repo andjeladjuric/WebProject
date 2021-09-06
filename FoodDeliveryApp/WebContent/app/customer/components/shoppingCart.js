@@ -62,9 +62,10 @@ Vue.component("shopping-cart", {
                                                 {{i.name}}
                                             </h1>
                                             <p class="mb-2">
-                                                Description: {{i.description}}
+                                               {{i.description}}
                                             </p>
-                                            <p class="mb-2">Size: {{i.amount}} mg</p>
+                                            <p class="mb-2" v-if="i.type == 'Food'">{{i.amount}} g</p>
+                                            <p class="mb-2" v-if="i.type == 'Drink'">{{i.amount}} ml</p>
                                             <p class="mb-5">
                                                 Restaurant: "{{i.restaurant}}"
                                             </p>
@@ -337,11 +338,13 @@ Vue.component("shopping-cart", {
                     this.totalPrice = this.cart.totalPrice + 100;
                     this.points = (this.cart.totalPrice / 1000) * 133;
                 });
+                this.showToast();
         },
         useDiscount: function () {
             this.totalPrice =
                 this.totalPrice * (1 - this.user.type.discount * 0.01);
             this.haveDiscount = false;
+            this.discountToast();
         },
         getRestaurant: function (id) {
             axios
@@ -384,6 +387,7 @@ Vue.component("shopping-cart", {
                 });
 
                 window.location.reload();
+                this.orderToast();
             }
         },
         getImage: function (item) {
@@ -393,5 +397,35 @@ Vue.component("shopping-cart", {
 
             return "";
         },
-    },
+        showToast: function () {
+            const Toast = Swal.mixin({
+                toast: true,
+                text: "Item removed!",
+                position: "bottom-end",
+                timer: 2000,
+                showConfirmButton: false,
+            });
+            Toast.fire({ icon: "success" });
+        },discountToast: function () {
+            const Toast = Swal.mixin({
+                toast: true,
+                text: "You have used your discount!",
+                position: "bottom-end",
+                timer: 2000,
+                showConfirmButton: false,
+            });
+            Toast.fire({ icon: "success" });
+        },orderToast: function () {
+            const Toast = Swal.mixin({
+                toast: true,
+                text: "Your order is recorded!",
+                position: "bottom-end",
+                timer: 2000,
+                showConfirmButton: false,
+            });
+            Toast.fire({ icon: "success" });
+        },
+    },components: {
+        swal
+       }
 });

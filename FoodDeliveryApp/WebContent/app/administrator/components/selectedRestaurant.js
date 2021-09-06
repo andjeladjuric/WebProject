@@ -20,7 +20,6 @@ Vue.component("selected-restaurant", {
             },
             showItems: true,
             showComments: false,
-            showOrders: false,
             items: [],
             allComments: [],
             deleteItem: {},
@@ -52,19 +51,14 @@ Vue.component("selected-restaurant", {
 			    <div class="row">
 			        <div class="container buttons mt-5 mb-1">
 			            <button type="button" class="btn d-sm-flex buttonGroup me-2" id="itemsButton"
-			                @click="showComments = false;  showItems = true; showOrders = false;"
+			                @click="showComments = false;  showItems = true;"
 			                v-bind:class="showItems ? 'active' : 'notActive'">
 			                Items
 			            </button>
 			            <button type="button" class="btn d-sm-flex buttonGroup me-2" id="commentsButton"
-			                @click="showComments = true; showItems = false; showOrders = false;"
+			                @click="showComments = true; showItems = false;"
 			                v-bind:class="showComments ? 'active' : 'notActive'">
 			                Comments
-			            </button>
-			            <button type="button" class="btn d-sm-flex buttonGroup me-2" id="ordersButton"
-			                @click="showOrders = true; showItems = false; showComments = false"
-			                v-bind:class="showOrders ? 'active' : 'notActive'">
-			                Orders
 			            </button>
 			        </div>
 			    </div>
@@ -387,7 +381,7 @@ Vue.component("selected-restaurant", {
                         <p>Do you really want to delete this restaurant? This process cannot be undone.</p>
                     </div>
                     <div class="modal-footer justify-content-center">
-                        <button type="button" class="btn" data-bs-dismiss="modal" @click="deleteRestaurant" @click="showToast">Confirm</button>
+                        <button type="button" class="btn" data-bs-dismiss="modal" @click="deleteRestaurant; showToast">Confirm</button>
                         <button type="button" class="btn" data-bs-dismiss="modal" style="background: #ecbeb1">Cancel</button>
                     </div>
                 </div>

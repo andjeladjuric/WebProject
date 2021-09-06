@@ -161,7 +161,7 @@ Vue.component("all-orders", {
                                         <h1 class="mb-4 mt-1 orderID">Order #{{o.id}}</h1>
                                         <h3 style="z-index: 2;">
                                             <button type="button" class="btn ms-4 mb-4" style="background: #ecbeb1;"
-                                                @click="cancelOrder(o); reload()" v-bind:disabled="o.status != 'PROCESSING'">Cancel Order</button>
+                                                @click="cancelOrder(o);" v-bind:disabled="o.status != 'PROCESSING'">Cancel Order</button>
                                         </h3>
                                     </div>
                                 </div>
@@ -269,13 +269,15 @@ Vue.component("all-orders", {
                 .get("rest/orders/cancelOrder", {
                     params: { id: order.id },
                 })
-                 .then((response) => (this.orders = response.data));
+                 .then((response) => {(this.orders = response.data);});
            axios
                 .post("rest/users/removePoints", JSON.stringify(order),
 	        	{ headers: {
 	        		'Content-type': 'application/json',
 	        		}
-                })
+                });
+                 this.showToast();
+                
         },
 
         reload: function () {
@@ -329,6 +331,15 @@ Vue.component("all-orders", {
         noFilters: function () {
             this.filterInput.restaurantType = "";
             this.filterInput.status = "";
+        },showToast: function () {
+            const Toast = Swal.mixin({
+                toast: true,
+                text: "Order canceled!",
+                position: "bottom-end",
+                timer: 2000,
+                showConfirmButton: false,
+            });
+            Toast.fire({ icon: "success" });
         },
     },
     computed: {
@@ -349,5 +360,7 @@ Vue.component("all-orders", {
             var parsed = moment(value);
             return parsed.format(format);
         },
-    },
+    },components: {
+        swal
+       }
 });

@@ -205,7 +205,7 @@ public class UsersDAO {
 		List<User> allUsers = new ArrayList<User>();
 		
 		for (User u : users.values()) {
-			if(u.getRole() != Role.ADMINISTRATOR  && u.isDeleted() == false )
+			if(u.isDeleted() == false )
 				allUsers.add(u);
 		}
 		return allUsers;
@@ -271,6 +271,9 @@ public class UsersDAO {
 		  case "Suspicious":
 				retVal = getSuspicious();
 				  break;
+		  case "Administrators":
+				retVal = getAdmins();
+				  break;
 		  default:
 			retVal = getUsers();
 		}
@@ -278,6 +281,16 @@ public class UsersDAO {
 		return retVal;
 	}
 	
+	private List<User> getAdmins() {
+		List<User> admins = new ArrayList<User>();
+		
+		for (User u : users.values()) {
+			if(u.getRole() == Role.ADMINISTRATOR  && u.isDeleted() == false)
+				admins.add(u);
+		}
+		return admins;
+	}
+
 	public List<User> remove(String username){
 		List<User> allUsers = new ArrayList<User>();
 		

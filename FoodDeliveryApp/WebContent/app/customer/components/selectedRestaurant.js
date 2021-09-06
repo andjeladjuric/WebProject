@@ -463,6 +463,7 @@ Vue.component("selected-restaurant", {
                     "Content-type": "application/json",
                 },
             });
+            this.showToast();
         },
         cancel: function () {
             this.comment.text = "";
@@ -535,6 +536,16 @@ Vue.component("selected-restaurant", {
 
             return "";
         },
+        showToast: function () {
+            const Toast = Swal.mixin({
+                toast: true,
+                text: "Item added to cart!",
+                position: "bottom-end",
+                timer: 2000,
+                showConfirmButton: false,
+            });
+            Toast.fire({ icon: "success" });
+        },
     },
     filters: {
         dateFormat: function (value, format) {
@@ -542,6 +553,9 @@ Vue.component("selected-restaurant", {
             return parsed.format(format);
         },
     },
+    components: {
+        swal
+       }
 });
 
 Vue.component("star-rating", VueStarRating.default);

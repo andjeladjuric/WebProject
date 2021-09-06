@@ -15,7 +15,9 @@ Vue.component("administrator-users", {
             searchInput: "",
             selectedFilter: "All",
             selectedOptionForSort: "",
-            newUser: {},
+            newUser: {
+            	dateOfBirth : ''
+            },
             errorMessage: "",
             gender: "",
             canBlock: false,
@@ -39,6 +41,7 @@ Vue.component("administrator-users", {
                                 <div class="form-floating">
                                     <select class="form-select" v-model="selectedFilter" v-on:change="filter()">
                                         <option>All</option>
+                                        <option>Administrators</option>
                                         <option>Managers</option>
                                         <option>Couriers</option>
                                         <option>Customers</option>
@@ -100,7 +103,7 @@ Vue.component("administrator-users", {
                     </div>
                     <div class="row mb-3">
                         <div class="col-4">
-                            <button class="btn buttonGroup" data-bs-toggle="modal" data-bs-target="#deleteModal" v-bind:disabled="selectedUser.username === ''"><i class="fa fa-trash"></i> Remove</button>
+                            <button class="btn buttonGroup" data-bs-toggle="modal" data-bs-target="#deleteModal" v-bind:disabled="selectedUser.username === '' || selectedUser.role === 'ADMINISTRATOR'"><i class="fa fa-trash"></i> Remove</button>
                         </div>
                     
 						<div class="col-4">
@@ -262,7 +265,9 @@ Vue.component("administrator-users", {
                                             <label class="form-check-label">Female</label>
                                         </div>
                                     </div>
-                                    <p style="color: red; font-size: small;">{{errorMessage}}</p>
+                                    <div class="d-flex justify-content-center">
+                                    	<p style="color: red; font-size: small;">{{errorMessage}}</p>
+                                    </div>
                                     <div class="container">
                                         <div class="row">
                                             <div class="col-12">
@@ -326,6 +331,10 @@ Vue.component("administrator-users", {
                 this.canBlock = false;
             } else {
                 this.canBlock = true;
+                this.canUnblock = false;
+            }
+            if(user.role === 'ADMINISTRATOR'){
+            	this.canBlock = false;
                 this.canUnblock = false;
             }
             if (user.role == "MANAGER") {
@@ -412,7 +421,8 @@ Vue.component("administrator-users", {
                 this.newUser.name == "" ||
                 this.newUser.surname == "" ||
                 this.gender == "" ||
-                this.newUser.role == ""
+                this.newUser.role == "" ||
+                this.newUser.dateOfBirth == ""
             ) {
                 this.errorMessage = "All fields are required!";
             } else {
