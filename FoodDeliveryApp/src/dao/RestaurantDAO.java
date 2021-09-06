@@ -97,6 +97,7 @@ public class RestaurantDAO {
 	}
 
 	public Restaurant getRestaurantByManager(String username) {
+		loadFromFile();
 		for(Restaurant r : restaurants) {
 			if(r.getMenagerId().equals(username) && !r.isDeleted())
 				return r;
