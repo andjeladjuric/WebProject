@@ -112,7 +112,7 @@ Vue.component("currentUser-profile", {
                         <h2 class="mb-2">
                             <i class="fas fa-edit mb-4 me-4"></i>Edit profile
                         </h2>
-                        <div class="row d-flex justify-content-center">
+                        <div class="col-md d-flex justify-content-center">
                             <table class="table-responsive profileTable">
                                <tr>
                                     <td>First Name</td>
@@ -137,8 +137,8 @@ Vue.component("currentUser-profile", {
                                 </tr>
                                 <tr>
                                     <td>Birthday</td>
-                                    <td>
-                                        <vuejs-datepicker :bootstrap-styling="true" style="background-color: white; text-align: start;" class="datepicker" format="dd.MM.yyyy" v-model="currentUser.dateOfBirth"></vuejs-datepicker>                                    </td>
+                                    <td style="white-space: normal">
+                                        <vuejs-datepicker :bootstrap-styling="true" calendar-class="calendar" format="dd.MM.yyyy" v-model="currentUser.dateOfBirth"></vuejs-datepicker>
                                     </td>
                                 </tr>
                                 <tr>
@@ -179,8 +179,6 @@ Vue.component("currentUser-profile", {
                                 <button type="button" class="btn profileBtn" style="background: #ecbeb1" v-on:click="cancelEditing(); showEdit = !showEdit; reload()">Cancel</button>
                             </div>
                         </div>
-
-                        <img class="img-fluid d-sm-block" v-bind:src="editedImageSrc" alt="" id="editedImage">
                     </div>
                     <!-- End of edit profile -->
                 </div>
@@ -336,11 +334,10 @@ Vue.component("currentUser-profile", {
 
         sendImgToBack: function () {
             var image = this.alreadyExists();
-            if(this.editedImageSrc === ''){
-            	this.updateProfile();
-            	window.location.reload();
-            }
-            else if (image !== null) {
+            if (this.editedImageSrc === "") {
+                this.updateProfile();
+                window.location.reload();
+            } else if (image !== null) {
                 this.currentUser.profilePicPath = image.imageId;
                 this.updateProfile();
                 window.location.reload();

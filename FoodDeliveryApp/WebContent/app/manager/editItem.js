@@ -14,6 +14,7 @@ Vue.component("edit-item", {
                 restaurantId: "",
                 category: "",
             },
+            items: [],
             errorMessage: "",
             chosenImg: {},
             imageSrc: "",
@@ -99,7 +100,7 @@ Vue.component("edit-item", {
                         </table>
                     </div>
                     <p style="color: red; font-size: small;" class="text-center mt-5">{{errorMessage}}</p>
-                    <div class="row mt-5">
+                    <div class="row mt-5 mb-5">
                         <div class="col d-inline-flex justify-content-center">
                             <button type="button" class="btn me-4" @click="sendImgToBack()">Save</button>
                             <button type="button" class="btn" style="background: #ecbeb1" @click="cancelEditing()">Cancel</button>
@@ -130,6 +131,12 @@ Vue.component("edit-item", {
                     restaurantId: this.item.restaurantId,
                     category: this.item.category,
                 };
+
+                axios
+                    .get("rest/items/getItemsForRestaurant", {
+                        params: { id: this.item.restaurantId },
+                    })
+                    .then((response) => (this.items = response.data));
             });
 
         axios
@@ -137,22 +144,48 @@ Vue.component("edit-item", {
             .then((response) => (this.images = response.data));
     },
     methods: {
+        alreadyExists(name) {
+            for (let i of this.items) {
+                if (i.name === name) return true;
+            }
+
+            return false;
+        },
+
         addNewItem: function () {
-            axios
-                .post(
-                    "rest/items/updateItem",
-                    JSON.stringify(this.updatedItem),
-                    {
-                        headers: {
-                            "Content-type": "application/json",
-                        },
-                    }
-                )
-                .then(
-                    (response) =>
-                        (window.location =
-                            "/FoodDeliveryApp/managerHomePage.html#/myRestaurant/")
-                );
+            if (
+                this.updatedItem.name === "" ||
+                this.updatedItem.price === "" ||
+                this.updatedItem.type === "" ||
+                this.updatedItem.category === "" ||
+                this.updatedItem.imagePath === ""
+            ) {
+                this.errorMessage = "Please fill in the required fields!";
+            } else if (
+                this.updatedItem.name !== this.item.name &&
+                this.alreadyExists(this.updatedItem.name)
+            ) {
+                this.errorMessage =
+                    "Item with the name '" +
+                    this.updatedItem.name +
+                    "' already exists!";
+            } else {
+                axios
+                    .post(
+                        "rest/items/updateItem",
+                        JSON.stringify(this.updatedItem),
+                        {
+                            headers: {
+                                "Content-type": "application/json",
+                            },
+                        }
+                    )
+                    .then(
+                        (response) =>
+                            (window.location =
+                                "/FoodDeliveryApp/managerHomePage.html#/myRestaurant/")
+                    );
+            }
         },
 
         cancelEditing: function () {
@@ -182,10 +215,9 @@ Vue.component("edit-item", {
 
         sendImgToBack: function () {
             var image = this.imageAlreadyExists();
-            if(this.imageSrc === ''){
-            	this.addNewItem();
-            }
-            else if (image !== null) {
+            if (this.imageSrc === "") {
+                this.addNewItem();
+            } else if (image !== null) {
                 this.updatedItem.imagePath = image.imageId;
                 this.addNewItem();
             } else {
