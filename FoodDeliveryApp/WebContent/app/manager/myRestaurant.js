@@ -24,6 +24,7 @@ Vue.component("myrestaurant", {
             showItems: true,
             showComments: false,
             showOrders: false,
+            images : []
         };
     },
     template: `
@@ -35,10 +36,10 @@ Vue.component("myrestaurant", {
                     <div class="overlay-image" style="background-image: url(img/la-forza.jpg);">
                     </div>
                     <div class="container headline">
-                        <h1 style="font-weight: bold; font-size: 5vw;">{{restaurant.name}}</h1>
-                        <p>
-                            Pizzeria with a long history, in the heart of Novi Sad
-                        </p>
+                        <div class="d-flex justify-content-start">
+			                <img class="img-rounded image-wrapper me-3" v-bind:src="getLogo()" alt="RestaurantLogo" style="width: 150px; height: 150px; border: 7px solid;">
+			                <h1 style="font-weight: bold; font-size: 5vw; margin-top:60px;">{{restaurant.name}}</h1>
+			            </div>
                     </div>
                 </div>
             </div>
@@ -77,5 +78,17 @@ Vue.component("myrestaurant", {
         axios
             .get("rest/restaurants/getRestaurantForManager")
             .then((response) => (this.restaurant = response.data));
+        axios
+            .get("rest/images/getAllImages")
+            .then((response) => (this.images = response.data));
     },
+    methods: {
+        getLogo: function () {
+            for (let i of this.images) {
+                if (i.imageId === this.restaurant.logo) return i.imageCode;
+            }
+
+            return "";
+        }
+    }
 });
