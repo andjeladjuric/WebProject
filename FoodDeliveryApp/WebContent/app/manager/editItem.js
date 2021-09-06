@@ -182,7 +182,10 @@ Vue.component("edit-item", {
 
         sendImgToBack: function () {
             var image = this.imageAlreadyExists();
-            if (image !== null) {
+            if(this.imageSrc === ''){
+            	this.addNewItem();
+            }
+            else if (image !== null) {
                 this.updatedItem.imagePath = image.imageId;
                 this.addNewItem();
             } else {

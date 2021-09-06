@@ -65,10 +65,6 @@ public class ImageDAO {
 		String id = UUID.randomUUID().toString();
 		newImage.setImageId(id);
 		
-		String part[] = code.split(",");
-		
-		byte[] image = Base64.getDecoder().decode(part[1]);
-		
 		newImage.setImageCode(code);
 		images.add(newImage);
 		serialize();
