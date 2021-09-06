@@ -17,7 +17,7 @@ public class Restaurant {
 	private ArrayList<String> items = new ArrayList<String>();
 	private String logo; 
 	private String menagerId;
-	private double rating;
+	private int rating;
 	//private ArrayList<WorkingHours> workingHours;
 
 	public Restaurant() {}
@@ -34,7 +34,7 @@ public class Restaurant {
 	}
 
 	public Restaurant(String name, String id, boolean deleted, RestaurantType type, Status status, Location location,
-			ArrayList<String> items, String logo, String menagerId, double rating) {
+			ArrayList<String> items, String logo, String menagerId, int rating) {
 		super();
 		this.name = name;
 		this.id = id;
@@ -48,11 +48,11 @@ public class Restaurant {
 		this.rating = rating;
 	}
 
-	public double getRating() {
+	public int getRating() {
 		return rating;
 	}
 
-	public void setRating(double rating) {
+	public void setRating(int rating) {
 		this.rating = rating;
 	}
 

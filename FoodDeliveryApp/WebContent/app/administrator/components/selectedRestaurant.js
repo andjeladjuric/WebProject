@@ -304,7 +304,7 @@ Vue.component("selected-restaurant", {
 			                    <div class="container d-inline-flex p-0">
 			                        <i class="fa fa-star checked me-2" style="color: gold;"></i>
 			                        <p>·</p>
-			                        <p class="ms-2">5.0</p>
+			                        <p class="ms-2">{{restaurant.rating}}</p>
 			                    </div>
 			                </div>
 			
@@ -312,7 +312,8 @@ Vue.component("selected-restaurant", {
                         		<h5><b>Address</b></h5>
 								<a href="#myRestaurant" @click="openMap()" id="locationLink" style="color: #7fd2c0;" data-bs-toggle="modal" data-bs-target="#mapModal">
 									{{restaurant.location.address.street}}  {{restaurant.location.address.number}} <br> 
-									{{restaurant.location.address.city}}, {{restaurant.location.address.postcode}}
+									{{restaurant.location.address.city}}, {{restaurant.location.address.postcode}}<br>
+                        			{{restaurant.location.latitude}}, {{restaurant.location.longitude}}
 								</a>
 							</div>
 			

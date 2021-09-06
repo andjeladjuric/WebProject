@@ -195,6 +195,7 @@ Vue.component("shopping-cart", {
                             	<div class="d-flex justify-content-center">
                                 	<h5 class="mb-4">Discount codes</h5>
                                 </div>
+                                <div class="d-flex justify-content-center">
                                 <p>
                                     <i class="fas fa-medal" style="color:brown;" v-if="haveDiscount && medal == 'BRONZE'"></i>
                                     <i class="fas fa-medal" style="color:gold;" v-if="haveDiscount && medal == 'GOLD'"></i>
@@ -202,6 +203,7 @@ Vue.component("shopping-cart", {
                     
                                     {{paragraph}}
                                 </p>
+                                </div>
                                 <div class="d-flex justify-content-center">
                                 <button class="btn buttonGroup active" v-bind:disabled="haveDiscount == false" v-on:click="useDiscount()">
                                     Use discount
@@ -387,7 +389,7 @@ Vue.component("shopping-cart", {
                 });
 
                 window.location.reload();
-                this.orderToast();
+                
             }
         },
         getImage: function (item) {
@@ -415,16 +417,7 @@ Vue.component("shopping-cart", {
                 showConfirmButton: false,
             });
             Toast.fire({ icon: "success" });
-        },orderToast: function () {
-            const Toast = Swal.mixin({
-                toast: true,
-                text: "Your order is recorded!",
-                position: "bottom-end",
-                timer: 2000,
-                showConfirmButton: false,
-            });
-            Toast.fire({ icon: "success" });
-        },
+        }
     },components: {
         swal
        }

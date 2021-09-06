@@ -76,6 +76,10 @@ public class UsersDAO {
 				newUser.gender, newUser.dateOfBirth, newUser.role);
 		users.put(createdUser.getUsername(), createdUser);
 		serialize();
+		if(newUser.role == Role.CUSTOMER) {
+			CartDAO carts = new CartDAO();
+			carts.createNew(createdUser);
+		}
 	}
 
 	
@@ -329,7 +333,8 @@ public class UsersDAO {
 		for (User u : users.values()) {
 			if(u.getUsername().equals(user))
 				{
-					u.setPoints(u.getPoints() + points);
+					double p = u.getPoints() + points;
+					u.setPoints(Math.round(p*100.0)/100.0);
 					u.setType();
 				}
 			allUsers.add(u);
@@ -347,7 +352,8 @@ public class UsersDAO {
 		for (User u : users.values()) {
 			if(u.getUsername().equals(user))
 				{
-					u.setPoints(u.getPoints() - points);
+					double p = u.getPoints() - points;
+					u.setPoints(Math.round(p*100.0)/100.0);
 					u.setType();
 				}
 			allUsers.add(u);

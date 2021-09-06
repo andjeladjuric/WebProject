@@ -236,11 +236,11 @@ Vue.component("all-restaurants", {
                                     </p>
 
                                     <div class="star mb-2 align-items-center">
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star" v-if="r.rating >= 1"></i>
+                                        <i class="fa fa-star" v-if="r.rating >= 2"></i>
+                                        <i class="fa fa-star" v-if="r.rating >= 3"></i>
+                                        <i class="fa fa-star" v-if="r.rating >= 4"></i>
+                                        <i class="fa fa-star" v-if="r.rating == 5"></i>
                                     </div>
                                 </div>
                                 <a :href="'#/selectedRestaurant?id=' + r.id" class="stretched-link"></a>

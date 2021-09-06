@@ -7,10 +7,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.commons.lang3.RandomStringUtils;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import beans.Item;
+import beans.Order;
 import beans.ShoppingCart;
+import beans.User;
 
 public class CartDAO {
 	
@@ -133,6 +137,32 @@ public class CartDAO {
 		}
 		carts = newCarts;
 		serialize();
+	}
+
+	public void createNew(User user) {
+		load();
+		String id = getUniqueId();
+		ShoppingCart newCart = new ShoppingCart(id, user.getUsername(), new ArrayList<Item>(), 0);
+		carts.add(newCart);
+		serialize();
+	}
+	
+	public String getUniqueId() {
+		String id;
+		while(true) {
+			 id = RandomStringUtils.randomAlphanumeric(5);
+			if(!alreadyExists(id))
+				return id;
+		}
+	}
+	
+	public boolean alreadyExists(String id) {
+		
+		for(ShoppingCart o : carts) {
+			if(o.getId().equals(id))
+				return true;
+		}
+		return false;
 	}
 
 }

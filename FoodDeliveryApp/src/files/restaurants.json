@@ -1,77 +1,77 @@
 [
-    {
-        "name": "La Forza",
-        "id": "1",
-        "deleted": false,
-        "type": "ITALIAN",
-        "status": "Open",
-        "location": {
-            "address": {
-                "street": "Katolicke porte",
-                "number": 6,
-                "city": "Kragujevac",
-                "country": "Serbia",
-                "postcode": 21000
-            },
-            "latitude": 124.55500030517578,
-            "longitude": 245.63999938964844
-        },
-        "items": [],
-        "logo": "7234c2ef-4818-4496-925c-db5d4a1b3b1b",
-        "menagerId": "",
-        "rating": 5.0
+  {
+    "name": "La Forza",
+    "id": "1",
+    "deleted": false,
+    "type": "ITALIAN",
+    "status": "Open",
+    "location": {
+      "address": {
+        "street": "Katolicke porte",
+        "number": 6,
+        "city": "Kragujevac",
+        "country": "Serbia",
+        "postcode": 21000
+      },
+      "latitude": 124.55500030517578,
+      "longitude": 245.63999938964844
     },
-    {
-        "name": "Caribic",
-        "id": "2",
-        "deleted": false,
-        "type": "FASTFOOD",
-        "status": "Closed",
-        "location": {
-            "address": {
-                "street": "Maksima Gorkog",
-                "number": 6,
-                "city": "Beograd",
-                "country": "Serbia",
-                "postcode": 21000
-            },
-            "latitude": 124.55500030517578,
-            "longitude": 245.63999938964844
-        },
-        "items": ["caec61c7-21d3-4a2d-a9ff-2858efcf1ea3"],
-        "logo": "7234c2ef-4818-4496-925c-db5d4a1b3b1b",
-        "menagerId": "",
-        "rating": 4.0
+    "items": [],
+    "logo": "7234c2ef-4818-4496-925c-db5d4a1b3b1b",
+    "menagerId": "",
+    "rating": 5
+  },
+  {
+    "name": "Caribic",
+    "id": "2",
+    "deleted": false,
+    "type": "FASTFOOD",
+    "status": "Closed",
+    "location": {
+      "address": {
+        "street": "Maksima Gorkog",
+        "number": 6,
+        "city": "Beograd",
+        "country": "Serbia",
+        "postcode": 21000
+      },
+      "latitude": 124.55500030517578,
+      "longitude": 245.63999938964844
     },
-    {
-        "name": "Corso",
-        "id": "3",
-        "deleted": false,
-        "type": "ITALIAN",
-        "status": "Open",
-        "location": {
-            "address": {
-                "street": "Zmaj Jovina",
-                "number": 16,
-                "city": "Novi Sad",
-                "country": "Serbia",
-                "postcode": 21000
-            },
-            "latitude": 45.25588607788086,
-            "longitude": 19.846721649169922
-        },
-        "items": [
-            "1",
-            "2",
-            "8bc9a5aa-3df0-4eeb-8b18-78df23b8f8a2",
-            "0d21adf1-6ec9-4992-baf9-a896277beaa4",
-            "0d12adf1-6bc9-4992-bsf9-a896288beaa4",
-            "7002d8dc-27b2-42e5-8891-a42e4de19273",
-            "6ce86a58-f855-4389-9aa1-84c265011ab2",
-            "ce5951bf-49fc-4f10-84b3-597d69375999"
-        ],
-        "logo": "7234c2ef-4818-4496-925c-db5d4a1b3b1b",
-        "menagerId": "andjela",
-        "rating": 3.0
-    }
+    "items": ["caec61c7-21d3-4a2d-a9ff-2858efcf1ea3"],
+    "logo": "7234c2ef-4818-4496-925c-db5d4a1b3b1b",
+    "menagerId": "",
+    "rating": 4
+  },
+  {
+    "name": "Corso",
+    "id": "3",
+    "deleted": false,
+    "type": "ITALIAN",
+    "status": "Open",
+    "location": {
+      "address": {
+        "street": "Zmaj Jovina",
+        "number": 16,
+        "city": "Novi Sad",
+        "country": "Serbia",
+        "postcode": 21000
+      },
+      "latitude": 45.25588607788086,
+      "longitude": 19.846721649169922
+    },
+    "items": [
+      "1",
+      "2",
+      "8bc9a5aa-3df0-4eeb-8b18-78df23b8f8a2",
+      "0d21adf1-6ec9-4992-baf9-a896277beaa4",
+      "0d12adf1-6bc9-4992-bsf9-a896288beaa4",
+      "7002d8dc-27b2-42e5-8891-a42e4de19273",
+      "6ce86a58-f855-4389-9aa1-84c265011ab2",
+      "ce5951bf-49fc-4f10-84b3-597d69375999"
+    ],
+    "logo": "7234c2ef-4818-4496-925c-db5d4a1b3b1b",
+    "menagerId": "andjela",
+    "rating": 3
+  }
 ]
