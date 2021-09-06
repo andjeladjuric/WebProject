@@ -179,7 +179,7 @@ public class UsersDAO {
 		RestaurantDAO dao = new RestaurantDAO("");
 		
 		for (User m : managers) {
-			if(!dao.hasRestaurant(m.getUsername()))
+			if(!dao.hasRestaurant(m.getUsername()) && !m.isBlocked())
 				freeManagers.add(m);
 		}
 		return freeManagers;
@@ -189,7 +189,7 @@ public class UsersDAO {
 		List<User> managers = new ArrayList<User>();
 		
 		for (User u : users.values()) {
-			if(u.getRole() == Role.MANAGER  && u.isDeleted() == false && u.isBlocked() == false )
+			if(u.getRole() == Role.MANAGER  && u.isDeleted() == false  )
 				managers.add(u);
 		}
 		return managers;
@@ -199,7 +199,7 @@ public class UsersDAO {
 		List<User> couriers = new ArrayList<User>();
 		
 		for (User u : users.values()) {
-			if(u.getRole() == Role.COURIER  && u.isDeleted() == false && u.isBlocked() == false )
+			if(u.getRole() == Role.COURIER  && u.isDeleted() == false )
 				couriers.add(u);
 		}
 		return couriers;
@@ -223,7 +223,7 @@ public class UsersDAO {
 		List<User> customers = new ArrayList<User>();
 		
 		for (User u : users.values()) {
-			if(u.getRole() == Role.CUSTOMER && u.getType().getName() == Type.GOLD  && u.isDeleted() == false && u.isBlocked() == false )
+			if(u.getRole() == Role.CUSTOMER && u.getType().getName() == Type.GOLD  && u.isDeleted() == false )
 				customers.add(u);
 		}
 		return customers;
@@ -233,7 +233,7 @@ public class UsersDAO {
 		List<User> customers = new ArrayList<User>();
 		
 		for (User u : users.values()) {
-			if(u.getRole() == Role.CUSTOMER && u.getType().getName() == Type.SILVER  && u.isDeleted() == false && u.isBlocked() == false )
+			if(u.getRole() == Role.CUSTOMER && u.getType().getName() == Type.SILVER  && u.isDeleted() == false  )
 				customers.add(u);
 		}
 		return customers;
@@ -243,7 +243,7 @@ public class UsersDAO {
 		List<User> customers = new ArrayList<User>();
 		
 		for (User u : users.values()) {
-			if(u.getRole() == Role.CUSTOMER && u.getType().getName() == Type.BRONZE  && u.isDeleted() == false && u.isBlocked() == false )
+			if(u.getRole() == Role.CUSTOMER && u.getType().getName() == Type.BRONZE  && u.isDeleted() == false  )
 				customers.add(u);
 		}
 		return customers;

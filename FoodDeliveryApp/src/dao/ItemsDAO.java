@@ -100,7 +100,7 @@ public class ItemsDAO {
 	
 	public Item getItemById(String id) {
 		for(Item i : items) {
-			if(i.getId().equals(id))
+			if(i.getId().equals(id) && !i.isDeleted())
 				return i;
 		}
 		

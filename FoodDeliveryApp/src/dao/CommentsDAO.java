@@ -80,7 +80,7 @@ public class CommentsDAO {
 		usersDAO.load();
 		
 		for(Comment c : comments) {
-			if(c.getRestaurantId().equals(restaurantId)) {
+			if(c.getRestaurantId().equals(restaurantId)  && !c.isDeleted()) {
 				User user = usersDAO.getByUsername(c.getCustomer());
 				usersWhoCommented.add(user.getName() + " " + user.getSurname());
 			}

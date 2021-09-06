@@ -11,8 +11,13 @@ Vue.component("restaurant-form", {
             totalSteps: 3,
             table: 1,
             managers: [],
-            restaurant: {},
-            selectedManager: {},
+            restaurant: {
+            	name : '',
+            	type : ''
+            },
+            selectedManager: {
+            	username : ''
+            },
             newManager: {},
             errorMessage: "",
             gender: "",
@@ -22,10 +27,10 @@ Vue.component("restaurant-form", {
             count: 0,
             location: {
                 address: {
-                    street: " ",
+                    street: "",
                     number: "",
-                    city: " ",
-                    country: " ",
+                    city: "",
+                    country: "",
                     postcode: "",
                 },
                 latitude: 0,
@@ -34,6 +39,8 @@ Vue.component("restaurant-form", {
             images: [],
             imageSrc: "",
             chosenImg: {},
+            firstError : '',
+            secondError : ''
         };
     },
     template: `
@@ -53,7 +60,7 @@ Vue.component("restaurant-form", {
                                     <label class="form-label">Name:</label>
                                 </div>
                                 <div class="col-8  mx-auto">
-                                    <input type="text" class="form-control" v-model="restaurant.name">
+                                    <input type="text" class="form-control" v-model="restaurant.name" v-on:change="signalChange()">
                                 </div>
                             </div>
 
@@ -62,7 +69,7 @@ Vue.component("restaurant-form", {
                                     <label class="form-label">Type:</label>
                                 </div>
                                 <div class="col-8  mx-auto">
-                                    <select class="form-select" v-model="restaurant.type">
+                                    <select class="form-select" v-model="restaurant.type" v-on:change="signalChange()">
                                         <option>ITALIAN</option>
                                         <option>FASTFOOD</option>
                                         <option>SERBIAN</option>
@@ -123,7 +130,9 @@ Vue.component("restaurant-form", {
 	                                 </div>
 	                            </div>
                             </div>
-                            
+                            <div class="d-flex justify-content-center">
+                            	<p style="color: red; font-size: small;">{{firstError}}</p>
+                           </div>
                         </div>
                     </section>
 
@@ -336,6 +345,9 @@ Vue.component("restaurant-form", {
 
                                     </div>
                                 </div>
+                                 <div class="d-flex justify-content-center">
+                            		<p style="color: red; font-size: small; margin-bottom: 20px">{{secondError}}</p>
+                           		</div>
                             </div>
                         </section>
 
@@ -386,19 +398,19 @@ Vue.component("restaurant-form", {
                                             <label class="form-label">Date Of Birth:</label>
                                         </div>
                                         <div class="col-8  mx-auto">
-                                            <input type="date" class="form-control" v-model="newManager.dateOfBirth">
+                                            <input type="date" class="form-control" v-model="newManager.dateOfBirth" v-on:change="signalChange()">
                                         </div>
                                     </div>
                                     <div class="d-flex gap-2 justify-content-evenly ">
                                         <div class="form-check">
-                                            <input class="form-check-input" type="radio" value="male" v-model="gender">
+                                            <input class="form-check-input" type="radio" value="male" v-model="gender" v-on:change="signalChange()">
                                             <label class="form-check-label">
                                                 Male
                                             </label>
                                         </div>
                                         <div class="form-check">
                                             <input class="form-check-input" type="radio" value="female"
-                                                v-model="gender">
+                                                v-model="gender" v-on:change="signalChange()">
                                             <label class="form-check-label">
                                                 Female
                                             </label>
@@ -459,7 +471,18 @@ Vue.component("restaurant-form", {
     },
     methods: {
         nextStep: function () {
-            this.step++;
+        	if(this.step == 1){
+        		if(this.restaurant.name === '' || this.restaurant.type === '' || this.location.address.street === ''
+        			|| this.location.address.city === '' || this.location.address.number === '' || this.location.address.postcode === ''
+        			|| this.imageSrc === ''){
+        			this.firstError = "All fields are required!";
+        		}else{
+        			this.firstError = "";
+        			this.step++;
+        		}
+        	}else{
+            	this.step++;
+            }
         },
         prevStep: function () {
             this.step--;
@@ -472,6 +495,7 @@ Vue.component("restaurant-form", {
         },
         selectManager: function (manager) {
             this.selectedManager = manager;
+            this.secondError = "";
         },
         addManager: function () {
             if (
@@ -524,6 +548,7 @@ Vue.component("restaurant-form", {
         },
         signalChange: function () {
             this.errorMessage = "";
+            this.firstError = "";
         },
         doSearch: function () {
             axios.get("rest/users/getManagers").then((response) => {
@@ -577,18 +602,22 @@ Vue.component("restaurant-form", {
             }
         },
         submit: function () {
-            this.restaurant.menagerId = this.selectedManager.username;
-            axios.post(
-                "rest/restaurants/addNewRestaurant",
-                JSON.stringify(this.restaurant),
-                {
-                    headers: {
-                        "Content-type": "application/json",
-                    },
-                }
-            );
-            window.location = "/FoodDeliveryApp/administratorPage.html#/";
-            location.reload();
+        	if(this.selectedManager.username === ''){
+        		this.secondError = "You must select a manager!";
+        	}else{
+	            this.restaurant.menagerId = this.selectedManager.username;
+	            axios.post(
+	                "rest/restaurants/addNewRestaurant",
+	                JSON.stringify(this.restaurant),
+	                {
+	                    headers: {
+	                        "Content-type": "application/json",
+	                    },
+	                }
+	            );
+	            window.location = "/FoodDeliveryApp/administratorPage.html#/";
+	            location.reload();
+            }
         },
         openMap: function () {
             this.count = this.count + 1;
