@@ -113,6 +113,9 @@ public class UsersDAO {
 				if(!u.getUsername().equals(updated.getUsername())) {
 					if (alreadyExists(updated.getUsername()))
 						return "Username taken";
+					else
+					{
+						u.setUsername(updated.getUsername());					}
 				}
 				
 				u.setProfilePicPath(updated.getProfilePicPath());

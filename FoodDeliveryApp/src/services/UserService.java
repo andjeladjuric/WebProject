@@ -91,7 +91,7 @@ public class UserService {
 		User newUser = allUsersDAO.getByUsername(user.username);
 		request.getSession().setAttribute("loginUser", newUser); // we give him a session
 
-		return ""; // stranica za kupca
+		return "/FoodDeliveryApp/customerPage.html"; // stranica za kupca
 	}
 	
 	@GET

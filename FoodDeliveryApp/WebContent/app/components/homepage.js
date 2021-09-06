@@ -5,7 +5,8 @@ Vue.component("home-page",{
 				username : '',
 				password: '',
 				name: '',
-				surname: ''
+				surname: '',
+				dateOfBirth : ''
 			},
 			logged : {
 				username : '',
@@ -180,7 +181,7 @@ Vue.component("home-page",{
 	methods:{
 		tryToSignup : function() {
 
-			if(this.user.username =='' || this.user.password=='' || this.user.name =='' || this.user.surname=='' || this.gender =='')
+			if(this.user.username =='' || this.user.password=='' || this.user.name =='' || this.user.surname=='' || this.gender =='' || this.user.dateOfBirth == '')
 			{
 				this.errorMessage="All fields are required!";
 			}

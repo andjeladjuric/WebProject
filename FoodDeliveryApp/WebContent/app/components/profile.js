@@ -336,7 +336,11 @@ Vue.component("currentUser-profile", {
 
         sendImgToBack: function () {
             var image = this.alreadyExists();
-            if (image !== null) {
+            if(this.editedImageSrc === ''){
+            	this.updateProfile();
+            	window.location.reload();
+            }
+            else if (image !== null) {
                 this.currentUser.profilePicPath = image.imageId;
                 this.updateProfile();
                 window.location.reload();
