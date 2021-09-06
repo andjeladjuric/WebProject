@@ -20,6 +20,7 @@ Vue.component("restaurant-items", {
                 items: [],
                 logo: "",
                 menagerId: "",
+                rating: 0,
             },
             items: [],
             item: {
@@ -327,7 +328,7 @@ Vue.component("restaurant-items", {
                         <div class="container d-inline-flex p-0">
                             <i class="fa fa-star checked me-2" style="color: gold;"></i>
                             <p>·</p>
-                            <p class="ms-2">5.0</p>
+                            <p class="ms-2">{{restaurant.rating}}</p>
                         </div>
                     </div>
 
@@ -335,7 +336,8 @@ Vue.component("restaurant-items", {
                         <h5><b>Address</b></h5>
                         <a href="#myRestaurant" @click="openMap()" id="locationLink" style="color: #7fd2c0;" data-bs-toggle="modal" data-bs-target="#mapModal">
                             {{restaurant.location.address.street}}  {{restaurant.location.address.number}} <br> 
-                            {{restaurant.location.address.city}}, {{restaurant.location.address.postcode}}
+                            {{restaurant.location.address.city}}, {{restaurant.location.address.postcode}} <br>
+                            {{restaurant.location.latitude}}, {{restaurant.location.longitude}}
                         </a>
                     </div>
 
@@ -434,7 +436,7 @@ Vue.component("restaurant-items", {
                         </table>
                     </div>
                     <p style="color: red; font-size: small;" class="text-center mt-5">{{errorMessage}}</p>
-                    <div class="row mt-5">
+                    <div class="row mt-5 mb-5">
                         <div class="col d-inline-flex justify-content-center">
                             <button type="button" class="btn me-4" @click="sendImgToBack()">Save</button>
                             <button type="button" class="btn" style="background: #ecbeb1" @click="cancelAdding()">Cancel</button>
@@ -608,7 +610,6 @@ Vue.component("restaurant-items", {
                         this.chosenImg = response.data;
                         this.item.imagePath = this.chosenImg.imageId;
                         this.addNewItem();
-                        window.location.reload();
                     });
             }
         },
