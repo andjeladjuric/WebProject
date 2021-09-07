@@ -47,7 +47,7 @@
             ],
             "logo": "",
             "menagerId": "andjela",
-            "rating": 0.0
+            "rating": 0
         },
         "timeOfOrder": 1629988507817,
         "price": 600.0,
@@ -95,7 +95,7 @@
                     "street": "Zmaj Jovina",
                     "number": 16,
                     "city": "Novi Sad",
-                    "country": null,
+                    "country": "Serbia",
                     "postcode": 21000
                 },
                 "latitude": 124.55500030517578,
@@ -110,13 +110,13 @@
             ],
             "logo": "",
             "menagerId": "andjela",
-            "rating": 0.0
+            "rating": 0
         },
         "timeOfOrder": 1629989187058,
         "price": 600.0,
         "customer": "Jelena Djokic",
         "customerId": "jele",
-        "status": "PROCESSING",
+        "status": "TRANSPORTING",
         "address": {
             "street": "bl",
             "number": 89,

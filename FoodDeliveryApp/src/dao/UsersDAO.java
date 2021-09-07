@@ -87,25 +87,6 @@ public class UsersDAO {
 		return users.containsKey(username);
 	}
 	
-	
-	/*
-	 * reference
-	 * https://stackoverflow.com/questions/23979842/convert-base64-string-to-image#23979996
-	 * https://docs.oracle.com/javase/8/docs/api/java/util/Base64.Decoder.html
-	 */
-	public void Base64Decode(String base64, String imagePath) throws FileNotFoundException, IOException {
-		
-		
-		String part[] = base64.split(",");
-		String path = "WebContent/" + imagePath;
-		
-		byte[] image = Base64.getDecoder().decode(part[1]);
-		
-		try (OutputStream stream = new FileOutputStream(path)) {
-		    stream.write(image);
-		}
-	}
-	
 	public String editUser(User updated, User currentUser) {
 		for(User u : users.values()) {
 			if(u.getUsername().equals(currentUser.getUsername())) {
@@ -129,18 +110,6 @@ public class UsersDAO {
 		}
 		
 		return "Success";
-	}
-
-	private String convertImage(User updated) {
-		String path = "img/" + updated.getUsername() + "profileImg.jpg";
-		System.out.println(path);
-		
-		try {
-			Base64Decode(updated.getProfilePicPath(), path);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return path;
 	}
 	
 	public void changePassword(User updated, String newPassword) {

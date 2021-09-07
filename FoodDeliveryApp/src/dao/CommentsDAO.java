@@ -13,6 +13,7 @@ import javax.ws.rs.core.Response.Status;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import beans.Comment;
+import beans.Restaurant;
 import beans.State;
 import beans.User;
 import dto.CommentDTO;
@@ -92,11 +93,37 @@ public class CommentsDAO {
 		for(Comment c : comments) {
 			if(c.getId().equals(commentId)) {
 				c.setStatus(status);
+				serialize();
+				setRating(c.getRestaurantId());
 				break;
 			}
 		}
+	}
+	
+	private void setRating(String restaurantId) {
+		List<Integer> ratings = getRatings(restaurantId);
+		int all = 0;
+		int newRating = 0;
 		
-		serialize();
+		for(int i : ratings) {
+			all = all + i;
+		}
+		
+		newRating = Math.round(all/ratings.size());
+		RestaurantDAO dao = new RestaurantDAO();
+		dao.getById(restaurantId).setRating(newRating);
+		dao.serialize();
+	}
+	
+	private List<Integer> getRatings(String restaurantId) {
+		List<Integer> ratings = new ArrayList<Integer>();
+		
+		for(Comment c : getCommentsForRestaurant(restaurantId)) {
+			if(c.getStatus() == State.ACCEPTED)
+				ratings.add(c.getStars());
+		}
+		
+		return ratings;
 	}
 
 	public void addComment(CommentDTO comment, User user) {

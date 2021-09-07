@@ -100,10 +100,11 @@ public class UserService {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public void logOut() {
 		User user = (User) request.getSession().getAttribute("loginUser");
-		HttpSession session = request.getSession();
 		
-		if(session != null && user != null) 
-			session.invalidate();
+		if(request.getSession() != null && user != null) { 
+			ctx.setAttribute("users", null); 
+			request.getSession().invalidate();
+		}
 	}
 	
 	@GET

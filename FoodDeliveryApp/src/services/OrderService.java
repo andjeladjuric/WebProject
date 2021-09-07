@@ -65,20 +65,16 @@ public class OrderService {
 	@GET
 	@Path("/getForCourier")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getOrdersForCourier() {
+	public Collection<Order> getOrdersForCourier() {
 		User user = (User) request.getSession().getAttribute("loginUser");
 		
 		if(user!= null && (user.getRole() == (Role.COURIER))) {
 			OrderDAO dao = (OrderDAO) ctx.getAttribute("orders");
 			
-			return Response
-					.status(Response.Status.ACCEPTED).entity("SUCCESS")
-					.entity(dao.getOrdersForCourier(user))
-					.build();
+			return dao.getOrdersForCourier(user);
 		}
 	
-		return Response.status(403).type("text/plain")
-                .entity("You do not have permission to access!").build();
+		return null;
 	}
 	
 	@GET

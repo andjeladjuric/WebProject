@@ -9,7 +9,7 @@ Vue.component("all-restaurants", {
                 restaurant: "",
                 type: "",
                 location: "",
-                rating: 0,
+                rating: "",
             },
             selected: "",
             sort: "",
@@ -104,6 +104,7 @@ Vue.component("all-restaurants", {
                                     <select class="form-select" placeholder="Restaurant type" aria-label="Restaurant type"
                                         v-model="searchInput.type">
                                         <option value="" disabled selected hidden>Restaurant type</option>
+                                        <option value="">All</option>
                                         <option value="ITALIAN">Italian</option>
                                         <option value="FASTFOOD">Fast food</option>
                                         <option value="CHINESE">Chinese</option>
@@ -114,6 +115,7 @@ Vue.component("all-restaurants", {
                                 <div class="col-md">
                                     <select class="form-select" placeholder="Rating" aria-label="Rating" v-model="searchInput.rating">
                                         <option value="" disabled selected hidden>Rating</option>
+                                        <option value="">All</option>
                                         <option value="1.0">1</option>
                                         <option value="2.0">2</option>
                                         <option value="3.0">3</option>
@@ -173,7 +175,7 @@ Vue.component("all-restaurants", {
                     <transition name="show">
                         <div class="container mb-3 sortInput" style="width: 85%;" v-if="showSort">
                             <div class="row g-4 justify-content-between align-items-center d-md-flex">
-                                <div class="col-md-3 me-5 select">
+                                <div class="col-md me-5 select">
                                     <select class="form-select" aria-label="Sort by" placeholder="Sort by" v-model="selected">
                                         <option value="" disabled selected hidden>Sort by</option>
                                         <option value="1">Restaurant name</option>
@@ -182,7 +184,7 @@ Vue.component("all-restaurants", {
                                     </select>
                                 </div>
                 
-                                <div class="col-md-3 p-2 d-inline-flex">
+                                <div class="col-md p-2 d-inline-flex">
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="radio" name="ascOrDsc" id="flexCheck" v-model="sort" v-bind:value="'asc'">
                                         <label class="form-check-label" for="flexCheckDefault">Ascending</label>
@@ -327,11 +329,10 @@ Vue.component("all-restaurants", {
                     return false;
             }
 
-            // if (
-            //     parseFloat(restaurant.rating) !==
-            //     parseFloat(this.searchInput.rating)
-            // )
-            //     return false;
+            if (this.searchInput.rating !== "") {
+                if (restaurant.rating !== parseFloat(this.searchInput.rating))
+                    return false;
+            }
 
             if (!restaurant.type.match(this.filterInput.restaurantType))
                 return false;

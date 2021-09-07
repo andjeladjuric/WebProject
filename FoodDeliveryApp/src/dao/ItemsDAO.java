@@ -147,19 +147,6 @@ public class ItemsDAO {
 			}
 		}
 	}
-
-	private String convertImage(Item updatedItem) {
-		UsersDAO dao = new UsersDAO();
-		String path = "img/" + updatedItem.getName() + "-" + updatedItem.getRestaurantId() + ".jpg";
-		System.out.println(path);
-		
-		try {
-			dao.Base64Decode(updatedItem.getImagePath(), path);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return path;
-	}
 	
 	public void deleteItem(String id) {
 		for(Item i : items) {

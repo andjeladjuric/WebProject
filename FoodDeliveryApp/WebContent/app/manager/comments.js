@@ -1,6 +1,7 @@
 Vue.component("comments", {
     data: function () {
         return {
+            restaurant: {},
             allComments: [],
             users: [],
             user: {
@@ -54,7 +55,10 @@ Vue.component("comments", {
             .get("rest/restaurants/getRestaurantForManager")
             .then((response) => {
                 this.restaurant = response.data;
-                return axios
+                console.log(this.restaurant.rating);
+            })
+            .then((response) => {
+                axios
                     .get("rest/comments/getCommentsForManager", {
                         params: { id: this.restaurant.id },
                     })
