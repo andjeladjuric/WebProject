@@ -24,7 +24,7 @@ Vue.component("edit-item", {
     template: `
     <!-- Edit item -->
         <div class="row my-5 text-center addItemForm">
-            <div class="col-md-2"></div>
+            <div class="col-md-2 me-5"></div>
 
             <div class="col-md-8">
                 <h2 class="mb-2" style="text-transform: uppercase;">
@@ -42,7 +42,7 @@ Vue.component("edit-item", {
                             <tr>
                                 <td>Price <span style="color: red;">*</span></td>
                                 <td>
-                                    <input class="form-control text-start" type="text" name="lastname" v-model="updatedItem.price"/>
+                                    <input class="form-control text-start" type="number" name="lastname" v-model="updatedItem.price"/>
                                 </td>
                             </tr>
                             <tr>
@@ -85,7 +85,7 @@ Vue.component("edit-item", {
                             <tr>
                                 <td>Amount</td>
                                 <td>
-                                    <input class="form-control text-start" type="text" name="amount" v-model="updatedItem.amount"/>
+                                    <input class="form-control text-start" type="number" name="amount" v-model="updatedItem.amount"/>
                                 </td>
                             </tr>
                             <tr>

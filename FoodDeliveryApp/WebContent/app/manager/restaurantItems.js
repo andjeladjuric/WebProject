@@ -85,7 +85,8 @@ Vue.component("restaurant-items", {
                             <div class="more mb-2">
                                 <p class="me-2">{{item.type}}</p>
                                 <p>·</p>
-                                <p class="ms-2">{{item.amount}}</p>
+                                <p class="ms-2">{{item.amount}}</p><p v-if="item.type === 'Food'">g</p>
+                                <p v-if="item.type === 'Drink'">ml</p>
                             </div>
                             <p id="price">RSD {{item.price}}</p>
 
@@ -120,7 +121,8 @@ Vue.component("restaurant-items", {
                             <div class="more mb-2">
                                 <p class="me-2">{{item.type}}</p>
                                 <p>·</p>
-                                <p class="ms-2">{{item.amount}}</p>
+                                <p class="ms-2">{{item.amount}}</p><p v-if="item.type === 'Food'">g</p>
+                                <p v-if="item.type === 'Drink'">ml</p>
                             </div>
                             <p id="price">RSD {{item.price}}</p>
 
@@ -155,7 +157,8 @@ Vue.component("restaurant-items", {
                             <div class="more mb-2">
                                 <p class="me-2">{{item.type}}</p>
                                 <p>·</p>
-                                <p class="ms-2">{{item.amount}}</p>
+                                <p class="ms-2">{{item.amount}}</p><p v-if="item.type === 'Food'">g</p>
+                                <p v-if="item.type === 'Drink'">ml</p>
                             </div>
                             <p id="price">RSD {{item.price}}</p>
 
@@ -190,7 +193,8 @@ Vue.component("restaurant-items", {
                             <div class="more mb-2">
                                 <p class="me-2">{{item.type}}</p>
                                 <p>·</p>
-                                <p class="ms-2">{{item.amount}}</p>
+                                <p class="ms-2">{{item.amount}}</p><p v-if="item.type === 'Food'">g</p>
+                                <p v-if="item.type === 'Drink'">ml</p>
                             </div>
                             <p id="price">RSD {{item.price}}</p>
 
@@ -225,7 +229,8 @@ Vue.component("restaurant-items", {
                             <div class="more mb-2">
                                 <p class="me-2">{{item.type}}</p>
                                 <p>·</p>
-                                <p class="ms-2">{{item.amount}}</p>
+                                <p class="ms-2">{{item.amount}}</p><p v-if="item.type === 'Food'">g</p>
+                                <p v-if="item.type === 'Drink'">ml</p>
                             </div>
                             <p id="price">RSD {{item.price}}</p>
 
@@ -260,7 +265,8 @@ Vue.component("restaurant-items", {
                             <div class="more mb-2">
                                 <p class="me-2">{{item.type}}</p>
                                 <p>·</p>
-                                <p class="ms-2">{{item.amount}}</p>
+                                <p class="ms-2">{{item.amount}}</p><p v-if="item.type === 'Food'">g</p>
+                                <p v-if="item.type === 'Drink'">ml</p>
                             </div>
                             <p id="price">RSD {{item.price}}</p>
 
@@ -295,7 +301,8 @@ Vue.component("restaurant-items", {
                             <div class="more mb-2">
                                 <p class="me-2">{{item.type}}</p>
                                 <p>·</p>
-                                <p class="ms-2">{{item.amount}}</p>
+                                <p class="ms-2">{{item.amount}}</p><p v-if="item.type === 'Food'">g</p>
+                                <p v-if="item.type === 'Drink'">ml</p>
                             </div>
                             <p id="price">RSD {{item.price}}</p>
 
@@ -360,7 +367,7 @@ Vue.component("restaurant-items", {
 
         <!-- Add item -->
         <div class="row my-5 text-center addItemForm" v-if="showAddItem">
-            <div class="col-md-2"></div>
+            <div class="col-md-2 me-5"></div>
 
             <div class="col-md-8">
                 <h2 class="mb-2" style="text-transform: uppercase;">
@@ -378,7 +385,7 @@ Vue.component("restaurant-items", {
                             <tr>
                                 <td class="label">Price <span style="color: red;">*</span></td>
                                 <td>
-                                    <input class="form-control text-start" type="text" name="lastname" v-model="item.price"/>
+                                    <input class="form-control text-start" type="number" name="lastname" v-model="item.price"/>
                                 </td>
                             </tr>
                             <tr>
@@ -421,7 +428,7 @@ Vue.component("restaurant-items", {
                             <tr>
                                 <td class="label">Amount</td>
                                 <td>
-                                    <input class="form-control text-start" type="text" name="amount" v-model="item.amount"/>
+                                    <input class="form-control text-start" type="number" name="amount" v-model="item.amount"/>
                                 </td>
                             </tr>
                             <tr>
@@ -663,7 +670,7 @@ Vue.component("restaurant-items", {
 
                 window.setTimeout(function () {
                     map.updateSize();
-                }, 200);
+                }, 500);
             }
         },
     },
