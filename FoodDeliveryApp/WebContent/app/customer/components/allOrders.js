@@ -94,8 +94,12 @@ Vue.component("all-orders", {
                                     <div class="col-md-3">
                                         <select class="form-select" placeholder="Order status" aria-label="Order status" v-model="filterInput.restaurantType">
                                             <option value="" disabled selected hidden>Restaurant type</option>
+                                            <option value="">All</option>
                                             <option value="ITALIAN">Italian</option>
                                             <option value="FASTFOOD">Fast food</option>
+                                            <option value="CHINESE">Chinese</option>
+                                            <option value="SERBIAN">Serbian</option>
+                                            <option value="BARBEQUE">Barbeque</option>
                                         </select>
                                     </div>
 
@@ -154,7 +158,7 @@ Vue.component("all-orders", {
 
                 <!-- Cards with not delivered orders -->
                 <div class="row g-4 mb-4 cards" id="vue-orders" v-for="o in orders" v-if="isHidden">
-                        <div class="card shadow bg-light text-dark">
+                        <div class="card shadow bg-light text-dark mb-4">
                             <div class="card-body text-center">
                                 <div class="row g-2 align-items-center d-inline-flex">
                                     <div class="container buttons">
@@ -168,25 +172,23 @@ Vue.component("all-orders", {
                                 <div class="row">
                                     <table class="table-responsive singleOrderView">
                                         <thead>
-                                            <td>Ordered from:</td>
-                                            <td>Total sum:</td>
-                                            <td>Date and time:</td>
-                                            <td>Stauts:</td>
-                                            <td>Delivery Address:</td>
+                                            <td scope="col">Ordered from:</td>
+                                            <td scope="col">Total sum:</td>
+                                            <td scope="col">Date and time:</td>
+                                            <td scope="col">Status:</td>
+                                            <td scope="col">Delivery Address:</td>
                                         </thead>
 
                                         <tbody>
-                                            <tr>
-                                                <td>
-                                                    <ol type="1">
-                                                        <li>{{o.restaurant.name}}</li>
-                                                    </ol>
-                                                </td>
-                                                <td>{{o.price}}</td>
-                                                <td>{{o.timeOfOrder | dateFormat('DD.MM.YYYY HH:mm')}}</td>
-                                                <td>{{o.status}}</td>
-                                                <td>{{o.address.street}} {{o.address.number}}, {{o.address.city}} {{o.address.postcode}}</td>
-                                            </tr>
+                                            <td data-label="Ordered from:">
+                                                <ul type="1">
+                                                    <li>{{o.restaurant.name}}</li>
+                                                </ul>
+                                            </td>
+                                            <td data-label="Total sum:" class="orderDetails">{{o.price}}</td>
+                                            <td data-label="Date and time:" class="orderDetails">{{o.timeOfOrder | dateFormat('DD.MM.YYYY HH:mm')}}</td>
+                                            <td data-label="Status:" class="orderDetails">{{o.status}}</td>
+                                            <td data-label="Delivery address:" class="orderDetails">{{o.address.street}} {{o.address.number}}, {{o.address.city}} {{o.address.postcode}}</td>
                                         </tbody>
                                     </table>
                                 </div>
@@ -241,7 +243,7 @@ Vue.component("all-orders", {
         axios
             .get("rest/orders/getDeliveredForCustomer")
             .then((response) => (this.allWaitingOrders = response.data));
-       axios
+        axios
             .get("rest/orders/getNotDeliveredForCustomer")
             .then((response) => (this.orders = response.data));
     },
@@ -269,15 +271,15 @@ Vue.component("all-orders", {
                 .get("rest/orders/cancelOrder", {
                     params: { id: order.id },
                 })
-                 .then((response) => {(this.orders = response.data);});
-           axios
-                .post("rest/users/removePoints", JSON.stringify(order),
-	        	{ headers: {
-	        		'Content-type': 'application/json',
-	        		}
+                .then((response) => {
+                    this.orders = response.data;
                 });
-                 this.showToast();
-                
+            axios.post("rest/users/removePoints", JSON.stringify(order), {
+                headers: {
+                    "Content-type": "application/json",
+                },
+            });
+            this.showToast();
         },
 
         reload: function () {
@@ -331,7 +333,8 @@ Vue.component("all-orders", {
         noFilters: function () {
             this.filterInput.restaurantType = "";
             this.filterInput.status = "";
-        },showToast: function () {
+        },
+        showToast: function () {
             const Toast = Swal.mixin({
                 toast: true,
                 text: "Order canceled!",
@@ -360,7 +363,8 @@ Vue.component("all-orders", {
             var parsed = moment(value);
             return parsed.format(format);
         },
-    },components: {
-        swal
-       }
+    },
+    components: {
+        swal,
+    },
 });

@@ -1,15 +1,10 @@
 package dao;
 
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Base64;
-import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -94,15 +89,6 @@ public class UsersDAO {
 				u.setGender(updated.getGender());
 				u.setName(updated.getName());
 				u.setSurname(updated.getSurname());
-				
-				if(!u.getUsername().equals(updated.getUsername())) {
-					if (alreadyExists(updated.getUsername()))
-						return "Username taken";
-					else
-					{
-						u.setUsername(updated.getUsername());					}
-				}
-				
 				u.setProfilePicPath(updated.getProfilePicPath());
 				serialize();
 				break;

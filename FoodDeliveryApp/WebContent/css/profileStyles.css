@@ -17,7 +17,7 @@
 
 #sidebar-wrapper {
     background: #7fd2c0;
-    min-height: 100vh;
+    height: 100vh;
     margin-left: -25rem;
     transition: margin 0.25s ease-out;
     position: fixed;

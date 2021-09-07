@@ -44,7 +44,7 @@ Vue.component("selected-restaurant", {
             <div class="container headline">
                 <div class="d-flex justify-content-start">
 			               		
-			        <img class="img-rounded image-wrapper me-3" v-bind:src="getLogo()" alt="RestaurantLogo" style="width: 150px; height: 150px; border: 7px solid;">
+			        <img class="img-rounded img-wrapper me-3" v-bind:src="getLogo()" alt="RestaurantLogo" style="width: 150px; height: 150px; border: 7px solid; object-fit: cover;">
 			        <h1 style="font-weight: bold; font-size: 5vw; margin-top:60px;">{{restaurant.name}}</h1>
 			                    
 			    </div>
@@ -68,7 +68,13 @@ Vue.component("selected-restaurant", {
             </button>
         </div>
     </div>
-    <div class="row g-2 comments mt-5" v-if="showComments">
+    <div class="row g-4 mb-4 cards align-contet-center justify-content-center" 
+        style="padding-left: 5%; padding-right: 7%; padding-bottom: 7%"
+        v-if="allComments.length === 0 && showComments">
+        <p style="font-size: 2rem; font-style: italic">There are currently no comments available!</p>
+    </div>
+
+    <div class="row g-2 comments mt-5" v-if="showComments && allComments.length !== 0">
         <!-- Comments -->
         <div class="col-lg-7 mx-auto">
             <h4 class="mb-3" id="item-1">All comments</h4>
@@ -428,11 +434,11 @@ Vue.component("selected-restaurant", {
                 axios.get("rest/users/getCurrentUser").then((response) => {
                     this.user = response.data;
                     if (this.user.role === "CUSTOMER") {
-                    	if(this.restaurant.status === 'CLOSED'){
-                    		this.canOrder = false;
-                    	}else{
-                    		this.canOrder = true;
-                    	}
+                        if (this.restaurant.status === "CLOSED") {
+                            this.canOrder = false;
+                        } else {
+                            this.canOrder = true;
+                        }
                         axios
                             .get("rest/orders/canComment", {
                                 params: { id: this.restaurant.id },
@@ -567,7 +573,7 @@ Vue.component("selected-restaurant", {
     },
     components: {
         swal,
-       }
+    },
 });
 
 Vue.component("star-rating", VueStarRating.default);

@@ -20,6 +20,11 @@ Vue.component("comments", {
     <div class="row g-2 comments mt-5">
         <!-- Comments -->
         <div class="col-md-2 d-flex"></div>
+        <div class="row g-4 mb-4 cards align-contet-center justify-content-center" 
+            style="padding-left: 5%; padding-right: 7%; padding-bottom: 7%"
+            v-if="allComments.length === 0">
+            <p style="font-size: 2rem; font-style: italic">There are currently no comments available!</p>
+        </div>
 
         <div class="col-md-8 ms-2">
             <h4 class="mb-3" id="item-1">All comments</h4>

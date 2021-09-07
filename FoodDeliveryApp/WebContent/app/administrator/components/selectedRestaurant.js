@@ -333,7 +333,13 @@ Vue.component("selected-restaurant", {
 			    </div>
 			    <!-- End of items -->
 			    
-			    <div class="row g-2 comments mt-5 justify-content-center" v-if="showComments">
+				<div class="row g-4 mb-4 cards align-contet-center justify-content-center" 
+					style="padding-left: 5%; padding-right: 7%; padding-bottom: 7%"
+					v-if="allComments.length === 0 && showComments">
+					<p style="font-size: 2rem; font-style: italic">There are currently no comments available!</p>
+				</div>
+
+			    <div class="row g-2 comments mt-5 justify-content-center" v-if="showComments && allComments.length !== 0">
 				    <!-- Comments -->
 				    <div class="col-lg-7 mx-auto">
 				        <h4 class="mb-3" id="item-1">All comments</h4>

@@ -108,7 +108,7 @@ Vue.component("currentUser-profile", {
                     </div>
                     <!-- End of profile overview -->
                     <!-- Edit Profile -->
-                    <div class="row my-5 text-center editProfile" v-if="showEdit">
+                    <div class="row mt-4 text-center editProfile" v-if="showEdit">
                         <h2 class="mb-2">
                             <i class="fas fa-edit mb-4 me-4"></i>Edit profile
                         </h2>
@@ -156,24 +156,10 @@ Vue.component("currentUser-profile", {
                                         </label>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td>Username</td>
-                                    <td>
-                                        <input type="text" class="form-control text-start" aria-describedby="username"
-                                            v-model="currentUser.username" />
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Password</td>
-                                    <td>
-                                        <input type="password" readonly class="form-control-plaintext text-start"
-                                            v-model="currentUser.password" style="margin-left: 15px;"/>
-                                    </td>
-                                </tr>
                             </table>
                         </div>
                         <p style="color: red; font-size: small;" class="text-center mt-3">{{editErrorMessage}}</p>
-                        <div class="row my-5">
+                        <div class="row mt-2">
                             <div class="col d-inline-flex justify-content-center">
                                 <button type="button" class="btn profileBtn me-4" v-on:click="sendImgToBack();">Save</button>
                                 <button type="button" class="btn profileBtn" style="background: #ecbeb1" v-on:click="cancelEditing(); showEdit = !showEdit; reload()">Cancel</button>

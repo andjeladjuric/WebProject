@@ -26,28 +26,75 @@
             "id": "3",
             "deleted": false,
             "type": "ITALIAN",
-            "status": "Open",
+            "status": "OPENED",
             "location": {
                 "address": {
                     "street": "Zmaj Jovina",
                     "number": 16,
                     "city": "Novi Sad",
-                    "country": null,
+                    "country": "Serbia",
                     "postcode": 21000
                 },
-                "latitude": 124.55500030517578,
-                "longitude": 245.63999938964844
+                "latitude": 45.25588607788086,
+                "longitude": 19.846721649169922
             },
             "items": [
                 "1",
                 "2",
                 "8bc9a5aa-3df0-4eeb-8b18-78df23b8f8a2",
                 "0d21adf1-6ec9-4992-baf9-a896277beaa4",
-                "0d12adf1-6bc9-4992-bsf9-a896288beaa4"
+                "0d12adf1-6bc9-4992-bsf9-a896288beaa4",
+                "7002d8dc-27b2-42e5-8891-a42e4de19273",
+                "6ce86a58-f855-4389-9aa1-84c265011ab2",
+                "ce5951bf-49fc-4f10-84b3-597d69375999"
             ],
-            "logo": "",
+            "logo": "7234c2ef-4818-4496-925c-db5d4a1b3b1b",
             "menagerId": "andjela",
-            "rating": 0
+            "rating": 3,
+            "workingHours": [
+                {
+                    "dayOfWeek": 2,
+                    "startTime": "07:00",
+                    "endTime": "15:00",
+                    "closed": false
+                },
+                {
+                    "dayOfWeek": 3,
+                    "startTime": "07:00",
+                    "endTime": "17:00",
+                    "closed": false
+                },
+                {
+                    "dayOfWeek": 4,
+                    "startTime": "07:00",
+                    "endTime": "15:00",
+                    "closed": false
+                },
+                {
+                    "dayOfWeek": 5,
+                    "startTime": "07:00",
+                    "endTime": "15:00",
+                    "closed": false
+                },
+                {
+                    "dayOfWeek": 6,
+                    "startTime": "07:00",
+                    "endTime": "15:00",
+                    "closed": false
+                },
+                {
+                    "dayOfWeek": 7,
+                    "startTime": "07:00",
+                    "endTime": "14:00",
+                    "closed": true
+                },
+                {
+                    "dayOfWeek": 1,
+                    "startTime": "07:00",
+                    "endTime": "14:00",
+                    "closed": false
+                }
+            ]
         },
         "timeOfOrder": 1629988507817,
         "price": 600.0,
@@ -89,7 +136,7 @@
             "id": "3",
             "deleted": false,
             "type": "ITALIAN",
-            "status": "Open",
+            "status": "OPENED",
             "location": {
                 "address": {
                     "street": "Zmaj Jovina",
@@ -98,19 +145,66 @@
                     "country": "Serbia",
                     "postcode": 21000
                 },
-                "latitude": 124.55500030517578,
-                "longitude": 245.63999938964844
+                "latitude": 45.25588607788086,
+                "longitude": 19.846721649169922
             },
             "items": [
                 "1",
                 "2",
                 "8bc9a5aa-3df0-4eeb-8b18-78df23b8f8a2",
                 "0d21adf1-6ec9-4992-baf9-a896277beaa4",
-                "0d12adf1-6bc9-4992-bsf9-a896288beaa4"
+                "0d12adf1-6bc9-4992-bsf9-a896288beaa4",
+                "7002d8dc-27b2-42e5-8891-a42e4de19273",
+                "6ce86a58-f855-4389-9aa1-84c265011ab2",
+                "ce5951bf-49fc-4f10-84b3-597d69375999"
             ],
-            "logo": "",
+            "logo": "7234c2ef-4818-4496-925c-db5d4a1b3b1b",
             "menagerId": "andjela",
-            "rating": 0
+            "rating": 3,
+            "workingHours": [
+                {
+                    "dayOfWeek": 2,
+                    "startTime": "07:00",
+                    "endTime": "15:00",
+                    "closed": false
+                },
+                {
+                    "dayOfWeek": 3,
+                    "startTime": "07:00",
+                    "endTime": "17:00",
+                    "closed": false
+                },
+                {
+                    "dayOfWeek": 4,
+                    "startTime": "07:00",
+                    "endTime": "15:00",
+                    "closed": false
+                },
+                {
+                    "dayOfWeek": 5,
+                    "startTime": "07:00",
+                    "endTime": "15:00",
+                    "closed": false
+                },
+                {
+                    "dayOfWeek": 6,
+                    "startTime": "07:00",
+                    "endTime": "15:00",
+                    "closed": false
+                },
+                {
+                    "dayOfWeek": 7,
+                    "startTime": "07:00",
+                    "endTime": "14:00",
+                    "closed": true
+                },
+                {
+                    "dayOfWeek": 1,
+                    "startTime": "07:00",
+                    "endTime": "14:00",
+                    "closed": false
+                }
+            ]
         },
         "timeOfOrder": 1629989187058,
         "price": 600.0,

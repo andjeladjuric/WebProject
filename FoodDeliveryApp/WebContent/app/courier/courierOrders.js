@@ -97,8 +97,12 @@ Vue.component("all-orders", {
                                         <div class="col-md-3">
                                             <select class="form-select" placeholder="Order status" aria-label="Order status" v-model="filterInput.restaurantType">
                                                 <option value="" disabled selected hidden>Restaurant type</option>
+                                                <option value="">All</option>
                                                 <option value="ITALIAN">Italian</option>
                                                 <option value="FASTFOOD">Fast food</option>
+                                                <option value="CHINESE">Chinese</option>
+                                                <option value="SERBIAN">Serbian</option>
+                                                <option value="BARBEQUE">Barbeque</option>
                                             </select>
                                         </div>
 
@@ -155,9 +159,15 @@ Vue.component("all-orders", {
                     </transition>
                     <!-- End of sort for orders -->
 
+                    <div class="row g-4 mb-4 cards align-contet-center justify-content-center" 
+                        style="padding-left: 14%; padding-right: 7%; padding-bottom: 7%"
+                        v-if="orders.length === 0 && isHidden">
+                        <p style="font-size: 2rem; font-style: italic">There are currently no orders available!</p>
+                    </div>
+
                     <!-- Cards with my orders -->
                     <div class="row g-4 mb-4 cards" id="vue-orders" v-for="o in filteredOrders" v-if="isHidden">
-                            <div class="card shadow bg-light text-dark">
+                            <div class="card shadow bg-light text-dark mb-4">
                                 <div class="card-body text-center">
                                     <div class="row g-2 align-items-center d-inline-flex">
                                         <div class="container buttons align-items-center justify-content-center" style="flex-wrap: wrap;">
@@ -199,6 +209,12 @@ Vue.component("all-orders", {
                             </div>
                     </div>
                     <!-- End of cards with orders -->
+
+                    <div class="row g-4 mb-4 cards align-contet-center justify-content-center" 
+                        style="padding-left: 5%; padding-right: 7%; padding-bottom: 7%"
+                        v-if="allWaitingOrders.length === 0 && !isHidden">
+                        <p style="font-size: 2rem; font-style: italic">There are currently no orders on waiting available!</p>
+                    </div>
 
                     <!-- Cards with waiting orders -->
                     <div class="row g-4 mb-4 cards" id="waiting-orders" v-for="o in filteredWaitingOrders" v-if="!isHidden">

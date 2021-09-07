@@ -129,6 +129,12 @@ Vue.component("rest-orders", {
             </transition>
             <!-- End of sort for orders -->
 
+            <div class="row g-4 mb-4 cards align-contet-center justify-content-center" 
+                style="padding-left: 5%; padding-right: 7%; padding-bottom: 7%"
+                v-if="orders.length === 0 && hideRequests">
+                <p style="font-size: 2rem; font-style: italic">There are currently no orders available!</p>
+            </div>
+
             <!-- Cards with my orders -->
             <div class="row g-4 mb-4 cards align-contet-center justify-content-center" id="vue-orders" v-if="hideRequests"
                 style="padding-left: 7%; padding-right: 7%">

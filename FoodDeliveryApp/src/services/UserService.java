@@ -182,8 +182,13 @@ public class UserService {
 	@Path("/getCurrentUser")
 	@Produces(MediaType.APPLICATION_JSON)
 	public User getCurrentUser() {
+		ctx.setAttribute("users", null);
+		UsersDAO dao = getUsers();
 		User user = (User) request.getSession().getAttribute("loginUser");
-		return user;
+		if(user != null)
+			return dao.getByUsername(user.getUsername());
+		
+		return null;
 	}
 	
 	@POST
