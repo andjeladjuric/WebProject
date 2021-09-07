@@ -7,7 +7,7 @@ function fixDate(users) {
 Vue.component("restaurant-form", {
     data: function () {
         return {
-            step: 2,
+            step: 1,
             totalSteps: 3,
             table: 1,
             managers: [],
@@ -40,7 +40,11 @@ Vue.component("restaurant-form", {
             imageSrc: "",
             chosenImg: {},
             firstError : '',
-            secondError : ''
+            secondError : '',
+            workingHours : {
+            	sat : false,
+            	sun : false
+            }
         };
     },
     template: `
@@ -150,13 +154,13 @@ Vue.component("restaurant-form", {
 						        <div class="row mt-2 mb-3">
 						          <div class="col-6 mx-auto">
 						            <div class="form-floating">
-						              <input type="time" class="form-control" />
+						              <input type="time" class="form-control" v-model="workingHours.opens" />
 						              <label>Opens at</label>
 						            </div>
 						          </div>
 						          <div class="col-6 mx-auto">
 						            <div class="form-floating">
-						              <input type="time" class="form-control" />
+						              <input type="time" class="form-control" v-model="workingHours.closes" />
 						              <label>Closes at</label>
 						            </div>
 						          </div>
@@ -173,13 +177,13 @@ Vue.component("restaurant-form", {
 						        <div class="row">
 						          <div class="col-6 mx-auto">
 						            <div class="form-floating">
-						              <input type="time" class="form-control" />
+						              <input type="time" class="form-control" v-model="workingHours.opensw" />
 						              <label>Opens at</label>
 						            </div>
 						          </div>
 						          <div class="col-6 mx-auto">
 						            <div class="form-floating">
-						              <input type="time" class="form-control" />
+						              <input type="time" class="form-control" v-model="workingHours.closesw" />
 						              <label>Closes at</label>
 						            </div>
 						          </div>
@@ -188,11 +192,11 @@ Vue.component("restaurant-form", {
 						          <div class="col-11">
 						            <div class="d-flex justify-content-center gap-3">
 						              <div class="form-check">
-						                <input class="form-check-input" type="checkbox" value="" />
+						                <input class="form-check-input" type="checkbox" v-model="workingHours.sat" />
 						                <label class="form-check-label"> Sat </label>
 						              </div>
 						              <div class="form-check">
-						                <input class="form-check-input" type="checkbox" value="" />
+						                <input class="form-check-input" type="checkbox" v-model="workingHours.sun" />
 						                <label class="form-check-label"> Sun </label>
 						              </div>
 						            </div>
@@ -530,6 +534,7 @@ Vue.component("restaurant-form", {
         		this.secondError = "You must select a manager!";
         	}else{
 	            this.restaurant.menagerId = this.selectedManager.username;
+	            this.restaurant.workingHours = this.workingHours;
 	            axios.post(
 	                "rest/restaurants/addNewRestaurant",
 	                JSON.stringify(this.restaurant),
@@ -539,8 +544,8 @@ Vue.component("restaurant-form", {
 	                    },
 	                }
 	            );
-	            window.location = "/FoodDeliveryApp/administratorPage.html#/";
-	            location.reload();
+	           window.location = "/FoodDeliveryApp/administratorPage.html#/";
+	           location.reload();
             }
         },
         openMap: function () {

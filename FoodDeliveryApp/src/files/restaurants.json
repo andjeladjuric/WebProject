@@ -4,7 +4,7 @@
     "id": "1",
     "deleted": false,
     "type": "ITALIAN",
-    "status": "Open",
+    "status": "OPENED",
     "location": {
       "address": {
         "street": "Katolicke porte",
@@ -19,14 +19,58 @@
     "items": [],
     "logo": "7234c2ef-4818-4496-925c-db5d4a1b3b1b",
     "menagerId": "",
-    "rating": 5
+    "rating": 5,
+    "workingHours": [
+      {
+        "dayOfWeek": 2,
+        "startTime": "07:00",
+        "endTime": "15:00",
+        "closed": false
+      },
+      {
+        "dayOfWeek": 3,
+        "startTime": "07:00",
+        "endTime": "15:00",
+        "closed": false
+      },
+      {
+        "dayOfWeek": 4,
+        "startTime": "07:00",
+        "endTime": "15:00",
+        "closed": false
+      },
+      {
+        "dayOfWeek": 5,
+        "startTime": "07:00",
+        "endTime": "15:00",
+        "closed": false
+      },
+      {
+        "dayOfWeek": 6,
+        "startTime": "07:00",
+        "endTime": "15:00",
+        "closed": false
+      },
+      {
+        "dayOfWeek": 7,
+        "startTime": "07:00",
+        "endTime": "14:00",
+        "closed": true
+      },
+      {
+        "dayOfWeek": 1,
+        "startTime": "07:00",
+        "endTime": "14:00",
+        "closed": false
+      }
+    ]
   },
   {
     "name": "Caribic",
     "id": "2",
     "deleted": false,
     "type": "FASTFOOD",
-    "status": "Closed",
+    "status": "CLOSED",
     "location": {
       "address": {
         "street": "Maksima Gorkog",
@@ -41,14 +85,58 @@
     "items": ["caec61c7-21d3-4a2d-a9ff-2858efcf1ea3"],
     "logo": "7234c2ef-4818-4496-925c-db5d4a1b3b1b",
     "menagerId": "",
-    "rating": 4
+    "rating": 4,
+    "workingHours": [
+      {
+        "dayOfWeek": 2,
+        "startTime": "07:00",
+        "endTime": "15:00",
+        "closed": false
+      },
+      {
+        "dayOfWeek": 3,
+        "startTime": "07:00",
+        "endTime": "15:00",
+        "closed": false
+      },
+      {
+        "dayOfWeek": 4,
+        "startTime": "07:00",
+        "endTime": "17:00",
+        "closed": false
+      },
+      {
+        "dayOfWeek": 5,
+        "startTime": "07:00",
+        "endTime": "15:00",
+        "closed": false
+      },
+      {
+        "dayOfWeek": 6,
+        "startTime": "07:00",
+        "endTime": "15:00",
+        "closed": false
+      },
+      {
+        "dayOfWeek": 7,
+        "startTime": "07:00",
+        "endTime": "14:00",
+        "closed": true
+      },
+      {
+        "dayOfWeek": 1,
+        "startTime": "07:00",
+        "endTime": "14:00",
+        "closed": false
+      }
+    ]
   },
   {
     "name": "Corso",
     "id": "3",
     "deleted": false,
     "type": "ITALIAN",
-    "status": "Open",
+    "status": "OPENED",
     "location": {
       "address": {
         "street": "Zmaj Jovina",
@@ -72,6 +160,116 @@
     ],
     "logo": "7234c2ef-4818-4496-925c-db5d4a1b3b1b",
     "menagerId": "andjela",
-    "rating": 3
+    "rating": 3,
+    "workingHours": [
+      {
+        "dayOfWeek": 2,
+        "startTime": "07:00",
+        "endTime": "15:00",
+        "closed": false
+      },
+      {
+        "dayOfWeek": 3,
+        "startTime": "07:00",
+        "endTime": "17:00",
+        "closed": false
+      },
+      {
+        "dayOfWeek": 4,
+        "startTime": "07:00",
+        "endTime": "15:00",
+        "closed": false
+      },
+      {
+        "dayOfWeek": 5,
+        "startTime": "07:00",
+        "endTime": "15:00",
+        "closed": false
+      },
+      {
+        "dayOfWeek": 6,
+        "startTime": "07:00",
+        "endTime": "15:00",
+        "closed": false
+      },
+      {
+        "dayOfWeek": 7,
+        "startTime": "07:00",
+        "endTime": "14:00",
+        "closed": true
+      },
+      {
+        "dayOfWeek": 1,
+        "startTime": "07:00",
+        "endTime": "14:00",
+        "closed": false
+      }
+    ]
+  },
+  {
+    "name": "Novi rest",
+    "id": "oLb6XOEWuo",
+    "deleted": false,
+    "type": "FASTFOOD",
+    "status": "OPENED",
+    "location": {
+      "address": {
+        "street": "Tikveska",
+        "number": 24,
+        "city": "Belgrade",
+        "country": "Serbia",
+        "postcode": 11040
+      },
+      "latitude": 44.789390563964844,
+      "longitude": 20.482139587402344
+    },
+    "items": [],
+    "logo": "9da29a88-eb4c-49dd-a6ee-b00728c391c1",
+    "menagerId": "ostoja",
+    "rating": 0,
+    "workingHours": [
+      {
+        "dayOfWeek": 2,
+        "startTime": "07:00",
+        "endTime": "15:00",
+        "closed": false
+      },
+      {
+        "dayOfWeek": 3,
+        "startTime": "07:00",
+        "endTime": "17:00",
+        "closed": false
+      },
+      {
+        "dayOfWeek": 4,
+        "startTime": "07:00",
+        "endTime": "15:00",
+        "closed": false
+      },
+      {
+        "dayOfWeek": 5,
+        "startTime": "07:00",
+        "endTime": "15:00",
+        "closed": false
+      },
+      {
+        "dayOfWeek": 6,
+        "startTime": "07:00",
+        "endTime": "15:00",
+        "closed": false
+      },
+      {
+        "dayOfWeek": 7,
+        "startTime": "07:00",
+        "endTime": "14:00",
+        "closed": true
+      },
+      {
+        "dayOfWeek": 1,
+        "startTime": "07:00",
+        "endTime": "14:00",
+        "closed": false
+      }
+    ]
   }
 ]

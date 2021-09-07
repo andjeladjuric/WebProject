@@ -325,8 +325,6 @@ Vue.component("selected-restaurant", {
 			                </div>
 			
 			                <div class="container d-block">
-			                    <h5><b>Working hours:</b></h5>
-			                    <p>7am - 9pm</p>
 			                    <h5><b>Currently:</b></h5>
 			                    <p style="color: red; text-transform: uppercase">{{restaurant.status}}</p>
 			                </div>

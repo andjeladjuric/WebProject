@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import dto.RestaurantDTO;
 
-enum Status { Open, Closed }
 
 public class Restaurant {
 	
@@ -12,29 +11,40 @@ public class Restaurant {
 	private String id;
 	private boolean deleted;
 	private RestaurantType type; 
-	private Status status;
+	private RestStatus status;
 	private Location location;
 	private ArrayList<String> items = new ArrayList<String>();
 	private String logo; 
 	private String menagerId;
 	private int rating;
-	//private ArrayList<WorkingHours> workingHours;
+	private ArrayList<WorkingHours> workingHours = new ArrayList<WorkingHours>();
 
+	public ArrayList<WorkingHours> getWorkingHours() {
+		return workingHours;
+	}
+
+	public void setWorkingHours(ArrayList<WorkingHours> workingHours) {
+		this.workingHours = workingHours;
+	}
+	
 	public Restaurant() {}
 	
-	public Restaurant(RestaurantDTO rest, String id) {
+	public Restaurant(RestaurantDTO rest, String id, ArrayList<WorkingHours> hours) {
 		this.name = rest.name;
 		this.id = id;
 		this.deleted = false;
 		this.type = rest.type;
-		this.status = Status.Open;
+		this.status = status.OPENED;
 		this.logo = rest.logo;
 		this.menagerId = rest.menagerId;
 		this.location = rest.location;
+		this.workingHours = hours;
 	}
 
-	public Restaurant(String name, String id, boolean deleted, RestaurantType type, Status status, Location location,
-			ArrayList<String> items, String logo, String menagerId, int rating) {
+	
+
+	public Restaurant(String name, String id, boolean deleted, RestaurantType type, RestStatus status, Location location,
+			ArrayList<String> items, String logo, String menagerId, int rating, ArrayList<WorkingHours> workingHours) {
 		super();
 		this.name = name;
 		this.id = id;
@@ -46,6 +56,7 @@ public class Restaurant {
 		this.logo = logo;
 		this.menagerId = menagerId;
 		this.rating = rating;
+		this.workingHours = workingHours;
 	}
 
 	public int getRating() {
@@ -88,11 +99,11 @@ public class Restaurant {
 		this.type = type;
 	}
 
-	public Status getStatus() {
+	public RestStatus getStatus() {
 		return status;
 	}
 
-	public void setStatus(Status status) {
+	public void setStatus(RestStatus status) {
 		this.status = status;
 	}
 
@@ -128,13 +139,6 @@ public class Restaurant {
 		this.menagerId = menagerId;
 	}
 	
-/*	public ArrayList<WorkingHours> getWorkingHours() {
-		return workingHours;
-	}
-
-	public void setWorkingHours(ArrayList<WorkingHours> workingHours) {
-		this.workingHours = workingHours;
-	}*/
 	
 	
 }

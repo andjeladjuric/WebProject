@@ -1,16 +1,15 @@
 package beans;
 
-import java.time.LocalTime;
 
 public class WorkingHours {
-	private int dayOfWeek; // 1 - Monday, 7 - Sunday
-	private LocalTime startTime;
-	private LocalTime endTime;
+	private int dayOfWeek; // 1 - Sunday, 7 - Saturday
+	private String startTime;
+	private String endTime;
 	private boolean closed;
 	
 	public WorkingHours() {}
 	
-	public WorkingHours(int dayOfWeek, LocalTime startTime, LocalTime endTime, boolean closed) {
+	public WorkingHours(int dayOfWeek, String startTime, String endTime, boolean closed) {
 		super();
 		this.dayOfWeek = dayOfWeek;
 		this.startTime = startTime;
@@ -26,19 +25,19 @@ public class WorkingHours {
 		this.dayOfWeek = dayOfWeek;
 	}
 
-	public LocalTime getStartTime() {
+	public String getStartTime() {
 		return startTime;
 	}
 
-	public void setStartTime(LocalTime startTime) {
+	public void setStartTime(String startTime) {
 		this.startTime = startTime;
 	}
 
-	public LocalTime getEndTime() {
+	public String getEndTime() {
 		return endTime;
 	}
 
-	public void setEndTime(LocalTime endTime) {
+	public void setEndTime(String endTime) {
 		this.endTime = endTime;
 	}
 
@@ -49,7 +48,5 @@ public class WorkingHours {
 	public void setClosed(boolean closed) {
 		this.closed = closed;
 	}
-
-	
 	
 }
