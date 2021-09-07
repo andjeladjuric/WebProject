@@ -7,7 +7,7 @@ function fixDate(users) {
 Vue.component("restaurant-form", {
     data: function () {
         return {
-            step: 1,
+            step: 2,
             totalSteps: 3,
             table: 1,
             managers: [],
@@ -138,146 +138,70 @@ Vue.component("restaurant-form", {
 
                     <section v-if="step == 2">
                         <div class="d-flex justify-content-center">
-                            <h4 class="card-title my-5">Working hours</h4>
-                        </div>
-                        <div class="d-grid gap-3">
-                            <div class="row">
-                                <div class="card noHover shadow-sm bg-light">
-                                    <div class="d-grid gap-2">
-                                        <div class="row mt-3">
-                                            <div class="col-6 mx-auto">
-                                                <div class="form-floating">
-                                                    <input type="time" class="form-control">
-                                                    <label>Opens at</label>
-                                                </div>
-                                            </div>
-                                            <div class="col-6 mx-auto">
-                                                <div class="form-floating">
-                                                    <input type="time" class="form-control">
-                                                    <label>Closes at</label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-11">
-                                                <div class="d-flex gap-1">
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="checkbox" value="">
-                                                        <label class="form-check-label">
-                                                            Mon
-                                                        </label>
-                                                    </div>
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="checkbox" value="">
-                                                        <label class="form-check-label">
-                                                            Tue
-                                                        </label>
-                                                    </div>
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="checkbox">
-                                                        <label class="form-check-label">
-                                                            Wed
-                                                        </label>
-                                                    </div>
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="checkbox" value="">
-                                                        <label class="form-check-label">
-                                                            Thur
-                                                        </label>
-                                                    </div>
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="checkbox" value="">
-                                                        <label class="form-check-label">
-                                                            Fri
-                                                        </label>
-                                                    </div>
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="checkbox" value="">
-                                                        <label class="form-check-label">
-                                                            Sat
-                                                        </label>
-                                                    </div>
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="checkbox" value="">
-                                                        <label class="form-check-label">
-                                                            Sun
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="card noHover shadow-sm bg-light">
-                                    <div class="d-grid gap-2">
-                                        <div class="row mt-3">
-                                            <div class="col-6 mx-auto">
-                                                <div class="form-floating">
-                                                    <input type="time" class="form-control">
-                                                    <label>Opens at</label>
-                                                </div>
-                                            </div>
-                                            <div class="col-6 mx-auto">
-                                                <div class="form-floating">
-                                                    <input type="time" class="form-control">
-                                                    <label>Closes at</label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-11">
-                                                <div class="d-flex gap-1">
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="checkbox" value="">
-                                                        <label class="form-check-label">
-                                                            Mon
-                                                        </label>
-                                                    </div>
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="checkbox" value="">
-                                                        <label class="form-check-label">
-                                                            Tue
-                                                        </label>
-                                                    </div>
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="checkbox">
-                                                        <label class="form-check-label">
-                                                            Wed
-                                                        </label>
-                                                    </div>
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="checkbox" value="">
-                                                        <label class="form-check-label">
-                                                            Thur
-                                                        </label>
-                                                    </div>
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="checkbox" value="">
-                                                        <label class="form-check-label">
-                                                            Fri
-                                                        </label>
-                                                    </div>
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="checkbox" value="">
-                                                        <label class="form-check-label">
-                                                            Sat
-                                                        </label>
-                                                    </div>
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="checkbox" value="">
-                                                        <label class="form-check-label">
-                                                            Sun
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+						  <h4 class="card-title my-5">Working hours</h4>
+						</div>
+						<div class="d-grid gap-3">
+						  <div class="row">
+						    <div class="card noHover shadow-sm bg-light" style="width : 400px;">
+						      <div class="d-grid gap-2">
+						        <div class="d-flex justify-content-center mt-2">
+						          <p>Work days</p>
+						        </div>
+						        <div class="row mt-2 mb-3">
+						          <div class="col-6 mx-auto">
+						            <div class="form-floating">
+						              <input type="time" class="form-control" />
+						              <label>Opens at</label>
+						            </div>
+						          </div>
+						          <div class="col-6 mx-auto">
+						            <div class="form-floating">
+						              <input type="time" class="form-control" />
+						              <label>Closes at</label>
+						            </div>
+						          </div>
+						        </div>
+						      </div>
+						    </div>
+						  </div>
+						  <div class="row">
+						    <div class="card noHover shadow-sm bg-light" style="width : 400px;">
+						      <div class="d-grid gap-2">
+						        <div class="d-flex justify-content-center mt-2">
+						          <p>Weekends</p>
+						        </div>
+						        <div class="row">
+						          <div class="col-6 mx-auto">
+						            <div class="form-floating">
+						              <input type="time" class="form-control" />
+						              <label>Opens at</label>
+						            </div>
+						          </div>
+						          <div class="col-6 mx-auto">
+						            <div class="form-floating">
+						              <input type="time" class="form-control" />
+						              <label>Closes at</label>
+						            </div>
+						          </div>
+						        </div>
+						        <div class="row mb-3">
+						          <div class="col-11">
+						            <div class="d-flex justify-content-center gap-3">
+						              <div class="form-check">
+						                <input class="form-check-input" type="checkbox" value="" />
+						                <label class="form-check-label"> Sat </label>
+						              </div>
+						              <div class="form-check">
+						                <input class="form-check-input" type="checkbox" value="" />
+						                <label class="form-check-label"> Sun </label>
+						              </div>
+						            </div>
+						          </div>
+						        </div>
+						      </div>
+						    </div>
+						  </div>
+						</div>
                     </section>
 
                     <section v-if="step == 3">
