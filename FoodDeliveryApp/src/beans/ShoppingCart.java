@@ -52,7 +52,7 @@ public class ShoppingCart {
 	public void setTotalPrice() {
 		this.totalPrice = 0;
 		for(Item i : items) {
-			totalPrice += i.getPrice();
+			totalPrice += i.getPrice()*i.getQuantity();
 		}
 	}
 	

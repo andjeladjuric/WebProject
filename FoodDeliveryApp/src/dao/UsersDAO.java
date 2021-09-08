@@ -67,8 +67,9 @@ public class UsersDAO {
 	}
 	
 	public void addNewUser(SignupDTO newUser) {
+		newUser.profileImage = "3bd6b803-2d7b-4388-9e2e-7f3215e4e9aa";
 		User createdUser = new User(newUser.username, newUser.password, newUser.name, newUser.surname,
-				newUser.gender, newUser.dateOfBirth, newUser.role);
+				newUser.gender, newUser.dateOfBirth, newUser.role, newUser.profileImage);
 		users.put(createdUser.getUsername(), createdUser);
 		serialize();
 		if(newUser.role == Role.CUSTOMER) {

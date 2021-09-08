@@ -284,7 +284,9 @@ Vue.component("shopping-cart", {
             this.cart = response.data;
             this.numOfItems = this.cart.items.length;
             this.totalPrice = this.cart.totalPrice + 100;
-            this.points = (this.cart.totalPrice / 1000) * 133;
+            this.points = Number((this.cart.totalPrice / 1000) * 133).toFixed(
+                2
+            );
         });
 
         axios.get("rest/users/getCurrentUser").then((response) => {
@@ -313,7 +315,9 @@ Vue.component("shopping-cart", {
                     i.quantity++;
                     this.cart.totalPrice = this.cart.totalPrice + i.price;
                     this.totalPrice = this.cart.totalPrice + 100;
-                    this.points = (this.cart.totalPrice / 1000) * 133;
+                    this.points = Number(
+                        (this.cart.totalPrice / 1000) * 133
+                    ).toFixed(2);
                 }
             }
         },
@@ -323,7 +327,9 @@ Vue.component("shopping-cart", {
                     i.quantity--;
                     this.cart.totalPrice = this.cart.totalPrice - i.price;
                     this.totalPrice = this.cart.totalPrice + 100;
-                    this.points = (this.cart.totalPrice / 1000) * 133;
+                    this.points = Number(
+                        (this.cart.totalPrice / 1000) * 133
+                    ).toFixed(2);
                 }
             }
         },
@@ -338,13 +344,16 @@ Vue.component("shopping-cart", {
                     this.cart = response.data;
                     this.numOfItems = this.cart.items.length;
                     this.totalPrice = this.cart.totalPrice + 100;
-                    this.points = (this.cart.totalPrice / 1000) * 133;
+                    this.points = Number(
+                        (this.cart.totalPrice / 1000) * 133
+                    ).toFixed(2);
                 });
-                this.showToast();
+            this.showToast();
         },
         useDiscount: function () {
-            this.totalPrice =
-                this.totalPrice * (1 - this.user.type.discount * 0.01);
+            this.totalPrice = Number(
+                this.totalPrice * (1 - this.user.type.discount * 0.01)
+            ).toFixed(2);
             this.haveDiscount = false;
             this.discountToast();
         },
@@ -388,8 +397,7 @@ Vue.component("shopping-cart", {
                     this.modalShow = false;
                 });
 
-                window.location.reload();
-                
+                //window.location.reload();
             }
         },
         getImage: function (item) {
@@ -408,7 +416,8 @@ Vue.component("shopping-cart", {
                 showConfirmButton: false,
             });
             Toast.fire({ icon: "success" });
-        },discountToast: function () {
+        },
+        discountToast: function () {
             const Toast = Swal.mixin({
                 toast: true,
                 text: "You have used your discount!",
@@ -417,8 +426,9 @@ Vue.component("shopping-cart", {
                 showConfirmButton: false,
             });
             Toast.fire({ icon: "success" });
-        }
-    },components: {
-        swal
-       }
+        },
+    },
+    components: {
+        swal,
+    },
 });

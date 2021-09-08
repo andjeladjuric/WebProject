@@ -48,8 +48,7 @@ Vue.component("selected-restaurant", {
 			            <div v-if="restaurant.type === 'VEGAN'" class="overlay-image" style="background-image: url(img/vegan.jpg);"></div>
             <div class="container headline">
                 <div class="d-flex justify-content-start">
-			               		
-			        <img class="img-rounded img-wrapper me-3" v-bind:src="getLogo()" alt="RestaurantLogo" style="width: 150px; height: 150px; border: 7px solid; object-fit: cover;">
+                    <img class="image-logo me-3" v-bind:src="getLogo()" alt="RestaurantLogo">   		
 			        <h1 style="font-weight: bold; font-size: 5vw; margin-top:60px;">{{restaurant.name}}</h1>
 			                    
 			    </div>
@@ -73,18 +72,20 @@ Vue.component("selected-restaurant", {
             </button>
         </div>
     </div>
-    <div class="row g-4 mb-4 cards align-contet-center justify-content-center" 
-        style="padding-left: 5%; padding-right: 7%; padding-bottom: 7%"
-        v-if="allComments.length === 0 && showComments">
-        <p style="font-size: 2rem; font-style: italic">There are currently no comments available!</p>
-    </div>
 
-    <div class="row g-2 comments mt-5" v-if="showComments && allComments.length !== 0">
+    <div class="row g-2 comments mt-5" v-if="showComments">
         <!-- Comments -->
         <div class="col-lg-7 mx-auto">
-            <h4 class="mb-3" id="item-1">All comments</h4>
+
+            <div class="row g-4 mb-4 cards align-contet-center justify-content-center" 
+                style="padding-left: 5%; padding-right: 7%; padding-bottom: 7%"
+                v-if="allComments.length === 0 && showComments">
+                <p style="font-size: 2rem; font-style: italic">There are currently no comments available!</p>
+            </div>
+            <h4 class="mb-3" id="item-1" v-if="allComments.length != 0">All comments</h4>
+
             <div class="card bg-light text-dark mb-2" id="itemAndCommentCards" v-for="comment in allComments"
-                style="border-top: 1px solid rgba(124, 124, 124, 0.404);">
+                style="border-top: 1px solid rgba(124, 124, 124, 0.404);" v-if="allComments.length != 0">
                 <div class="card-body text-start">
                     <div class="container cardContent text-start">
                         <div class="container mb-2 d-inline-flex userNameAndType">

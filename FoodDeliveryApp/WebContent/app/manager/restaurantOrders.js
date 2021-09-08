@@ -275,7 +275,7 @@ Vue.component("rest-orders", {
                             <i class="fas fa-check mt-3 mb-3"></i>
                             </div>				
                             <h4 class="modal-title w-100 mt-5">Are you sure?</h4>			
-                            <button type="button" class="close" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
                         </div>
                         <div class="modal-body">
                             <p>Do you really want to accept this request? This process cannot be undone.</p>

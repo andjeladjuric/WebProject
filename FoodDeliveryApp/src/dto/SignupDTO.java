@@ -14,4 +14,5 @@ public class SignupDTO {
 	public Gender gender;
 	public Date dateOfBirth;
 	public Role role;
+	public String profileImage;
 }

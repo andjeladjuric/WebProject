@@ -1,8 +1,1 @@
-[
-    {
-        "id": "1",
-        "customer": "jele",
-        "items": [],
-        "totalPrice": 0
-    }
-]
+[{"id":"1","customer":"jele","items":[],"totalPrice":0.0},{"id":"DWMax","customer":"miljana","items":[{"id":"428e958b-56af-4d9a-977b-18c3a9692ed5","deleted":false,"name":"Shrimp with indian walnuts","price":680.0,"type":"Food","amount":350.0,"description":"Shrimp, indian walnuts, mixed veggies with hot sauce","imagePath":"ef6c6a0a-21bd-49f7-bac4-f4979c3f6bb7","restaurantId":"2N8ISB5Cmo","restaurant":"Fish&Zelenish","quantity":1.0,"category":"SALADS"}],"totalPrice":680.0},{"id":"O9Ium","customer":"zoran","items":[],"totalPrice":0.0}]

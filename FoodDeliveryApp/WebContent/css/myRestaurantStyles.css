@@ -68,6 +68,14 @@ h4,
     position: relative;
 }
 
+.image-logo {
+    object-fit: cover;
+    width: 200px;
+    height: 150px;
+    border: 7px solid;
+    border-radius: 5px;
+}
+
 .information {
     display: block;
 }

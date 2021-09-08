@@ -24,7 +24,7 @@ Vue.component("myrestaurant", {
             showItems: true,
             showComments: false,
             showOrders: false,
-            images : []
+            images: [],
         };
     },
     template: `
@@ -42,7 +42,7 @@ Vue.component("myrestaurant", {
 			            <div v-if="restaurant.type === 'VEGAN'" class="overlay-image" style="background-image: url(img/vegan.jpg);"></div>
                     <div class="container headline">
                         <div class="d-flex justify-content-start">
-			                <img class="img-rounded image-wrapper me-3" v-bind:src="getLogo()" alt="RestaurantLogo" style="width: 150px; height: 150px; border: 7px solid;">
+			                <img class="image-logo me-3" v-bind:src="getLogo()" alt="RestaurantLogo">
 			                <h1 style="font-weight: bold; font-size: 5vw; margin-top:60px;">{{restaurant.name}}</h1>
 			            </div>
                     </div>
@@ -94,6 +94,6 @@ Vue.component("myrestaurant", {
             }
 
             return "";
-        }
-    }
+        },
+    },
 });

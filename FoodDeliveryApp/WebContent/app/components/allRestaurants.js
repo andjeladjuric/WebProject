@@ -107,9 +107,11 @@ Vue.component("all-restaurants", {
                                         <option value="">All</option>
                                         <option value="ITALIAN">Italian</option>
                                         <option value="FASTFOOD">Fast food</option>
-                                        <option value="CHINESE">Chinese</option>
-                                        <option value="SERBIAN">Serbian</option>
+                                        <option value="CHINEESE">Chinese</option>
                                         <option value="BARBEQUE">Barbeque</option>
+                                        <option value="MEXICAN">Mexican</option>
+                                        <option value="DESSERTS">Desserts</option>
+                                        <option value="VEGAN">Vegan</option>
                                     </select>
                                 </div>
                                 <div class="col-md">
@@ -145,18 +147,21 @@ Vue.component("all-restaurants", {
                                     <select class="form-select" placeholder="Restaurant type" aria-label="Restaurant type"
                                         v-model="filterInput.restaurantType">
                                         <option value="" disabled selected hidden>Restaurant type</option>
+                                        <option value="">All</option>
                                         <option value="ITALIAN">Italian</option>
                                         <option value="FASTFOOD">Fast food</option>
-                                        <option value="CHINESE">Chinese</option>
-                                        <option value="SERBIAN">Serbian</option>
+                                        <option value="CHINEESE">Chinese</option>
                                         <option value="BARBEQUE">Barbeque</option>
+                                        <option value="MEXICAN">Mexican</option>
+                                        <option value="DESSERTS">Desserts</option>
+                                        <option value="VEGAN">Vegan</option>
                                     </select>
                                 </div>
 
                                 <div class="col-md mt-2">
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="radio" name="opened" value="" id="flexCheck"
-                                            v-model="filterInput.opened" v-bind:value="'Open'">
+                                            v-model="filterInput.opened" v-bind:value="'OPENED'">
                                         <label class="form-check-label" for="flexCheckDefault">Show only opened restaurants</label>
                                     </div>
                                 </div>
@@ -214,15 +219,16 @@ Vue.component("all-restaurants", {
                     <div class="row text-center g-4">
 
                         <div class="col-md-4" v-for="r in filteredRestaurants">
-                            <div class="card bg-light text-dark restaurantCards" style="border: 2px solid #7fd2c0">
+                            <div class="card bg-light restaurantCards" style="border: 2px solid #7fd2c0">
                                 <div class="cover">
                                     <img v-bind:src="getImage(r)" alt="RestaurantLogo" class="img-responsive cover">
                                 </div>
                                 <div class="card-body text-center">
                                     <h3 class="card-title mb-2">{{r.name}}</h3>
 
-                                    <p class="card-text mb-2">
-                                        {{r.type}} · {{r.status}}
+                                    <p class="card-text mb-3">
+                                        {{r.type}} · 
+                                        <span v-bind:class="r.status === 'OPENED' ? 'green' : 'red'">{{r.status}}</span>
                                     </p>
 
                                     <p class="card-text mb-2" style="font-size: 0.9rem; 
@@ -391,9 +397,13 @@ Vue.component("all-restaurants", {
                     })
                     .then((json) => {
                         console.log(json.address.city);
+                        console.log(json.address.country);
 
                         // trigger event to search immediatelly
                         this.searchInput.location = json.address.city;
+                        if (json.address.city === undefined) {
+                            this.searchInput.location = json.address.country;
+                        }
                     });
             });
         },

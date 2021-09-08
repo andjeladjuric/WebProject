@@ -46,7 +46,7 @@ public class User {
 	}
 
 	
-	public User(String username, String password, String name, String surname, Gender gender, Date dateOfBirth, Role role) {
+	public User(String username, String password, String name, String surname, Gender gender, Date dateOfBirth, Role role, String profileImage) {
 		super();
 		this.username = username;
 		this.password = password;
@@ -58,7 +58,7 @@ public class User {
 		this.blocked = false;
 		this.deleted = false;
 		this.suspicious = false;
-		this.profilePicPath = "";
+		this.profilePicPath = profileImage;
 		this.points = 0;
 		this.type = new CustomerType(Type.NONE, 0, 0);
 	}

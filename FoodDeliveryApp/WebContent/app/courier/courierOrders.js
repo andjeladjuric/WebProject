@@ -100,9 +100,11 @@ Vue.component("all-orders", {
                                                 <option value="">All</option>
                                                 <option value="ITALIAN">Italian</option>
                                                 <option value="FASTFOOD">Fast food</option>
-                                                <option value="CHINESE">Chinese</option>
-                                                <option value="SERBIAN">Serbian</option>
+                                                <option value="CHINEESE">Chinese</option>
                                                 <option value="BARBEQUE">Barbeque</option>
+                                                <option value="MEXICAN">Mexican</option>
+                                                <option value="DESSERTS">Desserts</option>
+                                                <option value="VEGAN">Vegan</option>
                                             </select>
                                         </div>
 

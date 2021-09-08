@@ -97,9 +97,11 @@ Vue.component("all-orders", {
                                             <option value="">All</option>
                                             <option value="ITALIAN">Italian</option>
                                             <option value="FASTFOOD">Fast food</option>
-                                            <option value="CHINESE">Chinese</option>
-                                            <option value="SERBIAN">Serbian</option>
+                                            <option value="CHINEESE">Chinese</option>
                                             <option value="BARBEQUE">Barbeque</option>
+                                            <option value="MEXICAN">Mexican</option>
+                                            <option value="DESSERTS">Desserts</option>
+                                            <option value="VEGAN">Vegan</option>
                                         </select>
                                     </div>
 
@@ -157,7 +159,7 @@ Vue.component("all-orders", {
                 <!-- End of sort for orders -->
 
                 <!-- Cards with not delivered orders -->
-                <div class="row g-4 mb-4 cards" id="vue-orders" v-for="o in orders" v-if="isHidden">
+                <div class="row g-4 mb-4 cards" id="vue-orders" v-for="o in filteredWaitingOrders" v-if="isHidden">
                         <div class="card shadow bg-light text-dark mb-4">
                             <div class="card-body text-center">
                                 <div class="row g-2 align-items-center d-inline-flex">
@@ -199,7 +201,7 @@ Vue.component("all-orders", {
                 <!-- End of cards with orders -->
 
                 <!-- Cards with delivered orders -->
-                <div class="row g-4 mb-4 cards" id="waiting-orders" v-for="o in filteredWaitingOrders" v-if="!isHidden">
+                <div class="row g-4 mb-4 cards" id="waiting-orders" v-for="o in filteredOrders" v-if="!isHidden">
                         <div class="card shadow bg-light text-dark">
                             <div class="card-body text-center">
                                 <div class="row g-2">
@@ -347,13 +349,13 @@ Vue.component("all-orders", {
     },
     computed: {
         filteredOrders: function () {
-            return this.orders.filter((o) => {
+            return this.allWaitingOrders.filter((o) => {
                 return this.searchOrders(o);
             });
         },
 
         filteredWaitingOrders: function () {
-            return this.allWaitingOrders.filter((o) => {
+            return this.orders.filter((o) => {
                 return this.searchOrders(o);
             });
         },

@@ -63,6 +63,14 @@ body {
     line-height: 17px;
 }
 
+.green {
+    color: #7fd2c0;
+}
+
+.red {
+    color: rgb(201, 53, 53);
+}
+
 .star {
     color: #fbc02d;
 }

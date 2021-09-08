@@ -557,6 +557,7 @@ Vue.component("restaurant-items", {
                     description: this.item.description,
                     imagePath: this.item.imagePath,
                     restaurantId: this.restaurant.id,
+                    restaurant: this.restaurant.name,
                     category: this.item.category,
                 };
                 axios

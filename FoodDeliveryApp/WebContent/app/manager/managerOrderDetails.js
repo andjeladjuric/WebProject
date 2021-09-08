@@ -116,7 +116,7 @@ Vue.component("manager-order-details", {
                                 <td>
                                     <button type="button" class="btn d-flex tableBtn" 
                                         v-bind:class="order.status === 'DELIVERED' || order.status === 'TRANSPORTING' 
-                                            || order.status === 'WAITING' ? 'disabled' : 'nothing'" @click="changeStatus(order.id)">
+                                            || order.status === 'WAITING' || order.status === 'CANCELED' ? 'disabled' : 'nothing'" @click="changeStatus(order.id)">
                                         Change status
                                     </button>
                                 </td>
