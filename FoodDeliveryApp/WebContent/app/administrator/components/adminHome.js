@@ -126,7 +126,7 @@ Vue.component("administrator-users", {
                     <div class="row" style="height: 250px;">
                         <div class="col-10 mx-auto bg-light mt-2" style="border-radius: 30px;">
                             <img v-bind:src="getImage()" class="card-img-top"
-                                style="height: 250px; width: 250px;" alt="...">
+                                style="height: 250px; width: 250px; object-fit: cover" alt="...">
                         </div>
                     </div>
                     <div class="row mt-2">

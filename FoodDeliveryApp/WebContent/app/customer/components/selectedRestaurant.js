@@ -39,8 +39,13 @@ Vue.component("selected-restaurant", {
 		<div id="header" class="carousel">
     <div class="carousel-inner">
         <div class="carousel-item active">
-            <div class="overlay-image" style="background-image: url(img/la-forza.jpg);">
-            </div>
+               <div v-if="restaurant.type === 'ITALIAN'" class="overlay-image" style="background-image: url(img/italian.jpg);"></div>
+			            <div v-if="restaurant.type === 'CHINEESE'" class="overlay-image" style="background-image: url(img/asian.jpg);"></div>
+			            <div v-if="restaurant.type === 'FASTFOOD'" class="overlay-image" style="background-image: url(img/fastfood1.jpg);"></div>
+			            <div v-if="restaurant.type === 'BARBEQUE'" class="overlay-image" style="background-image: url(img/barbeque1.jpg);"></div>
+			            <div v-if="restaurant.type === 'DESSERTS'" class="overlay-image" style="background-image: url(img/dessert2.jpg);"></div>
+			            <div v-if="restaurant.type === 'MEXICAN'" class="overlay-image" style="background-image: url(img/mexican.jpg);"></div>
+			            <div v-if="restaurant.type === 'VEGAN'" class="overlay-image" style="background-image: url(img/vegan.jpg);"></div>
             <div class="container headline">
                 <div class="d-flex justify-content-start">
 			               		

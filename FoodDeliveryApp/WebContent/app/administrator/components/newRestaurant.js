@@ -76,9 +76,11 @@ Vue.component("restaurant-form", {
                                     <select class="form-select" v-model="restaurant.type" v-on:change="signalChange()">
                                         <option>ITALIAN</option>
                                         <option>FASTFOOD</option>
-                                        <option>SERBIAN</option>
+                                        <option>DESSERTS</option>
                                         <option>CHINEESE</option>
                                         <option>BARBEQUE</option>
+                                        <option>MEXICAN</option>
+                                        <option>VEGAN</option>
                                     </select>
                                 </div>
                             </div>
@@ -544,8 +546,8 @@ Vue.component("restaurant-form", {
 	                    },
 	                }
 	            );
-	           window.location = "/FoodDeliveryApp/administratorPage.html#/";
-	           location.reload();
+	          window.location = "/FoodDeliveryApp/administratorPage.html#/";
+	          location.reload();
             }
         },
         openMap: function () {

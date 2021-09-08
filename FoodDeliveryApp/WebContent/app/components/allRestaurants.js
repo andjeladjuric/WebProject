@@ -214,7 +214,7 @@ Vue.component("all-restaurants", {
                     <div class="row text-center g-4">
 
                         <div class="col-md-4" v-for="r in filteredRestaurants">
-                            <div class="card bg-light text-dark restaurantCards">
+                            <div class="card bg-light text-dark restaurantCards" style="border: 2px solid #7fd2c0">
                                 <div class="cover">
                                     <img v-bind:src="getImage(r)" alt="RestaurantLogo" class="img-responsive cover">
                                 </div>

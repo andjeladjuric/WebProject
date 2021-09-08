@@ -2,36 +2,7 @@
     {
         "id": "1",
         "customer": "jele",
-        "items": [
-            {
-                "id": "1",
-                "deleted": false,
-                "name": "Pizza",
-                "price": 300.0,
-                "type": "Food",
-                "amount": 500.0,
-                "description": "This is a pizza",
-                "imagePath": "59a2944d-2bea-44b8-aaca-4658954c232e",
-                "restaurantId": "3",
-                "restaurant": "Corso",
-                "quantity": 1.0,
-                "category": "PIZZA"
-            },
-            {
-                "id": "7002d8dc-27b2-42e5-8891-a42e4de19273",
-                "deleted": false,
-                "name": "Margarita",
-                "price": 400.0,
-                "type": "Food",
-                "amount": 300.0,
-                "description": "Cheesy pizza",
-                "imagePath": "871dfc7d-f188-4009-a969-d5877034ec10",
-                "restaurantId": "3",
-                "restaurant": null,
-                "quantity": 1.0,
-                "category": "PIZZA"
-            }
-        ],
-        "totalPrice": 1300.0
+        "items": [],
+        "totalPrice": 0
     }
 ]
