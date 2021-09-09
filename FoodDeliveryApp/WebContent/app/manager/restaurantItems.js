@@ -61,7 +61,7 @@ Vue.component("restaurant-items", {
                             <a class="nav-link" href="#item-4" v-if="!isCategoryEmpty('PASTA')">Pasta</a>
                             <a class="nav-link" href="#item-5" v-if="!isCategoryEmpty('MAINDISHES')">Main Dishes</a>
                             <a class="nav-link" href="#item-6" v-if="!isCategoryEmpty('DRINKS')">Drinks</a>
-                            <a class="nav-link" href="#item-7" v-if="!isCategoryEmpty('DESSERTS')">Desserts</a>
+                            <a class="nav-link" href="#item-7" v-if="!isCategoryEmpty('DESSERT')">Desserts</a>
                         </nav>
                     </nav>
                     <br><br>
@@ -485,7 +485,7 @@ Vue.component("restaurant-items", {
                             {{restaurant.location.address.street}}  {{restaurant.location.address.number}} <br> 
                             {{restaurant.location.address.city}} {{restaurant.location.address.postcode}}, {{restaurant.location.address.country}}
                         </h4>	
-                        <button type="button" class="close" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
+                        <button type="button" class="btn-close close" data-bs-dismiss="modal" aria-hidden="true"></button>
                     </div>
                     <div class="modal-body">
                         <div id="map"></div>

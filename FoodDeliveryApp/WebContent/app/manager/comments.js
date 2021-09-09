@@ -26,7 +26,7 @@ Vue.component("comments", {
             <p style="font-size: 2rem; font-style: italic">There are currently no comments available!</p>
         </div>
 
-        <div class="col-md-8 ms-2">
+        <div class="col-md-8 ms-2" v-if="allComments.length != 0">
             <h4 class="mb-3" id="item-1">All comments</h4>
             <div class="card bg-light text-dark mb-2" id="itemAndCommentCards" v-for="(comment, index) in allComments"
                 style="border-top: 1px solid rgba(124, 124, 124, 0.404);">

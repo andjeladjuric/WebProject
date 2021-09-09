@@ -129,7 +129,6 @@ body {
 }
 
 .modal-map .close {
-    font-size: 2rem;
     position: absolute;
     top: -5px;
     right: -2px;

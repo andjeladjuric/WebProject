@@ -4,7 +4,7 @@
         "id": "bYMwTB8fYp",
         "deleted": false,
         "type": "MEXICAN",
-        "status": "CLOSED",
+        "status": "OPENED",
         "location": {
             "address": {
                 "street": "Маркесова",
@@ -90,7 +90,11 @@
             "latitude": 43.85179901123047,
             "longitude": 18.404102325439453
         },
-        "items": [],
+        "items": [
+            "85804c8b-beeb-4757-ad26-15e18eb32130",
+            "816133b9-fc65-4a40-9177-83bbcd28a989",
+            "cd91cf94-9c6f-4231-bc0c-4f1629e059e3"
+        ],
         "logo": "c51d5cad-5c47-45e2-928c-74f3eecf7489",
         "menagerId": "miroslav",
         "rating": 0,
@@ -159,7 +163,8 @@
         "items": [
             "5bba9991-0515-40a1-9fa2-46eccee82802",
             "65eefffa-8fbf-4940-b21f-c3a222c594e3",
-            "145fbd67-9981-4a5d-97cb-516770c07559"
+            "145fbd67-9981-4a5d-97cb-516770c07559",
+            "02c98014-b679-4473-8c4c-0cf1aee03917"
         ],
         "logo": "0ec5481b-b8ef-4e6b-a680-f01bfcd2bf9e",
         "menagerId": "stevanovic99",
@@ -214,7 +219,7 @@
         "id": "SBXJokvYc9",
         "deleted": false,
         "type": "DESSERTS",
-        "status": "CLOSED",
+        "status": "OPENED",
         "location": {
             "address": {
                 "street": "Pavla Papa",
@@ -226,7 +231,13 @@
             "latitude": 45.25505065917969,
             "longitude": 19.83888816833496
         },
-        "items": [],
+        "items": [
+            "e34bd703-02ae-44db-be35-8553ddb9a297",
+            "7a3135b9-c6a3-4cd6-809d-06f98ac256ed",
+            "5bb56c4f-76e0-4704-8497-f8f1e9f6b4aa",
+            "fde6870c-f519-4d7f-90d3-6e723224a13d",
+            "1205fad0-226d-49d5-a7dd-c465c6011d08"
+        ],
         "logo": "60395a83-b6ae-4e8b-8819-d737959496bd",
         "menagerId": "sofija_peric",
         "rating": 0,
@@ -352,7 +363,7 @@
         "id": "CwhEB16SeK",
         "deleted": false,
         "type": "ITALIAN",
-        "status": "CLOSED",
+        "status": "OPENED",
         "location": {
             "address": {
                 "street": "Каплара Момчила Гаврића",
@@ -364,7 +375,14 @@
             "latitude": 44.75902557373047,
             "longitude": 20.48719596862793
         },
-        "items": [],
+        "items": [
+            "0b6437c6-1e58-4e86-9bb8-13f6404f6a9d",
+            "5d516afd-3a3d-497f-b285-91e3e1770b15",
+            "243dc19a-1fe6-4f5b-952e-39661d95113d",
+            "cb34720d-6ca9-4f01-b2b8-1f99c08b1afd",
+            "0f318bf8-7fb5-45bc-88e3-7b111c04f7e7",
+            "ee867b00-af97-44c6-a899-219342ed07fe"
+        ],
         "logo": "0323974a-67a1-44d9-b475-4393dac188b1",
         "menagerId": "mire",
         "rating": 0,
@@ -430,7 +448,12 @@
             "latitude": 45.250308990478516,
             "longitude": 19.84300994873047
         },
-        "items": [],
+        "items": [
+            "78376cbe-266c-4a0c-8287-9838cd81d2bb",
+            "9b3c3521-827a-4cfe-87be-51bea8ddfdff",
+            "3cdf398c-0d81-4940-bde9-3c02abbbf708",
+            "3945882e-3ec0-4f41-912d-8f4bbb897a64"
+        ],
         "logo": "ab0115e6-d19d-448e-93ef-fee2d30ef294",
         "menagerId": "mariceva",
         "rating": 0,

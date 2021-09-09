@@ -83,7 +83,7 @@ Vue.component("selected-restaurant", {
 			                        <a class="nav-link" href="#item-4" v-if="!isCategoryEmpty('PASTA')">Pasta</a>
 			                        <a class="nav-link" href="#item-5" v-if="!isCategoryEmpty('MAINDISHES')">Main Dishes</a>
 			                        <a class="nav-link" href="#item-6" v-if="!isCategoryEmpty('DRINKS')">Drinks</a>
-			                        <a class="nav-link" href="#item-7" v-if="!isCategoryEmpty('DESSERTS')">Desserts</a>
+			                        <a class="nav-link" href="#item-7" v-if="!isCategoryEmpty('DESSERT')">Desserts</a>
 			                    </nav>
 			                </nav>
 			                
@@ -273,9 +273,9 @@ Vue.component("selected-restaurant", {
 			            <!-- End of drinks -->
 			
 			            <!-- Desserts -->
-			            <h4 class="mb-3 mt-5" id="item-7" v-if="!isCategoryEmpty('DESSERTS')">Desserts</h4>
+			            <h4 class="mb-3 mt-5" id="item-7" v-if="!isCategoryEmpty('DESSERT')">Desserts</h4>
 			            <div class="card bg-light text-dark mb-2" id="itemAndCommentCards" v-for="item in items"
-			                v-if="item.category == 'DESSERTS'">
+			                v-if="item.category == 'DESSERT'">
 			                <div class="card-body text-start itemBody">
 			                    <div class="container cardContent text-start">
 			                        <h1 class="mt-1 mb-3">{{item.name}}</h1>
