@@ -397,7 +397,7 @@ Vue.component("shopping-cart", {
                     this.modalShow = false;
                 });
 
-                //window.location.reload();
+                window.location.reload();
             }
         },
         getImage: function (item) {
