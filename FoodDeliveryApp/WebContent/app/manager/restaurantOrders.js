@@ -252,7 +252,7 @@ Vue.component("rest-orders", {
                             <i class="fas fa-times mt-3 mb-3"></i>
                             </div>				
                             <h4 class="modal-title w-100 mt-5">Are you sure?</h4>			
-                            <button type="button" class="close" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
+                            <button type="button" class="btn-close close" data-bs-dismiss="modal" aria-hidden="true"></button>
                         </div>
                         <div class="modal-body">
                             <p>Do you really want to reject this request? This process cannot be undone.</p>
@@ -281,7 +281,7 @@ Vue.component("rest-orders", {
                             <p>Do you really want to accept this request? This process cannot be undone.</p>
                         </div>
                         <div class="modal-footer justify-content-center">
-                            <button type="button" class="btn" data-bs-dismiss="modal"  @click="acceptRequest(selectedRequest.requestId); reload()">Confirm</button>
+                            <button type="button" class="btn" data-bs-dismiss="modal"  @click="acceptRequest(selectedRequest.requestId); reload();">Confirm</button>
                             <button type="button" class="btn" data-bs-dismiss="modal" style="background: #ecbeb1">Cancel</button>
                         </div>
                     </div>
@@ -373,14 +373,30 @@ Vue.component("rest-orders", {
         },
 
         acceptRequest: function (id) {
+            let dto = {
+                id: id,
+                state: "ACCEPTED",
+            };
             axios
-                .post("rest/orders/acceptRequest", id)
+                .post("rest/orders/changeRequestState", JSON.stringify(dto), {
+                    headers: {
+                        "Content-type": "application/json",
+                    },
+                })
                 .then((response) => "Success");
         },
 
         rejectRequest: function (id) {
+            let dto = {
+                id: id,
+                state: "REJECTED",
+            };
             axios
-                .post("rest/orders/rejectRequest", id)
+                .post("rest/orders/changeRequestState", JSON.stringify(dto), {
+                    headers: {
+                        "Content-type": "application/json",
+                    },
+                })
                 .then((response) => "Success");
         },
 

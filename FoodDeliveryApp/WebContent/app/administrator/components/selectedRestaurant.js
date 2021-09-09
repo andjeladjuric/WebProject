@@ -546,7 +546,15 @@ Vue.component("selected-restaurant", {
         },
         removeItem: function () {
             axios
-                .post("rest/items/deleteItem", this.deleteItem.id)
+                .post(
+                    "rest/items/deleteItem",
+                    JSON.stringify(this.deleteItem),
+                    {
+                        headers: {
+                            "Content-type": "application/json",
+                        },
+                    }
+                )
                 .then((response) => {
                     axios
                         .get("rest/items/getItemsForRestaurant", {

@@ -192,8 +192,16 @@ Vue.component("order-details", {
     methods: {
         changeStatus: function (id) {
             this.order.status = "DELIVERED";
+            let dto = {
+                orderId: id,
+                status: "DELIVERED",
+            };
             axios
-                .post("rest/orders/orderDelivered", id)
+                .post("rest/orders/orderDelivered", JSON.stringify(dto), {
+                    headers: {
+                        "Content-type": "application/json",
+                    },
+                })
                 .then((response) => "SUCCESS");
         },
         reload: function () {

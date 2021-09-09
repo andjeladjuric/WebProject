@@ -115,7 +115,7 @@ Vue.component("selected-restaurant", {
                     <textarea class="form-control" v-model="comment.text" style="height: 150px"></textarea>
                     <label>Leave a comment here</label>
                 </div>
-                <div class="d-flex justify-content-end gap-1">
+                <div class="d-flex justify-content-end gap-1 mb-5">
                     <button type="button" class="btn btn-sm buttonGroup" v-on:click="cancel()">cancel</button>
                     <button type="button" class="btn btn-sm buttonGroup active"
                         v-on:click="addComment()" v-bind:disabled="!canComment">comment</button>

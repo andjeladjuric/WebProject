@@ -79,14 +79,30 @@ Vue.component("comments", {
     },
     methods: {
         rejectComment: function (id) {
+            let dto = {
+                commentId: id,
+                commentStatus: "REJECTED",
+            };
             axios
-                .post("rest/comments/rejectComment", id)
+                .post("rest/comments/changeCommentState", JSON.stringify(dto), {
+                    headers: {
+                        "Content-type": "application/json",
+                    },
+                })
                 .then((response) => window.location.reload());
         },
 
         allowComment: function (id) {
+            let dto = {
+                commentId: id,
+                commentStatus: "ACCEPTED",
+            };
             axios
-                .post("rest/comments/allowComment", id)
+                .post("rest/comments/changeCommentState", JSON.stringify(dto), {
+                    headers: {
+                        "Content-type": "application/json",
+                    },
+                })
                 .then((response) => window.location.reload());
         },
     },

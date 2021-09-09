@@ -97,7 +97,7 @@ Vue.component("restaurant-items", {
                                 </button>
                             </a>
                             <button type="button" class="btn ms-1 btn-sm btn-outline-secondary deleteItem" style="background: none; width: 3rem"
-                                data-toggle="tooltip" data-placement="bottom" title="Delete item" @click="itemToDelete.id = item.id" data-bs-toggle="modal" data-bs-target="#myModal">
+                                data-toggle="tooltip" data-placement="bottom" title="Delete item" @click="itemToDelete = item" data-bs-toggle="modal" data-bs-target="#myModal">
                                 <i class="fas fa-trash"></i>
                             </button>
                         </div>
@@ -133,7 +133,7 @@ Vue.component("restaurant-items", {
                                 </button>
                             </a>
                             <button type="button" class="btn ms-1 btn-sm btn-outline-secondary deleteItem" style="background: none; width: 3rem"
-                                data-toggle="tooltip" data-placement="bottom" title="Delete item" @click="itemToDelete.id = item.id" data-bs-toggle="modal" data-bs-target="#myModal">
+                                data-toggle="tooltip" data-placement="bottom" title="Delete item" @click="itemToDelete = item" data-bs-toggle="modal" data-bs-target="#myModal">
                                 <i class="fas fa-trash"></i>
                             </button>
                         </div>
@@ -169,7 +169,7 @@ Vue.component("restaurant-items", {
                                 </button>
                             </a>
                             <button type="button" class="btn ms-1 btn-sm btn-outline-secondary deleteItem" style="background: none; width: 3rem"
-                                data-toggle="tooltip" data-placement="bottom" title="Delete item" @click="itemToDelete.id = item.id" data-bs-toggle="modal" data-bs-target="#myModal">
+                                data-toggle="tooltip" data-placement="bottom" title="Delete item" @click="itemToDelete = item" data-bs-toggle="modal" data-bs-target="#myModal">
                                 <i class="fas fa-trash"></i>
                             </button>
                         </div>
@@ -205,7 +205,7 @@ Vue.component("restaurant-items", {
                                 </button>
                             </a>
                             <button type="button" class="btn ms-1 btn-sm btn-outline-secondary deleteItem" style="background: none; width: 3rem"
-                                data-toggle="tooltip" data-placement="bottom" title="Delete item" @click="itemToDelete.id = item.id" data-bs-toggle="modal" data-bs-target="#myModal">
+                                data-toggle="tooltip" data-placement="bottom" title="Delete item" @click="itemToDelete = item" data-bs-toggle="modal" data-bs-target="#myModal">
                                 <i class="fas fa-trash"></i>
                             </button>
                         </div>
@@ -241,7 +241,7 @@ Vue.component("restaurant-items", {
                                 </button>
                             </a>
                             <button type="button" class="btn ms-1 btn-sm btn-outline-secondary deleteItem" style="background: none; width: 3rem"
-                                data-toggle="tooltip" data-placement="bottom" title="Delete item" @click="itemToDelete.id = item.id" data-bs-toggle="modal" data-bs-target="#myModal">
+                                data-toggle="tooltip" data-placement="bottom" title="Delete item" @click="itemToDelete = item" data-bs-toggle="modal" data-bs-target="#myModal">
                                 <i class="fas fa-trash"></i>
                             </button>
                         </div>
@@ -277,7 +277,7 @@ Vue.component("restaurant-items", {
                                 </button>
                             </a>
                             <button type="button" class="btn ms-1 btn-sm btn-outline-secondary deleteItem" style="background: none; width: 3rem"
-                                data-toggle="tooltip" data-placement="bottom" title="Delete item" @click="itemToDelete.id = item.id" data-bs-toggle="modal" data-bs-target="#myModal">
+                                data-toggle="tooltip" data-placement="bottom" title="Delete item" @click="itemToDelete = item" data-bs-toggle="modal" data-bs-target="#myModal">
                                 <i class="fas fa-trash"></i>
                             </button>
                         </div>
@@ -313,7 +313,7 @@ Vue.component("restaurant-items", {
                                 </button>
                             </a>
                             <button type="button" class="btn ms-1 btn-sm btn-outline-secondary deleteItem" style="background: none; width: 3rem"
-                                data-toggle="tooltip" data-placement="bottom" title="Delete item" @click="itemToDelete.id = item.id" data-bs-toggle="modal" data-bs-target="#myModal">
+                                data-toggle="tooltip" data-placement="bottom" title="Delete item" @click="itemToDelete = item" data-bs-toggle="modal" data-bs-target="#myModal">
                                 <i class="fas fa-trash"></i>
                             </button>
                         </div>
@@ -462,13 +462,13 @@ Vue.component("restaurant-items", {
                         <i class="fas fa-trash mt-3 mb-3"></i>
                         </div>						
                         <h4 class="modal-title w-100 mt-5">Are you sure?</h4>	
-                        <button type="button" class="close" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
+                        <button type="button" class="btn-close close" data-bs-dismiss="modal" aria-hidden="true"></button>
                     </div>
                     <div class="modal-body">
                         <p>Do you really want to delete this item? This process cannot be undone.</p>
                     </div>
                     <div class="modal-footer justify-content-center">
-                        <button type="button" class="btn" data-bs-dismiss="modal" @click="deleteItem(itemToDelete.id)">Confirm</button>
+                        <button type="button" class="btn" data-bs-dismiss="modal" @click="deleteItem(itemToDelete)">Confirm</button>
                         <button type="button" class="btn" data-bs-dismiss="modal" style="background: #ecbeb1">Cancel</button>
                     </div>
                 </div>
@@ -573,9 +573,13 @@ Vue.component("restaurant-items", {
             window.location.reload();
         },
 
-        deleteItem: function (id) {
+        deleteItem: function (item) {
             axios
-                .post("rest/items/deleteItem", id)
+                .post("rest/items/deleteItem", JSON.stringify(item), {
+                    headers: {
+                        "Content-type": "application/json",
+                    },
+                })
                 .then((response) => window.location.reload());
         },
 

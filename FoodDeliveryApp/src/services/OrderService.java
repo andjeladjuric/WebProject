@@ -31,6 +31,7 @@ import dao.OrderRequestDAO;
 import dto.ChangeStatusDTO;
 import dao.UsersDAO;
 import dto.OrderDTO;
+import dto.RequestStateDTO;
 
 @Path("/orders")
 public class OrderService {
@@ -98,15 +99,17 @@ public class OrderService {
 	
 	@POST
 	@Path("/orderDelivered")
+	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public void orderDelivered(String id) {
+	public void orderDelivered(ChangeStatusDTO dto) {
 		User user = (User) request.getSession().getAttribute("loginUser");
 		
 		if(user!= null && (user.getRole() == (Role.COURIER))) {
 			OrderDAO dao = (OrderDAO) ctx.getAttribute("orders");
-			Order currentOrder = dao.getOrderById(id);
+			Order currentOrder = dao.getOrderById(dto.orderId);
 			
-			dao.changeStatus(OrderStatus.DELIVERED, id);
+			if(currentOrder.getStatus() == OrderStatus.TRANSPORTING)
+				dao.changeStatus(dto.status, dto.orderId);
 		}
 	}
 	
@@ -204,19 +207,12 @@ public class OrderService {
 	}
 	
 	@POST
-	@Path("/acceptRequest")
+	@Path("/changeRequestState")
+	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public void acceptRequest(String id){
+	public void requestState(RequestStateDTO dto){
 		OrderDAO dao = (OrderDAO) ctx.getAttribute("orders");
-		dao.acceptRequest(id, State.ACCEPTED);
-	}
-	
-	@POST
-	@Path("/rejectRequest")
-	@Produces(MediaType.APPLICATION_JSON)
-	public void rejectRequest(String id){
-		OrderDAO dao = (OrderDAO) ctx.getAttribute("orders");
-		dao.acceptRequest(id, State.REJECTED);
+		dao.acceptRequest(dto.id, dto.state);
 	}
 	
 	@POST

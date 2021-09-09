@@ -22,6 +22,7 @@ import beans.State;
 import beans.User;
 import dao.CommentsDAO;
 import dto.CommentDTO;
+import dto.CommentStatusDTO;
 
 @Path("/comments")
 public class CommentsService {
@@ -66,19 +67,12 @@ public class CommentsService {
 	}
 	
 	@POST
-	@Path("/allowComment")
+	@Path("/changeCommentState")
+	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public void allowComment(String commentId) {
+	public void changeCommentStatus(CommentStatusDTO dto) {
 		CommentsDAO dao = (CommentsDAO) ctx.getAttribute("comments");
-		dao.changeStatus(commentId, State.ACCEPTED);
-	}
-	
-	@POST
-	@Path("/rejectComment")
-	@Produces(MediaType.APPLICATION_JSON)
-	public void rejectComment(String commentId) {
-		CommentsDAO dao = (CommentsDAO) ctx.getAttribute("comments");
-		dao.changeStatus(commentId, State.REJECTED);
+		dao.changeStatus(dto.commentId, dto.commentStatus);
 	}
 	
 	@GET

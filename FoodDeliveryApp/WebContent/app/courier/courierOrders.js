@@ -169,7 +169,7 @@ Vue.component("all-orders", {
 
                     <!-- Cards with my orders -->
                     <div class="row g-4 mb-4 cards" id="vue-orders" v-for="o in filteredOrders" v-if="isHidden">
-                            <div class="card shadow bg-light text-dark mb-4">
+                            <div class="card shadow bg-light text-dark mb-5">
                                 <div class="card-body text-center">
                                     <div class="row g-2 align-items-center d-inline-flex">
                                         <div class="container buttons align-items-center justify-content-center" style="flex-wrap: wrap;">
@@ -220,7 +220,7 @@ Vue.component("all-orders", {
 
                     <!-- Cards with waiting orders -->
                     <div class="row g-4 mb-4 cards" id="waiting-orders" v-for="o in filteredWaitingOrders" v-if="!isHidden">
-                            <div class="card shadow bg-light text-dark">
+                            <div class="card shadow bg-light text-dark mb-5">
                                 <div class="card-body text-center">
                                     <div class="row g-2 align-items-center d-inline-flex">
                                         <div class="container buttons align-items-center justify-content-center" style="flex-wrap: wrap;">
@@ -303,8 +303,16 @@ Vue.component("all-orders", {
         },
         changeStatus: function (o) {
             o.status = "DELIVERED";
+            let dto = {
+                orderId: o.id,
+                status: "DELIVERED",
+            };
             axios
-                .post("rest/orders/orderDelivered", o.id)
+                .post("rest/orders/orderDelivered", JSON.stringify(dto), {
+                    headers: {
+                        "Content-type": "application/json",
+                    },
+                })
                 .then((response) => "SUCCESS");
         },
 
