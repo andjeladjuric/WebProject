@@ -34,7 +34,7 @@ Vue.component("all-orders", {
                         <div class="container buttons mt-5 mb-1">
                             <button type="button" class="btn d-sm-flex buttonGroup me-2" id="btn1" @click="isHidden = true; hideOnClick();"
                                 v-bind:class="isHidden ? 'active' : 'notActive'">My Orders</button>
-                            <button type="button" class="btn d-sm-flex buttonGroup" @click="isHidden = !isHidden; hideOnClick(); showNotifications() " id="btn2"
+                            <button type="button" class="btn d-sm-flex buttonGroup" @click="isHidden = !isHidden; hideOnClick();" id="btn2"
                                 v-bind:class="!isHidden ? 'active' : 'notActive'">Awaiting</button>
                         </div>
                     </div>
@@ -162,7 +162,7 @@ Vue.component("all-orders", {
                     <!-- End of sort for orders -->
 
                     <div class="row g-4 mb-4 cards align-contet-center justify-content-center" 
-                        style="padding-left: 14%; padding-right: 7%; padding-bottom: 7%"
+                        style="padding-left: 7%; padding-right: 7%; padding-bottom: 7%"
                         v-if="orders.length === 0 && isHidden">
                         <p style="font-size: 2rem; font-style: italic">There are currently no orders available!</p>
                     </div>
@@ -224,8 +224,8 @@ Vue.component("all-orders", {
                                 <div class="card-body text-center">
                                     <div class="row g-2 align-items-center d-inline-flex">
                                         <div class="container buttons align-items-center justify-content-center" style="flex-wrap: wrap;">
-                                            <h1 class="mb-4 mt-2 orderID d-flex">Order #{{o.id}}</h1>
-                                            <h3 class="ms-2" v-if="count > 1">
+                                            <h1 class="mb-4 mt-3 orderID d-flex">Order #{{o.id}}</h1>
+                                            <h3 class="ms-3">
                                                 <button type="button" class="btn d-flex tableBtn disabled" v-if="isRejected(o.id)" style="background: #ecbeb1;">
                                                     Request for order rejected!
                                                 </button>

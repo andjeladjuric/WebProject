@@ -500,6 +500,7 @@ Vue.component("selected-restaurant", {
 
             this.comment.text = "";
             this.comment.rating = 0;
+            this.showToastAfterCommenting();
         },
 
         openMap: function () {
@@ -564,6 +565,16 @@ Vue.component("selected-restaurant", {
             const Toast = Swal.mixin({
                 toast: true,
                 text: "Item added to cart!",
+                position: "bottom-end",
+                timer: 2000,
+                showConfirmButton: false,
+            });
+            Toast.fire({ icon: "success" });
+        },
+        showToastAfterCommenting: function () {
+            const Toast = Swal.mixin({
+                toast: true,
+                text: "Comment recorded!",
                 position: "bottom-end",
                 timer: 2000,
                 showConfirmButton: false,

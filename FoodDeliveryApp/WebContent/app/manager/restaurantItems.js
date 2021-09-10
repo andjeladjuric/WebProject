@@ -608,7 +608,6 @@ Vue.component("restaurant-items", {
             if (image !== null) {
                 this.item.imagePath = image.imageId;
                 this.addNewItem();
-                window.location.reload();
             } else {
                 axios
                     .post("rest/images/addNewImage", this.imageSrc, {

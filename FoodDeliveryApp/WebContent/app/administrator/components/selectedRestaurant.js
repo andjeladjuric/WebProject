@@ -392,7 +392,7 @@ Vue.component("selected-restaurant", {
                         <p>Do you really want to delete this restaurant? This process cannot be undone.</p>
                     </div>
                     <div class="modal-footer justify-content-center">
-                        <button type="button" class="btn" data-bs-dismiss="modal" @click="deleteRestaurant; showToast">Confirm</button>
+                        <button type="button" class="btn" data-bs-dismiss="modal" @click="deleteRestaurant(); showToast">Confirm</button>
                         <button type="button" class="btn" data-bs-dismiss="modal" style="background: #ecbeb1">Cancel</button>
                     </div>
                 </div>
@@ -413,7 +413,7 @@ Vue.component("selected-restaurant", {
                         <p>Do you really want to delete this item? This process cannot be undone.</p>
                     </div>
                     <div class="modal-footer justify-content-center">
-                        <button type="button" class="btn" data-bs-dismiss="modal" @click="removeItem">Confirm</button>
+                        <button type="button" class="btn" data-bs-dismiss="modal" @click="removeItem()">Confirm</button>
                         <button type="button" class="btn" data-bs-dismiss="modal" style="background: #ecbeb1">Cancel</button>
                     </div>
                 </div>
@@ -434,7 +434,7 @@ Vue.component("selected-restaurant", {
                         <p>Do you really want to delete this comment? This process cannot be undone.</p>
                     </div>
                     <div class="modal-footer justify-content-center">
-                        <button type="button" class="btn" data-bs-dismiss="modal" @click="removeComment">Confirm</button>
+                        <button type="button" class="btn" data-bs-dismiss="modal" @click="removeComment()">Confirm</button>
                         <button type="button" class="btn" data-bs-dismiss="modal" style="background: #ecbeb1">Cancel</button>
                     </div>
                 </div>

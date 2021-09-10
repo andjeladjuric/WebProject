@@ -95,6 +95,18 @@ Vue.component("manager-order-details", {
                             </tr>
 
                             <tr>
+                                <td id="customerName">Customer username</td>
+                                <td>{{order.customerId}}</td>
+                            </tr>
+
+                            <tr>
+                                <td id="customerName">Delivery address</td>
+                                <td>
+                                    {{order.address.street}} {{order.address.number}}, {{order.address.city}} {{order.address.postcode}}
+                                </td>
+                            </tr>
+
+                            <tr>
                                 <td id="dateAndTime">Date and time</td>
                                 <td>
                                     {{order.timeOfOrder | dateFormat('DD.MM.YYYY HH:mm')}}

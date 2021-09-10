@@ -114,10 +114,10 @@ Vue.component("order-details", {
                                         <button type="button" class="btn d-flex tableBtn" v-if="isOrderWaiting && !isSent && !requestSent" @click="sendRequest(); showAlert()">
                                             Send delivery request
                                         </button>
-                                        <button type="button" class="btn d-flex tableBtn disabled" v-if="(isSent || requestSent) && !requestRejected" style="background: #ecbeb1;">
+                                        <button type="button" class="btn d-flex tableBtn disabled" v-if="(isSent || requestSent) && !requestRejected && !isOrderInTransport && !isOrderDelivered" style="background: #ecbeb1;">
                                             Request for order sent!
                                         </button>
-                                        <button type="button" class="btn d-flex tableBtn disabled" v-if="requestRejected" style="background: #ecbeb1;">
+                                        <button type="button" class="btn d-flex tableBtn disabled" v-if="requestRejected && !isOrderInTransport" style="background: #ecbeb1;">
                                             Request for order rejected!
                                         </button>
                                     </td>
@@ -161,6 +161,11 @@ Vue.component("order-details", {
         },
         isOrderWaiting() {
             if (this.order.status == "WAITING") return true;
+
+            return false;
+        },
+        isOrderDelivered() {
+            if (this.order.status == "DELIVERED") return true;
 
             return false;
         },
