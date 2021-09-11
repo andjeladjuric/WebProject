@@ -109,8 +109,8 @@ public class RestaurantDAO {
 		WorkingHours wed = new WorkingHours(4, workingHours.opens, workingHours.closes, false);
 		WorkingHours thur = new WorkingHours(5, workingHours.opens, workingHours.closes, false);
 		WorkingHours fri = new WorkingHours(6, workingHours.opens, workingHours.closes, false);
-		WorkingHours sat = new WorkingHours(7, workingHours.opensw, workingHours.closesw, workingHours.sat);
-		WorkingHours sun = new WorkingHours(1, workingHours.opensw, workingHours.closesw, workingHours.sun);
+		WorkingHours sat = new WorkingHours(7, workingHours.opensw, workingHours.closesw, !workingHours.sat);
+		WorkingHours sun = new WorkingHours(1, workingHours.opensw, workingHours.closesw, !workingHours.sun);
 		ArrayList<WorkingHours> ret = new ArrayList<WorkingHours>();
 		ret.add(mon);
 		ret.add(tue);
